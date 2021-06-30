@@ -1,0 +1,70 @@
+/**
+ * Headings.
+ */
+ h1,
+ h2,
+ h3,
+ h4,
+ h5,
+ h6 {
+     font-weight: $heading-font-weight;
+     font-style: $heading-font-style;
+     font-family: $heading-font-family;
+
+     margin: 0 0 20px;
+     line-height: 1.4;
+ }
+ 
+ h1 {
+     font-size: 23px;
+ }
+ 
+ h2 {
+     font-size: 20px;
+ }
+ 
+ h3 {
+     font-size: 18px;
+ }
+ 
+ h4 {
+     font-size: 17px;
+ }
+ 
+ h5 {
+     font-size: 15px;
+ }
+ 
+ h6 {
+     font-size: 14px;
+ }
+
+
+ .tagline {
+     font-family: $primary-font-family;
+
+     &.header{
+         font-size: 3em;
+         line-height: 1em;
+         position: relative;
+         z-index: 1;
+         max-width: 500px;
+
+         &::after {
+             content: '';
+             position: absolute;
+             bottom: 4px;
+             height: 5px;
+             left: 5%;
+             width: 180px;
+
+             background-color: $primary-color;
+
+             z-index: -1;
+        }
+     }
+ }
+
+ p {
+     font-family: $secondary-font-family;
+ }

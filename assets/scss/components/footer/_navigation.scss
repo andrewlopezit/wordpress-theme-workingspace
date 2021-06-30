@@ -1,0 +1,38 @@
+.footer-navigation {
+    width: 100%;
+    display: flex;
+
+    li {
+        list-style-type: none;
+        margin: 0 $navigation-margin;
+        a {
+            text-decoration: none;
+            font-family:  $secondary-font-family;
+            font-weight: 600;
+            font-size: 1.5em;
+
+            color: $navigation-color;
+
+            @include transition($transition);
+        }
+
+        .sub-menu {
+            padding-left: 5px;
+            max-width: 200px;
+
+           li {
+               &:hover {
+                   a {
+                       opacity: 1;
+                   }
+               }             
+
+                a {
+                    font-size: .8em;
+                    font-weight: 500;
+                    opacity: .6;
+                }
+           }
+        }
+    }
+}

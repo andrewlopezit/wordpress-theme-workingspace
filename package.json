@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/andrewlopezit/wordpress-theme-workingspace/issues"
   },
-  "homepage": "https://github.com/andrewlopezit/wordpress-theme-workingspace#readme"
+  "homepage": "https://github.com/andrewlopezit/wordpress-theme-workingspace#readme",
+  "devDependencies": {
+    "browser-sync": "^2.27.3",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-sass": "^5.0.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "sass": "^1.35.1"
+  }
 }

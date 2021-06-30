@@ -1,3 +1,8 @@
 <?php
+    get_header();
+?>
+<h1> Index </h1>
 
-wp_head();
+<?php 
+    get_footer();
+?>

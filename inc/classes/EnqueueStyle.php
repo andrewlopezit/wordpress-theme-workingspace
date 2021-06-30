@@ -10,7 +10,7 @@
 
  namespace Inc\Classes;
 
-final class Enqueue {
+final class EnqueueStyle {
 
     private $styles;
 
@@ -27,7 +27,10 @@ final class Enqueue {
         return $this;
     }
 
-    public function load() {
+    /**
+     *  load all styles
+     */
+    public function enqueue() {
         add_action('wp_enqueue_scripts', array($this, 'enqueue_callback'));
         return;
     }
