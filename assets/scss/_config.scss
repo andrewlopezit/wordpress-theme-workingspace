@@ -1,0 +1,77 @@
+// Typography Variables
+// -------------------------------------------------
+$primary-font-family: 'Effra', sans-serif !default;
+$secondary-font-family: 'Montserrat', sans-serif !default;
+
+// Basic Typography
+$base-font-size:       14px;
+$base-line-height:     1.8;
+$font-size:            $base-font-size !default;
+$browser-font-size:    16px !default;
+
+// Body type
+$body-font-family:     $secondary-font-family;
+$body-font-weight:     400 !default;
+$body-font-style:      normal !default;
+
+// Heading type
+$heading-font-family:  $primary-font-family;
+$heading-font-weight:  normal !default;
+$heading-font-style:   normal !default;
+
+// Color Variables
+// -------------------------------------------------
+
+// Project base color
+// ==================================
+$color-1:             #FDD500 !default;
+$color-2:             #00CEB5 !default;
+$color-3:             #CECECE !default;
+$color-4:             #013727 !default;
+$color-5:             #4f4f4f !default;
+
+
+// ===================================
+
+// Base colors
+$primary-color:        $color-1 !default;
+$secondary-color:      $color-2 !default;
+$border-color:         $color-1 !default;
+$button-color:         $color-2 !default;
+$footer-color:         $color-4 !default;
+
+// Typography colors
+$text-muted-color:     $color-3 !default;
+
+// Link colors
+$link-color:           $color-2 !default;
+$link-hover-color:     $color-1 !default;
+
+// Transition
+$transition:            all 300ms ease;
+
+// Settings Hamburgers buttons
+// ==================================================
+$hamburger-layer-width                     : 28px !default;
+$hamburger-layer-height                    : 3px !default;
+$hamburger-layer-spacing                   : 3.5px !default;
+$hamburger-layer-color                     : $color-5 !default;
+$hamburger-layer-border-radius             : 3px !default;
+$hamburger-hover-opacity                   : 0.7 !default;
+$hamburger-hover-transition-duration       : 0.15s !default;
+$hamburger-hover-transition-timing-function: linear !default;
+
+// To use CSS filters as the hover effect instead of opacity,
+// set $hamburger-hover-use-filter as true and
+// change the value of $hamburger-hover-filter accordingly.
+$hamburger-hover-use-filter: false !default;
+$hamburger-hover-filter    : opacity(50%) !default;
+
+// Settings Navigation
+// ==================================================
+$navigation-margin: 20px;
+$navigation-padding: 14px;
+$navigation-color: #fff;
+
+$navigation-font-family: 'Effra', sans-serif !default;
+$navigation-font-size: 1.1em;

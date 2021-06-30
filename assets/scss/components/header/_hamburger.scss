@@ -1,0 +1,31 @@
+$color: $hamburger-layer-color;
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    cursor: pointer;
+    
+    z-index: 10;
+
+    &.is-hover {
+        span {
+            &:nth-child(2) {
+                width: $hamburger-layer-width;
+            }
+        }
+    }
+
+    span {
+        width: $hamburger-layer-width;
+        height: $hamburger-layer-height;
+        background-color: $color;
+        margin: $hamburger-layer-spacing 0;
+
+        @include transition($transition);
+
+        &:nth-child(2){
+            width: calc(#{$hamburger-layer-width} / 1.6);
+        }
+    }
+}

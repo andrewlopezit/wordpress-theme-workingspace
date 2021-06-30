@@ -1,0 +1,113 @@
+// Coloring SVGs in CSS Background Images
+// https://codepen.io/noahblon/post/coloring-svgs-in-css-background-images
+@mixin svg-mask($url, $color) {
+    background-color: $color;
+
+    -webkit-mask:  url($url) no-repeat 100% 100%;
+    -ms-mask: url($url) no-repeat 100% 100%;
+    -o-mask: url($url) no-repeat 100% 100%;
+    -moz-mask: url($url) no-repeat 100% 100%;
+    mask: url($url) no-repeat 100% 100%;
+
+    -webkit-mask-position: center;
+    -ms-mask-position: center;
+    -o-mask-position: center;
+    -moz-mask-position: center;
+    mask-position: center;
+}
+
+// Animation
+@mixin animation( $args ) {
+    -ms-animation: $args;
+    -webkit-animation: $args;
+	-o-animation: $args;
+	-moz-animation: $args;
+	animation: $args;
+}
+
+// Animation Delay
+@mixin animation-delay( $args ) {
+    -ms-animation-delay: $args;
+    -webkit-animation-delay: $args;
+	-o-animation-delay: $args;
+	-moz-animation-delay: $args;
+	animation-delay: $args;
+}
+
+// Transform
+@mixin transform( $args ) {
+    -webkit-transform: $args;
+    -moz-transform: $args;
+    -ms-transform: $args;
+    -o-transform: $args;
+    transform: $args;
+}
+
+// Transition
+@mixin transition( $args ) {
+    -webkit-transition: $args;
+    -moz-transition: $args;
+    -ms-transition: $args;
+    -o-transition: $args;
+    transition: $args;
+}
+
+// Transition Duration
+@mixin transition-duration( $args ) {
+    -webkit-transition-duration: $args;
+    -moz-transition-duration: $args;
+    -ms-transition-duration: $args;
+    -o-transition-duration: $args;
+    transition-duration: $args;
+}
+
+// Transition Delay
+@mixin transition-delay( $args ) {
+    -webkit-transition-delay: $args;
+    -moz-transition-delay: $args;
+    -ms-transition-delay: $args;
+    -o-transition-delay: $args;
+    transition-delay: $args;
+}
+
+// Opacity
+@mixin opacity( $args ) {
+    -moz-opacity: $args;
+    -webkit-opacity: $args;
+    opacity: $args;
+}
+
+// Border radius
+@mixin border-radius( $args ) {
+   -webkit-border-radius: $args;
+   -moz-border-radius: $args;
+   -ms-border-radius: $args;
+    border-radius: $args;
+}
+
+// Box Shadow
+@mixin box-shadow( $args ) {
+    -webkit-box-shadow: $args;
+    -moz-box-shadow: $args;
+    box-shadow: $args;
+}
+
+// Font Awesome CSS
+@mixin font-awesome() {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+// Simple Line Icons CSS
+@mixin simple-line-icons() {
+    font-family: 'simple-line-icons';
+    font-weight: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-rendering: auto;
+}

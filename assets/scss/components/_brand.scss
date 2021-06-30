@@ -1,0 +1,8 @@
+$brand-color: #000 !default;
+
+.brand {
+    width: 100px;
+    height: 40px;
+
+    @include svg-mask('../logo/working-space.svg', $brand-color);
+}

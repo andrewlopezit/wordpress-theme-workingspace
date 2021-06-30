@@ -1,0 +1,46 @@
+$icon-size: 28px;
+$color: $color-5;
+$hover-color: $secondary-color;
+
+$gutter: 5px;
+
+.social-media {
+    display: flex;
+    align-items: center;
+
+    .item {
+        width: $icon-size;
+        height: $icon-size;
+
+        background-size: 70%;
+        background-position: center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+
+        @include transition($transition);
+
+        &.instagram {
+            @include svg-mask('../../assets/icons/instagram.svg', $color);
+        }
+        &.facebook {
+           @include svg-mask('../../assets/icons/facebook.svg', $color);
+        }
+        &.twitter {
+            @include svg-mask('../../assets/icons/twitter.svg', $color);
+        }
+        &.behance {
+            @include svg-mask('../../assets/icons/behance.svg', $color);
+        }
+        &.linkedin {
+            @include svg-mask('../../assets/icons/linkedin.svg', $color);
+        }
+        &.pinterest {
+            @include svg-mask('../../assets/icons/pinterest.svg', $color);
+        }
+
+        &:hover{
+            background-color: $hover-color;
+
+        }
+    }
+}

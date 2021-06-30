@@ -60,12 +60,50 @@ if(!class_exists('WorkingspaceTheme')) {
     
             /** Admin Panel */
             if(is_admin()) { 
-    
+                // load all theme support
+                $this->add_theme_support();
+
+                // load all menus
+                $this->register_menus();
+
+                // display widgets container
+                $this->register_sidebar_widgets();
+
             /** Frontend */    
             } else {
+                // load all styles
                 $this->enqueue_style();
+
+                // load all scripts
+                $this->register_script();
+                $this->enqueue_scripts();
+
+                // display widgets container
+                $this->register_sidebar_widgets();
             }
-        } 
+        }
+
+//------------------------------------ F U N C T I O N S ----------------------------------------
+
+        public function add_theme_support() {
+            /**
+             * Add theme support, supply $feature and $args 
+             */
+             $theme_support = ThemeSetup::ThemeSupport();
+
+             $theme_support
+             ->support(
+                 array(
+                     'feature' => 'menus'
+                 )
+            )
+            ->support(
+                array(
+                    'feature' => 'widgets'
+                )
+            )
+             ->add();
+        }
     
         /**
          * Returns current theme version
@@ -85,13 +123,107 @@ if(!class_exists('WorkingspaceTheme')) {
         public function import_core_files() {
     
         }
+
+        /**
+         * Register scripts it is used for dependency js
+         */
+        public function register_script() {
+
+            $theme_setup = ThemeSetup::EnqueueScript();
+
+            // Define dir
+            $js_dir = WORKINGSPACE_JS_DIR_URI;
+            $main_js_dir = $js_dir.'main.js';
+
+            $theme_version = WORKINGSPACE_THEME_VERSION;
+
+            /**
+             *  To add new or register scripts just chain the method
+             *  (script) and pass an object
+             *  array( 
+             *   handle => main, 
+             *   src = '', 
+             *   $deps = array(),
+             *   $ver = false, 
+             *   $in_footer = false
+             *  ); 
+             */
+
+             // Register script
+            $theme_setup
+            ->script(
+                array(
+                    'handle' => 'gsap@3.7',
+                    'src' => 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.0/gsap.min.js'
+                )
+            )
+            ->script(
+                array(
+                    'handle'=> 'jQuery@3.6',
+                    'src' => 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js',
+                )   
+            )
+            // add the handle for defer script
+            ->register(
+                array(
+                    'jQuery@3.6',
+                    'gsap@3.7'
+                )
+            );
+    
+        }
+
+        /**
+         * Enqueue scripts
+         */
+        public function enqueue_scripts() {
+            $theme_setup = ThemeSetup::EnqueueScript();
+
+            // Define dir
+            $js_dir = WORKINGSPACE_JS_DIR_URI;
+            $main_js_dir = $js_dir.'main.js';
+
+            $theme_version = WORKINGSPACE_THEME_VERSION;
+
+            /**
+             *  To add new or register scripts just chain the method
+             *  (script) and pass an object
+             *  array( 
+             *   handle => main, 
+             *   src = '', 
+             *   $deps = array(),
+             *   $ver = false, 
+             *   $in_footer = false
+             *  ); 
+             */
+
+             // Enqueue script
+            $theme_setup
+            ->script(
+                array(
+                    'handle' => 'main',
+                    'src' => $main_js_dir,
+                    'ver' => $theme_version,
+                    'deps' => array(
+                        'jQuery@3.6',
+                        'gsap@3.7'
+                    )
+                )
+            )
+            // add the handle for defer script
+            ->enqueue(
+                array(
+                    'main'
+                )
+            );
+        }
     
         /**
          *  Enqueuue stylesheet
          */
         public function enqueue_style() {
     
-            $enqueue = ThemeSetup::Enqueue();
+            $theme_setup = ThemeSetup::EnqueueStyle();
     
             // Define dir
             $css_dir = WORKINGSPACE_CSS_DIR_URI;
@@ -112,16 +244,68 @@ if(!class_exists('WorkingspaceTheme')) {
              *  ); 
              */
     
-            $enqueue 
+            $theme_setup 
             ->style(
                 array(
-                    'handle' => 'workingspace-style',
+                    'handle' => 'workingspace-main',
                     'src' => $main_style_dir,
                     'ver' => $theme_version
                 )
             )
-            ->load();
+            ->style(
+                array(
+                    'handle' => 'workingspace-stylesheet',
+                    'src' => WORKINGSPACE_CSS_DIR_URI.'stylesheet.css',
+                    'ver' => $theme_version
+                )
+            )
+            ->style(
+                array(
+                    'handle' => 'bootstrapv5',
+                    'src' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'
+                )
+            )
+            ->enqueue();
             
+        }
+
+        // add theme location menu
+        public function register_menus() {
+            // register menu
+            $menu = ThemeSetup::RegisterMenu();
+
+            $menu
+            ->menu(
+                // Add your menu name here...
+                array(
+                    'header_menu' => __('Header Menu'),
+                    'footer_menu' => __('Footer Menu')
+                )
+            )
+            ->register();
+        }
+
+        // add sidebar widgets container
+        public function register_sidebar_widgets() {
+            $sidebar = ThemeSetup::RegisterSidebar();
+
+            $sidebar
+            /**
+             * add sidebar by adding new arry object
+             * array(
+             *  id => 'primary',
+             *  name => 'Primary Sidebar',
+             *  description => A short description of the sidebar.
+             * )
+             */
+            ->sidebar(
+                array(
+                    'name' => 'Main Sidebar',
+                    'id' => 'main_sidebar',
+                    'description' => 'The main sidebar appears on the right on each page except the front page template',
+                ) 
+            )
+            ->register();
         }
     }
 }
