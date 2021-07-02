@@ -1,5 +1,5 @@
 <div class="menu-navigation backdrop" id="menu-navigation">
-    <div class="container">
+    <div class="container" id="header-content">
         <div class="row">
             <div class="col offset-1">
             <?php
