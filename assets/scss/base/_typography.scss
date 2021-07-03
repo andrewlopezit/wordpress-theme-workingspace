@@ -48,7 +48,7 @@
          line-height: 1em;
          position: relative;
          z-index: 1;
-         max-width: 500px;
+         max-width: 400px;
 
          &::after {
              content: '';
@@ -56,7 +56,7 @@
              bottom: 4px;
              height: 5px;
              left: 5%;
-             width: 180px;
+             width: 150px;
 
              background-color: $primary-color;
 
@@ -67,4 +67,9 @@
 
  p {
      font-family: $secondary-font-family;
+ }
+
+ a {
+    text-decoration: none;
+    color: $secondary-color;
  }

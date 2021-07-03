@@ -21,9 +21,11 @@
 * - MAIN
 *
 * COMPONENTS
-* - HAMBURGER
+* - WIDGETS
 * - SOCIAL MEDIA
 * - BRAND
+* - HEADER/HAMBURGER
+* - HEADER/NAVIGATION
 * - HEADER
 * - FOOTER NAVIGATION
 */
@@ -49,9 +51,9 @@
 @import 'base/shared.scss';
 
 /*------------------------------------*
-	HAMBURGER
+	WIDGETS
 *------------------------------------*/
-@import 'components/header/hamburger.scss';
+@import 'components/widgets.scss';
 
 /*------------------------------------*
 	SOCIAL MEDIA
@@ -62,6 +64,16 @@
 	BRAND
 *------------------------------------*/
 @import 'components/brand.scss';
+
+/*------------------------------------*
+	HEADER/HAMBURGER
+*------------------------------------*/
+@import 'components/header/hamburger.scss';
+
+/*------------------------------------*
+	HEADER/NAVIGATION
+*------------------------------------*/
+@import 'components/header/navigation';
 
 /*------------------------------------*
 	HEADER
