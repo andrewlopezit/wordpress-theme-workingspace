@@ -244,7 +244,13 @@ if(!class_exists('WorkingspaceTheme')) {
              *  ); 
              */
     
-            $theme_setup 
+            $theme_setup
+            ->style(
+                array(
+                    'handle' => 'bootstrapv5',
+                    'src' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'
+                )
+            )
             ->style(
                 array(
                     'handle' => 'workingspace-main',
@@ -257,12 +263,6 @@ if(!class_exists('WorkingspaceTheme')) {
                     'handle' => 'workingspace-stylesheet',
                     'src' => WORKINGSPACE_CSS_DIR_URI.'stylesheet.css',
                     'ver' => $theme_version
-                )
-            )
-            ->style(
-                array(
-                    'handle' => 'bootstrapv5',
-                    'src' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'
                 )
             )
             ->enqueue();

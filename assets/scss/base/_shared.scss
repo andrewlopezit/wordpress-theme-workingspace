@@ -20,37 +20,3 @@ input {
         flex-direction: row;
     }
 }
-
-// override wordpress widget search form
-.widget.widget_search {
-    div {
-        max-width: 300px;
-        position: relative;
-
-        label {
-            text-transform: uppercase;
-            font-weight: 800;
-            font-size: 16px;
-            margin-bottom: 10px;
-            content: 'Search for';
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 5px 10px;
-        }
-
-        input[type="submit"] {
-            position: absolute;
-            right: 0;
-            width: 30px;
-            padding: 5px 10px;
-            color: transparent;
-
-            background: url('../../assets/icons/search.svg');
-            background-repeat: no-repeat;
-            background-size: 80%;
-            background-position: center;
-        }
-    }
-}
