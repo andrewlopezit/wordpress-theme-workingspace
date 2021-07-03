@@ -120,7 +120,7 @@
             translateY: -20,
             translateX: -($(document).width()- $headerContainer.width())/2,
             duration: 0.2})
-        .to($navigationMenu.find('#header-content'), {display: 'inherit', opacity: 1, duration: 0.3});
+        .to($navigationMenu.find('#header-content'), {display: 'inherit', opacity: 1, duration: 0.1});
 
         // hamburgermenu animation
         hamburgermenuTimeline = gsap.timeline( {paused: true} );
