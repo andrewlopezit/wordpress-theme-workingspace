@@ -15,7 +15,6 @@
         const secondaryColor = '#00CEB5';
         const navigationBackgroundColor = '#013727';
 
-
         /**
          *  GSAP ANIMATION
          */
@@ -38,7 +37,7 @@
             if($navigationMenu.hasClass('is-active')) {
 
                  // animate navigation small device
-                if(isSmallDevice()) {
+                if(isTouchEvent()) {
                     smallDeviceNavigaionGSAP.play();
                     $hamburgerMenu.addClass('is-hover');
 
@@ -51,7 +50,7 @@
                 hamburgermenuTimeline.play();
             } else {
                 // animate close navigation small device
-                if(isSmallDevice()) {
+                if(isTouchEvent()) {
                     smallDeviceNavigaionGSAP.reverse();
                     $hamburgerMenu.removeClass('is-hover');
                 } else {
@@ -133,15 +132,17 @@
             
         }
 
-        function isSmallDevice() {
-            return $(document).width() <= 578;
+        function isTouchEvent() {
+            return (('ontouchstart' in window) ||
+            (navigator.maxTouchPoints > 0) ||
+            (navigator.msMaxTouchPoints > 0))
         }
 
         function hamburgerMenuBackdropAnimation() {
             $hamburgerMenu.mouseover(function() {
                 if(!$navigationMenu.hasClass('is-active')) {
                     $(this).addClass('is-hover');
-                    gsap.to($navigationMenu, {scale: isSmallDevice() ? 1 : 1.8, opacity: 1, duration: 0.3});
+                    gsap.to($navigationMenu, {scale: isTouchEvent() ? 1 : 1.8, opacity: 1, duration: 0.3});
                 }
     
             }).mouseout(function() {
