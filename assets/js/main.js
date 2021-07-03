@@ -14,6 +14,7 @@
         const primaryColor = '#FDD500';
         const secondaryColor = '#00CEB5';
         const navigationBackgroundColor = '#013727';
+        const hamburgerMenuColor = '#4f4f4f';
 
         /**
          *  GSAP ANIMATION
@@ -66,16 +67,20 @@
         // resize document events init functions
         $(window).resize(function (){
             initElementCSSRules();
-            initGsapAnimation();
-
-            // re init hamburgermenu
-            hamburgerMenuBackdropAnimation();
 
             // animate close navigation menu
             largeDeviceNavigationGSAP.reverse();
-            smallDeviceNavigaionGSAP.reverse();
             hamburgermenuTimeline.reverse();
+            largeDeviceNavigationGSAP.reverse();
 
+            // reset navigation and hamburger menu
+            $hamburgerMenu.removeClass('is-hover');
+            $navigationMenu.removeClass('is-active');
+            gsap.to($navigationMenu, {scale: 1, opacity: 0, duration: 0.3});
+
+            // re initialize gsap animation for the position of navigation
+            // to fit the viewport
+            initGsapAnimation();
         });
 
         /**
