@@ -102,8 +102,8 @@
             left: 0,
             translateY: -20,
             translateX: -($(document).width()- $headerContainer.width())/2,
-            duration: 0.3})
-        .to($navigationMenu.find('#header-content'), {display: 'inherit', opacity: 1, duration: 0.5});
+            duration: 0.2})
+        .to($navigationMenu.find('#header-content'), {display: 'inherit', opacity: 1, duration: 0.1});
         
         // small device animation
         smallDeviceNavigaionGSAP = gsap.timeline({ paused: true});
@@ -126,9 +126,9 @@
         hamburgermenuTimeline = gsap.timeline( {paused: true} );
 
         hamburgermenuTimeline
-        .to($hamburgerMenu.find('span').eq(1), {x: -30, opacity: 0, duration: 0.1})
-        .to($hamburgerMenu.find('span').eq(0), {rotate: 45, translateY: 10, duration:0.1})
-        .to($hamburgerMenu.find('span').eq(2), {rotate: -45, translateY: -10, duration: 0.1}, '<');
+        .to($hamburgerMenu.find('span').eq(1), {x: -40, opacity: 0, duration: 0.1})
+        .to($hamburgerMenu.find('span').eq(0), {rotate: 45, translateY: 10, duration:0.05})
+        .to($hamburgerMenu.find('span').eq(2), {rotate: -45, translateY: -10, duration: 0.05}, '<');
             
         }
 
