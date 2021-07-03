@@ -2,6 +2,8 @@ $menu-navigation-background: $footer-color;
 
 #menu-navigation.backdrop {
     position: absolute;
+    right: 10px;
+
     height: 27px;
     width: 29px;
 
@@ -156,16 +158,8 @@ $menu-navigation-background: $footer-color;
             .social-media.title {
                 position: absolute;
                 bottom: 5%;
-                left: 50%;
                 display: flex;
-                align-items: center;
                 justify-content: center;
-
-                @include transform(translateX(-50%));
-
-                .social-media{
-                    margin-left: 0;
-                }
             }
         }
     }
@@ -185,6 +179,9 @@ $menu-navigation-background: $footer-color;
             background-size: cover;
             background-position: center;
 
+            min-height: 100vh;
+            height: auto;
+
             .navigation-container {
                 margin-bottom: $navigation-margin;
             }
@@ -198,7 +195,7 @@ $menu-navigation-background: $footer-color;
         .container {    
             .mobile-navigation {
                 .social-media.title {
-                    display: none;
+                    position:  relative;
                 }
             }
         }
