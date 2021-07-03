@@ -29,7 +29,7 @@
          */
         
         // prepare menu navigation
-        if(!isSmallDevice()) hamburgerMenuBackdropAnimation();
+        hamburgerMenuBackdropAnimation();
 
         // display menu navigation
         $hamburgerMenu.click(function() {
@@ -69,12 +69,14 @@
             initElementCSSRules();
             initGsapAnimation();
 
+            // re init hamburgermenu
+            hamburgerMenuBackdropAnimation();
+
             // animate close navigation menu
             largeDeviceNavigationGSAP.reverse();
             smallDeviceNavigaionGSAP.reverse();
             hamburgermenuTimeline.reverse();
 
-            if(!isSmallDevice()) hamburgerMenuBackdropAnimation();
         });
 
         /**
@@ -95,7 +97,7 @@
             {width:'100vw',
             height: 'auto',
             minHeight: '100vh', 
-            backgroundColor: navigationBackgroundColor ,
+            backgroundColor: navigationBackgroundColor,
             scale: 1, 
             top: 0, 
             left: 0,
@@ -139,7 +141,7 @@
             $hamburgerMenu.mouseover(function() {
                 if(!$navigationMenu.hasClass('is-active')) {
                     $(this).addClass('is-hover');
-                    gsap.to($navigationMenu, {scale: 1.8, opacity: 1, duration: 0.3});
+                    gsap.to($navigationMenu, {scale: isSmallDevice() ? 1 : 1.8, opacity: 1, duration: 0.3});
                 }
     
             }).mouseout(function() {
