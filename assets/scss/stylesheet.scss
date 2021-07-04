@@ -21,13 +21,16 @@
 * - MAIN
 *
 * COMPONENTS
+* - ICONS
 * - WIDGETS
 * - SOCIAL MEDIA
 * - BRAND
 * - HEADER/HAMBURGER
 * - HEADER/NAVIGATION
 * - HEADER
-* - FOOTER NAVIGATION
+* - FOOTER/NAVIGATION
+* - FOOTER/CONTACT INFO
+* - FOOTER
 */
 
 /*------------------------------------*
@@ -49,6 +52,12 @@
 	COMPONENTS
 *------------------------------------*/
 @import 'base/shared.scss';
+
+/*------------------------------------*
+	ICONS
+*------------------------------------*/
+@import 'components/icons';
+
 
 /*------------------------------------*
 	WIDGETS
@@ -84,3 +93,13 @@
 	FOOTER NAVIGATION
 *------------------------------------*/
 @import 'components/footer/navigation.scss';
+
+/*------------------------------------*
+	FOOTER NAVIGATION
+*------------------------------------*/
+@import 'components/footer/contact-info.scss';
+
+/*------------------------------------*
+	FOOTER
+*------------------------------------*/
+@import 'components/footer/footer.scss';

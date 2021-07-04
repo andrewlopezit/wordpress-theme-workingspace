@@ -1,0 +1,86 @@
+$icon-size: 28px;
+$color: $color-5;
+$hover-color: $secondary-color;
+
+
+.icon {
+    width: $icon-size;
+    height: $icon-size;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+
+    background-color: $color-5;
+
+    @include transition($transition);
+
+    &.primary-color {
+        background-color: $primary-color;
+    }
+
+    &.secondary-color {
+        background-color: $secondary-color;
+    }
+
+    // common css rules
+    &.marker,
+    &.telephone,
+    &.email,
+    &.facebook,
+    &.twitter,
+    &.behance,
+    &.linkedin,
+    &.instagram,
+    &.pinterest {
+        &.size-content-70 {
+            @include svg-mask-size(70%);
+        }
+
+        &.size-content-60 {
+            @include svg-mask-size(60%);
+        }
+    }
+
+    &.marker {
+        @include svg-mask('../../assets/icons/marker.svg');
+    }
+
+    &.telephone {
+        @include svg-mask('../../assets/icons/telephone.svg');
+    }
+
+    &.email {
+        @include svg-mask('../../assets/icons/email.svg');
+    }
+
+    &.facebook {
+        @include svg-mask('../../assets/icons/facebook.svg');
+    }
+
+    &.twitter {
+        @include svg-mask('../../assets/icons/twitter.svg');
+    }
+
+    &.instagram {
+        @include svg-mask('../../assets/icons/instagram.svg');
+    }
+
+    &.behance {
+        @include svg-mask('../../assets/icons/behance.svg');
+    }
+    &.linkedin {
+        @include svg-mask('../../assets/icons/linkedin.svg');
+    }
+    &.pinterest {
+        @include svg-mask('../../assets/icons/pinterest.svg');
+    }
+
+    &.hover-none {
+        pointer-events: none;
+    }
+
+    &:hover{
+        background-color: $hover-color;
+    }
+}

@@ -1,0 +1,17 @@
+.contact-info {
+    h4 {
+        font-family: $secondary-font-family;
+        margin: 0;
+        padding: 2px 0; 
+    }
+
+    .item {
+        display: flex;
+        align-items: flex-start;
+
+        .label{
+            padding: 3px 10px;
+            width: 90%;
+        }
+    }
+}
