@@ -1,5 +1,5 @@
 <div class="footer background">
-    <div class="image-background"></div>
+    <div class="image-background d-none d-lg-block"></div>
     <div class="container" id="header-content">
         <div class="row">
             <div class="col">
@@ -15,7 +15,7 @@
         </div>
 
         <div class="row">
-            <div class="col-3 contact-container">
+            <div class="col col-lg-3 contact-container">
                 <div class="contact-info">
                     <h4>Contact Us</h4>
                     <div class="info-container">
@@ -36,10 +36,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-5 navigation-container footer">
+            <div class="col col-lg-5 navigation-container footer">
                 <?php  get_template_part('partials/footer/navigation', 'navigation'); ?>
             </div>
-            <div class="offset-4"></div>
+            <div class="offset-4 d-none d-lg-block"></div>
         </div>
     </div>
 </div>
