@@ -1,8 +1,6 @@
 // Coloring SVGs in CSS Background Images
 // https://codepen.io/noahblon/post/coloring-svgs-in-css-background-images
-@mixin svg-mask($url, $color) {
-    background-color: $color;
-
+@mixin svg-mask($url, $size:100%) {
     -webkit-mask:  url($url) no-repeat 100% 100%;
     -ms-mask: url($url) no-repeat 100% 100%;
     -o-mask: url($url) no-repeat 100% 100%;
@@ -14,6 +12,30 @@
     -o-mask-position: center;
     -moz-mask-position: center;
     mask-position: center;
+
+    -webkit-mask-size: $size;
+    -ms-mask-size: $size;
+    -o-mask-size: $size;
+    -moz-mask-size: $size;
+    mask-size: $size;
+}
+
+// the mask-size property specifies the size of a mask layer image.
+// https://css-tricks.com/almanac/properties/m/mask-size/
+@mixin svg-mask-size($size: 100%) {
+    -webkit-mask-size: $size;
+    -ms-mask-size: $size;
+    -o-mask-size: $size;
+    -moz-mask-size: $size;
+    mask-size: $size;
+}
+
+@mixin background-polygon($args) {
+    -webkit-clip-path: polygon($args);
+    -ms-clip-path: polygon($args);
+    -o-clip-path: polygon($args);
+    -moz-clip-path: polygon($args);
+    clip-path: polygon($args);
 }
 
 // Animation

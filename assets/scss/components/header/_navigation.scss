@@ -62,7 +62,6 @@ $menu-navigation-background: $footer-color;
             }
         
             .brand {
-                background-color: #fff;
                 margin-top: 25px;
             }
         
@@ -81,13 +80,9 @@ $menu-navigation-background: $footer-color;
 
             .social-media {
                 margin-left: -10px;
-                .item {
-                    background-color: $primary-color;  
-                    
-                    &:hover{
-                        background-color: $secondary-color;
-                    }
-                }
+               .icon {
+                   margin-top: $navigation-margin - 15;
+               }
             }
         }
 

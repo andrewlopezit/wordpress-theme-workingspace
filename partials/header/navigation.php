@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col navigation-container">
                 <a href="<?php get_bloginfo('url');?>">
-                    <div class="brand" id="brand"></div>
+                    <div class="brand white" id="brand"></div>
                 </a>
                 <?php
                     $defaults = array(
@@ -40,12 +40,12 @@
                 <div class="social-media title d-none d-sm-flex d-flex">
                     <h4>Follow us on: </h4>
                     <div class="social-media">
-                        <a href="" class="item facebook"></a>
-                        <a href="" class="item instagram"></a>
-                        <a href="" class="item twitter"></a>
-                        <a href="" class="item behance"></a>
-                        <a href="" class="item linkedin"></a>
-                        <a href="" class="item pinterest"></a>
+                        <a href="" class="icon facebook primary-color size-content-60"></a>
+                        <a href="" class="icon instagram primary-color size-content-70"></a>
+                        <a href="" class="icon twitter primary-color size-content-70"></a>
+                        <a href="" class="icon behance primary-color size-content-70"></a>
+                        <a href="" class="icon linkedin primary-color size-content-70"></a>
+                        <a href="" class="icon pinterest primary-color size-content-60"></a>
                     </div>
                 </div>
             </div>

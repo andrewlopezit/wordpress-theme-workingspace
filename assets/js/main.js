@@ -1,5 +1,9 @@
 (function ($) {
+    $('html').css({ opacity: 0});
+
     $(document).ready(function () {
+        gsap.to('html', {opacity:1, delay: 0.8});
+
         // initialize elements variables
         const $hamburgerMenu = $('#hamburger');
         const $navigationMenu = $('#menu-navigation');
@@ -13,7 +17,7 @@
         // color codes
         const primaryColor = '#FDD500';
         const secondaryColor = '#00CEB5';
-        const navigationBackgroundColor = '#013727';
+        const navigationBackgroundColor = '#345F52';
         const hamburgerMenuColor = '#4f4f4f';
 
         /**

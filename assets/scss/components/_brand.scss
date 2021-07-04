@@ -3,6 +3,11 @@ $brand-color: #000 !default;
 .brand {
     width: 100px;
     height: 40px;
+    background-color: $brand-color;
 
-    @include svg-mask('../logo/working-space.svg', $brand-color);
+    &.white {
+        background-color: #fff;
+    }
+
+    @include svg-mask('../logo/working-space.svg');
 }
