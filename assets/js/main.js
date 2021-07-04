@@ -68,8 +68,22 @@
             }
         });
 
+        $( window ).on( "orientationchange", function() {
+            init();
+        });
+
         // resize document events init functions
-        $(window).resize(function (){
+        $(window).resize(function () {
+
+            if(!isTouchEvent()) {
+                init();
+            }
+        });
+
+        /**
+         *  FUNCTIONS
+         */
+        function init() {
             initElementCSSRules();
 
             // animate close navigation menu
@@ -85,11 +99,8 @@
             // re initialize gsap animation for the position of navigation
             // to fit the viewport
             initGsapAnimation();
-        });
+        }
 
-        /**
-         *  FUNCTIONS
-         */
         function initElementCSSRules() {
             // reposition navigation menu upon resizing the window
             $navigationMenu.css('left', 'auto');
