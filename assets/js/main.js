@@ -68,16 +68,20 @@
             }
         });
 
+        // this event is intended for mobile devices and ipad or tablet
         $( window ).on( "orientationchange", function() {
+            if(!isTouchEvent()) return;
+
             init();
         });
 
-        // resize document events init functions
-        $(window).resize(function () {
 
-            if(!isTouchEvent()) {
-                init();
-            }
+        // resize document events init functions
+        // this event is for pc
+        $(window).resize(function () {
+            if(isTouchEvent()) return;
+            console.log('in');
+            init();
         });
 
         /**
