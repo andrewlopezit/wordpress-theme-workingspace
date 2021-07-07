@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col navigation-container">
                 <a href="<?php get_bloginfo('url');?>">
-                    <div class="brand white" id="brand"></div>
+                    <div class="brand" id="brand" style="background-color: <?php echo get_theme_mod('brand-color-setting-id');?>"></div>
                 </a>
                 <?php
                     $defaults = array(

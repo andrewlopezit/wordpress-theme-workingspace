@@ -80,7 +80,6 @@
         // this event is for pc
         $(window).resize(function () {
             if(isTouchEvent()) return;
-            console.log('in');
             init();
         });
 

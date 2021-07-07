@@ -45,6 +45,9 @@ if(!class_exists('WorkingspaceTheme')) {
     
             // Theme version.
             define( 'WORKINGSPACE_THEME_VERSION', $version );
+
+            // Theme name
+            define('THEME_NAME', 'workingspace');
     
             // Javascript and CSS Paths.
             define( 'WORKINGSPACE_JS_DIR_URI', WORKINGSPACEWP_THEME_URI . '/assets/js/' );
@@ -65,10 +68,7 @@ if(!class_exists('WorkingspaceTheme')) {
 
                 // load all menus
                 $this->register_menus();
-
-                // display widgets container
-                $this->register_sidebar_widgets();
-
+                
             /** Frontend */    
             } else {
                 // load all styles
@@ -77,10 +77,18 @@ if(!class_exists('WorkingspaceTheme')) {
                 // load all scripts
                 $this->register_script();
                 $this->enqueue_scripts();
-
-                // display widgets container
-                $this->register_sidebar_widgets();
+                
             }
+
+            /**
+             * load frontend and back end;
+             */
+
+            // display widgets container
+            $this->register_sidebar_widgets();
+
+            // display theme customizer();
+            ThemeSetup::ThemeCustomizer();
         }
 
 //------------------------------------ F U N C T I O N S ----------------------------------------
