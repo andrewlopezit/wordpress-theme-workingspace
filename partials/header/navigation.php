@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col navigation-container">
                 <a href="<?php get_bloginfo('url');?>">
-                    <div class="brand" id="brand" style="background-color: <?php echo get_theme_mod('brand-color-setting-id');?>"></div>
+                    <div class="brand <?php if(get_theme_mod('is_svg_allow_modify_color_setting'))  echo 'is-allow-color-modify'; ?>" id="brand" style="background-color: <?php echo get_theme_mod('brand_color');?>"></div>
                 </a>
                 <?php
                     $defaults = array(
@@ -21,7 +21,7 @@
                    <?php bloginfo( 'description' ); ?>
                </p>
                <p class="sub-header">
-                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae eius voluptatibus, recusandae quae laborum officiis nesciunt mollitia natus pariatur sunt iusto.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae eius voluptatibus, recusandae quae laborum officiis nesciunt mollitia natus pariatur sunt iusto.
                </p>
             </div>
             <div class="col-7">

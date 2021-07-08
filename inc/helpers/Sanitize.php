@@ -22,4 +22,16 @@
             return $color;
         }
     }
+    public function sanitize_custom_option($input) {
+        return ( $input === "No" ) ? "No" : "Yes";
+    }
+    public function sanitize_custom_text($input) {
+        return filter_var($input, FILTER_SANITIZE_STRING);
+    }
+    public function sanitize_custom_url($input) {
+        return filter_var($input, FILTER_SANITIZE_URL);
+    }
+    public function sanitize_custom_email($input) {
+        return filter_var($input, FILTER_SANITIZE_EMAIL);
+    }
  }

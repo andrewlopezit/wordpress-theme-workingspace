@@ -11,6 +11,7 @@
 namespace Inc\Customizer;
 
 use Inc\Customizer\Sections\Navigation;
+use Inc\Customizer\Sections\Header;
 
 final class ThemeCustomizer  {
 
@@ -19,6 +20,7 @@ final class ThemeCustomizer  {
    }
 
    public function theme_customizer_callback($wp_customize) {
+      new Header($wp_customize);
       new Navigation($wp_customize);
    }
 }

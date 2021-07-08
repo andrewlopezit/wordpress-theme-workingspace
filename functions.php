@@ -23,6 +23,9 @@ use Inc\Classes\ThemeSetup;
 define( 'WORKINGSPACEWP_THEME_DIR', get_template_directory() );
 define( 'WORKINGSPACEWP_THEME_URI', get_template_directory_uri() );
 
+if(file_exists(WORKINGSPACEWP_THEME_DIR.'/inc/customizer/working-space-theme-customizer-functions.php')) {
+    require_once WORKINGSPACEWP_THEME_DIR.'/inc/customizer/working-space-theme-customizer-functions.php';
+}
 
 if(!class_exists('WorkingspaceTheme')) {
 
@@ -77,7 +80,6 @@ if(!class_exists('WorkingspaceTheme')) {
                 // load all scripts
                 $this->register_script();
                 $this->enqueue_scripts();
-                
             }
 
             /**
@@ -317,4 +319,5 @@ if(!class_exists('WorkingspaceTheme')) {
         }
     }
 }
+
 new WorkingspaceTheme();

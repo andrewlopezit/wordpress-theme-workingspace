@@ -11,7 +11,7 @@ $color: $hamburger-layer-color;
 
     &.is-hover {
         span {
-            background-color: #fff;
+            background-color: #fff !important;
 
             &:nth-child(2) {
                 width: $hamburger-layer-width;
