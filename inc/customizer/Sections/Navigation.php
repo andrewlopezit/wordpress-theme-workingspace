@@ -61,7 +61,7 @@ use Inc\Helpers\Sanitize;
             'setting_id' => 'navigation_background_color',
             'section' => $this->navigation_color_callback,
             'property' => array(
-               'default' => '##345f52',
+               'default' => '#345f52',
                'priority' => 10,
                'label' => __('Background Color', THEME_NAME)
             )

@@ -17,7 +17,6 @@
         // color codes
         const primaryColor = '#FDD500';
         const secondaryColor = '#00CEB5';
-        const navigationBackgroundColor = '#345F52';
         const hamburgerMenuColor = '#4f4f4f';
 
         /**
@@ -119,7 +118,6 @@
             {width:'100vw',
             height: 'auto',
             minHeight: '100vh', 
-            backgroundColor: navigationBackgroundColor,
             scale: 1, 
             top: 0, 
             left: 0,
@@ -135,7 +133,6 @@
         .to($navigationMenu, {width:'100vw',
             height: 'auto',
             minHeight: '100vh', 
-            backgroundColor: navigationBackgroundColor ,
             scale: 1, 
             top: 0, 
             left: 0,

@@ -1,9 +1,9 @@
-<div class="menu-navigation backdrop" id="menu-navigation">
+<div class="menu-navigation backdrop" id="menu-navigation" <?php workingspace_the_navigation_background_style(); ?>>
     <div class="container" id="header-content">
         <div class="row">
             <div class="col navigation-container">
                 <a href="<?php get_bloginfo('url');?>">
-                    <div class="brand <?php if(get_theme_mod('is_svg_allow_modify_color_setting'))  echo 'is-allow-color-modify'; ?>" id="brand" style="background-color: <?php echo get_theme_mod('brand_color');?>"></div>
+                    <div class="brand" <?php workingspace_the_navigation_brand_style(); ?>></div>
                 </a>
                 <?php
                     $defaults = array(
