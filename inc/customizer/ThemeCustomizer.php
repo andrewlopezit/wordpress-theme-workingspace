@@ -13,6 +13,7 @@ namespace Inc\Customizer;
 use Inc\Customizer\Sections\Navigation;
 use Inc\Customizer\Sections\Header;
 use Inc\Customizer\Sections\Color;
+use Inc\Customizer\Sections\Footer;
 
 use Inc\Classes\ThemeSetup;
 
@@ -29,6 +30,7 @@ final class ThemeCustomizer  {
       new Color($wp_customize);
       new Header($wp_customize);
       new Navigation($wp_customize);
+      new Footer($wp_customize);
    }
 
    public function enqueue_scripts() {

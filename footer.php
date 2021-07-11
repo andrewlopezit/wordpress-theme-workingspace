@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col">
                 <a href="<?php get_bloginfo('url');?>">
-                    <div class="brand white" id="brand"></div>
+                    <div class="brand" id="brand" <?php workingspace_the_footer_brand_style(); ?>></div>
                 </a>
             </div>
         </div>

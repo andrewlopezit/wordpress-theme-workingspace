@@ -42,6 +42,33 @@ if(!function_exists('workingspace_the_navigation_brand_style')) {
     }
 }
 
+if(!function_exists('workingspace_the_footer_brand_style')) {
+    function workingspace_the_footer_brand_style() {
+
+        $mask_css_rules = '-webkit-mask:  url('.get_theme_mod('brand_src').') no-repeat 100% 100%;
+        -ms-mask: url('.get_theme_mod('brand_src').') no-repeat 100% 100%;
+        -o-mask: url('.get_theme_mod('brand_src').') no-repeat 100% 100%;
+        -moz-mask: url('.get_theme_mod('brand_src').') no-repeat 100% 100%;
+        mask: url('.get_theme_mod('brand_src').') no-repeat 100% 100%;
+    
+        -webkit-mask-position: center;
+        -ms-mask-position: center;
+        -o-mask-position: center;   
+        -moz-mask-position: center;
+        mask-position: center;
+        -webkit-mask-size: 100%;
+        -ms-mask-size: 100%;
+        -o-mask-size: 100%;
+        -moz-mask-size: 100%;
+        mask-size: 100%;
+        background: '.get_theme_mod('footer_brand_color').'';
+
+        $brand_navigation_color = (get_theme_mod('is_footer_svg_allow_modify_color_setting')) ? 'style="'.$mask_css_rules.'"' : workingspace_get_brand_style();
+
+        echo $brand_navigation_color;
+    }
+}
+
 if(!function_exists('workingspace_the_navigation_background_style')) {
     function workingspace_the_navigation_background_style() {
         echo 'style="background-color: '.get_theme_mod('navigation_background_color').'"';
