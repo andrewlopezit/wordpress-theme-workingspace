@@ -11,16 +11,16 @@ $hover-color: $secondary-color;
     background-repeat: no-repeat;
     cursor: pointer;
 
-    background-color: $color-5;
+    background-color: var(--accent-color, $accent-color);
 
     @include transition($transition);
 
     &.primary-color {
-        background-color: $primary-color;
+        background-color: var(--primary-color, $primary-color);
     }
 
     &.secondary-color {
-        background-color: $secondary-color;
+        background-color: var(--secondary-color, $secondary-color);
     }
 
     // common css rules

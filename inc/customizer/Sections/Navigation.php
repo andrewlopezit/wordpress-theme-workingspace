@@ -31,7 +31,7 @@ use Inc\Helpers\Sanitize;
 
       $wp_customize->add_section( $this->navigation_color_callback, array(
          'title' => __( 'Color', THEME_NAME ),
-         'priority' => 5,
+      'priority' => 5,
          'panel' => 'navigation_color_callback_panel'
       ));
       $this->navigation_checkbox_settings($wp_customize);

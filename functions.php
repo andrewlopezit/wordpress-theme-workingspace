@@ -174,6 +174,8 @@ if(!class_exists('WorkingspaceTheme')) {
                 )   
             )
             // add the handle for defer script
+            // if id or handle included in array params 
+            // it will defer in your script tag
             ->register(
                 array(
                     'jQuery@3.6',
@@ -218,6 +220,7 @@ if(!class_exists('WorkingspaceTheme')) {
                         'jQuery@3.6',
                         'gsap@3.7'
                     )
+                    
                 )
             )
             // add the handle for defer script

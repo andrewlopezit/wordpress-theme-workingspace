@@ -1,6 +1,4 @@
 (function ($) {
-    $('html').css({ opacity: 0});
-
     $(document).ready(function () {
         gsap.to('html', {opacity:1, delay: 0.8});
 

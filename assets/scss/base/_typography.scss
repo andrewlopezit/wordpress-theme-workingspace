@@ -58,7 +58,7 @@
              left: 5%;
              width: 150px;
 
-             background-color: $primary-color;
+             background-color: var(--primary-color, $primary-color);
 
              z-index: -1;
         }
