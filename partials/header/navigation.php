@@ -1,9 +1,9 @@
-<div class="menu-navigation backdrop" id="menu-navigation">
+<div class="menu-navigation backdrop" id="menu-navigation" <?php workingspace_the_navigation_background_style(); ?>>
     <div class="container" id="header-content">
         <div class="row">
             <div class="col navigation-container">
                 <a href="<?php get_bloginfo('url');?>">
-                    <div class="brand white" id="brand"></div>
+                    <div class="brand" <?php workingspace_the_navigation_brand_style(); ?>></div>
                 </a>
                 <?php
                     $defaults = array(
@@ -21,7 +21,7 @@
                    <?php bloginfo( 'description' ); ?>
                </p>
                <p class="sub-header">
-                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae eius voluptatibus, recusandae quae laborum officiis nesciunt mollitia natus pariatur sunt iusto.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae eius voluptatibus, recusandae quae laborum officiis nesciunt mollitia natus pariatur sunt iusto.
                </p>
             </div>
             <div class="col-7">
@@ -40,12 +40,12 @@
                 <div class="social-media title d-none d-sm-flex d-flex">
                     <h4>Follow us on: </h4>
                     <div class="social-media">
-                        <a href="" class="icon facebook primary-color size-content-60"></a>
-                        <a href="" class="icon instagram primary-color size-content-70"></a>
-                        <a href="" class="icon twitter primary-color size-content-70"></a>
-                        <a href="" class="icon behance primary-color size-content-70"></a>
-                        <a href="" class="icon linkedin primary-color size-content-70"></a>
-                        <a href="" class="icon pinterest primary-color size-content-60"></a>
+                        <a href="" class="icon facebook accent-color size-content-60"></a>
+                        <a href="" class="icon instagram accent-color size-content-70"></a>
+                        <a href="" class="icon twitter accent-color size-content-70"></a>
+                        <a href="" class="icon behance accent-color size-content-70"></a>
+                        <a href="" class="icon linkedin accent-color size-content-70"></a>
+                        <a href="" class="icon pinterest accent-color size-content-60"></a>
                     </div>
                 </div>
             </div>

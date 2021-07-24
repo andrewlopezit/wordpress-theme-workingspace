@@ -18,6 +18,8 @@ use Inc\Classes\RegisterSidebar;
 
 use Inc\Classes\ThemeSupport;
 
+use Inc\Customizer\ThemeCustomizer;
+
 final class ThemeSetup {
 
     public static function EnqueueStyle() {
@@ -40,4 +42,7 @@ final class ThemeSetup {
         return new RegisterSidebar();
     }
 
+    public static function ThemeCustomizer() {
+        return new ThemeCustomizer();
+    }
 }

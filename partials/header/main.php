@@ -3,12 +3,12 @@
         <div class="col">
             <div class="header flex" id="header-container">
                 <a href="<?php echo get_bloginfo('url');?>">
-                    <div class="brand"></div>
+                    <div class="brand" <?php workingspace_the_brand_style(); ?>></div>
                 </a>
                 <div class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span <?php workingspace_the_color_hamburgermenu_style(); ?>></span>
+                    <span <?php workingspace_the_color_hamburgermenu_style(); ?>></span>
+                    <span <?php workingspace_the_color_hamburgermenu_style(); ?>></span>
                 </div>
 
                 <?php get_template_part('partials/header/navigation','navigation'); ?>

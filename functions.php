@@ -23,6 +23,9 @@ use Inc\Classes\ThemeSetup;
 define( 'WORKINGSPACEWP_THEME_DIR', get_template_directory() );
 define( 'WORKINGSPACEWP_THEME_URI', get_template_directory_uri() );
 
+if(file_exists(WORKINGSPACEWP_THEME_DIR.'/inc/customizer/working-space-theme-customizer-functions.php')) {
+    require_once WORKINGSPACEWP_THEME_DIR.'/inc/customizer/working-space-theme-customizer-functions.php';
+}
 
 if(!class_exists('WorkingspaceTheme')) {
 
@@ -45,10 +48,13 @@ if(!class_exists('WorkingspaceTheme')) {
     
             // Theme version.
             define( 'WORKINGSPACE_THEME_VERSION', $version );
+
+            // Theme name
+            define('THEME_NAME', 'workingspace');
     
             // Javascript and CSS Paths.
-            define( 'WORKINGSPACE_JS_DIR_URI', WORKINGSPACEWP_THEME_URI . '/assets/js/' );
-            define( 'WORKINGSPACE_CSS_DIR_URI', WORKINGSPACEWP_THEME_URI . '/assets/css/' );
+            define( 'WORKINGSPACE_JS_DIR_URI', WORKINGSPACEWP_THEME_URI . '/assets/build/' );
+            define( 'WORKINGSPACE_CSS_DIR_URI', WORKINGSPACEWP_THEME_URI . '/assets/build/' );
     
             // Include Paths.
             define( 'WORKINGSPACE_INC_DIR', WORKINGSPACEWP_THEME_DIR . '/inc/' );
@@ -65,10 +71,7 @@ if(!class_exists('WorkingspaceTheme')) {
 
                 // load all menus
                 $this->register_menus();
-
-                // display widgets container
-                $this->register_sidebar_widgets();
-
+                
             /** Frontend */    
             } else {
                 // load all styles
@@ -77,10 +80,17 @@ if(!class_exists('WorkingspaceTheme')) {
                 // load all scripts
                 $this->register_script();
                 $this->enqueue_scripts();
-
-                // display widgets container
-                $this->register_sidebar_widgets();
             }
+
+            /**
+             * load frontend and back end;
+             */
+
+            // display widgets container
+            $this->register_sidebar_widgets();
+
+            // display theme customizer();
+            ThemeSetup::ThemeCustomizer();
         }
 
 //------------------------------------ F U N C T I O N S ----------------------------------------
@@ -133,8 +143,6 @@ if(!class_exists('WorkingspaceTheme')) {
 
             // Define dir
             $js_dir = WORKINGSPACE_JS_DIR_URI;
-            $main_js_dir = $js_dir.'main.js';
-
             $theme_version = WORKINGSPACE_THEME_VERSION;
 
             /**
@@ -164,6 +172,8 @@ if(!class_exists('WorkingspaceTheme')) {
                 )   
             )
             // add the handle for defer script
+            // if id or handle included in array params 
+            // it will defer in your script tag
             ->register(
                 array(
                     'jQuery@3.6',
@@ -181,7 +191,7 @@ if(!class_exists('WorkingspaceTheme')) {
 
             // Define dir
             $js_dir = WORKINGSPACE_JS_DIR_URI;
-            $main_js_dir = $js_dir.'main.js';
+            $main_js_dir = $js_dir.'index.js';
 
             $theme_version = WORKINGSPACE_THEME_VERSION;
 
@@ -204,10 +214,6 @@ if(!class_exists('WorkingspaceTheme')) {
                     'handle' => 'main',
                     'src' => $main_js_dir,
                     'ver' => $theme_version,
-                    'deps' => array(
-                        'jQuery@3.6',
-                        'gsap@3.7'
-                    )
                 )
             )
             // add the handle for defer script
@@ -261,7 +267,7 @@ if(!class_exists('WorkingspaceTheme')) {
             ->style(
                 array(
                     'handle' => 'workingspace-stylesheet',
-                    'src' => WORKINGSPACE_CSS_DIR_URI.'stylesheet.css',
+                    'src' => $css_dir.'index.css',
                     'ver' => $theme_version
                 )
             )
@@ -309,4 +315,5 @@ if(!class_exists('WorkingspaceTheme')) {
         }
     }
 }
+
 new WorkingspaceTheme();

@@ -61,6 +61,23 @@
                 $script['deps'] ?? null, 
                 $script['ver'] ?? false,
                 $script['in_footer'] ?? true);
+
+            /**
+            * include your php value to js
+            * 
+            * $args = array(
+            *  array(
+            *      handle => working-space-main-js,
+            *      variable_name => working_space_main_js,
+            *      value => any
+            *  )
+            * )
+            */  
+
+            if(isset($script['localize'])) {
+                wp_localize_script( $script['handle'], $script['localize']['variable_name'], $script['localize']['value'] );
+                wp_enqueue_script( $script['handle']);
+            }
         }
     }
 
@@ -73,6 +90,7 @@
                 $script['ver'] ?? false,
                 $script['in_footer'] ?? false);
         }
+        
     }
 
     public function add_defer_scripts( $tag, $handle, $src ) {
@@ -81,5 +99,5 @@
         }
           
         return $tag;
-      } 
+    }
  }

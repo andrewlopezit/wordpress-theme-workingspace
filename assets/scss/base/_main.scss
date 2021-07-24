@@ -1,10 +1,8 @@
-* html {
-	font-size: calc(100% * ( $font-size / $browser-font-size ));
-}
-
 html {
 	-ms-overflow-x: hidden;
 	overflow-x: hidden;
+
+	// opacity: 0;
 }
 
 body {
