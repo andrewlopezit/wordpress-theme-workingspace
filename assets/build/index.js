@@ -205,7 +205,7 @@ class HamburgerMenu {
     this.$hamburgerMenu.on('click', e => {
       const $hamburgerMenu = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target);
 
-      if (!$hamburgerMenu.hasClass('is-active')) {
+      if (!this.$hamburgerMenu.hasClass('is-active')) {
         this.$hamburgerMenu.addClass('is-active');
         this.animateExtendBackdropNavigation();
       } else {
