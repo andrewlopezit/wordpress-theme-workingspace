@@ -64,4 +64,4 @@
         return(url.match(/\.(svg)$/) != null);
     }
     });
-})(jQuery);
+});

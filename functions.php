@@ -53,8 +53,8 @@ if(!class_exists('WorkingspaceTheme')) {
             define('THEME_NAME', 'workingspace');
     
             // Javascript and CSS Paths.
-            define( 'WORKINGSPACE_JS_DIR_URI', WORKINGSPACEWP_THEME_URI . '/assets/js/' );
-            define( 'WORKINGSPACE_CSS_DIR_URI', WORKINGSPACEWP_THEME_URI . '/assets/css/' );
+            define( 'WORKINGSPACE_JS_DIR_URI', WORKINGSPACEWP_THEME_URI . '/assets/build/' );
+            define( 'WORKINGSPACE_CSS_DIR_URI', WORKINGSPACEWP_THEME_URI . '/assets/build/' );
     
             // Include Paths.
             define( 'WORKINGSPACE_INC_DIR', WORKINGSPACEWP_THEME_DIR . '/inc/' );
@@ -143,8 +143,6 @@ if(!class_exists('WorkingspaceTheme')) {
 
             // Define dir
             $js_dir = WORKINGSPACE_JS_DIR_URI;
-            $main_js_dir = $js_dir.'main.js';
-
             $theme_version = WORKINGSPACE_THEME_VERSION;
 
             /**
@@ -193,7 +191,7 @@ if(!class_exists('WorkingspaceTheme')) {
 
             // Define dir
             $js_dir = WORKINGSPACE_JS_DIR_URI;
-            $main_js_dir = $js_dir.'main.js';
+            $main_js_dir = $js_dir.'index.js';
 
             $theme_version = WORKINGSPACE_THEME_VERSION;
 
@@ -216,11 +214,6 @@ if(!class_exists('WorkingspaceTheme')) {
                     'handle' => 'main',
                     'src' => $main_js_dir,
                     'ver' => $theme_version,
-                    'deps' => array(
-                        'jQuery@3.6',
-                        'gsap@3.7'
-                    )
-                    
                 )
             )
             // add the handle for defer script
@@ -274,7 +267,7 @@ if(!class_exists('WorkingspaceTheme')) {
             ->style(
                 array(
                     'handle' => 'workingspace-stylesheet',
-                    'src' => WORKINGSPACE_CSS_DIR_URI.'stylesheet.css',
+                    'src' => $css_dir.'index.css',
                     'ver' => $theme_version
                 )
             )

@@ -87,7 +87,7 @@ $menu-navigation-background: $footer-color;
         }
 
         .menu-secondary-menu-container {
-            margin: calc($navigation-margin - 10) 0;
+            margin:  $navigation-margin - 10;
             float: right;
         }
 

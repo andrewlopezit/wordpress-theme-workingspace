@@ -9,7 +9,8 @@ $color: $hamburger-layer-color;
     
     z-index: 10;
 
-    &.is-hover {
+    &.is-hover,
+    &.is-active {
         span {
             background-color: #fff !important;
 
