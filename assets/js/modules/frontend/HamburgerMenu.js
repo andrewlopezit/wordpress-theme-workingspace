@@ -92,9 +92,6 @@ class HamburgerMenu {
             this.hamburgermenuLayerAnimation.reverse();
             this.menuNavigationBackdropAnimation.reverse();
 
-            this.hamburgermenuLayerAnimation.kill();
-            this.menuNavigationBackdropAnimation.kill();
-
             this.$hamburgerMenu.removeClass('is-hover is-active');
 
             this.initAnimationHamburgerMenu();

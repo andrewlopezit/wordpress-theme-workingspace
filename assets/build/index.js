@@ -216,8 +216,6 @@ class HamburgerMenu {
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(window).on('resize', () => {
       this.hamburgermenuLayerAnimation.reverse();
       this.menuNavigationBackdropAnimation.reverse();
-      this.hamburgermenuLayerAnimation.kill();
-      this.menuNavigationBackdropAnimation.kill();
       this.$hamburgerMenu.removeClass('is-hover is-active');
       this.initAnimationHamburgerMenu();
       this.$navigationMenu.css('left', 'auto');
