@@ -75,7 +75,7 @@ class HamburgerMenu {
         this.$hamburgerMenu.on('click', (e) => {
             const $hamburgerMenu = $(e.target);
 
-            if(!$hamburgerMenu.hasClass('is-active')) {
+            if(!this.$hamburgerMenu.hasClass('is-active')) {
                 this.$hamburgerMenu.addClass('is-active');
 
                 this.animateExtendBackdropNavigation();
