@@ -446,7 +446,7 @@ input:focus {
 #hero-image-slider {
   position: relative;
   width: 90%;
-  height: 38em;
+  height: 36em;
 }
 #hero-image-slider .item {
   position: absolute;
