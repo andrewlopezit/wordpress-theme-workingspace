@@ -17,6 +17,7 @@ use Inc\Classes\RegisterMenu;
 use Inc\Classes\RegisterSidebar;
 
 use Inc\Classes\ThemeSupport;
+use Inc\Classes\ImageSize;
 
 use Inc\Customizer\ThemeCustomizer;
 
@@ -44,5 +45,9 @@ final class ThemeSetup {
 
     public static function ThemeCustomizer() {
         return new ThemeCustomizer();
+    }
+
+    public static function ImageSize() {
+        return new ImageSize();
     }
 }

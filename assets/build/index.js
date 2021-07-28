@@ -149,7 +149,7 @@ class HamburgerMenu {
       top: 0,
       left: 0,
       translateY: -20,
-      translateX: -(jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).width() - this.$headerContainer.width()) / 2,
+      translateX: -((jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).width() - this.$headerContainer.width()) / 2),
       duration: 0.2
     };
   }

@@ -1,0 +1,28 @@
+.hero-section {
+    margin-top: 20px;
+    margin-bottom: $margin-bottom-section;
+    .content {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+        .headline {
+            width: 350px;
+        }
+
+        .sub-paragraph {
+            margin: 30px 0;
+        }
+
+        .btn {
+            width: 200px
+        }
+    }
+    
+}
+
+.workspaces-section {
+    h1 {
+        width: 210px;
+    }
+}

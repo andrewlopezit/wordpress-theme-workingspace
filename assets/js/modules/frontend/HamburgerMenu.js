@@ -32,7 +32,7 @@ class HamburgerMenu {
             top: 0, 
             left: 0,
             translateY: -20,
-            translateX: -($(document).width()- this.$headerContainer.width())/2,
+            translateX: -(($(document).width()- this.$headerContainer.width())/2),
             duration: 0.2
         };
     }

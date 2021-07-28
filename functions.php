@@ -91,6 +91,9 @@ if(!class_exists('WorkingspaceTheme')) {
 
             // display theme customizer();
             ThemeSetup::ThemeCustomizer();
+
+            // set image image
+            $this->set_image_sizes();
         }
 
 //------------------------------------ F U N C T I O N S ----------------------------------------
@@ -112,6 +115,11 @@ if(!class_exists('WorkingspaceTheme')) {
                     'feature' => 'widgets'
                 )
             )
+            ->support(
+                array(
+                    'feature' => 'post-thumbnails'
+                )
+            )
              ->add();
         }
     
@@ -131,7 +139,6 @@ if(!class_exists('WorkingspaceTheme')) {
          * Load all core theme files
          */
         public function import_core_files() {
-    
         }
 
         /**
@@ -161,14 +168,8 @@ if(!class_exists('WorkingspaceTheme')) {
             $theme_setup
             ->script(
                 array(
-                    'handle' => 'gsap@3.7',
-                    'src' => 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.0/gsap.min.js'
-                )
-            )
-            ->script(
-                array(
                     'handle'=> 'jQuery@3.6',
-                    'src' => 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js',
+                    'src' => '//ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js',
                 )   
             )
             // add the handle for defer script
@@ -176,7 +177,6 @@ if(!class_exists('WorkingspaceTheme')) {
             // it will defer in your script tag
             ->register(
                 array(
-                    'jQuery@3.6',
                     'gsap@3.7'
                 )
             );
@@ -312,6 +312,21 @@ if(!class_exists('WorkingspaceTheme')) {
                 ) 
             )
             ->register();
+        }
+
+        // setimage sizes
+        public function set_image_sizes() {
+            $theme_support = ThemeSetup::ImageSize();
+
+            $theme_support
+            ->set_image_size(
+                array(
+                    'name' => 'hero_image_slider',
+                    'width' => 300,
+                    'height' => 200,
+                    'crop' => true
+                )
+            )->set();
         }
     }
 }

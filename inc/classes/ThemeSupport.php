@@ -29,7 +29,12 @@ final class ThemeSupport {
 
     public function add() {
         foreach($this->supports as $support) {
-            add_theme_support( $support['feature'] ?? null, $support['args'] ?? null);
+            
+            if(isset($support['args'])) {
+                add_theme_support( $support['feature'] ?? null, $support['args']);
+            } else {
+                add_theme_support( $support['feature'] ?? null);
+            }
         }  
     }
 }
