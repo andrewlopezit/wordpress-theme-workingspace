@@ -542,52 +542,54 @@ input:focus {
 .workspace-list .item.workspace.card {
   border: 0;
   border-radius: 0;
+  transform: scale(0.95);
   position: relative;
   transition: all 400ms ease;
 }
 .workspace-list .item.workspace.card .card-body {
-  z-index: 1;
+  position: relative;
+  background-color: #fff;
+}
+.workspace-list .item.workspace.card .card-body .like--container {
+  position: absolute;
+  right: 5%;
+  top: -20px;
+  background-color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 10em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--secondary-color, #00CEB5);
+}
+.workspace-list .item.workspace.card .card-body .like--container i {
+  font-size: 1.2em;
 }
 .workspace-list .item.workspace.card:hover::before {
-  width: 100%;
-  height: 100%;
-  border-color: #eec800;
-  background-color: #eec800;
-}
-.workspace-list .item.workspace.card:hover h4,
-.workspace-list .item.workspace.card:hover small,
-.workspace-list .item.workspace.card:hover .detail-icontainer a,
-.workspace-list .item.workspace.card:hover .detail-icontainer i,
-.workspace-list .item.workspace.card:hover .detail-icontainer p,
-.workspace-list .item.workspace.card:hover .price-container .price,
-.workspace-list .item.workspace.card:hover .price-container a {
-  color: #fff;
+  width: 103%;
+  height: 102%;
 }
 .workspace-list .item.workspace.card::before {
   content: "";
   position: absolute;
   width: 50%;
   height: 40%;
-  border-top: 6px solid var(--primary-color, #FDD500);
-  border-left: 6px solid var(--primary-color, #FDD500);
+  left: -5px;
+  top: -5px;
+  background-color: var(--primary-color, #FDD500);
+  z-index: -1;
   transition: all 400ms ease;
 }
 .workspace-list .item.workspace.card h4 {
   color: #000;
   transition: all 400ms ease;
 }
-.workspace-list .item.workspace.card small {
-  color: #6c757d;
-}
 .workspace-list .item.workspace.card .detail-icontainer {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   margin: 10px 0;
-}
-.workspace-list .item.workspace.card .detail-icontainer p, .workspace-list .item.workspace.card .detail-icontainer i, .workspace-list .item.workspace.card .detail-icontainer a {
-  color: #6c757d;
-  transition: all 400ms ease;
 }
 .workspace-list .item.workspace.card .detail-icontainer a, .workspace-list .item.workspace.card .detail-icontainer p {
   font-size: 12px;
@@ -606,14 +608,12 @@ input:focus {
   text-transform: uppercase;
 }
 .workspace-list .item.workspace.card .price-container a {
-  font-size: 0.9em;
   transition: all 400ms ease;
 }
 .workspace-list .item.workspace.card .price-container .price {
   font-size: 1.2em;
   color: #666666;
   text-transform: lowercase;
-  transition: all 400ms ease;
 }
 
 .action-container.workspace {

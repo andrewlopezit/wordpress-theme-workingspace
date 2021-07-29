@@ -7,31 +7,39 @@
     .item.workspace.card {
         border: 0;
         border-radius: 0;
+        transform: scale(0.95);
 
         position: relative;
         @include transition($transition);
 
         .card-body {
-            z-index: 1;
+            position: relative;
+            background-color: #fff;
+
+            .like--container {
+                position: absolute;
+                right: 5%;
+                top: -20px;
+                background-color: #fff;
+
+                width: 40px;
+                height: 40px;
+                border-radius: 10em;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--secondary-color, $secondary-color);
+
+                i {
+                    font-size: 1.2em;
+                }
+            }
         }
 
         &:hover {
             &::before {
-                width: 100%;
-                height: 100%;
-                border-color: darken($primary-color, 3%);
-
-                background-color: darken($primary-color, 3%);
-            }
-
-            h4,
-            small,
-            .detail-icontainer a,
-            .detail-icontainer i,
-            .detail-icontainer p,
-            .price-container .price,
-            .price-container a {
-                color: #fff;
+                width: 103%;
+                height: 102%;
             }
         }
 
@@ -40,8 +48,10 @@
             position: absolute;
             width: 50%;
             height: 40%;
-            border-top: 6px solid var(--primary-color, $primary-color);
-            border-left: 6px solid var(--primary-color, $primary-color);
+            left: -5px;
+            top: -5px;
+            background-color: var(--primary-color, $primary-color);;
+            z-index: -1;
             
             @include transition($transition);
         }
@@ -51,21 +61,11 @@
             @include transition($transition);
         }
 
-        small{
-            color: #6c757d;  
-        }
-
         .detail-icontainer{
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
             margin: 10px 0;
-
-            p, i, a {
-                color: #6c757d;
-                @include transition($transition);
-
-            }
 
             a, p {
                 font-size: 12px;
@@ -87,7 +87,6 @@
             text-transform: uppercase;
 
             a {
-                font-size: 0.9em;
                 @include transition($transition);
             }
 
@@ -95,8 +94,6 @@
                 font-size: 1.2em;
                 color: lighten( #000, 40%);
                 text-transform: lowercase;
-                
-                @include transition($transition);
             }
         }
     }

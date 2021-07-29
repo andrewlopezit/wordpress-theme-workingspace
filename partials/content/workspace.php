@@ -11,6 +11,9 @@
     <div class="item workspace card">
         <img class="card-img-top"  src="<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID()), 'hero_image_slider' )[0];?>" alt="">
         <div class="card-body">
+            <div class="like--container shadow-sm">
+                <i class="far fa-heart"></i>
+            </div>
             <a href="<?php the_permalink(); ?>">
                 <h4><?php the_title(); ?></h4>
             </a>
@@ -18,16 +21,16 @@
 
             <?php if($locations): foreach($locations as $location): ?>
                 <div class="detail-icontainer">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <a href="<?php echo get_the_permalink($location); ?>"><?php echo get_the_title($location); ?></a>
+                    <i class="fas fa-map-marker-alt text-muted"></i>
+                    <a class="text-muted" href="<?php echo get_the_permalink($location); ?>"><?php echo get_the_title($location); ?></a>
                 </div>
             <?php endforeach;endif; ?>
             <div class="detail-icontainer">
             <?php
                 $rooms = get_field('related_rooms'); 
                 $numberOfRooms =  $rooms != null ? count($rooms) : 0 ?>
-                <i class="fas fa-chair"></i>
-                <p>No. of rooms: <?php echo $numberOfRooms; ?></p>
+                <i class="fas fa-chair text-muted"></i>
+                <p class="text-muted">No. of rooms: <?php echo $numberOfRooms; ?></p>
             </div>
             <hr/>
             <small>Starting from</small>
