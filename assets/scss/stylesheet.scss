@@ -26,6 +26,7 @@
 * - BUTTONS
 * - SOCIAL MEDIA
 * - HERO IMAGE SLIDER
+* - WORKSPACES
 * - BRAND
 * - HEADER/HAMBURGER
 * - HEADER/NAVIGATION
@@ -83,6 +84,11 @@
 	HERO IMAGE SLIDER
 *------------------------------------*/
 @import 'components/hero-image-slider.scss';
+
+/*------------------------------------*
+	WORKSPACES
+*------------------------------------*/
+@import 'components/workspace.scss';
 
 /*------------------------------------*
 	BRAND

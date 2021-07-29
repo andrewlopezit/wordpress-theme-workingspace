@@ -30,14 +30,17 @@
  
  h4 {
      font-size: 1.5em;
+     font-weight: 400;
  }
  
  h5 {
      font-size: 1.2em;
+     font-weight: 400;
  }
  
  h6 {
      font-size: 1em;
+     font-weight: 400;
  }
 
  .headline {
@@ -89,5 +92,11 @@
 
  a {
     text-decoration: none;
-    color: $secondary-color;
+    color: var(--secondary-color, $secondary-color);
+
+    @include transition($transition);
+
+    &:hover {
+        color: darken($secondary-color, 15%);
+    }
  }

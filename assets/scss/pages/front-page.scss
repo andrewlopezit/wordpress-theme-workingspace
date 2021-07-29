@@ -21,8 +21,25 @@
     
 }
 
-.workspaces-section {
-    h1 {
-        width: 210px;
+.workspace-section--background {
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        background-color: #E6EBE9;
+        top: -20em;
+        right: 0;
+        bottom: -20em;
+        left: -5em;
+        z-index: -5;
+
+        @include clip-polygon((0 50%, 100% 100%, 100% 0));
     }
+
+    .workspaces-section {
+        h1 {
+            width: 210px;
+        }
+    }   
 }

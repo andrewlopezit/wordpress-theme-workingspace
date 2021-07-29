@@ -42,3 +42,13 @@ $transition: all 400ms ease;
         }
     }
 }
+
+.action-container {
+    width: 100%;
+    display: flex;
+
+    &.center {
+        align-items: center;
+        justify-content: center;
+    }
+}

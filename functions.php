@@ -17,6 +17,10 @@ if(file_exists(dirname(__FILE__).'/vendor/autoload.php')) {
     require_once dirname(__FILE__).'/vendor/autoload.php';
 }
 
+if(file_exists(dirname(__FILE__).'/inc/helpers/front-end-helpers.php')) {
+    require_once dirname(__FILE__).'/inc/helpers/front-end-helpers.php';
+}
+
 use Inc\Classes\ThemeSetup;
 
 // Core Constants.

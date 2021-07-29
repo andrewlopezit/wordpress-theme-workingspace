@@ -18,6 +18,7 @@
 * - BUTTONS
 * - SOCIAL MEDIA
 * - HERO IMAGE SLIDER
+* - WORKSPACES
 * - BRAND
 * - HEADER/HAMBURGER
 * - HEADER/NAVIGATION
@@ -50,6 +51,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-wrap: break-word;
   word-wrap: break-word;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
 }
 
 /*------------------------------------*
@@ -86,14 +96,17 @@ h3 {
 
 h4 {
   font-size: 1.5em;
+  font-weight: 400;
 }
 
 h5 {
   font-size: 1.2em;
+  font-weight: 400;
 }
 
 h6 {
   font-size: 1em;
+  font-weight: 400;
 }
 
 .headline.title {
@@ -134,7 +147,11 @@ p.title.sub-paragraph {
 
 a {
   text-decoration: none;
-  color: #00CEB5;
+  color: var(--secondary-color, #00CEB5);
+  transition: all 300ms ease;
+}
+a:hover {
+  color: #008272;
 }
 
 /*------------------------------------*
@@ -421,6 +438,15 @@ input:focus {
   width: 100%;
 }
 
+.action-container {
+  width: 100%;
+  display: flex;
+}
+.action-container.center {
+  align-items: center;
+  justify-content: center;
+}
+
 /*------------------------------------*
 	SOCIAL MEDIA
 *------------------------------------*/
@@ -500,6 +526,98 @@ input:focus {
   width: 100%;
   -o-object-fit: contain;
      object-fit: contain;
+}
+
+/*------------------------------------*
+	WORKSPACES
+*------------------------------------*/
+.workspace-list {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 2em;
+  grid-row-gap: 4em;
+}
+.workspace-list .item.workspace.card {
+  border: 0;
+  border-radius: 0;
+  position: relative;
+  transition: all 400ms ease;
+}
+.workspace-list .item.workspace.card .card-body {
+  z-index: 1;
+}
+.workspace-list .item.workspace.card:hover::before {
+  width: 100%;
+  height: 100%;
+  border-color: #eec800;
+  background-color: #eec800;
+}
+.workspace-list .item.workspace.card:hover h4,
+.workspace-list .item.workspace.card:hover small,
+.workspace-list .item.workspace.card:hover .detail-icontainer a,
+.workspace-list .item.workspace.card:hover .detail-icontainer i,
+.workspace-list .item.workspace.card:hover .detail-icontainer p,
+.workspace-list .item.workspace.card:hover .price-container .price,
+.workspace-list .item.workspace.card:hover .price-container a {
+  color: #fff;
+}
+.workspace-list .item.workspace.card::before {
+  content: "";
+  position: absolute;
+  width: 50%;
+  height: 40%;
+  border-top: 6px solid var(--primary-color, #FDD500);
+  border-left: 6px solid var(--primary-color, #FDD500);
+  transition: all 400ms ease;
+}
+.workspace-list .item.workspace.card h4 {
+  color: #000;
+  transition: all 400ms ease;
+}
+.workspace-list .item.workspace.card small {
+  color: #6c757d;
+}
+.workspace-list .item.workspace.card .detail-icontainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+.workspace-list .item.workspace.card .detail-icontainer p, .workspace-list .item.workspace.card .detail-icontainer i, .workspace-list .item.workspace.card .detail-icontainer a {
+  color: #6c757d;
+  transition: all 400ms ease;
+}
+.workspace-list .item.workspace.card .detail-icontainer a, .workspace-list .item.workspace.card .detail-icontainer p {
+  font-size: 12px;
+  width: 92%;
+  margin-top: -3px;
+}
+.workspace-list .item.workspace.card .detail-icontainer p {
+  margin-top: -2px;
+}
+.workspace-list .item.workspace.card .price-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.workspace-list .item.workspace.card .price-container a {
+  font-size: 0.9em;
+  transition: all 400ms ease;
+}
+.workspace-list .item.workspace.card .price-container .price {
+  font-size: 1.2em;
+  color: #666666;
+  text-transform: lowercase;
+  transition: all 400ms ease;
+}
+
+.action-container.workspace {
+  margin: 50px 0;
 }
 
 /*------------------------------------*
@@ -848,7 +966,25 @@ input:focus {
   width: 200px;
 }
 
-.workspaces-section h1 {
+.workspace-section--background {
+  position: relative;
+}
+.workspace-section--background::after {
+  content: "";
+  position: absolute;
+  background-color: #E6EBE9;
+  top: -20em;
+  right: 0;
+  bottom: -20em;
+  left: -5em;
+  z-index: -5;
+  -webkit-clip-path: polygon(0 50%, 100% 100%, 100% 0);
+  -ms-clip-path: polygon(0 50%, 100% 100%, 100% 0);
+  -o-clip-path: polygon(0 50%, 100% 100%, 100% 0);
+  -moz-clip-path: polygon(0 50%, 100% 100%, 100% 0);
+  clip-path: polygon(0 50%, 100% 100%, 100% 0);
+}
+.workspace-section--background .workspaces-section h1 {
   width: 210px;
 }
 

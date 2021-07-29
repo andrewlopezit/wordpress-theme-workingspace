@@ -37,13 +37,16 @@
    </div>
 </section>
 
-<section class="container workspaces-section">
-    <h1>Explore Our Workspaces</h1>
-    <div class="row workspaces-section">
-        <div class="col">1</div>
-    </div>
-</section>
-
+<div class="workspace-section--background">
+    <section class="container workspaces-section">
+        <h1>Explore Our Workspaces</h1>
+        <div class="row workspaces-section">
+            <div class="col">
+                <?php get_template_part('partials/content/workspace'); ?>
+            </div>
+        </div>
+    </section>
+</div>
 <?php
     get_footer();
 

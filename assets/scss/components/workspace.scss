@@ -1,0 +1,107 @@
+.workspace-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 2em;
+    grid-row-gap: 4em;
+
+    .item.workspace.card {
+        border: 0;
+        border-radius: 0;
+
+        position: relative;
+        @include transition($transition);
+
+        .card-body {
+            z-index: 1;
+        }
+
+        &:hover {
+            &::before {
+                width: 100%;
+                height: 100%;
+                border-color: darken($primary-color, 3%);
+
+                background-color: darken($primary-color, 3%);
+            }
+
+            h4,
+            small,
+            .detail-icontainer a,
+            .detail-icontainer i,
+            .detail-icontainer p,
+            .price-container .price,
+            .price-container a {
+                color: #fff;
+            }
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 40%;
+            border-top: 6px solid var(--primary-color, $primary-color);
+            border-left: 6px solid var(--primary-color, $primary-color);
+            
+            @include transition($transition);
+        }
+
+        h4 {
+            color: #000;
+            @include transition($transition);
+        }
+
+        small{
+            color: #6c757d;  
+        }
+
+        .detail-icontainer{
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin: 10px 0;
+
+            p, i, a {
+                color: #6c757d;
+                @include transition($transition);
+
+            }
+
+            a, p {
+                font-size: 12px;
+                width: 92%;
+                margin-top: -3px;
+            }
+
+            p {
+                margin-top: -2px;
+            }
+        }
+
+        .price-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+            font-weight: 600;
+            text-transform: uppercase;
+
+            a {
+                font-size: 0.9em;
+                @include transition($transition);
+            }
+
+            .price {
+                font-size: 1.2em;
+                color: lighten( #000, 40%);
+                text-transform: lowercase;
+                
+                @include transition($transition);
+            }
+        }
+    }
+}
+
+.action-container.workspace {
+    margin: 50px 0;
+}
