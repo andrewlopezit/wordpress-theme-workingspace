@@ -22,7 +22,6 @@
 * - BUTTONS
 * - SOCIAL MEDIA
 * - HERO IMAGE SLIDER
-* - WORKSPACES
 * - BRAND
 * - HEADER/HAMBURGER
 * - HEADER/NAVIGATION
@@ -30,6 +29,10 @@
 * - FOOTER/NAVIGATION
 * - FOOTER/CONTACT INFO
 * - FOOTER
+*
+* PARTIALS
+* - WORKSPACES
+* - POSTS
 *
 * PAGES
 * - FRONT PAGE
@@ -83,7 +86,6 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 600;
   font-style: normal;
   font-family: "Effra", sans-serif;
   margin: 0 0 20px;
@@ -108,7 +110,7 @@ h3 {
 }
 
 h4 {
-  font-size: 1.5em;
+  line-height: 1em;
   font-weight: 400;
 }
 
@@ -156,6 +158,10 @@ p {
 }
 p.title.sub-paragraph {
   font-size: 16px;
+}
+p.heading--sub-paragraph {
+  width: 600px;
+  margin: auto;
 }
 
 a {
@@ -670,85 +676,6 @@ input:focus {
 }
 
 /*------------------------------------*
-	WORKSPACES
-*------------------------------------*/
-.workspace-list {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (1fr)[3];
-  grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 2em;
-  grid-row-gap: 4em;
-}
-.workspace-list .item.workspace.card {
-  border: 0;
-  border-radius: 0;
-  position: relative;
-}
-.workspace-list .item.workspace.card .card-img-top {
-  border-radius: 0;
-}
-.workspace-list .item.workspace.card .card-body {
-  position: relative;
-  background-color: #fff;
-}
-.workspace-list .item.workspace.card .card-body .like--container {
-  position: absolute;
-  right: 5%;
-  top: -20px;
-  background-color: #fff;
-  width: 40px;
-  height: 40px;
-  border-radius: 10em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--secondary-color, #00CEB5);
-}
-.workspace-list .item.workspace.card .card-body .like--container i {
-  font-size: 1.2em;
-}
-.workspace-list .item.workspace.card h4 {
-  color: #000;
-  transition: all 400ms ease;
-}
-.workspace-list .item.workspace.card .detail-icontainer {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin: 10px 0;
-}
-.workspace-list .item.workspace.card .detail-icontainer a, .workspace-list .item.workspace.card .detail-icontainer p {
-  font-size: 12px;
-  width: 92%;
-  margin-top: -3px;
-  font-weight: 400;
-}
-.workspace-list .item.workspace.card .detail-icontainer p {
-  margin-top: -2px;
-}
-.workspace-list .item.workspace.card .price-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-.workspace-list .item.workspace.card .price-container a {
-  transition: all 400ms ease;
-}
-.workspace-list .item.workspace.card .price-container .price {
-  font-size: 1.2em;
-  color: #4f4f4f;
-  text-transform: lowercase;
-}
-
-.action-container.workspace {
-  margin: 50px 0;
-}
-
-/*------------------------------------*
 	BRAND
 *------------------------------------*/
 .brand {
@@ -1073,6 +1000,138 @@ input:focus {
 }
 
 /*------------------------------------*
+	P A R T I A L S
+	  WORKSPACES
+*------------------------------------*/
+.workspace-list {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 2em;
+  grid-row-gap: 4em;
+}
+.workspace-list .item.workspace.card {
+  border: 0;
+  border-radius: 0;
+  position: relative;
+}
+.workspace-list .item.workspace.card .card-img-top {
+  border-radius: 0;
+}
+.workspace-list .item.workspace.card .card-body {
+  position: relative;
+  background-color: #fff;
+}
+.workspace-list .item.workspace.card .card-body .like--container {
+  position: absolute;
+  right: 5%;
+  top: -20px;
+  background-color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 10em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--secondary-color, #00CEB5);
+}
+.workspace-list .item.workspace.card .card-body .like--container i {
+  font-size: 1.2em;
+}
+.workspace-list .item.workspace.card h4 {
+  color: #000;
+  transition: all 400ms ease;
+}
+.workspace-list .item.workspace.card .detail-icontainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+.workspace-list .item.workspace.card .detail-icontainer a, .workspace-list .item.workspace.card .detail-icontainer p {
+  font-size: 12px;
+  width: 92%;
+  margin-top: -3px;
+  font-weight: 400;
+}
+.workspace-list .item.workspace.card .detail-icontainer p {
+  margin-top: -2px;
+}
+.workspace-list .item.workspace.card .price-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.workspace-list .item.workspace.card .price-container a {
+  transition: all 400ms ease;
+}
+.workspace-list .item.workspace.card .price-container .price {
+  font-size: 1.2em;
+  color: #4f4f4f;
+  text-transform: lowercase;
+}
+
+.action-container.workspace {
+  margin: 50px 0;
+}
+
+/*------------------------------------*
+	  POSTS
+*------------------------------------*/
+.post-list#posts {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 2em;
+  grid-row-gap: 4em;
+}
+.post-list#posts .item.card.post {
+  border: 0;
+  border-radius: 0;
+  position: relative;
+}
+.post-list#posts .item.card.post .card-img-top {
+  border-radius: 0;
+}
+.post-list#posts .item.card.post .card-body {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.post-list#posts .item.card.post .card-body .author-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  top: -25px;
+  background-color: #fff;
+  padding: 5px 10px;
+  color: var(--primary-color, #FDD500);
+}
+.post-list#posts .item.card.post .card-body .author-container .author-details {
+  margin: 0 10px;
+}
+.post-list#posts .item.card.post .card-body .author-container .author-details small {
+  text-transform: capitalize;
+}
+.post-list#posts .item.card.post .card-body h5 {
+  color: #000;
+}
+.post-list#posts .item.card.post .card-body .btn {
+  width: 50%;
+  -ms-grid-row-align: center;
+      align-self: center;
+  transform: scale(0.9);
+}
+
+/*------------------------------------*
 	P A G E S
 	FRONT PAGE
 *------------------------------------*/
@@ -1118,17 +1177,20 @@ input:focus {
   width: 210px;
 }
 
-.about-our-service p {
+section.about-our-service {
+  margin-bottom: 100px;
+}
+section.about-our-service p {
   margin: 2em 0;
 }
-.about-our-service .img-service--background {
+section.about-our-service .img-service--background {
   background-image: url(images/our-service-img.f9db2bd8.png);
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
 }
-.about-our-service .img-service--background::after {
+section.about-our-service .img-service--background::after {
   position: absolute;
   content: "";
   width: 40%;
@@ -1141,38 +1203,38 @@ input:focus {
   background-position: center;
   background-repeat: no-repeat;
 }
-.about-our-service .services {
+section.about-our-service .services {
   margin-top: 100px;
 }
-.about-our-service .services .col:nth-child(2) .card {
+section.about-our-service .services .col:nth-child(2) .card {
   background-color: var(--secondary-color, #00CEB5);
 }
-.about-our-service .services .col:nth-child(2) .card .card-body h4, .about-our-service .services .col:nth-child(2) .card .card-body p, .about-our-service .services .col:nth-child(2) .card .card-body a {
+section.about-our-service .services .col:nth-child(2) .card .card-body h4, section.about-our-service .services .col:nth-child(2) .card .card-body p, section.about-our-service .services .col:nth-child(2) .card .card-body a {
   color: #fff;
 }
-.about-our-service .services .col:nth-child(2) .card .card-body h4::after, .about-our-service .services .col:nth-child(2) .card .card-body p::after, .about-our-service .services .col:nth-child(2) .card .card-body a::after {
+section.about-our-service .services .col:nth-child(2) .card .card-body h4::after, section.about-our-service .services .col:nth-child(2) .card .card-body p::after, section.about-our-service .services .col:nth-child(2) .card .card-body a::after {
   background-color: #fff;
 }
-.about-our-service .services .card {
+section.about-our-service .services .card {
   border: 0;
   border-radius: 0;
 }
-.about-our-service .services .card .card-body {
+section.about-our-service .services .card .card-body {
   display: flex;
   align-items: center;
   flex-direction: column;
   padding: 4rem 3rem;
 }
-.about-our-service .services .card .card-body .icon {
+section.about-our-service .services .card .card-body .icon {
   width: 50px;
   height: 50px;
   cursor: default;
 }
-.about-our-service .services .card .card-body h4 {
+section.about-our-service .services .card .card-body h4 {
   margin-top: 10px;
   position: relative;
 }
-.about-our-service .services .card .card-body h4::after {
+section.about-our-service .services .card .card-body h4::after {
   content: "";
   position: absolute;
   width: 40px;
@@ -1182,9 +1244,30 @@ input:focus {
   left: 50%;
   transform: translateX(-50%);
 }
-.about-our-service .services .card .card-body a {
+section.about-our-service .services .card .card-body a {
   text-transform: uppercase;
   font-weight: 600;
+}
+
+section.blog-post {
+  background-color: #f4f6f5;
+  padding: 2rem 0;
+}
+section.blog-post h1 {
+  position: relative;
+  margin-bottom: 40px;
+}
+section.blog-post h1::after {
+  content: "";
+  position: absolute;
+  border: 2px solid var(--primary-color, #FDD500);
+  width: 10%;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+section.blog-post .heading--sub-paragraph {
+  margin-bottom: 50px;
 }
 
 /*# sourceMappingURL=index.css.map*/

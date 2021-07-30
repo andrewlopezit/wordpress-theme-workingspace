@@ -9,7 +9,7 @@
 ?>
     <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
     <div class="item workspace card border-top-left border--post border--hover">
-        <img class="card-img-top"  src="<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID()), 'hero_image_slider' )[0];?>" alt="">
+        <img class="card-img-top"  src="<?php echo esc_url(wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID()), 'posts' )[0]);?>" alt="">
         <div class="card-body">
             <div class="like--container shadow-sm">
                 <i class="far fa-heart"></i>

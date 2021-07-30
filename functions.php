@@ -338,6 +338,14 @@ if(!class_exists('WorkingspaceTheme')) {
                     'height' => 200,
                     'crop' => true
                 )
+            )
+            ->set_image_size(
+                array(
+                    'name' => 'posts',
+                    'width' => 400,
+                    'height' => 280,
+                    'crop' => true
+                )
             )->set();
         }
     }

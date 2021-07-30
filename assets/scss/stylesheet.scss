@@ -26,7 +26,6 @@
 * - BUTTONS
 * - SOCIAL MEDIA
 * - HERO IMAGE SLIDER
-* - WORKSPACES
 * - BRAND
 * - HEADER/HAMBURGER
 * - HEADER/NAVIGATION
@@ -34,6 +33,10 @@
 * - FOOTER/NAVIGATION
 * - FOOTER/CONTACT INFO
 * - FOOTER
+*
+* PARTIALS
+* - WORKSPACES
+* - POSTS
 *
 * PAGES
 * - FRONT PAGE
@@ -86,11 +89,6 @@
 @import 'components/hero-image-slider.scss';
 
 /*------------------------------------*
-	WORKSPACES
-*------------------------------------*/
-@import 'components/workspace.scss';
-
-/*------------------------------------*
 	BRAND
 *------------------------------------*/
 @import 'components/brand.scss';
@@ -124,6 +122,17 @@
 	FOOTER
 *------------------------------------*/
 @import 'components/footer/footer.scss';
+
+/*------------------------------------*
+	P A R T I A L S
+	  WORKSPACES
+*------------------------------------*/
+@import 'partials/workspace.scss';
+
+/*------------------------------------*
+	  POSTS
+*------------------------------------*/
+@import 'partials/posts.scss';
 
 /*------------------------------------*
 	P A G E S

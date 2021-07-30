@@ -7,7 +7,6 @@
  h4,
  h5,
  h6 {
-     font-weight: $heading-font-weight;
      font-style: $heading-font-style;
      font-family: $heading-font-family;
 
@@ -34,7 +33,7 @@
  }
  
  h4 {
-     font-size: 1.5em;
+     line-height: 1em;
      font-weight: 400;
  }
  
@@ -92,6 +91,11 @@
         &.sub-paragraph {
             font-size: 16px;
         }
+    }
+
+    &.heading--sub-paragraph {
+        width: 600px;
+        margin: auto;
     }
  }
 

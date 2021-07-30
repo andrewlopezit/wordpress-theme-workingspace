@@ -42,7 +42,7 @@
         <h1>Explore Our Workspaces</h1>
         <div class="row workspaces-section">
             <div class="col">
-                <?php get_template_part('partials/content/workspace'); ?>
+                <?php get_template_part('partials/content/content','workingspaces'); ?>
             </div>
         </div>
     </section>
@@ -89,6 +89,23 @@
                     <p class="text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                     <a href="">Learn more</a>
                 </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="full-width blog-post">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center">News & Insights</h1>
+                <p class="text-center heading--sub-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pharetra nunc mollis etiam quis. Adipiscing viverra convallis orci tortor.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <?php get_template_part('partials/content/content','posts'); ?>
             </div>
         </div>
     </div>
