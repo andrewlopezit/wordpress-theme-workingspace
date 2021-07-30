@@ -1118,6 +1118,11 @@ input:focus {
 .post-list#posts .item.card.post .card-body .author-container .author-details {
   margin: 0 10px;
 }
+.post-list#posts .item.card.post .card-body .author-container .author-details a {
+  color: var(--primary-color, #FDD500);
+  font-size: 0.875em;
+  text-transform: capitalize;
+}
 .post-list#posts .item.card.post .card-body .author-container .author-details small {
   text-transform: capitalize;
 }

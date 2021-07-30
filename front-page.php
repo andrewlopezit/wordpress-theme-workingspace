@@ -105,7 +105,7 @@
 
         <div class="row">
             <div class="col">
-                <?php get_template_part('partials/content/content','posts'); ?>
+                <?php get_template_part('partials/content/content','post'); ?>
             </div>
         </div>
     </div>

@@ -15,7 +15,7 @@
                 <i class="fas fa-book-reader"></i>
                 <div class="author-details">
                     <span>
-                        <small><?php the_author(); ?></small>
+                        <?php the_author_link(); ?>
                     </span>,
                     <span>
                         <small><?php  

@@ -35,6 +35,11 @@
 
                 .author-details {
                     margin: 0 10px;
+                    a {
+                        color: var(--primary-color, $primary-color);
+                        font-size: .875em;
+                        text-transform: capitalize;
+                    }
                     small {
                         text-transform: capitalize;
                     }
