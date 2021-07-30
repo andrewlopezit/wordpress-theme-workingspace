@@ -96,12 +96,15 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scss_stylesheet_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/stylesheet.scss */ "./assets/scss/stylesheet.scss");
-/* harmony import */ var _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/frontend/HamburgerMenu */ "./assets/js/modules/frontend/HamburgerMenu.js");
+/* harmony import */ var _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/frontend/Main */ "./assets/js/modules/frontend/Main.js");
+/* harmony import */ var _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/frontend/HamburgerMenu */ "./assets/js/modules/frontend/HamburgerMenu.js");
  // import modules
+
 
  // instantiate module classes
 
-const hamburgerMenu = new _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_1__["default"]();
+const main = new _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_1__["default"]();
+const hamburgerMenu = new _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_2__["default"]();
 
 /***/ }),
 
@@ -261,6 +264,36 @@ class HamburgerMenu {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (HamburgerMenu);
+
+/***/ }),
+
+/***/ "./assets/js/modules/frontend/Main.js":
+/*!********************************************!*\
+  !*** ./assets/js/modules/frontend/Main.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
+
+
+
+class Main {
+  constructor() {
+    // initialize elements variables
+    this.workingspacesContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#workingspaces');
+    this.workspaceCardPosts = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.card-border--hover'); // init elements
+    // init gsap animation
+    // initialize events function
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Main);
 
 /***/ }),
 

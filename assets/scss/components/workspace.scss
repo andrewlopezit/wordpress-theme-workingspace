@@ -9,7 +9,17 @@
         border-radius: 0;
 
         position: relative;
-        @include transition($transition);
+
+        &::before {
+            @include transition($transition);
+        }
+
+        &:hover {
+            &::before {
+                width: 100%;
+                height: 100%;
+            }
+        }
 
         .card-img-top{
             border-radius: 0;

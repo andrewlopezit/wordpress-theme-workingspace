@@ -176,12 +176,20 @@ if(!class_exists('WorkingspaceTheme')) {
                     'src' => '//ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js',
                 )   
             )
+            ->script(
+                array(
+                    'handle'=> 'JqueryExtendFunction',
+                    'deps' => array('jQuery@3.6'),
+                    'src' => WORKINGSPACEWP_THEME_URI.'/assets/js/JqueryExtendFunction.js',
+                )
+            )
             // add the handle for defer script
             // if id or handle included in array params 
             // it will defer in your script tag
             ->register(
                 array(
-                    'gsap@3.7'
+                    'gsap@3.7',
+                    'JqueryExtendFunction'
                 )
             );
     
