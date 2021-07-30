@@ -192,6 +192,10 @@ input:focus {
 .border-top-left {
   position: relative;
 }
+.border-top-left.border--hover:hover::before {
+  width: 100%;
+  height: 100%;
+}
 .border-top-left::before {
   content: "";
   position: absolute;
@@ -199,6 +203,7 @@ input:focus {
   width: 50%;
   border-top: 8px solid var(--primary-color, #FDD500);
   border-left: 8px solid var(--primary-color, #FDD500);
+  transition: all 300ms ease;
 }
 .border-top-left.border--small::before {
   border-top: 5px solid var(--primary-color, #FDD500);
@@ -679,13 +684,6 @@ input:focus {
   border: 0;
   border-radius: 0;
   position: relative;
-}
-.workspace-list .item.workspace.card::before {
-  transition: all 400ms ease;
-}
-.workspace-list .item.workspace.card:hover::before {
-  width: 100%;
-  height: 100%;
 }
 .workspace-list .item.workspace.card .card-img-top {
   border-radius: 0;

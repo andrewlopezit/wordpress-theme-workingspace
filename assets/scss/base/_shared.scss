@@ -25,6 +25,15 @@ input {
 .border-top-left {
 	position: relative;
 
+	&.border--hover {
+		&:hover {
+            &::before {
+                width: 100%;
+                height: 100%;
+            }
+        }
+	}
+
 	&::before {
 		content: '';
 		position: absolute;
@@ -33,6 +42,8 @@ input {
 
 		border-top: 8px solid var(--primary-color, $primary-color);
 		border-left: 8px solid var(--primary-color, $primary-color);
+
+		@include transition($transition);
 	}
 
 	&.border--small {
