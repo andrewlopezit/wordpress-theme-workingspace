@@ -28,19 +28,19 @@
         }
 
         &:nth-child(2){
-            top: 35%;
+            top: 12em;
             right: 0;
             width: 45%;
             z-index: 1;
         }
 
         &:nth-child(3){
-            top: 55%;
+            top: 20em;
             width: 60%;
             z-index: 1;
         }
         &:nth-child(4){
-            bottom: 0;
+            top: 27em;
             width: 40%;
             right: 5%;
             z-index: 1;
@@ -59,6 +59,7 @@
 
         img {
             width: 100%;
+
             object-fit: contain;
         }
     }

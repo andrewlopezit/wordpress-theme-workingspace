@@ -23,14 +23,15 @@
 
 .workspace-section--background {
     position: relative;
+    margin-bottom: $margin-bottom-section;
 
     &::after {
         content: '';
         position: absolute;
         background-color: #E6EBE9;
-        top: -20em;
+        top: -15em;
         right: 0;
-        bottom: -20em;
+        bottom: -15em;
         left: -5em;
         z-index: -5;
 
@@ -42,4 +43,99 @@
             width: 210px;
         }
     }   
+}
+
+.about-our-service {
+    p {
+        margin: 2em 0;
+    }
+
+    .img-service--background {
+        background-image: url('../background/our-service-img.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        position: relative;
+
+        &::after {
+            position: absolute;
+            content: '';
+            width: 40%;
+            height: 40%;
+            top: -2em;
+            right: 2em;
+            z-index: -1;
+
+            background-image: url('../background/geometry-dotted-circle.svg');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    }
+
+    .services {
+        margin-top: $margin-bottom-section;
+
+        .col:nth-child(2) {
+            .card {
+                
+            }
+        }
+
+        .col:nth-child(2) {
+            .card {
+                background-color: var(--secondary-color, $secondary-color);
+                .card-body {
+                    h4, p, a {
+                        color: #fff;
+                        &::after {
+                            background-color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+
+        .card {
+            border: 0;
+            border-radius: 0;
+
+            .card-body{
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                padding: 4rem 3rem;
+
+                .icon {
+                    width: 50px;
+                    height: 50px;
+                    cursor: default;
+                }
+                
+                h4 {
+                    margin-top: 10px;
+                    position: relative;
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        width: 40px;
+                        height: 2px;
+                        background-color: #f2f2f2;
+                        bottom: -5px;
+
+                        left: 50%;
+                        transform: translateX(-50%);
+                    }
+                }
+
+                a {
+                    text-transform: uppercase;
+                    font-weight: 600;
+                }
+            }
+            
+        }
+    }
 }

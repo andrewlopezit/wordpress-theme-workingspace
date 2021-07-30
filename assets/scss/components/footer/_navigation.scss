@@ -23,6 +23,7 @@
 
         .sub-menu {
             max-width: 200px;
+            padding-left: 0;
 
            li {
                &:hover {
@@ -98,7 +99,7 @@
     .footer-navigation {
         li {
             .sub-menu {
-                padding-left: $navigation-margin;
+                margin-top: $navigation-margin - 10;
             }
         }
     }

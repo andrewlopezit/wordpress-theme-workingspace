@@ -7,10 +7,13 @@
     .item.workspace.card {
         border: 0;
         border-radius: 0;
-        transform: scale(0.95);
 
         position: relative;
         @include transition($transition);
+
+        .card-img-top{
+            border-radius: 0;
+        }
 
         .card-body {
             position: relative;
@@ -36,26 +39,6 @@
             }
         }
 
-        &:hover {
-            &::before {
-                width: 103%;
-                height: 102%;
-            }
-        }
-
-        &::before {
-            content: '';
-            position: absolute;
-            width: 50%;
-            height: 40%;
-            left: -5px;
-            top: -5px;
-            background-color: var(--primary-color, $primary-color);;
-            z-index: -1;
-            
-            @include transition($transition);
-        }
-
         h4 {
             color: #000;
             @include transition($transition);
@@ -71,6 +54,7 @@
                 font-size: 12px;
                 width: 92%;
                 margin-top: -3px;
+                font-weight: 400;
             }
 
             p {
@@ -92,7 +76,7 @@
 
             .price {
                 font-size: 1.2em;
-                color: lighten( #000, 40%);
+                color: $gray;
                 text-transform: lowercase;
             }
         }

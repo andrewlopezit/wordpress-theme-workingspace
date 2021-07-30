@@ -47,6 +47,52 @@
         </div>
     </section>
 </div>
+
+<section class="container about-our-service">
+    <div class="row">
+        <div class="col">
+            <h1 class="--border-left">We offer creative working environments that suit your business</h1>
+            <p>Coworking spaces have disrupted the traditional office experience by providing flexible work options. With corporates tapping into shared spaces to boost their productivity and efficiency, co workingspace is one of the best to work with.</p>
+            <a class="btn" href="">Learn More</a>
+        </div>
+        <div class="col img-service--background"></div>
+    </div>
+
+    <div class="row services">
+        <div class="col">
+            <div class="card border-top-left border--small">
+                <div class="card-body">
+                    <div class="icon office-block gray size-content-100"></div>
+                    <div class="clearfix"></div>
+                    <h4>Office Space</h4>
+                    <p class="text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <a href="">Learn more</a>
+                </div>
+
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="icon work white size-content-100"></div>
+                    <h4>Co-working</h4>
+                    <p class="text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <a href="">Learn more</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-right-bottom border--small">
+                <div class="card-body">
+                    <div class="icon meeting gray size-content-100"></div>
+                    <h4>Meeting Space</h4>
+                    <p class="text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <a href="">Learn more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <?php
     get_footer();
 
