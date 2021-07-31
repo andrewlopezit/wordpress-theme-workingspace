@@ -346,7 +346,16 @@ if(!class_exists('WorkingspaceTheme')) {
                     'height' => 280,
                     'crop' => true
                 )
-            )->set();
+            )
+            ->set_image_size(
+                array(
+                    'name' => 'testimonial_profile',
+                    'width' => 200,
+                    'height' => 250,
+                    'crop' => true
+                )
+            )
+           ->set();
         }
     }
 }

@@ -1,0 +1,107 @@
+.testimonial-slider#testimonials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .stage-container {
+        width: 100%;
+
+        .item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4em 0;
+    
+            .content {
+                p {
+                    width: 80%;
+                    max-width: 750px;
+                    margin: 4em 2em;
+                    font-size: 17px;
+                    position: relative;
+    
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: -5em;
+                        left: -1.5em;
+                        width: 8em;
+                        height: 8em;
+                        
+                        background-image: url('../icons/quote.png');
+                        background-size: contain;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                    }
+                }
+    
+                .author-details {
+                    display: flex;
+                    flex-direction: column;
+                    margin: 0 2em;
+    
+                    .profession {
+                        font-size: 15px;
+                        font-weight: 500;
+                    }
+    
+                    .signature img {
+                        width: 200px;
+                        height: 50px;
+    
+                        object-fit: contain;
+                        object-position: center;
+                    }
+                }
+            }
+            
+            .user-profile {
+                position: relative;
+    
+                &::after {
+                    position: absolute;
+                    content: '';
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    background-color: var(--primary-color, $primary-color);
+                    z-index: -1;
+    
+                    @include transform(translate(5px, 5px))
+                }
+            }
+        }
+    }
+
+    .controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        span {
+            width: 40px;
+            height: 4px;
+            background-color: lighten($secondary-color,  50%);
+
+            position: relative;
+
+            &:nth-child(2){
+                margin: 0 1.2em;
+            }
+
+           &.is-active {    
+              .duration-progress {
+                position: absolute;
+                content: '';
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: $secondary-color;
+              }
+           }
+        }
+    }
+}

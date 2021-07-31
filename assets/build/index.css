@@ -33,6 +33,7 @@
 * PARTIALS
 * - WORKSPACES
 * - POSTS
+* - TESTIMONIALS
 *
 * PAGES
 * - FRONT PAGE
@@ -1137,6 +1138,99 @@ input:focus {
 }
 
 /*------------------------------------*
+	  POSTS
+*------------------------------------*/
+.testimonial-slider#testimonials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.testimonial-slider#testimonials .stage-container {
+  width: 100%;
+}
+.testimonial-slider#testimonials .stage-container .item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4em 0;
+}
+.testimonial-slider#testimonials .stage-container .item .content p {
+  width: 80%;
+  max-width: 750px;
+  margin: 4em 2em;
+  font-size: 17px;
+  position: relative;
+}
+.testimonial-slider#testimonials .stage-container .item .content p::before {
+  content: "";
+  position: absolute;
+  top: -5em;
+  left: -1.5em;
+  width: 8em;
+  height: 8em;
+  background-image: url(images/quote.409be49a.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.testimonial-slider#testimonials .stage-container .item .content .author-details {
+  display: flex;
+  flex-direction: column;
+  margin: 0 2em;
+}
+.testimonial-slider#testimonials .stage-container .item .content .author-details .profession {
+  font-size: 15px;
+  font-weight: 500;
+}
+.testimonial-slider#testimonials .stage-container .item .content .author-details .signature img {
+  width: 200px;
+  height: 50px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  -o-object-position: center;
+     object-position: center;
+}
+.testimonial-slider#testimonials .stage-container .item .user-profile {
+  position: relative;
+}
+.testimonial-slider#testimonials .stage-container .item .user-profile::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary-color, #FDD500);
+  z-index: -1;
+  transform: translate(5px, 5px);
+}
+.testimonial-slider#testimonials .controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+.testimonial-slider#testimonials .controls span {
+  width: 40px;
+  height: 4px;
+  background-color: #cefff9;
+  position: relative;
+}
+.testimonial-slider#testimonials .controls span:nth-child(2) {
+  margin: 0 1.2em;
+}
+.testimonial-slider#testimonials .controls span.is-active .duration-progress {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #00CEB5;
+}
+
+/*------------------------------------*
 	P A G E S
 	FRONT PAGE
 *------------------------------------*/
@@ -1273,6 +1367,10 @@ section.blog-post h1::after {
 }
 section.blog-post .heading--sub-paragraph {
   margin-bottom: 50px;
+}
+
+section.testimonials {
+  margin-bottom: 100px;
 }
 
 /*# sourceMappingURL=index.css.map*/

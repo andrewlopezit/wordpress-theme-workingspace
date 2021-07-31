@@ -37,6 +37,7 @@
 * PARTIALS
 * - WORKSPACES
 * - POSTS
+* - TESTIMONIALS
 *
 * PAGES
 * - FRONT PAGE
@@ -133,6 +134,11 @@
 	  POSTS
 *------------------------------------*/
 @import 'partials/posts.scss';
+
+/*------------------------------------*
+	  POSTS
+*------------------------------------*/
+@import 'partials/testimonials.scss';
 
 /*------------------------------------*
 	P A G E S

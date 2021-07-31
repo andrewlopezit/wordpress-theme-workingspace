@@ -110,6 +110,14 @@
         </div>
     </div>
 </section>
+
+<section class="container testimonials">
+    <div class="row">
+        <div class="col">
+            <?php get_template_part('partials/content/content','testimonials'); ?>
+        </div>
+    </div>
+</section>
 <?php
     get_footer();
 
