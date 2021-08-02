@@ -1,9 +1,11 @@
 import '../scss/stylesheet.scss';
 
 // import modules
-import Main from './modules/frontend/Main';
 import HamburgerMenu from './modules/frontend/HamburgerMenu';
+import TestimonialsSlider from './modules/frontend/TestimonialsSlider';
+import Main from './modules/frontend/Main';
 
 // instantiate module classes
-const main  = new Main();
 const hamburgerMenu = new HamburgerMenu();
+const testimonialsSlider = new TestimonialsSlider();
+const main  = new Main();

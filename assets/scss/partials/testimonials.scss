@@ -1,4 +1,4 @@
-.testimonial-slider#testimonials {
+.testimonial-slider#testimonials-slider {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,10 +8,14 @@
         width: 100%;
 
         .item {
-            display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 4em 0;
+            display: none;
+
+            &.is-active {
+                display: flex;
+            }
     
             .content {
                 p {
@@ -79,29 +83,35 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 20px;
+        padding: 1.5em;
+
         span {
             width: 40px;
             height: 4px;
             background-color: lighten($secondary-color,  50%);
 
             position: relative;
+            display: none;
+            cursor: pointer;
+
+            &.is-active,
+            &.is-display {
+                display: inline;
+            }
 
             &:nth-child(2){
                 margin: 0 1.2em;
             }
 
-           &.is-active {    
-              .duration-progress {
+            .duration-progress {
                 position: absolute;
                 content: '';
                 top: 0;
                 left: 0;
-                right: 0;
                 bottom: 0;
+                width: 0;
                 background-color: $secondary-color;
               }
-           }
         }
     }
 }

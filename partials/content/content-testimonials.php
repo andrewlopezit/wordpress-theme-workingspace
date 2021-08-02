@@ -1,15 +1,19 @@
-<div class="testimonial-slider" id="testimonials">
+<div class="testimonial-slider" id="testimonials-slider">
     <div class="stage-container">
         <?php
             $args = array(
                 'post_type' => 'testimonials',
-                'posts_per_page' => '1'
+                'posts_per_page' => '6'
             );
 
-            $query = new WP_Query( $args ); 
+            $query = new WP_Query( $args );
+
+            $testimonial_ids = [];
         ?>
-        <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
-        <div class="item">
+        <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); 
+            array_push($testimonial_ids, get_the_ID());
+        ?>
+        <div class="item" data-id="<?php the_ID(); ?>">
             <div class="content">
                 <p>
                     <?php $message = get_field('message');
@@ -55,8 +59,8 @@
     </div>
 
     <div class="controls">
-        <span></span>
-        <span></span>
-        <span></span>
+        <?php if($testimonial_ids) : foreach($testimonial_ids as $id): ?>
+            <span data-id="<?php echo $id; ?>"></span>
+        <?php endforeach;endif; ?>
     </div>
 </div>

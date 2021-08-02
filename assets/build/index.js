@@ -96,15 +96,18 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scss_stylesheet_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/stylesheet.scss */ "./assets/scss/stylesheet.scss");
-/* harmony import */ var _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/frontend/Main */ "./assets/js/modules/frontend/Main.js");
-/* harmony import */ var _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/frontend/HamburgerMenu */ "./assets/js/modules/frontend/HamburgerMenu.js");
+/* harmony import */ var _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/frontend/HamburgerMenu */ "./assets/js/modules/frontend/HamburgerMenu.js");
+/* harmony import */ var _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/frontend/TestimonialsSlider */ "./assets/js/modules/frontend/TestimonialsSlider.js");
+/* harmony import */ var _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/frontend/Main */ "./assets/js/modules/frontend/Main.js");
  // import modules
+
 
 
  // instantiate module classes
 
-const main = new _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_1__["default"]();
-const hamburgerMenu = new _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_2__["default"]();
+const hamburgerMenu = new _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_1__["default"]();
+const testimonialsSlider = new _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_2__["default"]();
+const main = new _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_3__["default"]();
 
 /***/ }),
 
@@ -294,6 +297,97 @@ class Main {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Main);
+
+/***/ }),
+
+/***/ "./assets/js/modules/frontend/TestimonialsSlider.js":
+/*!**********************************************************!*\
+  !*** ./assets/js/modules/frontend/TestimonialsSlider.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
+
+
+
+class TestimonialsSlider {
+  constructor() {
+    // init variables
+    this.$testimonialSlider = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#testimonials-slider');
+    this.$controls = this.$testimonialSlider.find('.controls > span'); // init slider
+
+    this.initActiveSlider(); //init slider
+
+    this.initSliderAnimation();
+  }
+
+  initActiveSlider() {
+    this.$testimonialSlider.find('.item').first().addClass('is-active');
+    this.$testimonialSlider.find('.controls > span:lt(3)').addClass('is-display');
+    this.$testimonialSlider.find('.controls > span').first().addClass('is-active');
+    this.$testimonialSlider.find('.controls > span').append('<div class="duration-progress"></div>'); // init active item
+
+    this.$activeItem = this.$testimonialSlider.find('.item.is-active');
+    this.$activeControl = this.$testimonialSlider.find('.controls > span.is-active'); // init events
+
+    this.events();
+  }
+
+  events() {
+    this.$controls.on('mouseenter', () => this.testimonialControlAnimation.pause());
+    this.$controls.on('mouseout', () => this.testimonialControlAnimation.play());
+  }
+
+  initSliderAnimation() {
+    // re-init active item
+    this.$userProfile = this.$activeItem.find('.user-profile');
+    this.$content = this.$activeItem.find('.content');
+    this.testimonialSliderAnimation = gsap__WEBPACK_IMPORTED_MODULE_1__["default"].timeline({
+      onReverseComplete: () => this.nextItem()
+    });
+    this.testimonialSliderAnimation.from(this.$content.find('p'), {
+      translateY: 100,
+      opacity: 0,
+      duration: .5
+    }).from(this.$userProfile, {
+      scale: 0,
+      opacity: 0,
+      duration: .5
+    }).from(this.$content.find('.author-details'), {
+      translateY: 20,
+      opacity: 0,
+      duration: .5
+    });
+    this.testimonialControlAnimation = gsap__WEBPACK_IMPORTED_MODULE_1__["default"].timeline({
+      onComplete: () => this.testimonialSliderAnimation.reverse()
+    });
+    this.testimonialControlAnimation.to(this.$activeControl.find('.duration-progress'), {
+      width: '100%',
+      duration: 10
+    });
+  }
+
+  nextItem() {
+    this.$activeControl.removeClass('is-active');
+    this.$activeItem.removeClass('is-active');
+    const newItem = this.$activeItem.next();
+    newItem.addClass('is-active');
+    const newControl = this.$activeControl.next().removeClass('is-active');
+    newControl.addClass('is-active'); // // init new item and controls
+
+    this.$activeItem = newItem;
+    this.$activeControl = newControl;
+    this.initSliderAnimation();
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (TestimonialsSlider);
 
 /***/ }),
 

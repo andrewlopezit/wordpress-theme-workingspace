@@ -1140,29 +1140,32 @@ input:focus {
 /*------------------------------------*
 	  POSTS
 *------------------------------------*/
-.testimonial-slider#testimonials {
+.testimonial-slider#testimonials-slider {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
-.testimonial-slider#testimonials .stage-container {
+.testimonial-slider#testimonials-slider .stage-container {
   width: 100%;
 }
-.testimonial-slider#testimonials .stage-container .item {
-  display: flex;
+.testimonial-slider#testimonials-slider .stage-container .item {
   align-items: center;
   justify-content: space-between;
   padding: 4em 0;
+  display: none;
 }
-.testimonial-slider#testimonials .stage-container .item .content p {
+.testimonial-slider#testimonials-slider .stage-container .item.is-active {
+  display: flex;
+}
+.testimonial-slider#testimonials-slider .stage-container .item .content p {
   width: 80%;
   max-width: 750px;
   margin: 4em 2em;
   font-size: 17px;
   position: relative;
 }
-.testimonial-slider#testimonials .stage-container .item .content p::before {
+.testimonial-slider#testimonials-slider .stage-container .item .content p::before {
   content: "";
   position: absolute;
   top: -5em;
@@ -1174,16 +1177,16 @@ input:focus {
   background-position: center;
   background-repeat: no-repeat;
 }
-.testimonial-slider#testimonials .stage-container .item .content .author-details {
+.testimonial-slider#testimonials-slider .stage-container .item .content .author-details {
   display: flex;
   flex-direction: column;
   margin: 0 2em;
 }
-.testimonial-slider#testimonials .stage-container .item .content .author-details .profession {
+.testimonial-slider#testimonials-slider .stage-container .item .content .author-details .profession {
   font-size: 15px;
   font-weight: 500;
 }
-.testimonial-slider#testimonials .stage-container .item .content .author-details .signature img {
+.testimonial-slider#testimonials-slider .stage-container .item .content .author-details .signature img {
   width: 200px;
   height: 50px;
   -o-object-fit: contain;
@@ -1191,10 +1194,10 @@ input:focus {
   -o-object-position: center;
      object-position: center;
 }
-.testimonial-slider#testimonials .stage-container .item .user-profile {
+.testimonial-slider#testimonials-slider .stage-container .item .user-profile {
   position: relative;
 }
-.testimonial-slider#testimonials .stage-container .item .user-profile::after {
+.testimonial-slider#testimonials-slider .stage-container .item .user-profile::after {
   position: absolute;
   content: "";
   top: 0;
@@ -1205,28 +1208,33 @@ input:focus {
   z-index: -1;
   transform: translate(5px, 5px);
 }
-.testimonial-slider#testimonials .controls {
+.testimonial-slider#testimonials-slider .controls {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  padding: 1.5em;
 }
-.testimonial-slider#testimonials .controls span {
+.testimonial-slider#testimonials-slider .controls span {
   width: 40px;
   height: 4px;
   background-color: #cefff9;
   position: relative;
+  display: none;
+  cursor: pointer;
 }
-.testimonial-slider#testimonials .controls span:nth-child(2) {
+.testimonial-slider#testimonials-slider .controls span.is-active, .testimonial-slider#testimonials-slider .controls span.is-display {
+  display: inline;
+}
+.testimonial-slider#testimonials-slider .controls span:nth-child(2) {
   margin: 0 1.2em;
 }
-.testimonial-slider#testimonials .controls span.is-active .duration-progress {
+.testimonial-slider#testimonials-slider .controls span .duration-progress {
   position: absolute;
   content: "";
   top: 0;
   left: 0;
-  right: 0;
   bottom: 0;
+  width: 0;
   background-color: #00CEB5;
 }
 
