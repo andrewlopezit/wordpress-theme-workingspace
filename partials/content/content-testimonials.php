@@ -9,11 +9,12 @@
             $query = new WP_Query( $args );
 
             $testimonial_ids = [];
+            $counter = 0;
         ?>
         <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); 
             array_push($testimonial_ids, get_the_ID());
         ?>
-        <div class="item" data-id="<?php the_ID(); ?>">
+        <div class="item" data-id="<?php the_ID(); ?>" data-slide="<?php echo $counter; $counter++; ?>">
             <div class="content">
                 <p>
                     <?php $message = get_field('message');
@@ -59,8 +60,9 @@
     </div>
 
     <div class="controls">
+        <?php $counter = 0; ?>
         <?php if($testimonial_ids) : foreach($testimonial_ids as $id): ?>
-            <span data-id="<?php echo $id; ?>"></span>
+            <span data-id="<?php echo $id; ?>" data-slide="<?php echo $counter; $counter++; ?>"></span>
         <?php endforeach;endif; ?>
     </div>
 </div>

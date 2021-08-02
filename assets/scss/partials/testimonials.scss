@@ -1,4 +1,5 @@
 .testimonial-slider#testimonials-slider {
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,7 +25,10 @@
                     margin: 4em 2em;
                     font-size: 17px;
                     position: relative;
-    
+                    opacity: 0;
+
+                    @include transform(translateY(100px));
+
                     &::before {
                         content: "";
                         position: absolute;
@@ -44,6 +48,9 @@
                     display: flex;
                     flex-direction: column;
                     margin: 0 2em;
+                    opacity: 0;
+
+                    @include transform(translateY(50px));
     
                     .profession {
                         font-size: 15px;
@@ -62,6 +69,9 @@
             
             .user-profile {
                 position: relative;
+                opacity: 0;
+
+                @include transform(scale(0));
     
                 &::after {
                     position: absolute;
@@ -89,6 +99,7 @@
             width: 40px;
             height: 4px;
             background-color: lighten($secondary-color,  50%);
+            margin: 0 10px;
 
             position: relative;
             display: none;
@@ -98,11 +109,7 @@
             &.is-display {
                 display: inline;
             }
-
-            &:nth-child(2){
-                margin: 0 1.2em;
-            }
-
+            
             .duration-progress {
                 position: absolute;
                 content: '';

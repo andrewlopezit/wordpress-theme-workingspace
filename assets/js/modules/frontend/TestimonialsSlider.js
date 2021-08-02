@@ -7,7 +7,17 @@ class TestimonialsSlider {
 
         // init variables
         this.$testimonialSlider = $('#testimonials-slider');
-        this.$controls = this.$testimonialSlider.find('.controls > span');
+        this.$controlsContainer = this.$testimonialSlider.find('.controls')
+        this.$controls = this.$controlsContainer.find('span');
+        this.$items = this.$testimonialSlider.find('.item');
+
+
+        // init local variable
+        this.sliderDuration = 10; // by seconds;
+        this.displayControls = 3;
+        this.sliderCounter = 0;
+        this.controlsHolder;
+        this.lastIndexActiveControl = 0;
 
         // init slider
         this.initActiveSlider();
@@ -20,13 +30,16 @@ class TestimonialsSlider {
     initActiveSlider() {
         this.$testimonialSlider.find('.item').first().addClass('is-active');
 
-        this.$testimonialSlider.find('.controls > span:lt(3)').addClass('is-display');
+        // init slider controls
+        this.$testimonialSlider.find(`.controls > span:lt(${this.displayControls})`).addClass('is-display');
+        this.controlsHolder = this.$testimonialSlider.find(`.controls > span:lt(${this.displayControls})`).get();
         this.$testimonialSlider.find('.controls > span').first().addClass('is-active');
         this.$testimonialSlider.find('.controls > span').append('<div class="duration-progress"></div>');
 
         // init active item
         this.$activeItem = this.$testimonialSlider.find('.item.is-active');
         this.$activeControl = this.$testimonialSlider.find('.controls > span.is-active');
+        this.$durationProgress = this.$controls.find('.duration-progress');
 
         // init events
         this.events();
@@ -35,8 +48,9 @@ class TestimonialsSlider {
     }
 
     events() {
-        this.$controls.on('mouseenter', () => this.testimonialControlAnimation.pause());
-        this.$controls.on('mouseout', () => this.testimonialControlAnimation.play());
+       this.$controlsContainer
+       .on('mouseover', () => this.testimonialControlAnimation.pause())
+       .on('mouseout',() => this.testimonialControlAnimation.play());
     }
 
     initSliderAnimation () {
@@ -46,30 +60,72 @@ class TestimonialsSlider {
         this.$content = this.$activeItem.find('.content');
 
         this.testimonialSliderAnimation = gsap.timeline({onReverseComplete: () => this.nextItem() });
-        this.testimonialSliderAnimation.from(this.$content.find('p'), {translateY: 100, opacity: 0, duration: .5}) 
-                              .from(this.$userProfile, {scale: 0, opacity: 0, duration: .5})
-                              .from(this.$content.find('.author-details'), {translateY: 20, opacity: 0, duration: .5});
+        this.testimonialSliderAnimation.to(this.$content.find('p'), {translateY: 0, opacity: 1, duration: .5}) 
+                              .to(this.$userProfile, {scale: 1, opacity: 1, duration: .5})
+                              .to(this.$content.find('.author-details'), {translateY: 0, opacity: 1, duration: .5});
 
         this.testimonialControlAnimation = gsap.timeline({ onComplete: () => this.testimonialSliderAnimation.reverse()});
-        this.testimonialControlAnimation.to(this.$activeControl.find('.duration-progress'), {width: '100%', duration: 10});
+        this.testimonialControlAnimation.to(this.$activeControl.find('.duration-progress'), {width: '100%', duration: this.sliderDuration});
+    }
+
+    paginateControls() {
+        this.$controls.removeClass('is-display');
+        this.$durationProgress.css('width', 0);
+        this.sliderCounter = 0;
+
+        this.controlsHolder = this.$testimonialSlider.find(`.controls > span:gt(${this.lastIndexActiveControl}):lt(${this.lastIndexActiveControl+this.displayControls})`).get();
+        
+        if(this.displayControls > this.controlsHolder.length) {
+            const numberOfElements = this.displayControls - this.controlsHolder.length;
+
+            const addedElements = this.$testimonialSlider.find(`.controls > span:lt(${numberOfElements})`).get();
+            
+            this.controlsHolder = this.controlsHolder.concat(addedElements);
+        }
+
+        $(this.controlsHolder).addClass('is-display');
     }
 
     nextItem() {
-        this.$activeControl.removeClass('is-active');
-        this.$activeItem.removeClass('is-active');
+        let newControl;
+        let newItem;
 
-        const newItem = this.$activeItem.next()
-        newItem.addClass('is-active');
-
-        const newControl = this.$activeControl.next().removeClass('is-active');
+        newControl = this.getNewControl();
         newControl.addClass('is-active');
 
+        newItem = this.getNewItem();
+        newItem.addClass('is-active');
 
-        // // init new item and controls
+        // // init new item
         this.$activeItem = newItem;
         this.$activeControl = newControl;
 
         this.initSliderAnimation();
+
+        this.lastIndexActiveControl = this.$testimonialSlider.find('.controls > span.is-active').data('slide');
+    }
+
+    getNewControl() {
+        this.$activeControl.removeClass('is-active');
+        this.sliderCounter++;        
+
+        if(this.sliderCounter < this.displayControls) {
+            $(this.controlsHolder[this.sliderCounter]).removeClass('is-active');
+
+            return $(this.controlsHolder[this.sliderCounter]);
+        }else {
+            this.paginateControls();
+            const index = this.lastIndexActiveControl+1 === this.$controls.length ? 0 : this.lastIndexActiveControl+1;
+
+            return this.$controls.eq(index);
+        }
+    }
+
+    getNewItem () {
+        this.$activeItem.removeClass('is-active');
+        
+        const slideIndex = this.$testimonialSlider.find('.controls > span.is-active').data('slide');
+        return this.$items.eq(slideIndex);
     }
 }
 

@@ -1164,6 +1164,8 @@ input:focus {
   margin: 4em 2em;
   font-size: 17px;
   position: relative;
+  opacity: 0;
+  transform: translateY(100px);
 }
 .testimonial-slider#testimonials-slider .stage-container .item .content p::before {
   content: "";
@@ -1181,6 +1183,8 @@ input:focus {
   display: flex;
   flex-direction: column;
   margin: 0 2em;
+  opacity: 0;
+  transform: translateY(50px);
 }
 .testimonial-slider#testimonials-slider .stage-container .item .content .author-details .profession {
   font-size: 15px;
@@ -1196,6 +1200,8 @@ input:focus {
 }
 .testimonial-slider#testimonials-slider .stage-container .item .user-profile {
   position: relative;
+  opacity: 0;
+  transform: scale(0);
 }
 .testimonial-slider#testimonials-slider .stage-container .item .user-profile::after {
   position: absolute;
@@ -1218,15 +1224,13 @@ input:focus {
   width: 40px;
   height: 4px;
   background-color: #cefff9;
+  margin: 0 10px;
   position: relative;
   display: none;
   cursor: pointer;
 }
 .testimonial-slider#testimonials-slider .controls span.is-active, .testimonial-slider#testimonials-slider .controls span.is-display {
   display: inline;
-}
-.testimonial-slider#testimonials-slider .controls span:nth-child(2) {
-  margin: 0 1.2em;
 }
 .testimonial-slider#testimonials-slider .controls span .duration-progress {
   position: absolute;
