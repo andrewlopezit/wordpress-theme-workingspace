@@ -328,7 +328,8 @@ class TestimonialsSlider {
     this.displayControls = 3;
     this.sliderCounter = 0;
     this.controlsHolder;
-    this.lastIndexActiveControl = 0; // init slider
+    this.lastIndexActiveControl = 0;
+    this.isAlreadyInit = false; // init slider
 
     this.initActiveSlider(); //init slider
 
@@ -352,10 +353,12 @@ class TestimonialsSlider {
 
   events() {
     this.$controlsContainer.on('mouseover', () => this.testimonialControlAnimation.pause()).on('mouseout', () => this.testimonialControlAnimation.play());
+    this.$controlsContainer.on('click', e => this.gotoItem(e));
   }
 
   initSliderAnimation() {
     // re-init active item
+    this.isAlreadyInit = true;
     this.$userProfile = this.$activeItem.find('.user-profile');
     this.$content = this.$activeItem.find('.content');
     this.testimonialSliderAnimation = gsap__WEBPACK_IMPORTED_MODULE_1__["default"].timeline({
@@ -408,8 +411,8 @@ class TestimonialsSlider {
 
     this.$activeItem = newItem;
     this.$activeControl = newControl;
-    this.initSliderAnimation();
     this.lastIndexActiveControl = this.$testimonialSlider.find('.controls > span.is-active').data('slide');
+    this.initSliderAnimation();
   }
 
   getNewControl() {
@@ -417,7 +420,6 @@ class TestimonialsSlider {
     this.sliderCounter++;
 
     if (this.sliderCounter < this.displayControls) {
-      jquery__WEBPACK_IMPORTED_MODULE_0___default()(this.controlsHolder[this.sliderCounter]).removeClass('is-active');
       return jquery__WEBPACK_IMPORTED_MODULE_0___default()(this.controlsHolder[this.sliderCounter]);
     } else {
       this.paginateControls();
@@ -428,8 +430,30 @@ class TestimonialsSlider {
 
   getNewItem() {
     this.$activeItem.removeClass('is-active');
-    const slideIndex = this.$testimonialSlider.find('.controls > span.is-active').data('slide');
+    const slideIndex = this.$controlsContainer.find('span.is-active').data('slide');
     return this.$items.eq(slideIndex);
+  }
+
+  gotoItem(e) {
+    const $element = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target);
+    if (!$element.hasClass('is-display') || $element.hasClass('is-active') || !this.isAlreadyInit) return;
+    this.isAlreadyInit = true;
+    const targettedSlideIndex = $element.data('slide');
+    this.sliderCounter = targettedSlideIndex - 1;
+    const filteredElements = this.controlsHolder.filter(element => jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).data('slide') < targettedSlideIndex);
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(filteredElements).removeClass('is-active');
+    const unFilteredElements = this.controlsHolder.filter(element => jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).data('slide') >= targettedSlideIndex);
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(unFilteredElements).removeClass('is-active');
+    this.stopControlAnimation();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(filteredElements).find('.duration-progress').css('width', '100%');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(unFilteredElements).find('.duration-progress').css('width', '0%');
+    this.testimonialSliderAnimation.reverse();
+  }
+
+  stopControlAnimation() {
+    if (!this.testimonialControlAnimation) return;
+    this.testimonialControlAnimation.kill();
+    this.testimonialControlAnimation = null;
   }
 
 }

@@ -98,8 +98,9 @@
         span {
             width: 40px;
             height: 4px;
-            background-color: lighten($secondary-color,  50%);
+            background-color: transparent;
             margin: 0 10px;
+            background-color: rgba($secondary-color, 0.5);
 
             position: relative;
             display: none;
@@ -118,6 +119,7 @@
                 bottom: 0;
                 width: 0;
                 background-color: $secondary-color;
+                z-index: -1;
               }
         }
     }
