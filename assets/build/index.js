@@ -352,7 +352,11 @@ class TestimonialsSlider {
   }
 
   events() {
-    this.$controlsContainer.on('mouseover', () => this.testimonialControlAnimation.pause()).on('mouseout', () => this.testimonialControlAnimation.play());
+    this.$controlsContainer.on('mouseover', () => {
+      if (this.testimonialControlAnimation) this.testimonialControlAnimation.pause();
+    }).on('mouseout', () => {
+      if (this.testimonialControlAnimation) this.testimonialControlAnimation.play();
+    });
     this.$controlsContainer.on('click', e => this.gotoItem(e));
   }
 
@@ -439,7 +443,7 @@ class TestimonialsSlider {
     if (!$element.hasClass('is-display') || $element.hasClass('is-active') || !this.isAlreadyInit) return;
     this.isAlreadyInit = true;
     const targettedSlideIndex = $element.data('slide');
-    this.sliderCounter = targettedSlideIndex - 1;
+    this.sliderCounter = this.controlsHolder.findIndex(element => jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).data('slide') === $element.data('slide') - 1);
     const filteredElements = this.controlsHolder.filter(element => jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).data('slide') < targettedSlideIndex);
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(filteredElements).removeClass('is-active');
     const unFilteredElements = this.controlsHolder.filter(element => jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).data('slide') >= targettedSlideIndex);

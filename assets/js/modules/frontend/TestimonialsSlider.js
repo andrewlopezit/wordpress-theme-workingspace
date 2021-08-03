@@ -50,8 +50,8 @@ class TestimonialsSlider {
 
     events() {
        this.$controlsContainer
-       .on('mouseover', () => this.testimonialControlAnimation.pause())
-       .on('mouseout',() => this.testimonialControlAnimation.play());
+       .on('mouseover', () => { if(this.testimonialControlAnimation) this.testimonialControlAnimation.pause()})
+       .on('mouseout',() => { if(this.testimonialControlAnimation) this.testimonialControlAnimation.play()});
 
        this.$controlsContainer.on('click', e => this.gotoItem(e));
     }
@@ -141,7 +141,7 @@ class TestimonialsSlider {
         this.isAlreadyInit = true;
 
         const targettedSlideIndex = $element.data('slide');
-        this.sliderCounter = targettedSlideIndex - 1;
+        this.sliderCounter = this.controlsHolder.findIndex( element => $(element).data('slide') === $element.data('slide') - 1);
 
         const filteredElements = this.controlsHolder.filter( element => $(element).data('slide') < targettedSlideIndex);
         $(filteredElements).removeClass('is-active');
