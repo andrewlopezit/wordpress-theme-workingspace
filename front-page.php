@@ -9,13 +9,14 @@
                 <?php
                     $args = array(
                         'post_type' => 'workingspaces',
-                        'posts_per_page' => '4'
+                        'posts_per_page' => '8'
                     );
 
-                    $query = new WP_Query( $args ); 
+                    $query = new WP_Query( $args );
+                    $counter = 0;
                 ?>
                 <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
-                <div class="item">
+                <div class="item" data-slide="<?php echo $counter; $counter++; ?>">
                     <a href="<?php the_permalink(); ?>">
                         <img src="<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( $query->ID ), 'hero_image_slider' )[0];?>" alt="">
                     </a>

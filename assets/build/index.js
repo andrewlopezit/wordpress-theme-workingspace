@@ -96,18 +96,21 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scss_stylesheet_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/stylesheet.scss */ "./assets/scss/stylesheet.scss");
-/* harmony import */ var _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/frontend/HamburgerMenu */ "./assets/js/modules/frontend/HamburgerMenu.js");
-/* harmony import */ var _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/frontend/TestimonialsSlider */ "./assets/js/modules/frontend/TestimonialsSlider.js");
-/* harmony import */ var _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/frontend/Main */ "./assets/js/modules/frontend/Main.js");
+/* harmony import */ var _modules_frontend_HeroImageSlider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/frontend/HeroImageSlider */ "./assets/js/modules/frontend/HeroImageSlider.js");
+/* harmony import */ var _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/frontend/HamburgerMenu */ "./assets/js/modules/frontend/HamburgerMenu.js");
+/* harmony import */ var _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/frontend/TestimonialsSlider */ "./assets/js/modules/frontend/TestimonialsSlider.js");
+/* harmony import */ var _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/frontend/Main */ "./assets/js/modules/frontend/Main.js");
  // import modules
+
 
 
 
  // instantiate module classes
 
-const hamburgerMenu = new _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_1__["default"]();
-const testimonialsSlider = new _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_2__["default"]();
-const main = new _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_3__["default"]();
+const heroImageSlider = new _modules_frontend_HeroImageSlider__WEBPACK_IMPORTED_MODULE_1__["default"]();
+const hamburgerMenu = new _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_2__["default"]();
+const testimonialsSlider = new _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_3__["default"]();
+const main = new _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_4__["default"]();
 
 /***/ }),
 
@@ -270,6 +273,122 @@ class HamburgerMenu {
 
 /***/ }),
 
+/***/ "./assets/js/modules/frontend/HeroImageSlider.js":
+/*!*******************************************************!*\
+  !*** ./assets/js/modules/frontend/HeroImageSlider.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
+
+
+
+class HeroImageSlider {
+  constructor() {
+    // init elements
+    this.$heroImageSlider = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#hero-image-slider');
+    this.$items = this.$heroImageSlider.find('.item'); // local variables
+
+    this.displayCntrols = 4;
+    this.animationSpeed = 10;
+    this.lastIndexActiveItem = 0;
+    this.primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color'); // init image slider
+
+    this.initHeroImageSlider(); // init slider animation
+
+    this.initHeroImageSliderAnimation();
+    this.events();
+  }
+
+  initHeroImageSlider() {
+    this.$activeItems = this.$heroImageSlider.find('.item:lt(4)').addClass('is-display');
+    this.addBorderClassActiveItems();
+  }
+
+  initHeroImageSliderAnimation() {
+    this.heroImageSliderAnimation = gsap__WEBPACK_IMPORTED_MODULE_1__["default"].timeline({
+      onComplete: () => gsap__WEBPACK_IMPORTED_MODULE_1__["default"].delayedCall(this.animationSpeed, () => this.heroImageSliderAnimation.reverse()),
+      onReverseComplete: () => this.paginateItem()
+    });
+    this.heroImageSliderAnimation.to(this.$activeItems.eq(0), {
+      scale: 1,
+      width: '70%',
+      opacity: 1,
+      ease: 'back',
+      duration: 1
+    }).to(this.$activeItems.eq(1), {
+      scale: 1,
+      width: '45%',
+      translateX: '100%',
+      translateY: '105%',
+      opacity: 1,
+      ease: 'back',
+      duration: 1
+    }).to(this.$activeItems.eq(2), {
+      scale: 1,
+      width: '60%',
+      translateY: '130%',
+      opacity: 1,
+      ease: 'back',
+      duration: 1
+    }).to(this.$activeItems.eq(3), {
+      scale: 1,
+      width: '40%',
+      translateX: '112%',
+      translateY: '275%',
+      opacity: 1,
+      ease: 'back',
+      duration: 1
+    });
+  }
+
+  events() {
+    this.$heroImageSlider.on('mouseover', () => this.heroImageSliderAnimation.pause()).on('mouseout', () => this.heroImageSliderAnimation.play());
+  }
+
+  paginateItem() {
+    this.$items.removeClass('is-display border-left border-right hover-odd hover-even');
+    this.heroImageSliderAnimation.reverse();
+    this.lastIndexActiveItem = this.$activeItems.last().data('slide');
+    const unDisplayItems = this.$heroImageSlider.find(`.item:gt(${this.lastIndexActiveItem}):lt(${this.lastIndexActiveItem + this.displayCntrols})`).get();
+
+    if (this.displayCntrols > unDisplayItems.length) {
+      const numberOfElements = this.displayCntrols - unDisplayItems.length;
+      const addedUnDisplayItems = this.$heroImageSlider.find(`.item:lt(${numberOfElements})`).get();
+      this.$activeItems = jquery__WEBPACK_IMPORTED_MODULE_0___default()(unDisplayItems.concat(addedUnDisplayItems));
+    } else {
+      this.$activeItems = jquery__WEBPACK_IMPORTED_MODULE_0___default()(unDisplayItems);
+    }
+
+    this.$activeItems.addClass('is-display');
+    this.addBorderClassActiveItems();
+    this.initHeroImageSliderAnimation();
+  }
+
+  addBorderClassActiveItems() {
+    this.$activeItems.eq(0).addClass('border-left');
+    this.$activeItems.eq(this.displayCntrols - 1).addClass('border-right');
+
+    for (let i = 0; i < this.$activeItems.length; i++) {
+      if (i % 2 === 0) {
+        this.$activeItems.eq(i).addClass('hover-even');
+      } else {
+        this.$activeItems.eq(i).addClass('hover-odd');
+      }
+    }
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (HeroImageSlider);
+
+/***/ }),
+
 /***/ "./assets/js/modules/frontend/Main.js":
 /*!********************************************!*\
   !*** ./assets/js/modules/frontend/Main.js ***!
@@ -371,15 +490,18 @@ class TestimonialsSlider {
     this.testimonialSliderAnimation.to(this.$content.find('p'), {
       translateY: 0,
       opacity: 1,
-      duration: .5
+      ease: 'back',
+      duration: .8
     }).to(this.$userProfile, {
       scale: 1,
       opacity: 1,
-      duration: .5
+      ease: 'back',
+      duration: .8
     }).to(this.$content.find('.author-details'), {
       translateY: 0,
       opacity: 1,
-      duration: .5
+      ease: 'back',
+      duration: .8
     });
     this.testimonialControlAnimation = gsap__WEBPACK_IMPORTED_MODULE_1__["default"].timeline({
       onComplete: () => this.testimonialSliderAnimation.reverse()

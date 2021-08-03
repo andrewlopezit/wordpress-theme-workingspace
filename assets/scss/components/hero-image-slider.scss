@@ -5,55 +5,53 @@
 
     .item {
         position: absolute;
-        width: auto;
+        display: none;
+        opacity: 0;
+        width: 0;
+        @include transform(translate(0,0) scale(0.5));
 
-        &:nth-child(1) {
-            top: 0;
-            width: 70%;
-
-            &::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                width: 8px;
-                background-color: var(--primary-color, $primary-color);
-                z-index: 1;
-            }
-
-            img {
-                position: relative;
+        &:hover{
+            &.hover-odd::after,
+            &.hover-even::after{
+                width: 0;
             }
         }
 
-        &:nth-child(2){
-            top: 12em;
+        &.hover-odd::after,
+        &.hover-even::after {
+            content: '';
+            position: absolute;
+            background-color:rgba(#fff, .5);
+            width: 100%;
             right: 0;
-            width: 45%;
-            z-index: 1;
+            height: 100%;
+
+            @include transition($transition);
         }
 
-        &:nth-child(3){
-            top: 20em;
-            width: 60%;
-            z-index: 1;
+        &.hover-even::after {
+            right: auto;
+            left: 0;
         }
-        &:nth-child(4){
-            top: 27em;
-            width: 40%;
-            right: 5%;
-            z-index: 1;
+        
+        &.is-display {
+            display: flex;
 
-            &::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                right: 0;
-                width: 6px;
-                background-color: var(--primary-color, $primary-color);
-                z-index: 1;
+            &.border-left,
+            &.border-right{
+                &::before {
+                    content: '';
+                    position: absolute;
+                    background-color: var(--primary-color, $primary-color);
+                    height: 100%;
+                    width: 2%;
+                }
+            }
+
+            &.border-right{
+                &::before {
+                    right: 0;
+                }
             }
         }
 
