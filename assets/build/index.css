@@ -1114,13 +1114,15 @@ input:focus {
   top: -25px;
   background-color: #fff;
   padding: 5px 10px;
-  color: var(--primary-color, #FDD500);
+  color: var(--secondary-color, #00CEB5);
+  font-weight: 600;
+  font-size: 0.9em;
 }
 .post-list#posts .item.card.post .card-body .author-container .author-details {
   margin: 0 10px;
 }
 .post-list#posts .item.card.post .card-body .author-container .author-details a {
-  color: var(--primary-color, #FDD500);
+  color: var(--secondary-color, #00CEB5);
   font-size: 0.875em;
   text-transform: capitalize;
 }
