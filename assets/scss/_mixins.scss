@@ -30,7 +30,7 @@
     mask-size: $size;
 }
 
-@mixin background-polygon($args) {
+@mixin clip-polygon($args) {
     -webkit-clip-path: polygon($args);
     -ms-clip-path: polygon($args);
     -o-clip-path: polygon($args);

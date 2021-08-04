@@ -55,7 +55,7 @@ $menu-navigation-background: $footer-color;
         
                         color: $navigation-color;
                         opacity: 0.4;
-        
+
                         @include transition($transition);
                     }
                 }

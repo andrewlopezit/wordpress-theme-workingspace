@@ -23,7 +23,9 @@
 * COMPONENTS
 * - ICONS
 * - WIDGETS
+* - BUTTONS
 * - SOCIAL MEDIA
+* - HERO IMAGE SLIDER
 * - BRAND
 * - HEADER/HAMBURGER
 * - HEADER/NAVIGATION
@@ -31,6 +33,11 @@
 * - FOOTER/NAVIGATION
 * - FOOTER/CONTACT INFO
 * - FOOTER
+*
+* PARTIALS
+* - WORKSPACES
+* - POSTS
+* - TESTIMONIALS
 *
 * PAGES
 * - FRONT PAGE
@@ -65,12 +72,22 @@
 /*------------------------------------*
 	WIDGETS
 *------------------------------------*/
-@import 'components/widgets.scss';
+@import 'components/widgets';
+
+/*------------------------------------*
+	BUTTONS
+*------------------------------------*/
+@import 'components/buttons';
 
 /*------------------------------------*
 	SOCIAL MEDIA
 *------------------------------------*/
-@import 'components/social-media.scss';
+@import 'components/social-media';
+
+/*------------------------------------*
+	HERO IMAGE SLIDER
+*------------------------------------*/
+@import 'components/hero-image-slider.scss';
 
 /*------------------------------------*
 	BRAND
@@ -106,3 +123,25 @@
 	FOOTER
 *------------------------------------*/
 @import 'components/footer/footer.scss';
+
+/*------------------------------------*
+	P A R T I A L S
+	  WORKSPACES
+*------------------------------------*/
+@import 'partials/workspace.scss';
+
+/*------------------------------------*
+	  POSTS
+*------------------------------------*/
+@import 'partials/posts.scss';
+
+/*------------------------------------*
+	  POSTS
+*------------------------------------*/
+@import 'partials/testimonials.scss';
+
+/*------------------------------------*
+	P A G E S
+	FRONT PAGE
+*------------------------------------*/
+@import 'pages/front-page.scss';

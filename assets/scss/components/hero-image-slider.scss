@@ -1,0 +1,176 @@
+@mixin border() {
+    content: '';
+    position: absolute;
+    background-color: var(--primary-color, $primary-color);
+    height: 100%;
+    width: 2%;
+}
+
+@mixin hoverUI() {
+    content: '';
+    position: absolute;
+    background-color:rgba(#fff, .5);
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+
+    @include transition($transition);
+}
+
+
+#hero-image-slider {
+    position: relative;
+    width: 90%;
+    height: 36em;
+
+    .item {
+        position: absolute;
+        display: flex;
+        opacity: 1;
+        width: 0;
+
+        &:hover {
+            &.is-display {
+                &.first,
+                &.second,
+                &.third,
+                &.fourth {
+                    &::after {
+                        width: 0;
+                    }
+                }
+            }
+        }
+        
+        &.is-display {
+            display: flex;
+            opacity: 0;
+
+            @include transform(scale(0.8));
+
+            &.first {
+                top: 0;
+                left: 0;
+                width: 70%;
+
+                &::after {
+                    @include hoverUI();
+                }
+
+                &::before {
+                   @include border();
+                   left: 0;
+                }
+            }
+
+            &.second {
+                width: 45%;
+                top: 30%;
+                right: 0;
+
+                &::after {
+                    @include hoverUI();
+                    right: 0;
+                }
+            }
+
+            &.third {
+                width: 60%;
+                top: 50%;
+                left: 0;
+
+                &::after {
+                    @include hoverUI();
+                }
+            }
+
+            &.fourth {
+                width: 40%;
+                top: 70%;
+                right: 5%;
+
+                &::after {
+                    @include hoverUI();
+                    right: 0;
+                }
+
+                &::before {
+                    @include border();
+                    right: 0;
+                 }
+            }
+        }
+
+        img {
+            width: 100%;
+
+            object-fit: contain;
+        }
+    }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+
+}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) { 
+
+    #hero-image-slider {
+        width: 100%;
+        height: auto !important;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        
+        .item {
+            position: relative;
+            &.is-display {
+                &.first,
+                &.second,
+                &.third,
+                &.fourth {
+                   width: 100%;
+                   top: 0 !important;
+                   right: 0 !important;
+                   left: 0 !important;
+
+                   &::before {
+                       display: none !important;
+                   }
+                }
+            }
+        }
+    }
+
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+    #hero-image-slider{
+        height: 24em;
+
+        .item {
+            
+            &.is-display {
+                &.second {
+                    top: 32%;
+                }
+
+                &.third {
+                    top: 52%;
+                }
+                &.fourth {
+                    top: 75%;
+                }
+            }
+        }
+    }
+
+}
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {
+
+}

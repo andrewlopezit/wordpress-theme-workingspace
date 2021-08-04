@@ -7,7 +7,6 @@
  h4,
  h5,
  h6 {
-     font-weight: $heading-font-weight;
      font-style: $heading-font-style;
      font-family: $heading-font-family;
 
@@ -17,6 +16,12 @@
  
  h1 {
      font-size: 2.5em;
+     line-height: 1.2em;
+
+     &.--border-left {
+         border-left: 6px solid var(--primary-color, $primary-color);
+         padding-left: 0.8em;
+     }
  }
  
  h2 {
@@ -28,15 +33,29 @@
  }
  
  h4 {
-     font-size: 1.5em;
+     line-height: 1em;
+     font-weight: 400;
  }
  
  h5 {
      font-size: 1.2em;
+     font-weight: 400;
  }
  
  h6 {
      font-size: 1em;
+     font-weight: 400;
+ }
+
+ .headline {
+    &.title {
+        line-height: .8em;
+        font-weight: 400;
+    }
+
+    &.large{
+        font-size: 4em;
+    }
  }
 
 
@@ -66,10 +85,27 @@
  }
 
  p {
-     font-family: $secondary-font-family;
+    font-family: $secondary-font-family;
+
+    &.title {
+        &.sub-paragraph {
+            font-size: 16px;
+        }
+    }
+
+    &.heading--sub-paragraph {
+        width: 600px;
+        margin: auto;
+    }
  }
 
  a {
     text-decoration: none;
-    color: $secondary-color;
+    color: var(--secondary-color, $secondary-color);
+
+    @include transition($transition);
+
+    &:hover {
+        color: darken($secondary-color, 15%);
+    }
  }

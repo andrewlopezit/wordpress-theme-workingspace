@@ -1,0 +1,107 @@
+.post-list#posts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 2em;
+    grid-row-gap: 4em;
+
+    .item.card.post {
+        border: 0;
+        border-radius: 0;
+
+        position: relative;
+
+        .card-img-top{
+            border-radius: 0;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+
+            .author-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+
+                top: -25px;
+                background-color: #fff;
+                padding: 5px 10px;
+                color: var(--secondary-color, $secondary-color);
+                font-weight: 600;
+                font-size: .9em;
+
+                .author-details {
+                    margin: 0 10px;
+                    a {
+                        color: var(--secondary-color, $secondary-color);
+                        font-size: .875em;
+                        text-transform: capitalize;
+                    }
+                    small {
+                        text-transform: capitalize;
+                    }
+                }
+            }
+
+            h5 {
+                color: #000;
+            }
+
+            .btn {
+                width: 50%;
+                align-self: center;
+                
+                @include transform(scale(0.9));
+            }
+
+        }
+    }
+}
+
+.action-container.post {
+    margin: 50px 0;
+}
+
+
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+
+}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) { 
+    .post-list#posts {
+        grid-template-columns: repeat(1, 1fr) !important;
+
+        .item.card.post {
+            &:nth-child(3) {
+                display: flex !important;
+            }
+        }
+    }
+
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+    .post-list#posts {
+        grid-template-columns: repeat(2, 1fr);
+
+        .item.card.post {
+            &:nth-child(3) {
+                display: none !important;
+            }
+        }
+    }
+}
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {
+
+}

@@ -40,6 +40,7 @@ $accent-color:         $color-1 !default;
 $border-color:         $color-1 !default;
 $button-color:         $color-2 !default;
 $footer-color:         $color-4 !default;
+$gray:                 $color-5 !default;
 
 // Typography colors
 $text-muted-color:     $color-3 !default;
@@ -76,3 +77,10 @@ $navigation-color: #fff;
 
 $navigation-font-family: 'Effra', sans-serif !default;
 $navigation-font-size: 1.1em;
+
+// Settings Sections
+$margin-bottom-section: 100px;
+
+:root {
+	--primary-color: #FDD500;
+}

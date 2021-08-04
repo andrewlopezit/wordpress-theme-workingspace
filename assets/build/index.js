@@ -96,12 +96,21 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scss_stylesheet_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/stylesheet.scss */ "./assets/scss/stylesheet.scss");
-/* harmony import */ var _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/frontend/HamburgerMenu */ "./assets/js/modules/frontend/HamburgerMenu.js");
+/* harmony import */ var _modules_frontend_HeroImageSlider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/frontend/HeroImageSlider */ "./assets/js/modules/frontend/HeroImageSlider.js");
+/* harmony import */ var _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/frontend/HamburgerMenu */ "./assets/js/modules/frontend/HamburgerMenu.js");
+/* harmony import */ var _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/frontend/TestimonialsSlider */ "./assets/js/modules/frontend/TestimonialsSlider.js");
+/* harmony import */ var _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/frontend/Main */ "./assets/js/modules/frontend/Main.js");
  // import modules
+
+
+
 
  // instantiate module classes
 
-const hamburgerMenu = new _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_1__["default"]();
+const heroImageSlider = new _modules_frontend_HeroImageSlider__WEBPACK_IMPORTED_MODULE_1__["default"]();
+const hamburgerMenu = new _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_2__["default"]();
+const testimonialsSlider = new _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_3__["default"]();
+const main = new _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_4__["default"]();
 
 /***/ }),
 
@@ -149,7 +158,7 @@ class HamburgerMenu {
       top: 0,
       left: 0,
       translateY: -20,
-      translateX: -(jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).width() - this.$headerContainer.width()) / 2,
+      translateX: -((jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).width() - this.$headerContainer.width()) / 2),
       duration: 0.2
     };
   }
@@ -261,6 +270,322 @@ class HamburgerMenu {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (HamburgerMenu);
+
+/***/ }),
+
+/***/ "./assets/js/modules/frontend/HeroImageSlider.js":
+/*!*******************************************************!*\
+  !*** ./assets/js/modules/frontend/HeroImageSlider.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
+
+
+
+class HeroImageSlider {
+  constructor() {
+    // init elements
+    this.$heroImageSlider = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#hero-image-slider');
+    this.$items = this.$heroImageSlider.find('.item'); // local variables
+
+    this.displayCntrols = 4;
+    this.animationSpeed = 5;
+    this.lastIndexActiveItem = 0;
+    this.primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color'); // init image slider
+
+    this.initHeroImageSlider(); // init slider animation
+
+    this.initHeroImageSliderAnimation();
+    this.events();
+  }
+
+  initHeroImageSlider() {
+    this.$activeItems = this.$heroImageSlider.find('.item:lt(4)').addClass('is-display');
+    this.addClassesActiveItem();
+  }
+
+  initHeroImageSliderAnimation() {
+    this.heroImageSliderAnimation = gsap__WEBPACK_IMPORTED_MODULE_1__["default"].timeline({
+      onComplete: () => gsap__WEBPACK_IMPORTED_MODULE_1__["default"].delayedCall(this.animationSpeed, () => this.heroImageSliderAnimation.reverse()),
+      onReverseComplete: () => this.paginateItem()
+    });
+    this.heroImageSliderAnimation.to(this.$activeItems, {
+      opacity: 1,
+      scale: 1,
+      ease: 'back',
+      stagger: {
+        amount: 2,
+        ease: 'stepped'
+      }
+    });
+  }
+
+  events() {
+    this.$heroImageSlider.on('mouseover', () => this.heroImageSliderAnimation.pause()).on('mouseout', () => this.heroImageSliderAnimation.play());
+  }
+
+  paginateItem() {
+    this.$items.removeClass(`is-display
+             first
+             second
+             third
+             fourth
+            `);
+    this.heroImageSliderAnimation.reverse();
+    this.lastIndexActiveItem = this.$activeItems.last().data('slide');
+    const unDisplayItems = this.$heroImageSlider.find(`.item:gt(${this.lastIndexActiveItem}):lt(${this.lastIndexActiveItem + this.displayCntrols})`).get();
+
+    if (this.displayCntrols > unDisplayItems.length) {
+      const numberOfElements = this.displayCntrols - unDisplayItems.length;
+      const addedUnDisplayItems = this.$heroImageSlider.find(`.item:lt(${numberOfElements})`).get();
+      this.$activeItems = jquery__WEBPACK_IMPORTED_MODULE_0___default()(unDisplayItems.concat(addedUnDisplayItems));
+    } else {
+      this.$activeItems = jquery__WEBPACK_IMPORTED_MODULE_0___default()(unDisplayItems);
+    }
+
+    this.$activeItems.addClass('is-display');
+    this.addClassesActiveItem();
+    this.initHeroImageSliderAnimation();
+  }
+
+  addClassesActiveItem() {
+    for (let i = 0; i < this.$activeItems.length; i++) {
+      switch (i) {
+        case 0:
+          {
+            this.$activeItems.eq(i).addClass('first');
+          }
+          break;
+
+        case 1:
+          {
+            this.$activeItems.eq(i).addClass('second');
+          }
+          break;
+
+        case 2:
+          {
+            this.$activeItems.eq(i).addClass('third');
+          }
+          break;
+
+        case 3:
+          {
+            this.$activeItems.eq(i).addClass('fourth');
+          }
+          break;
+      }
+    }
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (HeroImageSlider);
+
+/***/ }),
+
+/***/ "./assets/js/modules/frontend/Main.js":
+/*!********************************************!*\
+  !*** ./assets/js/modules/frontend/Main.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
+
+
+
+class Main {
+  constructor() {
+    // initialize elements variables
+    this.workingspacesContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#workingspaces');
+    this.workspaceCardPosts = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.card-border--hover'); // init elements
+    // init gsap animation
+    // initialize events function
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Main);
+
+/***/ }),
+
+/***/ "./assets/js/modules/frontend/TestimonialsSlider.js":
+/*!**********************************************************!*\
+  !*** ./assets/js/modules/frontend/TestimonialsSlider.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
+
+
+
+class TestimonialsSlider {
+  constructor() {
+    // init variables
+    this.$testimonialSlider = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#testimonials-slider');
+    this.$controlsContainer = this.$testimonialSlider.find('.controls');
+    this.$controls = this.$controlsContainer.find('span');
+    this.$items = this.$testimonialSlider.find('.item'); // init local variable
+
+    this.sliderDuration = 10; // by seconds;
+
+    this.displayControls = 3;
+    this.sliderCounter = 0;
+    this.controlsHolder;
+    this.lastIndexActiveControl = 0;
+    this.isAlreadyInit = false; // init slider
+
+    this.initActiveSlider(); //init slider
+
+    this.initSliderAnimation();
+  }
+
+  initActiveSlider() {
+    this.$testimonialSlider.find('.item').first().addClass('is-active'); // init slider controls
+
+    this.$testimonialSlider.find(`.controls > span:lt(${this.displayControls})`).addClass('is-display');
+    this.controlsHolder = this.$testimonialSlider.find(`.controls > span:lt(${this.displayControls})`).get();
+    this.$testimonialSlider.find('.controls > span').first().addClass('is-active');
+    this.$testimonialSlider.find('.controls > span').append('<div class="duration-progress"></div>'); // init active item
+
+    this.$activeItem = this.$testimonialSlider.find('.item.is-active');
+    this.$activeControl = this.$testimonialSlider.find('.controls > span.is-active');
+    this.$durationProgress = this.$controls.find('.duration-progress'); // init events
+
+    this.events();
+  }
+
+  events() {
+    this.$controlsContainer.on('mouseover', () => {
+      if (this.testimonialControlAnimation) this.testimonialControlAnimation.pause();
+    }).on('mouseout', () => {
+      if (this.testimonialControlAnimation) this.testimonialControlAnimation.play();
+    });
+    this.$controlsContainer.on('click', e => this.gotoItem(e));
+  }
+
+  initSliderAnimation() {
+    // re-init active item
+    this.isAlreadyInit = true;
+    this.$userProfile = this.$activeItem.find('.user-profile');
+    this.$content = this.$activeItem.find('.content');
+    this.testimonialSliderAnimation = gsap__WEBPACK_IMPORTED_MODULE_1__["default"].timeline({
+      onReverseComplete: () => this.nextItem()
+    });
+    this.testimonialSliderAnimation.to(this.$content.find('p'), {
+      translateY: 0,
+      opacity: 1,
+      ease: 'back',
+      duration: .8
+    }).to(this.$userProfile, {
+      scale: 1,
+      opacity: 1,
+      ease: 'back',
+      duration: .8
+    }).to(this.$content.find('.author-details'), {
+      translateY: 0,
+      opacity: 1,
+      ease: 'back',
+      duration: .8
+    });
+    this.testimonialControlAnimation = gsap__WEBPACK_IMPORTED_MODULE_1__["default"].timeline({
+      onComplete: () => this.testimonialSliderAnimation.reverse()
+    });
+    this.testimonialControlAnimation.to(this.$activeControl.find('.duration-progress'), {
+      width: '100%',
+      duration: this.sliderDuration
+    });
+  }
+
+  paginateControls() {
+    this.$controls.removeClass('is-display');
+    this.$durationProgress.css('width', 0);
+    this.sliderCounter = 0;
+    this.controlsHolder = this.$testimonialSlider.find(`.controls > span:gt(${this.lastIndexActiveControl}):lt(${this.lastIndexActiveControl + this.displayControls})`).get();
+
+    if (this.displayControls > this.controlsHolder.length) {
+      const numberOfElements = this.displayControls - this.controlsHolder.length;
+      const addedElements = this.$testimonialSlider.find(`.controls > span:lt(${numberOfElements})`).get();
+      this.controlsHolder = this.controlsHolder.concat(addedElements);
+    }
+
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(this.controlsHolder).addClass('is-display');
+  }
+
+  nextItem() {
+    let newControl;
+    let newItem;
+    newControl = this.getNewControl();
+    newControl.addClass('is-active');
+    newItem = this.getNewItem();
+    newItem.addClass('is-active'); // // init new item
+
+    this.$activeItem = newItem;
+    this.$activeControl = newControl;
+    this.lastIndexActiveControl = this.$testimonialSlider.find('.controls > span.is-active').data('slide');
+    this.initSliderAnimation();
+  }
+
+  getNewControl() {
+    this.$activeControl.removeClass('is-active');
+    this.sliderCounter++;
+
+    if (this.sliderCounter < this.displayControls) {
+      return jquery__WEBPACK_IMPORTED_MODULE_0___default()(this.controlsHolder[this.sliderCounter]);
+    } else {
+      this.paginateControls();
+      const index = this.lastIndexActiveControl + 1 === this.$controls.length ? 0 : this.lastIndexActiveControl + 1;
+      return this.$controls.eq(index);
+    }
+  }
+
+  getNewItem() {
+    this.$activeItem.removeClass('is-active');
+    const slideIndex = this.$controlsContainer.find('span.is-active').data('slide');
+    return this.$items.eq(slideIndex);
+  }
+
+  gotoItem(e) {
+    const $element = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target);
+    if (!$element.hasClass('is-display') || $element.hasClass('is-active') || !this.isAlreadyInit) return;
+    this.isAlreadyInit = true;
+    const targettedSlideIndex = $element.data('slide');
+    this.sliderCounter = this.controlsHolder.findIndex(element => jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).data('slide') === $element.data('slide') - 1);
+    const filteredElements = this.controlsHolder.filter(element => jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).data('slide') < targettedSlideIndex);
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(filteredElements).removeClass('is-active');
+    const unFilteredElements = this.controlsHolder.filter(element => jquery__WEBPACK_IMPORTED_MODULE_0___default()(element).data('slide') >= targettedSlideIndex);
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(unFilteredElements).removeClass('is-active');
+    this.stopControlAnimation();
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(filteredElements).find('.duration-progress').css('width', '100%');
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()(unFilteredElements).find('.duration-progress').css('width', '0%');
+    this.testimonialSliderAnimation.reverse();
+  }
+
+  stopControlAnimation() {
+    if (!this.testimonialControlAnimation) return;
+    this.testimonialControlAnimation.kill();
+    this.testimonialControlAnimation = null;
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (TestimonialsSlider);
 
 /***/ }),
 

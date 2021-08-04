@@ -11,6 +11,7 @@ $hover-color: $secondary-color;
     background-repeat: no-repeat;
     cursor: pointer;
 
+    @include svg-mask('../../assets/logo/working-space.svg');
     background-color: var(--accent-color, $accent-color);
 
     @include transition($transition);
@@ -32,13 +33,27 @@ $hover-color: $secondary-color;
     &.behance,
     &.linkedin,
     &.instagram,
-    &.pinterest {
+    &.pinterest,
+    &.office-block,
+    &.meeting,
+    &.work {
+        &.size-content-100 {
+            @include svg-mask-size(100%);
+        }
         &.size-content-70 {
             @include svg-mask-size(70%);
         }
 
         &.size-content-60 {
             @include svg-mask-size(60%);
+        }
+
+        &.gray {
+            background-color: $gray;
+        }
+
+        &.white {
+            background-color: #fff;
         }
     }
 
@@ -69,11 +84,25 @@ $hover-color: $secondary-color;
     &.behance {
         @include svg-mask('../../assets/icons/behance.svg');
     }
+
     &.linkedin {
         @include svg-mask('../../assets/icons/linkedin.svg');
     }
+
     &.pinterest {
         @include svg-mask('../../assets/icons/pinterest.svg');
+    }
+
+    &.office-block {
+        @include svg-mask('../../assets/icons/office-block.svg');
+    }
+
+    &.meeting {
+        @include svg-mask('../../assets/icons/meeting.svg');
+    }
+
+    &.work {
+        @include svg-mask('../../assets/icons/work.svg');
     }
 
     &.hover-none {

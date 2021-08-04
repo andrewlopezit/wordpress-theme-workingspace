@@ -1,0 +1,168 @@
+.testimonial-slider#testimonials-slider {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .stage-container {
+        width: 100%;
+
+        .item {
+            align-items: center;
+            justify-content: space-between;
+            padding: 4em 0;
+            display: none;
+
+            &.is-active {
+                display: flex;
+            }
+    
+            .content {
+                p {
+                    width: 80%;
+                    max-width: 750px;
+                    margin: 4em 2em;
+                    font-size: 17px;
+                    position: relative;
+                    opacity: 0;
+
+                    @include transform(translateY(100px));
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: -5em;
+                        left: -1.5em;
+                        width: 8em;
+                        height: 8em;
+                        
+                        background-image: url('../icons/quote.png');
+                        background-size: contain;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                    }
+                }
+    
+                .author-details {
+                    display: flex;
+                    flex-direction: column;
+                    margin: 0 2em;
+                    opacity: 0;
+
+                    @include transform(translateY(50px));
+    
+                    .profession {
+                        font-size: 15px;
+                        font-weight: 500;
+                    }
+    
+                    .signature img {
+                        width: 200px;
+                        height: 50px;
+    
+                        object-fit: contain;
+                        object-position: center;
+                    }
+                }
+            }
+            
+            .user-profile {
+                position: relative;
+                opacity: 0;
+
+                @include transform(scale(0));
+    
+                &::after {
+                    position: absolute;
+                    content: '';
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    background-color: var(--primary-color, $primary-color);
+                    z-index: -1;
+    
+                    @include transform(translate(5px, 5px))
+                }
+            }
+        }
+    }
+
+    .controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5em;
+
+        span {
+            width: 40px;
+            height: 4px;
+            background-color: transparent;
+            margin: 0 10px;
+            background-color: rgba($secondary-color, 0.5);
+
+            position: relative;
+            display: none;
+            cursor: pointer;
+
+            &.is-active,
+            &.is-display {
+                display: inline;
+            }
+            
+            .duration-progress {
+                position: absolute;
+                content: '';
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 0;
+                background-color: $secondary-color;
+                z-index: -1;
+              }
+        }
+    }
+}
+
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+
+}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) { 
+    .testimonial-slider#testimonials-slider {
+        .stage-container {
+            .item {
+                position: relative;
+                padding-top: 6em;
+                
+                .user-profile {
+                    position: absolute;
+                    top: -1.5em;
+                    width: 120px;
+                    left: 50%;
+
+                    @include transform(translateX(-50%));
+
+                    img {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+   
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+
+}
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {
+
+}
