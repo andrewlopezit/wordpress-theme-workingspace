@@ -69,7 +69,12 @@
             
             .user-profile {
                 position: relative;
+                display: none;
                 opacity: 0;
+
+                &.is-display {
+                    display: inline;
+                }
 
                 @include transform(scale(0));
     
