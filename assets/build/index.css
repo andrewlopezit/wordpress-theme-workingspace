@@ -716,6 +716,41 @@ input:focus {
      object-fit: contain;
 }
 
+@media (max-width: 767.98px) {
+  #hero-image-slider {
+    width: 100%;
+    height: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #hero-image-slider .item {
+    position: relative;
+  }
+  #hero-image-slider .item.is-display.first, #hero-image-slider .item.is-display.second, #hero-image-slider .item.is-display.third, #hero-image-slider .item.is-display.fourth {
+    width: 100%;
+    top: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
+  }
+  #hero-image-slider .item.is-display.first::before, #hero-image-slider .item.is-display.second::before, #hero-image-slider .item.is-display.third::before, #hero-image-slider .item.is-display.fourth::before {
+    display: none !important;
+  }
+}
+@media (max-width: 991.98px) {
+  #hero-image-slider {
+    height: 24em;
+  }
+  #hero-image-slider .item.is-display.second {
+    top: 32%;
+  }
+  #hero-image-slider .item.is-display.third {
+    top: 52%;
+  }
+  #hero-image-slider .item.is-display.fourth {
+    top: 75%;
+  }
+}
 /*------------------------------------*
 	BRAND
 *------------------------------------*/
@@ -1120,6 +1155,26 @@ input:focus {
   margin: 50px 0;
 }
 
+@media (max-width: 767.98px) {
+  .workspace-list {
+    -ms-grid-columns: (1fr)[1] !important;
+    grid-template-columns: repeat(1, 1fr) !important;
+    grid-column-gap: 0;
+    grid-row-gap: 2em;
+  }
+  .workspace-list .item.workspace.card:nth-child(4), .workspace-list .item.workspace.card:nth-child(5), .workspace-list .item.workspace.card:nth-child(6) {
+    display: none !important;
+  }
+}
+@media (max-width: 991.98px) {
+  .workspace-list {
+    -ms-grid-columns: (1fr)[2];
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .workspace-list .item.workspace.card:nth-child(5), .workspace-list .item.workspace.card:nth-child(6) {
+    display: none !important;
+  }
+}
 /*------------------------------------*
 	  POSTS
 *------------------------------------*/
@@ -1179,6 +1234,28 @@ input:focus {
   transform: scale(0.9);
 }
 
+.action-container.post {
+  margin: 50px 0;
+}
+
+@media (max-width: 767.98px) {
+  .post-list#posts {
+    -ms-grid-columns: (1fr)[1] !important;
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+  .post-list#posts .item.card.post:nth-child(3) {
+    display: flex !important;
+  }
+}
+@media (max-width: 991.98px) {
+  .post-list#posts {
+    -ms-grid-columns: (1fr)[2];
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .post-list#posts .item.card.post:nth-child(3) {
+    display: none !important;
+  }
+}
 /*------------------------------------*
 	  POSTS
 *------------------------------------*/
@@ -1286,6 +1363,22 @@ input:focus {
   z-index: -1;
 }
 
+@media (max-width: 767.98px) {
+  .testimonial-slider#testimonials-slider .stage-container .item {
+    position: relative;
+    padding-top: 6em;
+  }
+  .testimonial-slider#testimonials-slider .stage-container .item .user-profile {
+    position: absolute;
+    top: -1.5em;
+    width: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .testimonial-slider#testimonials-slider .stage-container .item .user-profile img {
+    width: 100%;
+  }
+}
 /*------------------------------------*
 	P A G E S
 	FRONT PAGE
@@ -1427,6 +1520,38 @@ section.blog-post .heading--sub-paragraph {
 
 section.testimonials {
   margin-bottom: 100px;
+}
+
+@media (max-width: 767.98px) {
+  .hero-section,
+.workspace-section--background,
+section.about-our-service,
+section.blog-post,
+section.testimonials {
+    margin-bottom: 50px !important;
+  }
+
+  .hero-section .image-slider {
+    margin-bottom: 20px !important;
+  }
+
+  section.about-our-service .services {
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media (max-width: 991.98px) {
+  .hero-section,
+.workspace-section--background,
+section.about-our-service,
+section.blog-post,
+section.testimonials {
+    margin-bottom: 80px;
+  }
+
+  section.about-our-service .services .card .card-body {
+    padding: 4rem 0;
+  }
 }
 
 /*# sourceMappingURL=index.css.map*/

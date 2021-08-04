@@ -85,3 +85,45 @@
 .action-container.workspace {
     margin: 50px 0;
 }
+
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+
+}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) { 
+    .workspace-list {
+        grid-template-columns: repeat(1, 1fr) !important;
+        grid-column-gap: 0;
+        grid-row-gap: 2em;
+        
+        .item.workspace.card {
+            &:nth-child(4),
+            &:nth-child(5),
+            &:nth-child(6) {
+                display: none !important;
+            }
+        }
+    }
+
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+    .workspace-list {
+        grid-template-columns: repeat(2, 1fr);
+        .item.workspace.card {
+            &:nth-child(5),
+            &:nth-child(6) {
+                display: none !important;
+            }
+        }
+    }
+}
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {
+
+}

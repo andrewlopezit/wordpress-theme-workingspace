@@ -48,9 +48,11 @@
                     </span>
                 </div>
             </div>
-            <div class="user-profile">
-                <img src="<?php the_post_thumbnail_url('testimonial_profile'); ?>" alt="">
-            </div>
+            <?php if(has_post_thumbnail()): ?>
+                <div class="user-profile">
+                    <img src="<?php the_post_thumbnail_url('testimonial_profile'); ?>" alt="">
+                </div>
+            <?php endif ?>
         </div>
         <?php endwhile; 
             wp_reset_postdata();

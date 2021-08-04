@@ -39,3 +39,7 @@
     <p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>
     <?php endif; ?>
 </div>
+
+<div class="action-container center post">
+    <a class="btn text-center" href="<?php esc_url(site_url())?>">View more</a>
+</div>

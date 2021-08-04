@@ -29,12 +29,12 @@
             </div>
         </div>
     <div class="col content">
-            <h1 class="headline title large">Coworking space.</h1>
-            <p class="title sub-paragraph">
-                Grow your business with co workingspace productivity led agile coworking spaces in Philippines that suit your business across all the metropolitan
-            </p>
-            <a class="btn" href="">Request a visit</a>
-        </div>
+        <h1 class="headline title large">Coworking space.</h1>
+        <p class="title sub-paragraph">
+            Grow your business with co workingspace productivity led agile coworking spaces in Philippines that suit your business across all the metropolitan
+        </p>
+        <a class="btn" href="">Request a visit</a>
+    </div>
    </div>
 </section>
 
@@ -56,7 +56,7 @@
             <p>Coworking spaces have disrupted the traditional office experience by providing flexible work options. With corporates tapping into shared spaces to boost their productivity and efficiency, co workingspace is one of the best to work with.</p>
             <a class="btn" href="">Learn More</a>
         </div>
-        <div class="col img-service--background"></div>
+        <div class="col d-none d-sm-flex d-flex img-service--background"></div>
     </div>
 
     <div class="row services">
