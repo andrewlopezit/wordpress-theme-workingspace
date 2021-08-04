@@ -187,8 +187,19 @@ section.testimonials {
     }
 
     .hero-section{
+       .row {
+           display: flex;
+           flex-direction: column;
+       }
+
         .image-slider {
             margin-bottom: $margin-bottom-section - 30 !important;
+        }
+
+        .content {
+            .headline {
+                width: 100%;
+            }
         }
     }
 
