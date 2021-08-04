@@ -10,7 +10,7 @@ class HeroImageSlider {
 
         // local variables
         this.displayCntrols = 4;
-        this.animationSpeed = 10;
+        this.animationSpeed = 5;
         this.lastIndexActiveItem = 0;
         this.primaryColor = getComputedStyle(document.documentElement)
                          .getPropertyValue('--primary-color');
@@ -26,18 +26,14 @@ class HeroImageSlider {
 
     initHeroImageSlider() {
         this.$activeItems = this.$heroImageSlider.find('.item:lt(4)').addClass('is-display');
-        this.addBorderClassActiveItems();
+        this.addClassesActiveItem();
     }
 
     initHeroImageSliderAnimation() {
         this.heroImageSliderAnimation = gsap.timeline({ 
             onComplete: () => gsap.delayedCall( this.animationSpeed, () => this.heroImageSliderAnimation.reverse()), 
             onReverseComplete: () =>  this.paginateItem()});
-        this.heroImageSliderAnimation
-        .to(this.$activeItems.eq(0), { scale:1, width: '70%', opacity: 1 ,ease: 'back', duration: 1})
-        .to(this.$activeItems.eq(1), { scale:1, width: '45%', translateX: '100%', translateY: '105%',  opacity: 1, ease: 'back', duration: 1})
-        .to(this.$activeItems.eq(2), { scale:1, width: '60%', translateY: '130%',   opacity: 1, ease: 'back', duration: 1})
-        .to(this.$activeItems.eq(3), { scale:1, width: '40%', translateX: '112%', translateY: '275%', opacity: 1, ease: 'back', duration: 1});
+        this.heroImageSliderAnimation.to(this.$activeItems, { opacity: 1, scale:1, ease: 'back', stagger:{ amount: 2, ease: 'stepped'} });
     }
 
     events() {
@@ -47,7 +43,14 @@ class HeroImageSlider {
     }
 
     paginateItem () {
-        this.$items.removeClass('is-display border-left border-right hover-odd hover-even');
+        this.$items.removeClass(
+            `is-display
+             first
+             second
+             third
+             fourth
+            `
+        );
 
         this.heroImageSliderAnimation.reverse();
 
@@ -67,21 +70,31 @@ class HeroImageSlider {
         }
 
         this.$activeItems.addClass('is-display');
-        this.addBorderClassActiveItems();
+        this.addClassesActiveItem();
 
         this.initHeroImageSliderAnimation();
 
     }
 
-    addBorderClassActiveItems() {
-        this.$activeItems.eq(0).addClass('border-left');
-        this.$activeItems.eq(this.displayCntrols-1).addClass('border-right');
-
+    addClassesActiveItem() {
         for(let i = 0; i < this.$activeItems.length; i++) {
-            if((i%2) === 0) {
-                this.$activeItems.eq(i).addClass('hover-even');
-            }else {
-                this.$activeItems.eq(i).addClass('hover-odd');
+            switch(i) {
+                case 0: {
+                    this.$activeItems.eq(i).addClass('first');
+                }
+                break;
+                case 1: {
+                    this.$activeItems.eq(i).addClass('second');
+                }
+                break;
+                case 2: {
+                    this.$activeItems.eq(i).addClass('third');
+                }
+                break;
+                case 3: {
+                    this.$activeItems.eq(i).addClass('fourth');
+                }
+                break;
             }
         }
     }
