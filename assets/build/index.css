@@ -37,6 +37,7 @@
 *
 * PAGES
 * - FRONT PAGE
+* - SINGLE WORKINGSPACES
 */
 /*------------------------------------*
 	FONTS
@@ -1572,6 +1573,53 @@ section.testimonials {
   section.about-our-service .services .card .card-body {
     padding: 4rem 0;
   }
+}
+/*------------------------------------*
+	SINGLE WORKINGSPACES
+*------------------------------------*/
+.single-workingspaces.page .hero-section {
+  width: 100%;
+  height: auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+.single-workingspaces.page .hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+.single-workingspaces.page .hero-section .container {
+  z-index: 1;
+  position: relative;
+  padding: 4em 0;
+}
+.single-workingspaces.page .hero-section .container .row .col {
+  display: flex;
+}
+.single-workingspaces.page .hero-section .container .headline {
+  line-height: 1em;
+  color: #fff;
+  position: relative;
+}
+.single-workingspaces.page .hero-section .container .headline::before, .single-workingspaces.page .hero-section .container .headline::after {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 0;
+  height: 8px;
+  width: 45%;
+  background-color: var(--primary-color, #FDD500);
+}
+.single-workingspaces.page .hero-section .container .headline::after {
+  top: auto;
+  bottom: -12px;
+  width: 100%;
 }
 
 /*# sourceMappingURL=index.css.map*/

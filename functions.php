@@ -355,6 +355,14 @@ if(!class_exists('WorkingspaceTheme')) {
                     'crop' => true
                 )
             )
+            ->set_image_size(
+                array(
+                    'name' => 'hero_background',
+                    'width' => 800,
+                    'height' => 300,
+                    'crop' => true
+                )
+            )
            ->set();
         }
     }

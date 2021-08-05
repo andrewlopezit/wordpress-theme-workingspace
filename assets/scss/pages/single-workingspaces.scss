@@ -1,0 +1,59 @@
+.single-workingspaces.page {
+    .hero-section {
+        width: 100%;
+        height: auto;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+
+            background-color: rgba(#fff, 0.15);
+        }
+
+        .container {
+            z-index: 1;
+            position: relative;
+            padding: 4em 0;
+            
+            .row{
+                .col{
+                    display: flex;
+                }
+            }
+
+            .headline {
+                line-height: 1em;
+                color: #fff;
+
+                position: relative;
+                
+                &::before,
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: -12px;
+                    left: 0;
+
+                    height: 8px;
+                    width: 45%;
+        
+                    background-color: var(--primary-color, $primary-color);
+                }
+
+                &::after {
+                    top: auto;
+                    bottom: -12px;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

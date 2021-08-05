@@ -7,7 +7,17 @@ import TestimonialsSlider from './modules/frontend/TestimonialsSlider';
 import Main from './modules/frontend/Main';
 
 // instantiate module classes
-const heroImageSlider = new HeroImageSlider();
-const hamburgerMenu = new HamburgerMenu();
-const testimonialsSlider = new TestimonialsSlider();
-const main  = new Main();
+let heroImageSlider;
+let hamburgerMenu;
+let testimonialsSlider;
+let main;
+
+const hompage = document.querySelector(".home");
+
+if(hompage) {
+    heroImageSlider = new HeroImageSlider();
+    testimonialsSlider = new TestimonialsSlider();
+}
+
+hamburgerMenu = new HamburgerMenu();
+main  = new Main();

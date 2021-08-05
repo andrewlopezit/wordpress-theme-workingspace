@@ -9,6 +9,6 @@
 
     <title><?php echo get_bloginfo().' | '.get_the_title();   ?></title>
 </head>
-<body>
+<body <?php body_class(); ?>>
 
 <?php get_template_part('partials/header/main','main'); ?>

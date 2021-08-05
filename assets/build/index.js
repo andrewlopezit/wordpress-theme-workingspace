@@ -107,10 +107,19 @@ __webpack_require__.r(__webpack_exports__);
 
  // instantiate module classes
 
-const heroImageSlider = new _modules_frontend_HeroImageSlider__WEBPACK_IMPORTED_MODULE_1__["default"]();
-const hamburgerMenu = new _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_2__["default"]();
-const testimonialsSlider = new _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_3__["default"]();
-const main = new _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_4__["default"]();
+let heroImageSlider;
+let hamburgerMenu;
+let testimonialsSlider;
+let main;
+const hompage = document.querySelector(".home");
+
+if (hompage) {
+  heroImageSlider = new _modules_frontend_HeroImageSlider__WEBPACK_IMPORTED_MODULE_1__["default"]();
+  testimonialsSlider = new _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_3__["default"]();
+}
+
+hamburgerMenu = new _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_2__["default"]();
+main = new _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_4__["default"]();
 
 /***/ }),
 
