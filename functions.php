@@ -22,6 +22,7 @@ if(file_exists(dirname(__FILE__).'/inc/helpers/front-end-helpers.php')) {
 }
 
 use Inc\Classes\ThemeSetup;
+use Inc\CustomMetaRooms\CustomMetaRooms;
 
 // Core Constants.
 define( 'WORKINGSPACEWP_THEME_DIR', get_template_directory() );
@@ -75,6 +76,9 @@ if(!class_exists('WorkingspaceTheme')) {
 
                 // load all menus
                 $this->register_menus();
+
+                // load all custom meta box
+                new CustomMetaRooms();
                 
             /** Frontend */    
             } else {
