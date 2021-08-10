@@ -6,22 +6,10 @@
     width: 2%;
 }
 
-@mixin hoverUI() {
-    content: '';
-    position: absolute;
-    background-color:rgba(#fff, .5);
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-
-    @include transition($transition);
-}
-
-
 #hero-image-slider {
     position: relative;
     width: 90%;
-    height: 36em;
+    height: 38.5em;
 
     .item {
         position: absolute;
@@ -29,19 +17,6 @@
         opacity: 1;
         width: 0;
 
-        &:hover {
-            &.is-display {
-                &.first,
-                &.second,
-                &.third,
-                &.fourth {
-                    &::after {
-                        width: 0;
-                    }
-                }
-            }
-        }
-        
         &.is-display {
             display: flex;
             opacity: 0;
@@ -53,9 +28,6 @@
                 left: 0;
                 width: 70%;
 
-                &::after {
-                    @include hoverUI();
-                }
 
                 &::before {
                    @include border();
@@ -64,35 +36,23 @@
             }
 
             &.second {
-                width: 45%;
-                top: 30%;
+                width: 50%;
+                top: 13em;
                 right: 0;
 
-                &::after {
-                    @include hoverUI();
-                    right: 0;
-                }
             }
 
             &.third {
                 width: 60%;
-                top: 50%;
+                top: 21em;
                 left: 0;
 
-                &::after {
-                    @include hoverUI();
-                }
             }
 
             &.fourth {
                 width: 40%;
-                top: 70%;
+                top: 29em;
                 right: 5%;
-
-                &::after {
-                    @include hoverUI();
-                    right: 0;
-                }
 
                 &::before {
                     @include border();

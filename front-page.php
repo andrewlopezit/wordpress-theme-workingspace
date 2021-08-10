@@ -17,9 +17,7 @@
                 ?>
                 <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
                 <div class="item" data-slide="<?php echo $counter; $counter++; ?>">
-                    <a href="<?php the_permalink(); ?>">
-                        <img src="<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( $query->ID ), 'hero_image_slider' )[0];?>" alt="">
-                    </a>
+                    <img src="<?php echo wp_get_attachment_image_src( get_post_thumbnail_id( $query->ID ), 'hero_image_slider' )[0];?>" alt="">
                 </div>
                 <?php endwhile; 
                    wp_reset_postdata();

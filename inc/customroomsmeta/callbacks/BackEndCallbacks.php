@@ -8,12 +8,11 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\CustomMetarooms\Callbacks;
+namespace Inc\customroomsmeta\Callbacks;
 
-final class BackendUI {
+final class BackEndCallbacks {
 
     public function index() {
-        $base_path = WORKINGSPACE_INC_DIR_URI;
-        return ;
+        return require_once WORKINGSPACE_INC_DIR.'customroomsmeta/callbacks/views/index.php';
     }
 }
