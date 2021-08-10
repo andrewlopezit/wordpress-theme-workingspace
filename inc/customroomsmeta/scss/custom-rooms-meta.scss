@@ -193,7 +193,21 @@ $border: #DFDFDF solid 1px;;
             }
 
             .post-container{
-                max-height: 330px;  
+                max-height: 330px; 
+                
+                .selected-rooms {
+                    .spinner-container{
+                        width: 100%;
+                        display: none;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 2em;
+
+                        &.is-display {
+                            display: flex;
+                        }
+                    }
+                }
 
                 .rooms-container {
                     display: grid;

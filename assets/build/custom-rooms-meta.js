@@ -130,6 +130,7 @@ class CustomRoomsMeta {
     this.$contentContainer = this.$customRoomsMeta.find('.content-container');
     this.$postContainer = this.$contentContainer.find('.post-container');
     this.$roomsContainer = this.$postContainer.find('.rooms-container');
+    this.$selectedRoomsContainer = this.$postContainer.find('.selected-rooms');
     this.$svgClusteringContainer = this.$contentContainer.find('.floorplan-container > .svg-clustering');
     this.$outputContainer = this.$contentContainer.find('.output');
     this.$searchPostContainer = this.$outputContainer.find('.search-container');
@@ -195,6 +196,11 @@ class CustomRoomsMeta {
         //prevent close search input
         return;
       } else if (this.floorplanShapes.map(shape => shape.id).includes(e.target.id)) {
+        if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('id')) {
+          this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
+          return;
+        }
+
         this.destroyActiveShapeAnimation();
         this.$activeShapes = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target);
         this.$searchPostContainer.addClass('is-display'); // console.log(e.target.getBoundingClientRect()); // get coordinates

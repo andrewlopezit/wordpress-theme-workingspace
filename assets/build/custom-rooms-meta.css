@@ -148,6 +148,16 @@
 .custom-meta-rooms-container .content-container .assigned-rooms .post-container {
   max-height: 330px;
 }
+.custom-meta-rooms-container .content-container .assigned-rooms .post-container .selected-rooms .spinner-container {
+  width: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+}
+.custom-meta-rooms-container .content-container .assigned-rooms .post-container .selected-rooms .spinner-container.is-display {
+  display: flex;
+}
 .custom-meta-rooms-container .content-container .assigned-rooms .post-container .rooms-container {
   display: -ms-grid;
   display: grid;

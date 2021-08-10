@@ -54,6 +54,11 @@
             </div>
             <hr/>
             <div class="post-container">
+                <div class="selected-rooms">
+                    <div class="spinner-container">
+                        <div class="custom-rooms--spinner"></div>
+                    </div>
+                </div>
                 <div class="rooms-container">
                 </div>
             </div>

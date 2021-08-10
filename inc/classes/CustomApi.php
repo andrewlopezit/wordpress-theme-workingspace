@@ -30,6 +30,23 @@ class CustomApi extends WP_REST_Controller {
               ),
               'permission_callback' => array($this, 'get_permission_callback')
             ));
+            register_rest_route('wp/v2', 'workingspaces/(?P<id>\d+)/rooms/(?P<room_id>\d+)', array(
+              'methods' => WP_REST_SERVER::READABLE,
+              'callback' => array($this, 'get_workingspace_room_byid'),
+              'args' => array(
+                'id' =>array(
+                    'validate_callback' => function($param, $request, $key) {
+                      return is_numeric( $param );
+                    }
+                ),
+                'room_id' =>array(
+                  'validate_callback' => function($param, $request, $key) {
+                    return is_numeric( $param );
+                  }
+              ),
+              ),
+              'permission_callback' => array($this, 'get_permission_callback')
+            ));
           });
     }
 
@@ -57,20 +74,37 @@ class CustomApi extends WP_REST_Controller {
         'post__in' => $room_ids
       ));
 
-      $rooms =[];
+      $results = $this->add_workingspaces_details($results->posts);
+      
+      return wp_send_json($results, 200);
+    }
 
-      foreach($results->posts as $result) {
-        $post = $result;
-        $post->featured_image = get_the_post_thumbnail($result->ID);
+    public function get_workingspace_room_byid($request) {
+      $request_id = $request['id'];
+      $room_id = $request['room_id'];
+
+      if(!$request_id) return wp_send_json_error('No results found', 404);
+
+
+      $result = get_post($room_id);
+
+      $results = $this->add_workingspaces_details([$result]);
+      
+      return wp_send_json($results[0], 200);
+    }
+
+    public function add_workingspaces_details($posts) {
+      $rooms = [];
+
+      foreach($posts as $val) {
+        $post = $val;
+        $post->featured_image = get_the_post_thumbnail($val->ID);
         $post->categories =  get_the_category($post->ID);
-        $post->room_rate = get_field('room_rate', $result->ID);
+        $post->room_rate = get_field('room_rate', $val->ID);
 
         array_push($rooms, $post);
       }
 
-      $results = $rooms;
-      return wp_send_json($results, 200);
+      return $rooms;
     }
-
-
 }

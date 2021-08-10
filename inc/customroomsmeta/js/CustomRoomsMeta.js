@@ -12,6 +12,7 @@ class CustomRoomsMeta {
         this.$contentContainer = this.$customRoomsMeta.find('.content-container');
         this.$postContainer = this.$contentContainer.find('.post-container');
         this.$roomsContainer = this.$postContainer.find('.rooms-container');
+        this.$selectedRoomsContainer = this.$postContainer.find('.selected-rooms');
         this.$svgClusteringContainer =  this.$contentContainer.find('.floorplan-container > .svg-clustering');
         this.$outputContainer = this.$contentContainer.find('.output');
         this.$searchPostContainer = this.$outputContainer.find('.search-container');
@@ -94,6 +95,11 @@ class CustomRoomsMeta {
                 //prevent close search input
                return;
            } else if(this.floorplanShapes.map(shape => shape.id).includes(e.target.id)) {
+
+                if($(e.target).data('id')){
+                    this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
+                    return;
+                }
 
                 this.destroyActiveShapeAnimation();
 
@@ -215,6 +221,7 @@ class CustomRoomsMeta {
             const { site_url } =this.translationArray;
 
             this.$searchResultsContainer.children().remove();
+
             api(site_url).getPostsByName(this.searchValue).then( result => {
                 const { data } = result;
 
