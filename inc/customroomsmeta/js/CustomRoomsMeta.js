@@ -45,6 +45,7 @@ class CustomRoomsMeta {
         this.totalUnAssignedRooms;
         this.assigendRoomsColor = '#00CEB5';
         this.unAssignedRoomsColor = '#778B85';
+        this.isFetchingSelectedRooms;
 
         this.rooms = [];
 
@@ -100,12 +101,16 @@ class CustomRoomsMeta {
                     return;
                 }
                 // display room if it has assigned rooms
-                if($(e.target).data('id')){
+                if($(e.target).data('id') && !this.isFetchingSelectedRooms){
                     this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
+
                     const { site_url } =this.translationArray;
+                    this.isFetchingSelectedRooms = true;
 
                     api(site_url).getPostById($(e.target).data('id')).then( result =>{
+                        this.$selectedRoomsContainer.find('.item').remove();
                         this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
+                        this.isFetchingSelectedRooms = false;
 
                         const { data } = result;
 
@@ -113,6 +118,7 @@ class CustomRoomsMeta {
 
                     }).catch(() =>{
                         this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
+                        this.isFetchingSelectedRooms = false;
                     });
                     return;
                 }
@@ -152,6 +158,8 @@ class CustomRoomsMeta {
             return;
         });
         
+
+        // delete selected rooms
         this.$selectedRoomsContainer.on('click', '.item > .action-container > .delete-rooms',e => {
             const $el = $(e.target);
 
@@ -188,7 +196,8 @@ class CustomRoomsMeta {
         this.$roomsContainer.on('mouseleave', '.item', () => {
             if(!this.hoverRoomAnimation) return;
             
-            this.hoverRoomAnimation.reverse(0.5);
+            this.hoverRoomAnimation.kill();
+            this.$roomHover.css('opacity', 1);
         });
     }
 

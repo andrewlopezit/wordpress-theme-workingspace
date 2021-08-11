@@ -158,6 +158,7 @@ class CustomRoomsMeta {
     this.totalUnAssignedRooms;
     this.assigendRoomsColor = '#00CEB5';
     this.unAssignedRoomsColor = '#778B85';
+    this.isFetchingSelectedRooms;
     this.rooms = []; // init events
 
     this.events(); //init color
@@ -208,19 +209,23 @@ class CustomRoomsMeta {
       } // display room if it has assigned rooms
 
 
-      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('id')) {
+      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('id') && !this.isFetchingSelectedRooms) {
         this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
         const {
           site_url
         } = this.translationArray;
+        this.isFetchingSelectedRooms = true;
         Object(_modules_Api__WEBPACK_IMPORTED_MODULE_2__["default"])(site_url).getPostById(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('id')).then(result => {
+          this.$selectedRoomsContainer.find('.item').remove();
           this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
+          this.isFetchingSelectedRooms = false;
           const {
             data
           } = result;
           this.$selectedRoomsContainer.append(this.roomTemplate([data], true));
         }).catch(() => {
           this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
+          this.isFetchingSelectedRooms = false;
         });
         return;
       }
@@ -249,7 +254,8 @@ class CustomRoomsMeta {
       $el.parent().parent().remove();
       this.removeRooms($el);
       return;
-    });
+    }); // delete selected rooms
+
     this.$selectedRoomsContainer.on('click', '.item > .action-container > .delete-rooms', e => {
       const $el = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target);
       this.removeRooms($el);
@@ -278,7 +284,8 @@ class CustomRoomsMeta {
     });
     this.$roomsContainer.on('mouseleave', '.item', () => {
       if (!this.hoverRoomAnimation) return;
-      this.hoverRoomAnimation.reverse(0.5);
+      this.hoverRoomAnimation.kill();
+      this.$roomHover.css('opacity', 1);
     });
   }
 
