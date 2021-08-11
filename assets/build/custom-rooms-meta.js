@@ -198,6 +198,20 @@ class CustomRoomsMeta {
       } else if (this.floorplanShapes.map(shape => shape.id).includes(e.target.id)) {
         if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('id')) {
           this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
+          this.$selectedRoomsContainer.find('.item').remove();
+          const {
+            site_url
+          } = this.translationArray;
+          Object(_modules_Api__WEBPACK_IMPORTED_MODULE_2__["default"])(site_url).getPostById(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('id')).then(result => {
+            this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
+            const {
+              data
+            } = result;
+            console.log(data);
+            this.$selectedRoomsContainer.append(this.roomTemplate([data], true));
+          }).catch(() => {
+            this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
+          });
           return;
         }
 
@@ -229,17 +243,9 @@ class CustomRoomsMeta {
     this.$roomsContainer.on('click', e => {
       if (e.target.className !== 'components-button is-destructive delete-rooms') return;
       const $el = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target);
-      const id = $el.data('id');
       $el.parent().parent().remove();
-      this.$outputContainer.find('svg').children().each((i, el) => {
-        const $el = jquery__WEBPACK_IMPORTED_MODULE_0___default()(el);
-
-        if ($el.data('id') === id) {
-          $el.removeAttr('data-id style');
-          this.reloadContent();
-          return;
-        }
-      });
+      this.removeRooms($el);
+      return;
     });
   }
 
@@ -272,6 +278,21 @@ class CustomRoomsMeta {
     ;
   }
 
+  removeRooms($el) {
+    const id = $el.data('id');
+    this.$outputContainer.find('svg').children().each((i, el) => {
+      const $el = jquery__WEBPACK_IMPORTED_MODULE_0___default()(el);
+
+      if ($el.data('id') === id) {
+        $el.removeAttr('data-id style');
+        this.rooms = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.remove(this.rooms, room => room.ID !== id);
+        console.log(this.rooms, id);
+        this.reloadContent();
+        return;
+      }
+    });
+  }
+
   getConvertedOutputtedSvg() {
     const serializer = new XMLSerializer();
     return serializer.serializeToString(this.$outputContainer.find('svg')[0]);
@@ -285,6 +306,7 @@ class CustomRoomsMeta {
   }
 
   displaySearchRooms() {
+    console.log(this.rooms);
     if (!this.$txtSearchInput.val() || this.searchValue === this.$txtSearchInput.val()) return;
     this.searchValue = this.$txtSearchInput.val();
     clearInterval(this.searchTimer);
@@ -322,7 +344,7 @@ class CustomRoomsMeta {
                             ${value.featured_image}
                             <div class="detail">
                                 <h4 class="name">${value.post_title}</h4>
-                                <div class="price">${value.room_rate}</div>
+                                <div class="price">$${value.room_rate}/month</div>
                                 <small class="categories">${value.categories.map(category => category.name).toString()}</small>
                             </div>
                             <div class="action-container">
@@ -382,6 +404,11 @@ const api = url => {
 
     getPostsByName(name) {
       const url = `${this.endpoint}?search=${name}`;
+      return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
+    }
+
+    getPostById(id) {
+      const url = `${this.endpoint}/${id}`;
       return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
     }
 

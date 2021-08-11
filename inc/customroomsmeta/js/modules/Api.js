@@ -13,6 +13,11 @@ const api = (url) => {
             const url = `${this.endpoint}?search=${name}`;
             return axios(url);
         }
+
+        getPostById(id) {
+            const url = `${this.endpoint}/${id}`;
+            return axios(url);
+        }
         
     }
 

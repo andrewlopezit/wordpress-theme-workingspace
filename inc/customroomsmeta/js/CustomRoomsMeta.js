@@ -98,6 +98,21 @@ class CustomRoomsMeta {
 
                 if($(e.target).data('id')){
                     this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
+                    this.$selectedRoomsContainer.find('.item').remove();
+                    
+                    const { site_url } =this.translationArray;
+                    
+                    api(site_url).getPostById($(e.target).data('id')).then( result =>{
+                        this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
+
+                        const { data } = result;
+                        console.log(data);
+
+                        this.$selectedRoomsContainer.append(this.roomTemplate([data], true));
+
+                    }).catch(() =>{
+                        this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
+                    });
                     return;
                 }
 
@@ -136,26 +151,14 @@ class CustomRoomsMeta {
         });
 
         // delete assinged rooms
-        this.$roomsContainer.on('click', e =>{
-
+        this.$roomsContainer.on('click', e => {
             if(e.target.className !== 'components-button is-destructive delete-rooms') return;
 
             const $el = $(e.target);
-            const id = $el.data('id');
 
             $el.parent().parent().remove();
-
-            this.$outputContainer.find('svg').children().each( (i, el)=> {
-                const $el = $(el);
-
-                if($el.data('id') === id) {
-                    $el.removeAttr('data-id style');
-
-                    this.reloadContent();
-
-                    return;
-                }
-            });
+            this.removeRooms($el);
+            return;
         });
     }
 
@@ -193,6 +196,23 @@ class CustomRoomsMeta {
         return this.floorplanShapes.map(shape => $(shape).data('id')).filter(val => val > 0).length;;
     }
 
+    removeRooms ($el) {
+        const id = $el.data('id');
+
+        this.$outputContainer.find('svg').children().each( (i, el)=> {
+            const $el = $(el);
+
+            if($el.data('id') === id) {
+                $el.removeAttr('data-id style');
+                this.rooms = _.remove(this.rooms, room => room.ID !== id);
+                console.log(this.rooms, id);
+
+                this.reloadContent();
+                return;
+            }
+        });
+    }
+
     getConvertedOutputtedSvg() {
         const serializer = new XMLSerializer();
         return serializer.serializeToString(this.$outputContainer.find('svg')[0]);
@@ -207,7 +227,8 @@ class CustomRoomsMeta {
         this.activeShapeAnimation = null;
     }
 
-    displaySearchRooms() {        
+    displaySearchRooms() {
+        console.log(this.rooms);
 
         if(!this.$txtSearchInput.val() ||
             this.searchValue === this.$txtSearchInput.val()) return;
@@ -250,7 +271,7 @@ class CustomRoomsMeta {
                             ${value.featured_image}
                             <div class="detail">
                                 <h4 class="name">${value.post_title}</h4>
-                                <div class="price">${value.room_rate}</div>
+                                <div class="price">$${value.room_rate}/month</div>
                                 <small class="categories">${value.categories.map(category => category.name).toString()}</small>
                             </div>
                             <div class="action-container">

@@ -193,7 +193,8 @@ $border: #DFDFDF solid 1px;;
             }
 
             .post-container{
-                max-height: 330px; 
+                max-height: 300px;
+                overflow: auto; 
                 
                 .selected-rooms {
                     .spinner-container{
@@ -207,6 +208,31 @@ $border: #DFDFDF solid 1px;;
                             display: flex;
                         }
                     }
+                    
+                    .item {
+                        border-bottom: 1px solid #f6f7f7;
+                        margin-bottom: 50px;
+                        padding-bottom: 20px;
+
+                        h4 {
+                            margin: 0;
+                            font-size: 1.5em;
+                        }
+
+                        .price {
+                            font-weight: 600;
+                        }
+
+                        .action-container{
+                            padding: 10px 0;
+                        }
+
+                        img {
+                            height: 150px;
+                            object-fit: cover;
+                            object-position: center;
+                        }
+                    }
                 }
 
                 .rooms-container {
@@ -214,9 +240,6 @@ $border: #DFDFDF solid 1px;;
                     grid-template-columns: repeat(3, 1fr);
                     grid-template-rows: 180px;
                     grid-gap: 10px;
-
-                    max-height: 300px;
-                    overflow: auto;
 
                     .item {
                         img {
