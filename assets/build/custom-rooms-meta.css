@@ -146,6 +146,7 @@
   cursor: pointer;
 }
 .custom-meta-rooms-container .content-container .assigned-rooms .post-container {
+  height: auto;
   max-height: 300px;
   overflow: auto;
 }
@@ -189,6 +190,15 @@
   -ms-grid-rows: 180px;
   grid-template-rows: 180px;
   grid-gap: 10px;
+}
+.custom-meta-rooms-container .content-container .assigned-rooms .post-container .rooms-container .item {
+  padding: 5px;
+  cursor: pointer;
+  transition: all 100ms ease-in-out;
+}
+.custom-meta-rooms-container .content-container .assigned-rooms .post-container .rooms-container .item:hover {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transform: scale(1.01);
 }
 .custom-meta-rooms-container .content-container .assigned-rooms .post-container .rooms-container .item img {
   height: 60px;

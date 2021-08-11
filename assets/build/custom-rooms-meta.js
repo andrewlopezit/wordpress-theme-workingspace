@@ -150,7 +150,6 @@ class CustomRoomsMeta {
 
     this.translationArray = translation_array;
     this.floorplanShapes;
-    this.$activeShapes;
     this.searchTimer;
     this.searchValue;
     this.roomsResults;
@@ -175,6 +174,17 @@ class CustomRoomsMeta {
     });
     this.activeShapeAnimation.to(this.$activeShapes, {
       fill: this.assigendRoomsColor
+    });
+  }
+
+  initHoverAnimation() {
+    if (!this.$roomHover) return;
+    this.$roomHover.css('opacity', 1);
+    this.hoverRoomAnimation = gsap__WEBPACK_IMPORTED_MODULE_1__["default"].timeline({
+      repeat: -1
+    });
+    this.hoverRoomAnimation.to(this.$roomHover, {
+      opacity: 0
     });
   }
 
@@ -263,6 +273,21 @@ class CustomRoomsMeta {
         }
       });
       return;
+    });
+    this.$roomsContainer.on('mouseenter', '.item', e => {
+      this.floorplanShapes.forEach((el, i) => {
+        const id = jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).data('id');
+
+        if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget).data('id') === id) {
+          this.$roomHover = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this.floorplanShapes[i]);
+          this.initHoverAnimation();
+          return;
+        }
+      });
+    });
+    this.$roomsContainer.on('mouseleave', '.item', () => {
+      if (!this.hoverRoomAnimation) return;
+      this.hoverRoomAnimation.reverse(0.5);
     });
   }
 

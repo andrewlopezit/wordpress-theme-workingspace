@@ -193,6 +193,7 @@ $border: #DFDFDF solid 1px;;
             }
 
             .post-container{
+                height: auto;
                 max-height: 300px;
                 overflow: auto; 
                 
@@ -242,6 +243,16 @@ $border: #DFDFDF solid 1px;;
                     grid-gap: 10px;
 
                     .item {
+                        padding: 5px;
+                        cursor: pointer;
+
+                        transition: all 100ms ease-in-out;
+
+                        &:hover {
+                            box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+                            transform: scale(1.01);
+                        }
+
                         img {
                             height: 60px;
                             object-position: center;
