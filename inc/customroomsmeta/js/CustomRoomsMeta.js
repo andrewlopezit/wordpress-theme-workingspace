@@ -28,7 +28,7 @@ class CustomRoomsMeta {
         this.$detailsContainer = this.$contentContainer.find('.details-container');
         this.$legendContainer = this.$detailsContainer.find('.legend-container');
         this.$totalRooms = this.$legendContainer.children().eq(0).find('.total-rooms > p');
-        this.$assignedRooms = this.$legendContainer.children().eq(0).find('.total-assigned-rooms > p');
+        this.$totalAssignedRooms = this.$legendContainer.children().eq(0).find('.total-assigned-rooms > p');
         this.$unAssignedRooms = this.$legendContainer.children().eq(0).find('.total-unassigned-rooms > p');
         this.$assignedRoomsColor = this.$legendContainer.children().eq(1).find('.color.assigned').children().eq(0);
         this.$unAssignedRoomsColor = this.$legendContainer.children().eq(1).find('.color.unassigned').children().eq(0);
@@ -91,25 +91,23 @@ class CustomRoomsMeta {
             'categories',
             'components-button is-primary assign-rooms'];
 
+            this.$selectedRoomsContainer.find('.item').remove();
+
            if(classesSearchContainer.includes(e.target.className)) {
                 //prevent close search input
                return;
            } else if(this.floorplanShapes.map(shape => shape.id).includes(e.target.id)) {
+                this.destroyActiveShapeAnimation();
 
                 // display room if it has assigned rooms
                 if($(e.target).data('id')){
-                    this.destroyActiveShapeAnimation();
-                    
                     this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
-                    this.$selectedRoomsContainer.find('.item').remove();
-                    
                     const { site_url } =this.translationArray;
                     
                     api(site_url).getPostById($(e.target).data('id')).then( result =>{
                         this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
 
                         const { data } = result;
-                        console.log(data);
 
                         this.$selectedRoomsContainer.append(this.roomTemplate([data], true));
 
@@ -118,8 +116,6 @@ class CustomRoomsMeta {
                     });
                     return;
                 }
-
-                this.destroyActiveShapeAnimation();
 
                 this.$activeShapes = $(e.target);
                 this.$searchPostContainer.addClass('is-display');
@@ -156,11 +152,35 @@ class CustomRoomsMeta {
         // delete assinged rooms
         this.$roomsContainer.on('click', e => {
             if(e.target.className !== 'components-button is-destructive delete-rooms') return;
-
+            
+            this.$selectedRoomsContainer.find('.item').remove();
             const $el = $(e.target);
+            
 
             $el.parent().parent().remove();
             this.removeRooms($el);
+            return;
+        });
+        
+        this.$selectedRoomsContainer.on('click', e => {
+            if(e.target.className !== 'components-button is-destructive delete-rooms') return;
+
+            const $el = $(e.target);
+
+            this.removeRooms($el);
+
+            this.$selectedRoomsContainer.find('.item').remove();
+            this.destroyActiveShapeAnimation();
+
+            this.$roomsContainer.children().each((i, el) => {
+                const $assignedRooms = $(el);
+
+                if($el.data('id') === $assignedRooms.data('id')) {
+                    $assignedRooms.remove();
+                    return;
+                }
+            });
+
             return;
         });
     }
@@ -176,7 +196,7 @@ class CustomRoomsMeta {
         this.$totalRooms.html(this.totalRooms);
 
         this.totalAssignedRooms = this.getTotalUnAssignedRooms();
-        this.$assignedRooms.html(this.totalAssignedRooms);
+        this.$totalAssignedRooms.html(this.totalAssignedRooms);
 
         this.totalUnAssignedRooms = this.totalRooms - this.totalAssignedRooms;
         this.$unAssignedRooms.html(this.totalUnAssignedRooms);
@@ -206,9 +226,10 @@ class CustomRoomsMeta {
             const $el = $(el);
 
             if($el.data('id') === id) {
+                this.destroyActiveShapeAnimation();
+
                 $el.removeAttr('data-id style');
                 this.rooms = _.remove(this.rooms, room => room.ID !== id);
-                console.log(this.rooms, id);
 
                 this.reloadContent();
                 return;
@@ -221,18 +242,15 @@ class CustomRoomsMeta {
         return serializer.serializeToString(this.$outputContainer.find('svg')[0]);
     }
 
-    destroyActiveShapeAnimation(color = this.unAssignedRoomsColor) {
+    destroyActiveShapeAnimation(color = null) {
         if(!this.activeShapeAnimation) return;
 
-        this.$activeShapes.css('fill', color);
-
         this.activeShapeAnimation.kill();
-        this.activeShapeAnimation = null;
+
+        color ? this.$activeShapes.css('fill', color) : this.$activeShapes.removeAttr('style');
     }
 
     displaySearchRooms() {
-        console.log(this.rooms);
-
         if(!this.$txtSearchInput.val() ||
             this.searchValue === this.$txtSearchInput.val()) return;
 
@@ -270,7 +288,7 @@ class CustomRoomsMeta {
         let template ='';
 
         data.forEach(value => {
-            template+= `<div class="item">
+            template+= `<div class="item" data-id="${value.ID}">
                             ${value.featured_image}
                             <div class="detail">
                                 <h4 class="name">${value.post_title}</h4>
@@ -293,10 +311,11 @@ class CustomRoomsMeta {
 
         if(!selectedRooms) return;
 
+        this.destroyActiveShapeAnimation(this.assigendRoomsColor);
+
         this.$activeShapes.attr('data-id', selectedRooms.ID);
 
         this.$searchPostContainer.removeClass('is-display');
-        this.destroyActiveShapeAnimation(this.assigendRoomsColor);
         this.$searchResultsContainer.children().remove();
 
         this.rooms.unshift(selectedRooms);
