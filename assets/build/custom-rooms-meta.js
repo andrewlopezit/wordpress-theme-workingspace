@@ -233,14 +233,13 @@ class CustomRoomsMeta {
 
     this.$txtSearchInput.on('keyup', () => this.displaySearchRooms()); // assign rooms
 
-    this.$searchResultsContainer.on('click', '.action-container > .components-button.is-primary.assign-rooms', e => {
+    this.$searchResultsContainer.on('click', '.action-container > .assign-rooms', e => {
       const id = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('id');
       this.assignedRoom(id);
       return;
     }); // delete assinged rooms
 
-    this.$roomsContainer.on('click', e => {
-      if (e.target.className !== 'components-button is-destructive delete-rooms') return;
+    this.$roomsContainer.on('click', '.item > .action-container > .delete-rooms', e => {
       this.$selectedRoomsContainer.find('.item').remove();
       const $el = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target);
       $el.parent().parent().remove();
