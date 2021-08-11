@@ -150,9 +150,7 @@ class CustomRoomsMeta {
             return;
         });
         
-        this.$selectedRoomsContainer.on('click', e => {
-            if(e.target.className !== 'components-button is-destructive delete-rooms') return;
-
+        this.$selectedRoomsContainer.on('click', '.item > .action-container > .delete-rooms',e => {
             const $el = $(e.target);
 
             this.removeRooms($el);
