@@ -113,6 +113,8 @@ class CustomRoomsMeta {
                 if($(e.target).data('id')){
                     this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
                     const { site_url } =this.translationArray;
+
+                    this.$searchPostContainer.removeClass('is-display');
                     
                     api(site_url).getPostById($(e.target).data('id')).then( result =>{
                         this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');

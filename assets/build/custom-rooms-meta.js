@@ -214,6 +214,7 @@ class CustomRoomsMeta {
           const {
             site_url
           } = this.translationArray;
+          this.$searchPostContainer.removeClass('is-display');
           Object(_modules_Api__WEBPACK_IMPORTED_MODULE_2__["default"])(site_url).getPostById(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('id')).then(result => {
             this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
             const {
