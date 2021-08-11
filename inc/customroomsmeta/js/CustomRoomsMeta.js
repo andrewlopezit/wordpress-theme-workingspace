@@ -132,7 +132,7 @@ class CustomRoomsMeta {
         this.$txtSearchInput.on('keyup', () => this.displaySearchRooms());
 
         // assign rooms
-        this.$searchResultsContainer.on('click', '.action-container > .components-button.is-primary.assign-rooms', e => {
+        this.$searchResultsContainer.on('click', '.action-container > .assign-rooms', e => {
 
             const id = $(e.target).data('id');
             this.assignedRoom(id);
@@ -140,13 +140,11 @@ class CustomRoomsMeta {
         });
 
         // delete assinged rooms
-        this.$roomsContainer.on('click', e => {
-            if(e.target.className !== 'components-button is-destructive delete-rooms') return;
-            
+        this.$roomsContainer.on('click','.item > .action-container > .delete-rooms', e => {
+
             this.$selectedRoomsContainer.find('.item').remove();
             const $el = $(e.target);
-            
-
+        
             $el.parent().parent().remove();
             this.removeRooms($el);
             return;
