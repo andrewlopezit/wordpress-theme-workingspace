@@ -15,22 +15,67 @@
 
             <div class="row">
                 <div class="col">
-                    <div class="search-form">
-                    <?php 
-                        $cat_id = get_cat_ID('workingspaces');
-                        $categories = get_categories(array("child_of" => $cat_id, "hide_empty" => 0));
+                    <form class="categories">
+                        <h5>Available spaces:</h5>
+                        <div class="categories-container">
+                            <?php 
+                                $cat_id = get_cat_ID('workingspaces');
+                                $categories = get_categories(array("child_of" => $cat_id, "hide_empty" => 0));
 
-                        if($categories) : foreach($categories as $category) :
-                    ?>
-                    <div class="input-group">
-                        <input type="checkbox" id="horns" name="horns">
-                        <label for="horns">Horns</label>
-                    </div>
-                    <?php endforeach;endif; ?>
-
-                    </div>
+                                if($categories) : foreach($categories as $category) :
+                            ?>
+                            <div class="input-group">
+                                <input type="checkbox" disabled checked>
+                                <label><?php echo $category->name; ?></label>
+                            </div>
+                            <?php endforeach;endif; ?>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section class="container service">
+        <h1>Why <span>cowork</span> on us.</h1>
+        <div class="row">
+            <div class="col">
+                <div class="card border-top-left border--xsmall">
+                <div class="card-body text-center">
+                    <div class="icon check secondary-color size-content-70"></div>
+                    <h4>Validated Space</h4>
+                    <hr/>
+                    <p class="text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                <div class="card-body text-center">
+                    <div class="icon money-exchange secondary-color size-content-100"></div>
+                    <h4>Affordable</h4>
+                    <hr/>
+                    <p class="text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-right-bottom border--xsmall">
+                <div class="card-body text-center">
+                    <div class="icon medal secondary-color size-content-100"></div>
+                    <h4>Trusted</h4>
+                    <hr/>
+                    <p class="text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                </div>
+                </div>
+            </div>
+           
+        </div>
+    </section>
+
+    <section class="container spaces">
+        <div class="row">
+            <div class="col">s</div>
         </div>
     </section>
 </div>

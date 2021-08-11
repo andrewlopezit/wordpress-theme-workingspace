@@ -36,7 +36,10 @@ $hover-color: $secondary-color;
     &.pinterest,
     &.office-block,
     &.meeting,
-    &.work {
+    &.work,
+    &.check, 
+    &.medal,
+    &.money-exchange {
         &.size-content-100 {
             @include svg-mask-size(100%);
         }
@@ -49,11 +52,15 @@ $hover-color: $secondary-color;
         }
 
         &.gray {
-            background-color: $gray;
+            background-color: var(--gray, $gray);
         }
 
         &.white {
             background-color: #fff;
+        }
+
+        &.secondary-color {
+            background-color: var(--secondary-color, $secondary-color) !important;
         }
     }
 
@@ -103,6 +110,18 @@ $hover-color: $secondary-color;
 
     &.work {
         @include svg-mask('../../assets/icons/work.svg');
+    }
+
+    &.check {
+        @include svg-mask('../../assets/icons/check.svg');
+    }
+
+    &.medal {
+        @include svg-mask('../../assets/icons/medal.svg');
+    }
+
+    &.money-exchange {
+        @include svg-mask('../../assets/icons/money-exchange.svg');
     }
 
     &.hover-none {

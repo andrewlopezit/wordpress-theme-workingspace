@@ -22,6 +22,8 @@ if(file_exists(dirname(__FILE__).'/inc/helpers/front-end-helpers.php')) {
 }
 
 use Inc\Classes\ThemeSetup;
+use Inc\CustomRoomsMeta\Init as CustomRoomsMeta;
+use Inc\Classes\CustomApi;
 
 // Core Constants.
 define( 'WORKINGSPACEWP_THEME_DIR', get_template_directory() );
@@ -75,6 +77,9 @@ if(!class_exists('WorkingspaceTheme')) {
 
                 // load all menus
                 $this->register_menus();
+
+                // load all custom meta box
+                new CustomRoomsMeta();
                 
             /** Frontend */    
             } else {
@@ -98,6 +103,9 @@ if(!class_exists('WorkingspaceTheme')) {
 
             // set image image
             $this->set_image_sizes();
+
+            // custom api
+            new CustomApi();
         }
 
 //------------------------------------ F U N C T I O N S ----------------------------------------
