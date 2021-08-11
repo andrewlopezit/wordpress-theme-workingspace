@@ -96,7 +96,10 @@ class CustomRoomsMeta {
                return;
            } else if(this.floorplanShapes.map(shape => shape.id).includes(e.target.id)) {
 
+                // display room if it has assigned rooms
                 if($(e.target).data('id')){
+                    this.destroyActiveShapeAnimation();
+                    
                     this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
                     this.$selectedRoomsContainer.find('.item').remove();
                     
