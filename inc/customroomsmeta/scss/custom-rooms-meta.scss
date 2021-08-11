@@ -195,7 +195,8 @@ $border: #DFDFDF solid 1px;;
             .post-container{
                 height: auto;
                 max-height: 300px;
-                overflow: auto; 
+                overflow: auto;
+                overflow-x: hidden;
                 
                 .selected-rooms {
                     .spinner-container{

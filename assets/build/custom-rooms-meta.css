@@ -149,6 +149,7 @@
   height: auto;
   max-height: 300px;
   overflow: auto;
+  overflow-x: hidden;
 }
 .custom-meta-rooms-container .content-container .assigned-rooms .post-container .selected-rooms .spinner-container {
   width: 100%;
