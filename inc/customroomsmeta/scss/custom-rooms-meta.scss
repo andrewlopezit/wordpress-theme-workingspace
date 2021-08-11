@@ -242,6 +242,8 @@ $border: #DFDFDF solid 1px;;
                     grid-template-columns: repeat(3, 1fr);
                     grid-template-rows: 180px;
                     grid-gap: 10px;
+                    overflow: hidden;
+                    padding: .5em;
 
                     .item {
                         padding: 5px;
