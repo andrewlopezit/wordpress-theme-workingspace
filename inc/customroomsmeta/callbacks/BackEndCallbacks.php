@@ -12,7 +12,7 @@ namespace Inc\customroomsmeta\Callbacks;
 
 final class BackEndCallbacks {
 
-    public function index() {
+    public function index($post) {
         return require_once WORKINGSPACE_INC_DIR.'customroomsmeta/callbacks/views/index.php';
     }
 }

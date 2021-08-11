@@ -55,6 +55,55 @@ class CustomRoomsMeta {
         //init color
         this.$assignedRoomsColor.css('background-color', this.assigendRoomsColor);
         this.$unAssignedRoomsColor.css('background-color', this.unAssignedRoomsColor);
+
+        this.init();
+    }
+
+    init() {
+        if(this.$outputContainer.hasClass('is-display')) {
+            const {site_url} = this.translationArray;
+
+            this.$textareaSvg.val(this.getConvertedOutputtedSvg());
+            this.initContent();
+            
+            this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
+
+            const flooplanHasDataIds = _.filter(this.floorplanShapes, floorplan => $(floorplan).data('id') > 0 );
+            const floorplanIds = _.map($(flooplanHasDataIds), floorplan => $(floorplan).data('id'));
+
+            api(site_url).getPostsByIds([floorplanIds]).then(result => {
+                this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
+                const {data} = result;
+                this.rooms = data;
+
+                this.$roomsContainer.append(this.roomTemplate(data, true));
+
+                this.reloadContent();
+
+            }).catch(() =>{
+                this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
+            });
+           
+        }else {
+            this.$textareaSvg.val('');
+        }
+    }
+
+    initContent() {
+        this.$outputContainer.find('svg').remove();
+
+        let svg = this.$textareaSvg.val();
+        this.$outputContainer.append(svg);
+        this.floorplanShapes = this.getFloorPlanShapes();
+
+        this.totalRooms = this.floorplanShapes.length;
+        this.$totalRooms.html(this.totalRooms);
+
+        this.totalAssignedRooms = this.getTotalUnAssignedRooms();
+        this.$totalAssignedRooms.html(this.totalAssignedRooms);
+
+        this.totalUnAssignedRooms = this.totalRooms - this.totalAssignedRooms;
+        this.$unAssignedRooms.html(this.totalUnAssignedRooms);
     }
 
     initActiveShapesAnimation() {
@@ -161,7 +210,7 @@ class CustomRoomsMeta {
         
 
         // delete selected rooms
-        this.$selectedRoomsContainer.on('click', '.item > .action-container > .delete-rooms',e => {
+        this.$selectedRoomsContainer.on('click', '.item > .action-container > .delete-rooms', e => {
             const $el = $(e.target);
 
             this.removeRooms($el);
@@ -200,23 +249,6 @@ class CustomRoomsMeta {
             this.hoverRoomAnimation.kill();
             this.$roomHover.css('opacity', 1);
         });
-    }
-
-    initContent() {
-        this.$outputContainer.find('svg').remove();
-
-        let svg = this.$textareaSvg.val();
-        this.$outputContainer.append(svg);
-        this.floorplanShapes = this.getFloorPlanShapes();
-
-        this.totalRooms = this.floorplanShapes.length;
-        this.$totalRooms.html(this.totalRooms);
-
-        this.totalAssignedRooms = this.getTotalUnAssignedRooms();
-        this.$totalAssignedRooms.html(this.totalAssignedRooms);
-
-        this.totalUnAssignedRooms = this.totalRooms - this.totalAssignedRooms;
-        this.$unAssignedRooms.html(this.totalUnAssignedRooms);
     }
     
     getFloorPlanShapes() {
@@ -319,7 +351,6 @@ class CustomRoomsMeta {
                             </div>
                         </div>`;
         });
-
        return template;
     }
 
@@ -334,6 +365,7 @@ class CustomRoomsMeta {
 
         this.$searchPostContainer.removeClass('is-display');
         this.$searchResultsContainer.children().remove();
+        this.$selectedRoomsContainer.find('.item').remove();
 
         this.rooms.unshift(selectedRooms);
 

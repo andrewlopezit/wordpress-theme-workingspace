@@ -14,6 +14,11 @@ const api = (url) => {
             return axios(url);
         }
 
+        getPostsByIds(ids) {
+            const url = `${this.endpoint}?ids=${ids}`;
+            return axios(url);
+        }
+
         getPostById(id) {
             const url = `${this.endpoint}/${id}`;
             return axios(url);

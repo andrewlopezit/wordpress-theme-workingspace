@@ -165,6 +165,49 @@ class CustomRoomsMeta {
 
     this.$assignedRoomsColor.css('background-color', this.assigendRoomsColor);
     this.$unAssignedRoomsColor.css('background-color', this.unAssignedRoomsColor);
+    this.init();
+  }
+
+  init() {
+    if (this.$outputContainer.hasClass('is-display')) {
+      const {
+        site_url
+      } = this.translationArray;
+      this.$textareaSvg.val(this.getConvertedOutputtedSvg());
+      this.initContent();
+      this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
+
+      const flooplanHasDataIds = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.filter(this.floorplanShapes, floorplan => jquery__WEBPACK_IMPORTED_MODULE_0___default()(floorplan).data('id') > 0);
+
+      const floorplanIds = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.map(jquery__WEBPACK_IMPORTED_MODULE_0___default()(flooplanHasDataIds), floorplan => jquery__WEBPACK_IMPORTED_MODULE_0___default()(floorplan).data('id'));
+
+      Object(_modules_Api__WEBPACK_IMPORTED_MODULE_2__["default"])(site_url).getPostsByIds([floorplanIds]).then(result => {
+        this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
+        const {
+          data
+        } = result;
+        this.rooms = data;
+        this.$roomsContainer.append(this.roomTemplate(data, true));
+        this.reloadContent();
+      }).catch(() => {
+        this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
+      });
+    } else {
+      this.$textareaSvg.val('');
+    }
+  }
+
+  initContent() {
+    this.$outputContainer.find('svg').remove();
+    let svg = this.$textareaSvg.val();
+    this.$outputContainer.append(svg);
+    this.floorplanShapes = this.getFloorPlanShapes();
+    this.totalRooms = this.floorplanShapes.length;
+    this.$totalRooms.html(this.totalRooms);
+    this.totalAssignedRooms = this.getTotalUnAssignedRooms();
+    this.$totalAssignedRooms.html(this.totalAssignedRooms);
+    this.totalUnAssignedRooms = this.totalRooms - this.totalAssignedRooms;
+    this.$unAssignedRooms.html(this.totalUnAssignedRooms);
   }
 
   initActiveShapesAnimation() {
@@ -288,19 +331,6 @@ class CustomRoomsMeta {
     });
   }
 
-  initContent() {
-    this.$outputContainer.find('svg').remove();
-    let svg = this.$textareaSvg.val();
-    this.$outputContainer.append(svg);
-    this.floorplanShapes = this.getFloorPlanShapes();
-    this.totalRooms = this.floorplanShapes.length;
-    this.$totalRooms.html(this.totalRooms);
-    this.totalAssignedRooms = this.getTotalUnAssignedRooms();
-    this.$totalAssignedRooms.html(this.totalAssignedRooms);
-    this.totalUnAssignedRooms = this.totalRooms - this.totalAssignedRooms;
-    this.$unAssignedRooms.html(this.totalUnAssignedRooms);
-  }
-
   getFloorPlanShapes() {
     const shapes = ['rect', 'polygon', 'polyline'];
     let floorplanShapes = [];
@@ -401,6 +431,7 @@ class CustomRoomsMeta {
     this.$activeShapes.attr('data-id', selectedRooms.ID);
     this.$searchPostContainer.removeClass('is-display');
     this.$searchResultsContainer.children().remove();
+    this.$selectedRoomsContainer.find('.item').remove();
     this.rooms.unshift(selectedRooms);
     this.reloadContent();
     this.$roomsContainer.append(this.roomTemplate([selectedRooms], true));
@@ -441,6 +472,11 @@ const api = url => {
 
     getPostsByName(name) {
       const url = `${this.endpoint}?search=${name}`;
+      return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
+    }
+
+    getPostsByIds(ids) {
+      const url = `${this.endpoint}?ids=${ids}`;
       return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
     }
 

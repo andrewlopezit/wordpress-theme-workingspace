@@ -59,6 +59,7 @@ class CustomApi extends WP_REST_Controller {
 
       $request_id = $request['id'];
       $reqest_search = $request['search'];
+      $request_ids = isset($request['ids']) ? explode(',',$request['ids']) : null;
 
       if(!$request_id) return wp_send_json_error('No results found', 404);
 
@@ -71,13 +72,14 @@ class CustomApi extends WP_REST_Controller {
       $results = new WP_Query(array(
         'post_type' => 'rooms',
         's' => sanitize_text_field($reqest_search),
-        'post__in' => $room_ids
+        'post__in' => $request_ids ?? $room_ids
       ));
 
       $results = $this->add_workingspaces_details($results->posts);
       
       return wp_send_json($results, 200);
     }
+    
 
     public function get_workingspace_room_byid($request) {
       $request_id = $request['id'];

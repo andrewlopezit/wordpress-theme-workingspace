@@ -324,3 +324,15 @@ $border: #DFDFDF solid 1px;;
       transform: rotate(360deg);
     }
   }
+
+.components-button.editor-post-featured-image__toggle {
+    border: 0;
+    background-color: #f0f0f0;
+
+    &.is-selected{
+        background-color: #fff;
+        border-top: 1px solid #f0f0f0;
+        border-left: 1px solid #f0f0f0;
+        border-right: 1px solid #f0f0f0;
+    }
+}
