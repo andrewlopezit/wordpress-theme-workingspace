@@ -90,18 +90,20 @@ class CustomRoomsMeta {
             this.$outputContainer.removeClass('is-display');
         });
 
-        const svgSelector = ['svg > rect','svg > polygon', 'svg > polyline'];
+        const svgSelector = ['svg','svg > rect','svg > polygon', 'svg > polyline'];
         this.$outputContainer.on('click', svgSelector.toString(), e => {
-                this.$searchPostContainer.removeClass('is-display');
-                this.destroyActiveShapeAnimation();
+            this.destroyActiveShapeAnimation();
 
+                if(e.target.tagName === 'image') {
+                    this.$searchPostContainer.removeClass('is-display');
+
+                    return;
+                }
                 // display room if it has assigned rooms
                 if($(e.target).data('id')){
                     this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
                     const { site_url } =this.translationArray;
 
-                    this.$searchPostContainer.removeClass('is-display');
-                    
                     api(site_url).getPostById($(e.target).data('id')).then( result =>{
                         this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
 

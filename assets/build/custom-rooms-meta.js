@@ -198,17 +198,21 @@ class CustomRoomsMeta {
       this.$svgClusteringContainer.addClass('is-display');
       this.$outputContainer.removeClass('is-display');
     });
-    const svgSelector = ['svg > rect', 'svg > polygon', 'svg > polyline'];
+    const svgSelector = ['svg', 'svg > rect', 'svg > polygon', 'svg > polyline'];
     this.$outputContainer.on('click', svgSelector.toString(), e => {
-      this.$searchPostContainer.removeClass('is-display');
-      this.destroyActiveShapeAnimation(); // display room if it has assigned rooms
+      this.destroyActiveShapeAnimation();
+
+      if (e.target.tagName === 'image') {
+        this.$searchPostContainer.removeClass('is-display');
+        return;
+      } // display room if it has assigned rooms
+
 
       if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('id')) {
         this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
         const {
           site_url
         } = this.translationArray;
-        this.$searchPostContainer.removeClass('is-display');
         Object(_modules_Api__WEBPACK_IMPORTED_MODULE_2__["default"])(site_url).getPostById(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('id')).then(result => {
           this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
           const {
