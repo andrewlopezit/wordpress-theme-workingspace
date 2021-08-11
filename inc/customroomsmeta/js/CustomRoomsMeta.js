@@ -97,11 +97,13 @@ class CustomRoomsMeta {
 
                 if(e.target.tagName === 'image') {
                     this.$searchPostContainer.removeClass('is-display');
+                    this.$selectedRoomsContainer.find('.item').remove();
 
-                    return;
                 }
                 // display room if it has assigned rooms
-                if($(e.target).data('id') && !this.isFetchingSelectedRooms){
+                else if($(e.target).data('id')) {
+                    if(this.isFetchingSelectedRooms) return;
+
                     this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
 
                     const { site_url } =this.translationArray;
@@ -115,23 +117,22 @@ class CustomRoomsMeta {
                         const { data } = result;
 
                         this.$selectedRoomsContainer.append(this.roomTemplate([data], true));
-
                     }).catch(() =>{
                         this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
                         this.isFetchingSelectedRooms = false;
                     });
-                    return;
+
+                }else {
+                    this.$activeShapes = $(e.target);
+                    this.$searchPostContainer.addClass('is-display');
+                    
+                    // console.log(e.target.getBoundingClientRect()); // get coordinates
+                    this.initActiveShapesAnimation();
+    
+                    this.searchValue = '';
+                    this.$txtSearchInput.val('');
+                    this.$txtSearchInput.get(0).focus();
                 }
-
-                this.$activeShapes = $(e.target);
-                this.$searchPostContainer.addClass('is-display');
-                
-                // console.log(e.target.getBoundingClientRect()); // get coordinates
-                this.initActiveShapesAnimation();
-
-                this.searchValue = '';
-                this.$txtSearchInput.val('');
-                this.$txtSearchInput.get(0).focus();
 
                 return;
         });

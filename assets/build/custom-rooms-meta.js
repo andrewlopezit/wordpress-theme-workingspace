@@ -205,11 +205,10 @@ class CustomRoomsMeta {
 
       if (e.target.tagName === 'image') {
         this.$searchPostContainer.removeClass('is-display');
-        return;
+        this.$selectedRoomsContainer.find('.item').remove();
       } // display room if it has assigned rooms
-
-
-      if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('id') && !this.isFetchingSelectedRooms) {
+      else if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('id')) {
+        if (this.isFetchingSelectedRooms) return;
         this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
         const {
           site_url
@@ -227,16 +226,16 @@ class CustomRoomsMeta {
           this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
           this.isFetchingSelectedRooms = false;
         });
-        return;
+      } else {
+        this.$activeShapes = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target);
+        this.$searchPostContainer.addClass('is-display'); // console.log(e.target.getBoundingClientRect()); // get coordinates
+
+        this.initActiveShapesAnimation();
+        this.searchValue = '';
+        this.$txtSearchInput.val('');
+        this.$txtSearchInput.get(0).focus();
       }
 
-      this.$activeShapes = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target);
-      this.$searchPostContainer.addClass('is-display'); // console.log(e.target.getBoundingClientRect()); // get coordinates
-
-      this.initActiveShapesAnimation();
-      this.searchValue = '';
-      this.$txtSearchInput.val('');
-      this.$txtSearchInput.get(0).focus();
       return;
     }); // search available rooms
 
