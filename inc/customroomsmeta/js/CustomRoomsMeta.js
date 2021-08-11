@@ -90,23 +90,9 @@ class CustomRoomsMeta {
             this.$outputContainer.removeClass('is-display');
         });
 
-        // on clicking shapes
-        this.$outputContainer.on('click', e => {
-            const classesSearchContainer = ['components-text-control__input', 
-            'item',
-            'attachment-post-thumbnail size-post-thumbnail wp-post-image',
-            'name',
-            'price',
-            'detail',   
-            'categories',
-            'components-button is-primary assign-rooms'];
-
-            this.$selectedRoomsContainer.find('.item').remove();
-
-           if(classesSearchContainer.includes(e.target.className)) {
-                //prevent close search input
-               return;
-           } else if(this.floorplanShapes.map(shape => shape.id).includes(e.target.id)) {
+        const svgSelector = ['svg > rect','svg > polygon', 'svg > polyline'];
+        this.$outputContainer.on('click', svgSelector.toString(), e => {
+                this.$searchPostContainer.removeClass('is-display');
                 this.destroyActiveShapeAnimation();
 
                 // display room if it has assigned rooms
@@ -140,12 +126,6 @@ class CustomRoomsMeta {
                 this.$txtSearchInput.get(0).focus();
 
                 return;
-           } else {
-                this.$searchPostContainer.removeClass('is-display');
-                this.destroyActiveShapeAnimation();
-                
-                return;
-           }
         });
 
         // search available rooms
