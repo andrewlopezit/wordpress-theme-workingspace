@@ -132,9 +132,7 @@ class CustomRoomsMeta {
         this.$txtSearchInput.on('keyup', () => this.displaySearchRooms());
 
         // assign rooms
-        this.$searchResultsContainer.on('click', e => {
-
-            if(e.target.className !== 'components-button is-primary assign-rooms') return;
+        this.$searchResultsContainer.on('click', '.action-container > .components-button.is-primary.assign-rooms', e => {
 
             const id = $(e.target).data('id');
             this.assignedRoom(id);
