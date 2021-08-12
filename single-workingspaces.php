@@ -15,22 +15,7 @@
 
             <div class="row">
                 <div class="col">
-                    <form class="categories">
-                        <h5>Available spaces:</h5>
-                        <div class="categories-container">
-                            <?php 
-                                $cat_id = get_cat_ID('workingspaces');
-                                $categories = get_categories(array("child_of" => $cat_id, "hide_empty" => 0));
-
-                                if($categories) : foreach($categories as $category) :
-                            ?>
-                            <div class="input-group">
-                                <input type="checkbox" disabled checked>
-                                <label><?php echo $category->name; ?></label>
-                            </div>
-                            <?php endforeach;endif; ?>
-                        </div>
-                    </form>
+                    <?php get_template_part('partials/components/categories','workingspaces' , array( 'id' => get_the_ID())); ?>
                 </div>
             </div>
         </div>

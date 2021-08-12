@@ -9,16 +9,46 @@
  */
 
 
- function get_rooms_price_range($rooms) {
-    $prices = [];
+ if(!function_exists('get_rooms_price_range')) {
+    function get_rooms_price_range($rooms) {
+        $prices = [];
+    
+        foreach($rooms as $room) {
+            $price = get_field('room_rate', $room->ID);
+    
+            array_push($prices, $price);
+        }
+        $priceTo = count($prices) > 1 ? ' - '.number_format(max($prices),2).'/month' : '/month';
+    
+        return '$ '.number_format(min($prices),2).$priceTo;
+         
+     } 
+ }
 
-    foreach($rooms as $room) {
-        $price = get_field('room_rate', $room->ID);
+ if(!function_exists('get_workingspaces_related_room_categories')) {
+    
+     function get_workingspaces_related_room_categories() {
+        
+        $rooms = get_field('related_rooms'); 
 
-        array_push($prices, $price);
+        if(!$rooms) return;
+
+        $categories = [];
+
+        foreach($rooms as $room) {
+            $room_categories = get_the_category($room->ID);
+
+            foreach($room_categories as $category) {
+                if(!has_category_id($categories, $category)) {
+                    array_push($categories, $category);
+                }
+            }
+
+        }
+        return $categories; 
+     }
+
+     function has_category_id($categories,$category) {
+        return in_array($category->term_id, array_map(function($categories) {return $categories->term_id;}, $categories));
     }
-    $priceTo = count($prices) > 1 ? ' - '.number_format(max($prices),2).'/month' : '/month';
-
-    return '$ '.number_format(min($prices),2).$priceTo;
-     
- } 
+ }

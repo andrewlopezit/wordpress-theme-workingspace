@@ -73,7 +73,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <div class="icon work white size-content-100"></div>
+                    <div class="icon work gray size-content-100"></div>
                     <h4>Co-working</h4>
                     <p class="text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                     <a href="">Learn more</a>

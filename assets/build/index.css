@@ -24,6 +24,7 @@
 * - INPUTS
 * - SOCIAL MEDIA
 * - HERO IMAGE SLIDER
+* - CATEGORIES
 * - BRAND
 * - HEADER/HAMBURGER
 * - HEADER/NAVIGATION
@@ -851,6 +852,27 @@ hr {
   }
 }
 /*------------------------------------*
+	HERO IMAGE SLIDER
+*------------------------------------*/
+.categories.--workingspaces {
+  background-color: #fff;
+  margin-top: 2em;
+  padding: 2em;
+}
+.categories.--workingspaces .categories-container {
+  display: flex;
+  flex-direction: column;
+}
+.categories.--workingspaces .categories-container .input-group input::after {
+  cursor: default;
+}
+.categories.--workingspaces .categories-container .input-group label {
+  font-size: 0.8em;
+  margin-top: 2px;
+  font-weight: 600;
+}
+
+/*------------------------------------*
 	BRAND
 *------------------------------------*/
 .brand {
@@ -1557,18 +1579,22 @@ section.about-our-service .img-service--background::after {
 section.about-our-service .services {
   margin-top: 100px;
 }
-section.about-our-service .services .col:nth-child(2) .card {
-  background-color: var(--secondary-color, #00CEB5);
-}
-section.about-our-service .services .col:nth-child(2) .card .card-body h4, section.about-our-service .services .col:nth-child(2) .card .card-body p, section.about-our-service .services .col:nth-child(2) .card .card-body a {
-  color: #fff;
-}
-section.about-our-service .services .col:nth-child(2) .card .card-body h4::after, section.about-our-service .services .col:nth-child(2) .card .card-body p::after, section.about-our-service .services .col:nth-child(2) .card .card-body a::after {
-  background-color: #fff;
-}
 section.about-our-service .services .card {
+  transition: all 400ms ease;
   border: 0;
   border-radius: 0;
+}
+section.about-our-service .services .card:hover {
+  background-color: var(--secondary-color, #00CEB5);
+}
+section.about-our-service .services .card:hover .card-body .icon {
+  background-color: #fff;
+}
+section.about-our-service .services .card:hover .card-body h4, section.about-our-service .services .card:hover .card-body p, section.about-our-service .services .card:hover .card-body a {
+  color: #fff;
+}
+section.about-our-service .services .card:hover .card-body h4::after, section.about-our-service .services .card:hover .card-body p::after, section.about-our-service .services .card:hover .card-body a::after {
+  background-color: #fff;
 }
 section.about-our-service .services .card .card-body {
   display: flex;
@@ -1711,20 +1737,6 @@ section.testimonials {
   top: auto;
   bottom: -12px;
   width: 100%;
-}
-.single-workingspaces.page .hero-section .container .categories {
-  background-color: #fff;
-  margin-top: 2em;
-  padding: 2em;
-}
-.single-workingspaces.page .hero-section .container .categories .categories-container {
-  display: flex;
-  flex-direction: column;
-}
-.single-workingspaces.page .hero-section .container .categories .categories-container .input-group label {
-  font-size: 0.8em;
-  margin-top: 2px;
-  font-weight: 600;
 }
 .single-workingspaces.page .service h1 {
   margin-bottom: 50px;
