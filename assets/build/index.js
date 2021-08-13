@@ -762,6 +762,8 @@ class CustomRoomsMeta {
   events() {
     this.$contentContainer.on('mouseover', '.item.is-display', () => this.progressbarAnimation.pause());
     this.$contentContainer.on('mouseout', '.item.is-display', () => this.progressbarAnimation.play());
+    this.$floorplanContainer.on('mouseover', 'svg > .is-active', () => this.progressbarAnimation.pause());
+    this.$floorplanContainer.on('mouseout', 'svg > .is-active', () => this.progressbarAnimation.play());
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(this.floorplanShapes).on('click', el => {
       const id = jquery__WEBPACK_IMPORTED_MODULE_0___default()(el.target).data('id');
       const activeId = this.floorplanShapes.findIndex(el => jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).data('id') === id);

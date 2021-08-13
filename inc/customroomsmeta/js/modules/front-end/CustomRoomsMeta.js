@@ -83,6 +83,9 @@ class CustomRoomsMeta {
         this.$contentContainer.on('mouseover', '.item.is-display', () => this.progressbarAnimation.pause());
         this.$contentContainer.on('mouseout', '.item.is-display', () => this.progressbarAnimation.play());
 
+        this.$floorplanContainer.on('mouseover', 'svg > .is-active', () => this.progressbarAnimation.pause());
+        this.$floorplanContainer.on('mouseout', 'svg > .is-active', () => this.progressbarAnimation.play());
+
         $(this.floorplanShapes).on('click', el => {
             const id = $(el.target).data('id');
 
