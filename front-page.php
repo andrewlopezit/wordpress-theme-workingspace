@@ -27,7 +27,7 @@
             </div>
         </div>
     <div class="col content">
-        <h1 class="headline title large">Coworking space.</h1>
+        <h1 class="headline title large">Coworking <span>space</span>.</h1>
         <p class="title sub-paragraph">
             Grow your business with co workingspace productivity led agile coworking spaces in Philippines that suit your business across all the metropolitan
         </p>
@@ -38,7 +38,7 @@
 
 <div class="workspace-section--background">
     <section class="container workspaces-section">
-        <h1>Explore Our Workspaces</h1>
+        <h1>Explore Our <span>Workspaces</span></h1>
         <div class="row workspaces-section">
             <div class="col">
                 <?php get_template_part('partials/content/content','workingspaces'); ?>

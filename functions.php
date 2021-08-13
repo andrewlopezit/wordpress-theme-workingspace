@@ -77,9 +77,6 @@ if(!class_exists('WorkingspaceTheme')) {
 
                 // load all menus
                 $this->register_menus();
-
-                // load all custom meta box
-                new CustomRoomsMeta();
                 
             /** Frontend */    
             } else {
@@ -106,6 +103,9 @@ if(!class_exists('WorkingspaceTheme')) {
 
             // custom api
             new CustomApi();
+
+            // load all custom meta box
+            new CustomRoomsMeta();
         }
 
 //------------------------------------ F U N C T I O N S ----------------------------------------
@@ -234,6 +234,12 @@ if(!class_exists('WorkingspaceTheme')) {
                     'handle' => 'main',
                     'src' => $main_js_dir,
                     'ver' => $theme_version,
+                    'localize' => array(
+                        'variable_name' => 'translation_array',
+                        'value' => array(
+                            'site_url' => esc_url(site_url())
+                        )
+                    )
                 )
             )
             // add the handle for defer script

@@ -2,6 +2,7 @@
 @charset "UTF-8";
 :root {
   --primary-color: #FDD500;
+  --secondary-color: #00CEB5;
 }
 
 /*------------------------------------*
@@ -41,6 +42,7 @@
 * PAGES
 * - FRONT PAGE
 * - SINGLE WORKINGSPACES
+* - CUSTOM META FLOORPLAN
 */
 /*------------------------------------*
 	FONTS
@@ -104,6 +106,20 @@ h1 {
 h1.--border-left {
   border-left: 6px solid var(--primary-color, #FDD500);
   padding-left: 0.8em;
+}
+h1 span {
+  position: relative;
+  z-index: 1;
+}
+h1 span::after {
+  content: "";
+  position: absolute;
+  width: 80%;
+  height: 5px;
+  right: -8px;
+  bottom: 6px;
+  background-color: var(--primary-color, #FDD500);
+  z-index: -1;
 }
 
 h2 {
@@ -1738,22 +1754,11 @@ section.testimonials {
   bottom: -12px;
   width: 100%;
 }
+.single-workingspaces.page .service {
+  margin-bottom: 100px;
+}
 .single-workingspaces.page .service h1 {
   margin-bottom: 50px;
-}
-.single-workingspaces.page .service h1 span {
-  position: relative;
-  z-index: 1;
-}
-.single-workingspaces.page .service h1 span::after {
-  content: "";
-  position: absolute;
-  width: 80%;
-  height: 5px;
-  right: -8px;
-  bottom: 6px;
-  background-color: var(--primary-color, #FDD500);
-  z-index: -1;
 }
 .single-workingspaces.page .service .card {
   border: 0 !important;
@@ -1772,6 +1777,100 @@ section.testimonials {
 }
 .single-workingspaces.page .service .card .card-body h4 {
   margin-top: 20px;
+}
+.single-workingspaces.page .spaces h1 {
+  width: 300px;
+}
+
+/*------------------------------------*
+	CUSTOM META FLOORPLAN
+*------------------------------------*/
+.floorplan-container#custom-rooms--floorplan {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2em;
+  padding: 5px 0;
+}
+.floorplan-container#custom-rooms--floorplan svg rect,
+.floorplan-container#custom-rooms--floorplan svg polygon,
+.floorplan-container#custom-rooms--floorplan svg polyline {
+  opacity: 0.5 !important;
+}
+.floorplan-container#custom-rooms--floorplan svg rect.is-active,
+.floorplan-container#custom-rooms--floorplan svg polygon.is-active,
+.floorplan-container#custom-rooms--floorplan svg polyline.is-active {
+  cursor: pointer;
+}
+.floorplan-container#custom-rooms--floorplan svg rect.is-active:hover,
+.floorplan-container#custom-rooms--floorplan svg polygon.is-active:hover,
+.floorplan-container#custom-rooms--floorplan svg polyline.is-active:hover {
+  fill: var(--primary-color, #FDD500) !important;
+}
+.floorplan-container#custom-rooms--floorplan svg rect:not(.is-active),
+.floorplan-container#custom-rooms--floorplan svg polygon:not(.is-active),
+.floorplan-container#custom-rooms--floorplan svg polyline:not(.is-active) {
+  transition: all 400ms ease;
+}
+.floorplan-container#custom-rooms--floorplan svg rect:not(.is-active):hover,
+.floorplan-container#custom-rooms--floorplan svg polygon:not(.is-active):hover,
+.floorplan-container#custom-rooms--floorplan svg polyline:not(.is-active):hover {
+  opacity: 0.1 !important;
+}
+.floorplan-container#custom-rooms--floorplan .content {
+  position: relative;
+}
+.floorplan-container#custom-rooms--floorplan .content .floorplan-progressbar {
+  position: absolute;
+  width: 5px;
+  top: 0;
+  right: 0;
+  height: 0;
+  z-index: 5;
+  background-color: var(--primary-color, #FDD500);
+}
+.floorplan-container#custom-rooms--floorplan .content .item {
+  position: relative;
+  display: none;
+}
+.floorplan-container#custom-rooms--floorplan .content .item.is-display {
+  display: flex;
+  flex-direction: column;
+}
+.floorplan-container#custom-rooms--floorplan .content .item img {
+  width: 100%;
+  height: 280px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+.floorplan-container#custom-rooms--floorplan .content .item h2 {
+  margin: 0;
+  margin: 10px 0;
+  position: relative;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+}
+.floorplan-container#custom-rooms--floorplan .content .item h2 a {
+  color: #000;
+}
+.floorplan-container#custom-rooms--floorplan .content .item h2::after {
+  content: "";
+  position: absolute;
+  width: 60%;
+  right: 10%;
+  bottom: 8px;
+  border: 2px solid #FDD500;
+  z-index: -1;
+}
+.floorplan-container#custom-rooms--floorplan .content .item .price {
+  font-weight: 600;
+}
+.floorplan-container#custom-rooms--floorplan .content .item .price span {
+  margin-left: 1.2em;
 }
 
 /*# sourceMappingURL=index.css.map*/

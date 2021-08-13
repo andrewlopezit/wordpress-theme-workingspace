@@ -103,6 +103,8 @@ class CustomApi extends WP_REST_Controller {
         $post->featured_image = get_the_post_thumbnail($val->ID);
         $post->categories =  get_the_category($post->ID);
         $post->room_rate = get_field('room_rate', $val->ID);
+        $post->post_content_trim = wp_trim_words(strip_tags($val->post_content), 50);
+        $post->post_excerpt = wp_trim_words($val->post_excerpt, 50);
 
         array_push($rooms, $post);
       }

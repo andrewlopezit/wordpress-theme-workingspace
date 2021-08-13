@@ -35,6 +35,7 @@ class CustomRoomsMeta {
 
         // local varialble
         this.translationArray = translation_array;
+        this.baseEndpointUrl = `${this.translationArray.site_url}/wp-json/wp/v2/workingspaces/${this.$customRoomsMeta.data('id')}/rooms`;
         this.floorplanShapes;
         this.searchTimer;
         this.searchValue;
@@ -61,8 +62,6 @@ class CustomRoomsMeta {
 
     init() {
         if(this.$outputContainer.hasClass('is-display')) {
-            const {site_url} = this.translationArray;
-
             this.$textareaSvg.val(this.getConvertedOutputtedSvg());
             this.initContent();
             
@@ -71,7 +70,7 @@ class CustomRoomsMeta {
             const flooplanHasDataIds = _.filter(this.floorplanShapes, floorplan => $(floorplan).data('id') > 0 );
             const floorplanIds = _.map($(flooplanHasDataIds), floorplan => $(floorplan).data('id'));
 
-            api(site_url).getPostsByIds([floorplanIds]).then(result => {
+            api(this.baseEndpointUrl).getPostsByIds([floorplanIds]).then(result => {
                 this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
                 const {data} = result;
                 this.rooms = data;
@@ -155,10 +154,9 @@ class CustomRoomsMeta {
 
                     this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
 
-                    const { site_url } =this.translationArray;
                     this.isFetchingSelectedRooms = true;
 
-                    api(site_url).getPostById($(e.target).data('id')).then( result =>{
+                    api(this.baseEndpointUrl).getPostById($(e.target).data('id')).then( result =>{
                         this.$selectedRoomsContainer.find('.item').remove();
                         this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
                         this.isFetchingSelectedRooms = false;
@@ -309,11 +307,9 @@ class CustomRoomsMeta {
         this.$searchSpinner.addClass('is-display');
 
         this.searchTimer = setTimeout(() => {
-            const { site_url } =this.translationArray;
-
             this.$searchResultsContainer.children().remove();
 
-            api(site_url).getPostsByName(this.searchValue).then( result => {
+            api(this.baseEndpointUrl).getPostsByName(this.searchValue).then( result => {
                 const { data } = result;
 
                 const diff = _.differenceBy(data, this.rooms, 'ID');

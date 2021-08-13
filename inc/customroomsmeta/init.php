@@ -11,6 +11,7 @@
 namespace Inc\customroomsmeta;
 
 use Inc\customroomsmeta\Callbacks\BackEndCallbacks;
+use Inc\customroomsmeta\Callbacks\FrontEndCallbacks;
 
 final class Init {
 
@@ -20,12 +21,17 @@ final class Init {
     public function __construct() {
         // initialize
 
-        // add meta
-        add_action( 'add_meta_boxes', array( $this, 'init' ));
-        $this->enqueue_backend_scripts();
+        if(is_admin()) {
+            // add meta
+            add_action( 'add_meta_boxes', array( $this, 'init' ));
+            $this->enqueue_backend_scripts();
 
-        // save meta
-        add_action( 'save_post', array( $this, 'save_meta_custom_rooms_floorplan' ) );
+            // save meta
+            add_action( 'save_post', array( $this, 'save_meta_custom_rooms_floorplan' ) );
+        }
+
+        // shortcode 
+        add_shortcode('floorplan', array( $this, 'floor_plan_shortcode' ));
 
     }
 
@@ -95,5 +101,10 @@ final class Init {
 			'floorplan' => preg_replace('#<script(.*?)>(.*?)</script>#is', '', $_POST['custom_rooms_floorplan'])
 		);
 		update_post_meta( $post_id, 'custom_rooms_floorplan_form_key', $data );
+    }
+
+    public function floor_plan_shortcode($args) {
+        $this->frontend = new FrontEndCallbacks();
+        $this->frontend->index($args);
     }
 }

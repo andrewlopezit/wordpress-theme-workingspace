@@ -60,7 +60,13 @@
 
     <section class="container spaces">
         <div class="row">
-            <div class="col">s</div>
+            <div class="col">
+                <h1>Find your room that suit <span>your needs.</span></h1>
+            <?php 
+                $post_id = get_the_ID();
+                do_shortcode("[floorplan id=$post_id]"); 
+            ?>
+            </div>
         </div>
     </section>
 </div>

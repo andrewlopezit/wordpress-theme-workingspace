@@ -44,6 +44,7 @@
 * PAGES
 * - FRONT PAGE
 * - SINGLE WORKINGSPACES
+* - CUSTOM META FLOORPLAN
 */
 
 /*------------------------------------*
@@ -163,3 +164,8 @@
 	SINGLE WORKINGSPACES
 *------------------------------------*/
 @import 'pages/single-workingspaces.scss';
+
+/*------------------------------------*
+	CUSTOM META FLOORPLAN
+*------------------------------------*/
+@import '../../inc/customroomsmeta/scss/custom-rooms-meta-front-end.scss';

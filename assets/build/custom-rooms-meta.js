@@ -149,6 +149,7 @@ class CustomRoomsMeta {
     this.$unAssignedRoomsColor = this.$legendContainer.children().eq(1).find('.color.unassigned').children().eq(0); // local varialble
 
     this.translationArray = translation_array;
+    this.baseEndpointUrl = `${this.translationArray.site_url}/wp-json/wp/v2/workingspaces/${this.$customRoomsMeta.data('id')}/rooms`;
     this.floorplanShapes;
     this.searchTimer;
     this.searchValue;
@@ -170,9 +171,6 @@ class CustomRoomsMeta {
 
   init() {
     if (this.$outputContainer.hasClass('is-display')) {
-      const {
-        site_url
-      } = this.translationArray;
       this.$textareaSvg.val(this.getConvertedOutputtedSvg());
       this.initContent();
       this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
@@ -181,7 +179,7 @@ class CustomRoomsMeta {
 
       const floorplanIds = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.map(jquery__WEBPACK_IMPORTED_MODULE_0___default()(flooplanHasDataIds), floorplan => jquery__WEBPACK_IMPORTED_MODULE_0___default()(floorplan).data('id'));
 
-      Object(_modules_Api__WEBPACK_IMPORTED_MODULE_2__["default"])(site_url).getPostsByIds([floorplanIds]).then(result => {
+      Object(_modules_Api__WEBPACK_IMPORTED_MODULE_2__["default"])(this.baseEndpointUrl).getPostsByIds([floorplanIds]).then(result => {
         this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
         const {
           data
@@ -253,11 +251,8 @@ class CustomRoomsMeta {
       else if (jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('id')) {
         if (this.isFetchingSelectedRooms) return;
         this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
-        const {
-          site_url
-        } = this.translationArray;
         this.isFetchingSelectedRooms = true;
-        Object(_modules_Api__WEBPACK_IMPORTED_MODULE_2__["default"])(site_url).getPostById(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('id')).then(result => {
+        Object(_modules_Api__WEBPACK_IMPORTED_MODULE_2__["default"])(this.baseEndpointUrl).getPostById(jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).data('id')).then(result => {
           this.$selectedRoomsContainer.find('.item').remove();
           this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
           this.isFetchingSelectedRooms = false;
@@ -379,11 +374,8 @@ class CustomRoomsMeta {
     clearInterval(this.searchTimer);
     this.$searchSpinner.addClass('is-display');
     this.searchTimer = setTimeout(() => {
-      const {
-        site_url
-      } = this.translationArray;
       this.$searchResultsContainer.children().remove();
-      Object(_modules_Api__WEBPACK_IMPORTED_MODULE_2__["default"])(site_url).getPostsByName(this.searchValue).then(result => {
+      Object(_modules_Api__WEBPACK_IMPORTED_MODULE_2__["default"])(this.baseEndpointUrl).getPostsByName(this.searchValue).then(result => {
         const {
           data
         } = result;
@@ -465,9 +457,7 @@ __webpack_require__.r(__webpack_exports__);
 const api = url => {
   class Api {
     constructor(url) {
-      const postUrl = new URL(window.location.href);
-      const postId = postUrl.searchParams.get("post");
-      this.endpoint = `${url}/wp-json/wp/v2/workingspaces/${postId}/rooms`;
+      this.endpoint = url;
     }
 
     getPostsByName(name) {

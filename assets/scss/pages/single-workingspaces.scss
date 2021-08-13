@@ -60,23 +60,9 @@
     }
 
     .service {
+        margin-bottom: $margin-bottom-section;
         h1 {
          margin-bottom: $margin-bottom-section - 50;
-
-            span{
-                position: relative;
-                z-index: 1;
-                &::after {
-                    content: '';
-                    position: absolute;
-                    width: 80%;
-                    height: 5px;
-                    right: -8px;
-                    bottom: 6px;
-                    background-color: var(--primary-color, $primary-color);
-                    z-index: -1;
-                }
-            }
         }
 
         .card {
@@ -101,6 +87,12 @@
                     margin-top: 20px;
                 }
             }
+        }
+    }
+
+    .spaces {
+        h1 {
+            width: 300px;
         }
     }
 }

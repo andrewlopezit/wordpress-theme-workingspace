@@ -22,6 +22,20 @@
          border-left: 6px solid var(--primary-color, $primary-color);
          padding-left: 0.8em;
      }
+     span{
+        position: relative;
+        z-index: 1;
+        &::after {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 5px;
+            right: -8px;
+            bottom: 6px;
+            background-color: var(--primary-color, $primary-color);
+            z-index: -1;
+        }
+    }
  }
  
  h2 {
