@@ -24,6 +24,7 @@ if(file_exists(dirname(__FILE__).'/inc/helpers/front-end-helpers.php')) {
 use Inc\Classes\ThemeSetup;
 use Inc\CustomRoomsMeta\Init as CustomRoomsMeta;
 use Inc\Classes\CustomApi;
+use Inc\ACF\ACF;
 
 // Core Constants.
 define( 'WORKINGSPACEWP_THEME_DIR', get_template_directory() );
@@ -106,6 +107,10 @@ if(!class_exists('WorkingspaceTheme')) {
 
             // load all custom meta box
             new CustomRoomsMeta();
+
+            // ACF init
+            $acf = new ACF();
+            $acf->init();
         }
 
 //------------------------------------ F U N C T I O N S ----------------------------------------
