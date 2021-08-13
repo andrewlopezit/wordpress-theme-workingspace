@@ -13,7 +13,7 @@ namespace Inc\ACF;
 final class ACF {
 
     public  function init() {
-        add_action('acf/init', array($this, 'register_google_api_key'));
+        // add_action('acf/init', array($this, 'register_google_api_key'));
 }
 
      // Method 2: Setting.
