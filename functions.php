@@ -107,10 +107,6 @@ if(!class_exists('WorkingspaceTheme')) {
 
             // load all custom meta box
             new CustomRoomsMeta();
-
-            // ACF init
-            $acf = new ACF();
-            $acf->init();
         }
 
 //------------------------------------ F U N C T I O N S ----------------------------------------
