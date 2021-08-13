@@ -6,7 +6,7 @@
             $categories = get_categories(array("child_of" => $cat_id, "hide_empty" => 0));
 
             $related_categories = get_workingspaces_related_room_categories();
-            if($categories) : foreach($categories as $category) :
+            if($categories && $related_categories) : foreach($categories as $category) :
                 
         ?>
         <div class="input-group">
