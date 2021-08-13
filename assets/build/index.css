@@ -1785,7 +1785,31 @@ section.testimonials {
 /*------------------------------------*
 	CUSTOM META FLOORPLAN
 *------------------------------------*/
-.floorplan-container#custom-rooms--floorplan {
+.floorplan-container#custom-rooms--floorplan .location-container {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+.floorplan-container#custom-rooms--floorplan .location-container i {
+  margin-right: 10px;
+  font-size: 1.5em;
+  position: relative;
+  transform: translateY(-10px);
+}
+.floorplan-container#custom-rooms--floorplan .location-container i::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  width: 5px;
+  height: 2px;
+  background-color: var(--secondary-color, #00CEB5);
+  transform: translateX(-48%);
+  -webkit-animation: marker-anim 1s linear infinite;
+  animation: marker-anim 1s linear infinite;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (1fr)[2];
@@ -1793,35 +1817,35 @@ section.testimonials {
   grid-gap: 2em;
   padding: 5px 0;
 }
-.floorplan-container#custom-rooms--floorplan svg rect,
-.floorplan-container#custom-rooms--floorplan svg polygon,
-.floorplan-container#custom-rooms--floorplan svg polyline {
+.floorplan-container#custom-rooms--floorplan .inner-container svg rect,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polygon,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polyline {
   opacity: 0.5 !important;
 }
-.floorplan-container#custom-rooms--floorplan svg rect.is-active,
-.floorplan-container#custom-rooms--floorplan svg polygon.is-active,
-.floorplan-container#custom-rooms--floorplan svg polyline.is-active {
+.floorplan-container#custom-rooms--floorplan .inner-container svg rect.is-active,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polygon.is-active,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polyline.is-active {
   cursor: pointer;
 }
-.floorplan-container#custom-rooms--floorplan svg rect.is-active:hover,
-.floorplan-container#custom-rooms--floorplan svg polygon.is-active:hover,
-.floorplan-container#custom-rooms--floorplan svg polyline.is-active:hover {
+.floorplan-container#custom-rooms--floorplan .inner-container svg rect.is-active:hover,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polygon.is-active:hover,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polyline.is-active:hover {
   fill: var(--primary-color, #FDD500) !important;
 }
-.floorplan-container#custom-rooms--floorplan svg rect:not(.is-active),
-.floorplan-container#custom-rooms--floorplan svg polygon:not(.is-active),
-.floorplan-container#custom-rooms--floorplan svg polyline:not(.is-active) {
+.floorplan-container#custom-rooms--floorplan .inner-container svg rect:not(.is-active),
+.floorplan-container#custom-rooms--floorplan .inner-container svg polygon:not(.is-active),
+.floorplan-container#custom-rooms--floorplan .inner-container svg polyline:not(.is-active) {
   transition: all 400ms ease;
 }
-.floorplan-container#custom-rooms--floorplan svg rect:not(.is-active):hover,
-.floorplan-container#custom-rooms--floorplan svg polygon:not(.is-active):hover,
-.floorplan-container#custom-rooms--floorplan svg polyline:not(.is-active):hover {
+.floorplan-container#custom-rooms--floorplan .inner-container svg rect:not(.is-active):hover,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polygon:not(.is-active):hover,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polyline:not(.is-active):hover {
   opacity: 0.1 !important;
 }
-.floorplan-container#custom-rooms--floorplan .content {
+.floorplan-container#custom-rooms--floorplan .inner-container .content {
   position: relative;
 }
-.floorplan-container#custom-rooms--floorplan .content .floorplan-progressbar {
+.floorplan-container#custom-rooms--floorplan .inner-container .content .floorplan-progressbar {
   position: absolute;
   width: 5px;
   top: 0;
@@ -1830,15 +1854,15 @@ section.testimonials {
   z-index: 5;
   background-color: var(--primary-color, #FDD500);
 }
-.floorplan-container#custom-rooms--floorplan .content .item {
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item {
   position: relative;
   display: none;
 }
-.floorplan-container#custom-rooms--floorplan .content .item.is-display {
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item.is-display {
   display: flex;
   flex-direction: column;
 }
-.floorplan-container#custom-rooms--floorplan .content .item img {
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item img {
   width: 100%;
   height: 280px;
   -o-object-fit: cover;
@@ -1846,18 +1870,17 @@ section.testimonials {
   -o-object-position: center;
      object-position: center;
 }
-.floorplan-container#custom-rooms--floorplan .content .item h2 {
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item h2 {
   margin: 0;
-  margin: 10px 0;
   position: relative;
   width: -moz-fit-content;
   width: -webkit-fit-content;
   width: fit-content;
 }
-.floorplan-container#custom-rooms--floorplan .content .item h2 a {
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item h2 a {
   color: #000;
 }
-.floorplan-container#custom-rooms--floorplan .content .item h2::after {
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item h2::after {
   content: "";
   position: absolute;
   width: 60%;
@@ -1866,11 +1889,35 @@ section.testimonials {
   border: 2px solid #FDD500;
   z-index: -1;
 }
-.floorplan-container#custom-rooms--floorplan .content .item .price {
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item p {
+  margin-top: 10px !important;
+  margin: 0;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item .price {
   font-weight: 600;
 }
-.floorplan-container#custom-rooms--floorplan .content .item .price span {
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item .price span {
   margin-left: 1.2em;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item .btn.visit-request {
+  margin-top: 30px;
+}
+
+@-webkit-keyframes marker-anim {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes marker-anim {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 /*# sourceMappingURL=index.css.map*/

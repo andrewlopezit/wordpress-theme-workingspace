@@ -75,7 +75,7 @@ class CustomApi extends WP_REST_Controller {
         'post__in' => $request_ids ?? $room_ids
       ));
 
-      $results = $this->add_workingspaces_details($results->posts);
+      $results = $this->add_workingspaces_details($results->posts, $request_id);
       
       return wp_send_json($results, 200);
     }
@@ -90,12 +90,12 @@ class CustomApi extends WP_REST_Controller {
 
       $result = get_post($room_id);
 
-      $results = $this->add_workingspaces_details([$result]);
+      $results = $this->add_workingspaces_details([$result], $request_id);
       
       return wp_send_json($results[0], 200);
     }
 
-    public function add_workingspaces_details($posts) {
+    public function add_workingspaces_details($posts, $workingspace_id) {
       $rooms = [];
 
       foreach($posts as $val) {
@@ -105,6 +105,7 @@ class CustomApi extends WP_REST_Controller {
         $post->room_rate = get_field('room_rate', $val->ID);
         $post->post_content_trim = wp_trim_words(strip_tags($val->post_content), 50);
         $post->post_excerpt = wp_trim_words($val->post_excerpt, 50);
+        $post->location = get_field('related_location', $workingspace_id);
 
         array_push($rooms, $post);
       }

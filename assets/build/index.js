@@ -812,35 +812,33 @@ class CustomRoomsMeta {
 
   roomTemplate(data) {
     let template = '';
-    let categoriesTemplate = '<small>Category: ';
-    data.forEach(val => {
-      val.categories.forEach((category, index) => {
-        categoriesTemplate += `<a href="#">${category.name}`;
-
-        if (index < val.categories.length - 1) {
-          categoriesTemplate += ', </a>';
-        } else {
-          categoriesTemplate += '</a>';
-        }
-      });
-    });
-    categoriesTemplate += '</small>';
     data.forEach(value => {
       template += `<div class="item" data-id="${value.ID}">
                             <a href="#">
                                 ${value.featured_image}
                             </a>
                             <div class="detail">
-                                <h2 class="name"><a href="#">${value.post_title}</a></h2>
-                                <div class="price">Price: <span>$${value.room_rate}/month</span></div>
-                                ${value.categories.length > 0 ? categoriesTemplate : ''}
-
+                                <h2 class="name"><a href="#">${value === null || value === void 0 ? void 0 : value.post_title}</a></h2>
+                                <div class="price">Price: <span>$${value === null || value === void 0 ? void 0 : value.room_rate}/month</span></div>
+                                ${value.categories.length > 0 ? this.categoriesTemplate(value.categories) : ''}
                                 <p>${value.post_excerpt ? value.post_excerpt : value.post_content ? value.post_content_trim : ''}</p>
                             </div>
                             <a class="btn visit-request" href="">Request a visit</a>
                         </div>`;
     });
     return template;
+  }
+
+  categoriesTemplate(categories) {
+    let categoriesTemplate = '<small>Category: ';
+    categories.forEach((category, index) => {
+      if (index + 1 !== categories.length) {
+        categoriesTemplate += `<a href="#">${category.name}, </a>`;
+      } else {
+        categoriesTemplate += `<a href="#">${category.name}</a>`;
+      }
+    });
+    return categoriesTemplate + '</small>';
   }
 
 }

@@ -17,14 +17,14 @@
             <a href="<?php the_permalink(); ?>">
                 <h4><?php the_title(); ?></h4>
             </a>
-            <?php $locations = get_field('related_locations');  ?>
+            <?php $location = get_field('related_location');  ?>
 
-            <?php if($locations): foreach($locations as $location): ?>
+            <?php if($location):?>
                 <div class="detail-icontainer">
                     <i class="fas fa-map-marker-alt text-muted"></i>
-                    <a class="text-muted" href="<?php echo get_the_permalink($location); ?>"><?php echo get_the_title($location); ?></a>
+                    <a href="<?php echo get_the_permalink($location); ?>"><?php echo get_the_title($location); ?></a>
                 </div>
-            <?php endforeach;endif; ?>
+            <?php endif; ?>
             <div class="detail-icontainer">
             <?php
                 $rooms = get_field('related_rooms'); 
