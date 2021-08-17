@@ -695,6 +695,7 @@ class CustomRoomsMeta {
     this.floorplanAnimation;
     this.floorplanAnimationDuration = 15;
     this.indexActiveShape = 0;
+    this.activeId;
     this.primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
     this.secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
     this.init();
@@ -766,6 +767,8 @@ class CustomRoomsMeta {
     this.$floorplanContainer.on('mouseout', 'svg > .is-active', () => this.progressbarAnimation.play());
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(this.floorplanShapes).on('click', el => {
       const id = jquery__WEBPACK_IMPORTED_MODULE_0___default()(el.target).data('id');
+      if (id === this.activeId) return;
+      this.activeId = id;
       const activeId = this.floorplanShapes.findIndex(el => jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).data('id') === id);
       this.gotoItem(activeId);
     });

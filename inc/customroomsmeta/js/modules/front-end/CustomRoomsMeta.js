@@ -15,7 +15,6 @@ class CustomRoomsMeta {
         this.$activeShapes;
         this.$activeItem;
 
-
         // local variable
         this.translationArray = translation_array;
         this.baseEndpointUrl = `${this.translationArray.site_url}/wp-json/wp/v2/workingspaces/${this.$floorplanContainer.data('id')}/rooms`;
@@ -23,6 +22,7 @@ class CustomRoomsMeta {
         this.floorplanAnimation;
         this.floorplanAnimationDuration = 15;
         this.indexActiveShape = 0;
+        this.activeId;
 
         this.primaryColor = getComputedStyle(document.documentElement)
                          .getPropertyValue('--primary-color');
@@ -89,6 +89,9 @@ class CustomRoomsMeta {
         $(this.floorplanShapes).on('click', el => {
             const id = $(el.target).data('id');
 
+            if(id === this.activeId) return;
+
+            this.activeId = id;
             const activeId =this.floorplanShapes.findIndex( el => $(el).data('id') === id);
 
             this.gotoItem(activeId);
