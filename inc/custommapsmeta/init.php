@@ -31,9 +31,9 @@ final class Init {
             $this->custom_meta_id,
             'Map Location',
             array($this, 'render_post_type_metabox'),
-            'locations',
+            'workingspaces',
             'advanced',
-            'default'
+            'high'
         );
     }
 
@@ -85,7 +85,8 @@ final class Init {
 
 		$data = array(
 			'post_id' => $post_id,
-			'location' => sanitize_text_field($_POST['location'])
+			'location' => sanitize_text_field($_POST['location']),
+            'place_name' => sanitize_text_field($_POST['place_name'])
 		);
 		update_post_meta( $post_id, 'custom_maps_mapbox_form_key', $data );
     }

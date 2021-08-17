@@ -17,12 +17,12 @@
             <a href="<?php the_permalink(); ?>">
                 <h4><?php the_title(); ?></h4>
             </a>
-            <?php $location = get_field('related_location');  ?>
+            <?php $location = get_workingspaces_location(); ?>
 
             <?php if($location):?>
                 <div class="detail-icontainer">
                     <i class="fas fa-map-marker-alt text-muted"></i>
-                    <a href="<?php echo get_the_permalink($location); ?>"><?php echo get_the_title($location); ?></a>
+                    <a href="#"><?php echo $location; ?></a>
                 </div>
             <?php endif; ?>
             <div class="detail-icontainer">

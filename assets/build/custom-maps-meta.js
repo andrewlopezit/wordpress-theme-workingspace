@@ -137,11 +137,13 @@ class CustomMapsMeta {
 
     this.locationSearchValue;
     this.locationSearchTimer;
+    this.locationSearchResults;
     this.mapboxtSecretToken = 'sk.eyJ1IjoiYW5kcmV3bG9wZXppdCIsImEiOiJja3NmaHFkcnIxOXl5MnZxcTRxMnl6dnVjIn0.FeYFdhahKOk9un-uF8sXpQ';
     this.mapboxPublicToken = 'pk.eyJ1IjoiYW5kcmV3bG9wZXppdCIsImEiOiJja3NiYWE0ZzQwMjcxMnFvNHBmMDlwMHpwIn0.Arhd62cdkLAS0k7SlXoQRg'; // set location
 
     if (this.$txtLocation.val()) {
       this.initMap(this.$txtLocation.val().split(','), this.mapZoom);
+      this.initMarker(this.$txtLocation.val().split(','));
     } else {
       navigator.geolocation.getCurrentPosition(position => {
         this.initMap([position.coords.longitude, position.coords.latitude]);
@@ -158,25 +160,32 @@ class CustomMapsMeta {
   events() {
     this.$txtSearchLocation.on('keyup', () => this.displayLocations());
     this.$searchResultsContainer.on('click', '.item', e => {
-      const location = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget).data('location');
+      const index = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget).data('index');
       if (!location) return;
+      this.$txtSearchLocation.val(this.locationSearchResults[index].place_name);
+      this.locationSearchValue = this.locationSearchResults[index].place_name;
       this.$searchResultsContainer.children().remove();
-      this.locationSearchValue = '';
-      this.$txtSearchLocation.val('');
       this.map.flyTo({
         enableHighAccuracy: true,
-        center: location.split(','),
+        center: this.locationSearchResults[index].center,
         zoom: this.mapZoom,
         essential: true
       });
+      this.setMarker(this.locationSearchResults[index].center);
     });
   }
 
   initMapEvents() {
     this.map.on('click', e => {
-      this.marker.setLngLat(e.lngLat);
-      this.$txtLocation.val([e.lngLat.lng, e.lngLat.lat].toString());
+      this.setMarker([e.lngLat.lng, e.lngLat.lat]);
     });
+  }
+
+  initMarker(center) {
+    // Set marker options.
+    this.marker = new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.Marker({
+      draggable: true
+    }).setLngLat(center).addTo(this.map);
     this.marker.on('dragend', () => {
       const {
         lng,
@@ -195,11 +204,7 @@ class CustomMapsMeta {
       center: center,
       zoom: mapZoom
     });
-    this.map.addControl(new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.NavigationControl()); // Set marker options.
-
-    this.marker = new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.Marker({
-      draggable: true
-    }).setLngLat(center).addTo(this.map);
+    this.map.addControl(new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.NavigationControl());
     this.map.on('load', () => {
       this.map.resize();
       this.$mapContainer.find('.custom-maps--spinner.is-loading.maps').remove();
@@ -209,10 +214,20 @@ class CustomMapsMeta {
     });
   }
 
+  setMarker(center) {
+    if (this.marker) {
+      this.marker.setLngLat(center);
+    } else {
+      this.initMarker(center);
+    }
+
+    this.$txtLocation.val(center.toString());
+  }
+
   itemSearchResultsTemplate(data) {
     let template = '';
-    data.forEach(val => {
-      template += ` <div class="item" data-location="${val.center.toString()}">
+    data.forEach((val, i) => {
+      template += ` <div class="item" data-index="${i}">
                             <span class="dashicons dashicons-location"></span>
                             <span>${val.place_name}</span>
                         </div>`;
@@ -236,6 +251,7 @@ class CustomMapsMeta {
         } = res;
 
         if (features.length > 0) {
+          this.locationSearchResults = features;
           this.$searchResultsContainer.append(this.itemSearchResultsTemplate(features));
         } else {
           this.$searchResultsContainer.append('<p>No results found.</p>');

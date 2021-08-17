@@ -62,6 +62,13 @@
         <div class="row">
             <div class="col">
                 <h1>Find your room that suit <span>your needs.</span></h1>
+                <?php $location = get_workingspaces_location(); ?>
+                <?php if($location):?>
+                <div class="location-container">
+                    <i class="fas fa-map-marker-alt text-muted"></i>
+                    <a href="#"><?php echo $location; ?></a>
+                </div>
+            <?php endif; ?>
             <?php 
                 $post_id = get_the_ID();
                 do_shortcode("[floorplan id=$post_id]"); 

@@ -10,13 +10,13 @@ ob_start();
         <?php 
             wp_nonce_field('custom_maps_mapbox_nonce_form', 'custom_maps_mapbox_nonce');
         ?>
-    </form>
     <div class="search-container">
-        <input type="text" class="components-text-control__input" id="search-location">
+        <input type="text" class="components-text-control__input" name="place_name" value="<?php echo isset($data['place_name']) ? $data['place_name'] : ''; ?>" id="search-location">
         <div class="search-results">
             <div class="custom-maps--spinner"></div>
         </div>
     </div>
     <div class="map-container">
     </div>
+    </form>
 </div>

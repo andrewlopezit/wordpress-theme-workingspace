@@ -1,33 +1,5 @@
 
 .floorplan-container#custom-rooms--floorplan {
-    .location-container {
-        display: flex;
-        align-items: center;
-        margin-top: 30px;
-        margin-bottom: 10px;
-
-        i {
-            margin-right: 10px;
-            font-size: 1.5em;
-            position: relative;
-
-            @include transform(translateY(-10px));
-
-            &::after {
-                content: '';
-                position: absolute;
-                bottom: -6px;
-                left: 50%;
-                width: 5px;
-                height: 2px;
-                background-color: var(--secondary-color, $secondary-color);
-
-                @include transform(translateX(-48%));
-                @include animation(marker-anim 1s linear infinite);
-            }
-        }
-    }
-
    .inner-container {
         display: grid;
         grid-template-columns: repeat(2, 1fr);

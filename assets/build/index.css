@@ -1781,23 +1781,19 @@ section.testimonials {
 .single-workingspaces.page .spaces h1 {
   width: 300px;
 }
-
-/*------------------------------------*
-	CUSTOM META FLOORPLAN
-*------------------------------------*/
-.floorplan-container#custom-rooms--floorplan .location-container {
+.single-workingspaces.page .spaces .location-container {
   display: flex;
   align-items: center;
   margin-top: 30px;
   margin-bottom: 10px;
 }
-.floorplan-container#custom-rooms--floorplan .location-container i {
+.single-workingspaces.page .spaces .location-container i {
   margin-right: 10px;
   font-size: 1.5em;
   position: relative;
   transform: translateY(-10px);
 }
-.floorplan-container#custom-rooms--floorplan .location-container i::after {
+.single-workingspaces.page .spaces .location-container i::after {
   content: "";
   position: absolute;
   bottom: -6px;
@@ -1809,6 +1805,10 @@ section.testimonials {
   -webkit-animation: marker-anim 1s linear infinite;
   animation: marker-anim 1s linear infinite;
 }
+
+/*------------------------------------*
+	CUSTOM META FLOORPLAN
+*------------------------------------*/
 .floorplan-container#custom-rooms--floorplan .inner-container {
   display: -ms-grid;
   display: grid;

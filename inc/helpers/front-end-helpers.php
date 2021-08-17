@@ -52,3 +52,12 @@
         return in_array($category->term_id, array_map(function($categories) {return $categories->term_id;}, $categories));
     }
  }
+ if(!function_exists('get_workingspaces_location')) {
+    function get_workingspaces_location() {
+        $data = get_post_meta( get_the_ID(), 'custom_maps_mapbox_form_key', true );
+
+        if(!isset($data['place_name'])) return null;
+
+        return $data['place_name'];
+    }
+ }
