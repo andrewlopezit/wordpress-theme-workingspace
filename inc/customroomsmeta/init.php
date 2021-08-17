@@ -16,7 +16,6 @@ use Inc\customroomsmeta\Callbacks\FrontEndCallbacks;
 final class Init {
 
     private $custom_meta_id = 'workingSpaceRoomMetaID';
-    private $backend;
 
     public function __construct() {
         // initialize

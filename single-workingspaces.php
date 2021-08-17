@@ -69,6 +69,8 @@
             </div>
         </div>
     </section>
+
+    <section id="mapbox"></section>
 </div>
 
  <?php endwhile; else : ?>

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "wp-scripts build assets/js/index.js inc/customroomsmeta/custom-rooms-meta.js  --output-path=assets/build",
-    "start": "wp-scripts start assets/js/index.js inc/customroomsmeta/custom-rooms-meta.js --output-path=assets/build",
+    "build": "wp-scripts build assets/js/index.js inc/customroomsmeta/custom-rooms-meta.js inc/custommapsmeta/custom-maps-meta.js  --output-path=assets/build",
+    "start": "wp-scripts start assets/js/index.js inc/customroomsmeta/custom-rooms-meta.js inc/custommapsmeta/custom-maps-meta.js --output-path=assets/build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +23,7 @@
     "axios": "^0.21.1",
     "gsap": "^3.7.1",
     "lodash": "^4.17.21",
+    "mapbox-gl": "^2.4.0",
     "moment": "^2.29.1",
     "vanilla-picker": "^2.11.2"
   }
