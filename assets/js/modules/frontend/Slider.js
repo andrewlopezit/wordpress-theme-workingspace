@@ -19,30 +19,38 @@ const slider = (args) => {
             this.$slider.html(svg);
             this.$slider.append($('<div>').addClass('active').html(svg.cloneNode(true)));
 
-             this.svgPath = new Proxy({
-                    x: null,
-                    y: null,
-                    b: null,
-                    a: null
-                }, {
-                    set: (target, key, value)  =>{
-                        target[key] = value;
-                        if(target.x !== null && target.y !== null && target.b !== null && target.a !== null) {
-                            this.$slider.find('svg').html(this.getPath([target.x, target.y], target.b, target.a, this.width));
-                        }
-                        return true;
-                    },
-                    get:(target, key) => {
-                        return target[key];
+            this.initSlider();
+
+            this.createLine();
+        }
+
+        createLine() {
+            this.svgPath = new Proxy({
+                x: null,
+                y: null,
+                b: null,
+                a: null
+            }, {
+                set: (target, key, value)  =>{
+                    target[key] = value;
+                    if(target.x !== null && target.y !== null && target.b !== null && target.a !== null) {
+                        this.$slider.find('svg').html(this.getPath([target.x, target.y], target.b, target.a, this.width));
                     }
-                });
+                    return true;
+                },
+                get:(target, key) => {
+                    return target[key];
+                }
+            });
 
-                this.svgPath.x = this.width / 2;
-                this.svgPath.y = 42;
-                this.svgPath.b = 0;
-                this.svgPath.a = this.width;
+            this.svgPath.x = this.width / 2;
+            this.svgPath.y = 42;
+            this.svgPath.b = 0;
+            this.svgPath.a = this.width;
+        }
 
-           this.$slider.slider({
+        initSlider() {
+            this.$slider.slider({
                 range: true,
                 values: [1800, 7800],
                 min: 500,
@@ -121,7 +129,6 @@ const slider = (args) => {
         
                 }
             });
-
         }
 
         setCSSVars(slider) {

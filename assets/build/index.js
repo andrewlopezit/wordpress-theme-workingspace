@@ -464,6 +464,11 @@ const slider = args => {
       svg.setAttribute('viewBox', '0 0 ' + this.width + ' 83');
       this.$slider.html(svg);
       this.$slider.append(jquery__WEBPACK_IMPORTED_MODULE_0___default()('<div>').addClass('active').html(svg.cloneNode(true)));
+      this.initSlider();
+      this.createLine();
+    }
+
+    createLine() {
       this.svgPath = new Proxy({
         x: null,
         y: null,
@@ -487,6 +492,9 @@ const slider = args => {
       this.svgPath.y = 42;
       this.svgPath.b = 0;
       this.svgPath.a = this.width;
+    }
+
+    initSlider() {
       this.$slider.slider({
         range: true,
         values: [1800, 7800],
