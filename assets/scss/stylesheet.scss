@@ -22,6 +22,7 @@
 *
 * COMPONENTS
 * - ICONS
+* - SLIDER
 * - WIDGETS
 * - BUTTONS
 * - INPUTS
@@ -38,6 +39,7 @@
 *
 * PARTIALS
 * - WORKSPACES
+* - WORKSPACES MAPS
 * - POSTS
 * - TESTIMONIALS
 *
@@ -72,6 +74,11 @@
 *------------------------------------*/
 @import 'components/icons';
 
+
+/*------------------------------------*
+	WIDGETS
+*------------------------------------*/
+@import 'components/slider';
 
 /*------------------------------------*
 	WIDGETS
@@ -143,6 +150,11 @@
 	  WORKSPACES
 *------------------------------------*/
 @import 'partials/workspace.scss';
+
+/*------------------------------------*
+	  WORKSPACES MAPS
+*------------------------------------*/
+@import 'partials/workspace-maps.scss';
 
 /*------------------------------------*
 	  POSTS

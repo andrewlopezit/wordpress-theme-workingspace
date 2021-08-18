@@ -1,3 +1,5 @@
+$background-color: #E6EBE9;
+
 .single-workingspaces.page {
     .hero-section {
         margin-bottom: $margin-bottom-section - 50;
@@ -91,6 +93,8 @@
     }
 
     .spaces {
+        margin-bottom: $margin-bottom-section;
+        
         h1 {
             width: 300px;
         }
@@ -121,6 +125,16 @@
                     @include animation(marker-anim 1s linear infinite);
                 }
             }
+        }
+    }
+
+    .workingspaces {
+        background-color: lighten($background-color, 5%);
+
+        padding: 2rem 0;
+
+        h1, p {
+            width: 370px;
         }
     }
 }

@@ -77,7 +77,27 @@
         </div>
     </section>
 
-    <section id="mapbox"></section>
+    <section class="full-width workingspaces">
+        <div class="container">
+            <?php 
+            $country = get_field('related_country');
+
+            if($country): ?>
+            <div class="row">
+                <div class="col">
+                    <h1>
+                        Workingspaces that you find in <span><?php echo $country->post_title; ?></span>
+                    </h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <?php get_template_part('partials/content/content', 'workingspaces-maps', array('id' => get_the_ID(),'country' => array('id' => $country->ID, 'name' => $country->post_title))); ?>
+                </div>
+            </div>
+            <?php  endif;?>
+        </div>
+    </section>
 </div>
 
  <?php endwhile; else : ?>

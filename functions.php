@@ -187,6 +187,11 @@ if(!class_exists('WorkingspaceTheme')) {
                 )   
             )
             ->script(
+                array('handle' => 'jQueryUI@1.12',
+                'src' => '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js'
+                )
+            )
+            ->script(
                 array(
                     'handle'=> 'JqueryExtendFunction',
                     'deps' => array('jQuery@3.6'),
@@ -199,6 +204,7 @@ if(!class_exists('WorkingspaceTheme')) {
             ->register(
                 array(
                     'gsap@3.7',
+                    'jQueryUI@1.12',
                     'JqueryExtendFunction'
                 )
             );

@@ -1,4 +1,5 @@
 $transition: all 400ms ease;
+$font-size: 14px;
 
 .btn {
     text-transform: uppercase;
@@ -7,7 +8,12 @@ $transition: all 400ms ease;
     padding: 10px 30px;
     position: relative;
     z-index: 1;
-    font-size: 14px;
+    font-size: $font-size;
+
+    &:focus{
+        outline: 0 !important;
+        box-shadow: 0 !important;
+    }
 
     color: #fff;
     font-weight: 500;
@@ -41,6 +47,23 @@ $transition: all 400ms ease;
             width: 100%;
         }
     }
+    
+    &.outline {
+        color: $gray;
+        &::after {
+            background-color: #fff;
+        }
+
+        &:hover {
+            color: #fff;
+        }
+    }
+
+    &.small {
+        font-size: $font-size - 2;
+        padding: 8px 15px;
+        font-weight: 400;
+    }
 }
 
 .action-container {
@@ -51,4 +74,8 @@ $transition: all 400ms ease;
         align-items: center;
         justify-content: center;
     }
+}
+
+.btn-check:focus+.btn, .btn:focus {
+    box-shadow: none;
 }
