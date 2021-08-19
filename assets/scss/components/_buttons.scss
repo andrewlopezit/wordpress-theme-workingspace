@@ -40,7 +40,8 @@ $font-size: 14px;
         z-index: -1;
     }
 
-    &:hover {
+    &:hover,
+    &.is-active {
         color: #fff;
 
         &:before {
@@ -54,7 +55,8 @@ $font-size: 14px;
             background-color: #fff;
         }
 
-        &:hover {
+        &:hover,
+        &.is-active {
             color: #fff;
         }
     }

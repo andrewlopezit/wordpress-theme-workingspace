@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import { Elastic, TweenMax } from 'gsap/all';
 
 const slider = (args) => {
     
@@ -52,25 +51,27 @@ const slider = (args) => {
         initSlider() {
             this.$slider.slider({
                 range: true,
-                values: [1800, 7800],
-                min: 500,
-                step: 5,
-                minRange: 1000,
-                max: 12000,
+                values: this.$slider.data('values').split(','),
+                min: this.$slider.data('min'),
+                step: this.$slider.data('step') ?? 1,
+                minRange: this.$slider.data('min-range'),
+                max: this.$slider.data('max'),
                 create: (event, ui) => {
+                    const $handle = this.$slider.find('.ui-slider-handle');
 
                     this.$slider.find('.ui-slider-handle').append($('<div />'));
-        
+                    
                     $(this.$slider.data('value-0')).html(this.$slider.slider('values', 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&thinsp;'));
                     $(this.$slider.data('value-1')).html(this.$slider.slider('values', 1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&thinsp;'));
                     $(this.$slider.data('range')).html((this.$slider.slider('values', 1) - this.$slider.slider('values', 0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&thinsp;'));
-        
+
                     this.setCSSVars(this.$slider);
         
                 },
                 start: (event, ui) => {
 
                     this.$slider.addClass('ui-slider-active');
+                    
         
                     this.handle = $(ui.handle).data('index', ui.handleIndex);
                     this.handlehandleObj = this.$slider.find('.ui-slider-handle');
@@ -101,33 +102,13 @@ const slider = (args) => {
                         }
                     }
         
-                    $(this.$slider.data('value-0')).html(ui.values[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&thinsp;'));
-                    $(this.$slider.data('value-1')).html(ui.values[1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&thinsp;'));
+                    $(this.$slider.data('value-0')).html(this.$slider.slider('values', 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&thinsp;'));
+                    $(this.$slider.data('value-1')).html(this.$slider.slider('values', 1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&thinsp;'));
                     $(this.$slider.data('range')).html((this.$slider.slider('values', 1) - this.$slider.slider('values', 0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&thinsp;'));
-        
+                    
                     this.setCSSVars(this.$slider);
         
                 },
-                stop: (event, ui) => {
-        
-                    this.$slider.removeClass('ui-slider-active');
-        
-                    let duration = .6,
-                        ease = Elastic.easeOut.config(1.08, .44);
-        
-                    TweenMax.to(this.handle, duration, {
-                        '--y': 0,
-                        ease: ease
-                    });
-        
-                    TweenMax.to(this.svgPath, duration, {
-                        y: 42,
-                        ease: ease
-                    });
-        
-                    this.handle = null;
-        
-                }
             });
         }
 

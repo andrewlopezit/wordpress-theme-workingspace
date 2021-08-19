@@ -1,19 +1,36 @@
 <?php 
 
+$country = $args['country'] ?? null;
+
+
 $query = array(
     'post_type' => 'workingspaces',
 );
 
-$workingspaces = new WP_Query( $query ); 
+$min_room_rate = get_min_room_rate();
+$max_room_rate =  get_max_room_rate();
 
+$max_range_room_rate = $max_room_rate - $min_room_rate;
+
+if(isset($country['id'])) {
+    $query['meta_query'] = array(
+        array(
+            'key' => 'related_country',
+            'value' => $country['id'],
+            'compare' => '='
+        )
+    );
+}
+
+$workingspaces = new WP_Query( $query ); 
 ?>
 <div id="workspaces-map">
     <div class="action-container">
-        <div class="action">
+        <div class="action filter">
             <i class="fas fa-filter"></i>
             <span>View all filters</span>
         </div>
-        <span class="text-muted">Location: Philippines, Price range: $20 - $50</span>
+        <span class="text-muted"><?php echo isset($country['name']) ? 'Location: '.$country['name'].', ' : '' ?> Price range: $<?php echo $min_room_rate; ?> - $<?php echo $max_range_room_rate; ?></span>
     </div>
     <div class="filter-container shadow-sm">
         <div class="filter">
@@ -28,7 +45,7 @@ $workingspaces = new WP_Query( $query );
                     $countries = new WP_Query( $query );
                 ?>
                 <?php if ( $countries->have_posts() ) : while ( $countries->have_posts() ) : $countries->the_post(); ?>
-                    <button class="btn outline small"><?php the_title(); ?></button>
+                    <button class="btn outline small <?php echo isset($country) ? $country['id'] == get_the_ID() ? 'is-active' : '' : '' ?>" <?php echo isset($country) ? 'disabled' : '' ?>><?php the_title(); ?></button>
                 <?php endwhile; 
                 wp_reset_postdata();
                 else : ?>
@@ -57,7 +74,7 @@ $workingspaces = new WP_Query( $query );
             <div class="title">Capacity: </div>
             <div class="action-container">
                 <?php
-                $maxCount = 5;
+                    $maxCount = 5;
                 ?>
                 <?php for ($count = 1 ; $count <= $maxCount; $count++): ?>
                     <button class="btn outline small">
@@ -76,14 +93,36 @@ $workingspaces = new WP_Query( $query );
             </div>
         </div>
 
+        <?php if($country): ?>
         <div class="filter">
-            <div class="title">Price range: </div>
-            <p class="annotate">The average price is $43 in Philippines / month</p>
+            <div class="header-container">
+                <div class="title-container">
+                    <div class="title">Price range: </div>
+                    <p class="annotate">The average price is $<?php echo get_average_room_rate_country($country['id'] ?? null) ?> in <?php echo $country['name'] ?? ''; ?> / month</p>
+                </div>
+                <div class="range">Price range: $<span id="third"></span>/month</div>
+            </div>
+            <div class="minmax-values">
+                <div>Min Budget: $<span id="minimum"></span></div>
+                <div>Max Mudget: $<span id="maximum"></span></div>
+            </div>
+
             <div class="action-container">
-                <div class="slider" data-value-0="#first" data-value-1="#second" data-range="#third"  id="price-range">
+                <div class="slider" 
+                    data-value-0="#minimum" 
+                    data-value-1="#maximum" 
+                    data-range="#third"  
+                    data-values="<?php echo $min_room_rate; ?>, <?php echo $max_range_room_rate; ?>"
+                    data-min ="<?php echo $min_room_rate >= 10 ? 10 : $min_room_rate; ?>"
+                    data-max = "<?php echo $max_room_rate+20; ?>"
+                    data-step = "1"
+                    data-min-range ="5"
+                    id="price-range">
                 </div>
             </div>
         </div>
+        <?php endif; ?>
+        <button class="btn filter"> Save</button>
     </div>
     <div class="content-container">
         <div class="item-container">
