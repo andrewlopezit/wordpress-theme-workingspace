@@ -1376,6 +1376,8 @@ hr {
   font-weight: 400;
 }
 .workspace-list .item.workspace.card .detail-icontainer p {
+  margin: 0;
+  padding: 0;
   margin-top: -2px;
 }
 .workspace-list .item.workspace.card .price-container {

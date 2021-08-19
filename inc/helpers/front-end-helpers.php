@@ -115,6 +115,24 @@ if(!function_exists('get_average_room_rate_country')) {
     }
 }
 
+
+
+if(!function_exists('get_minimum_seat_rooms')) {
+    function get_minimum_seat_rooms($rooms) {
+        $capacities = array_map(function($room) {return $room->capacity;}, $rooms);
+        
+        return min($capacities);
+    }
+}
+
+if(!function_exists('get_maximmum_seat_rooms')) {
+    function get_maximmum_seat_rooms($rooms) {
+        $capacities = array_map(function($room) {return $room->capacity;}, $rooms);
+        
+        return max($capacities);
+    }
+}
+
 if(!function_exists('get_country_rooms')) {
     function get_country_rooms($country_id) {   
         $workingspace = new WP_Query(array(

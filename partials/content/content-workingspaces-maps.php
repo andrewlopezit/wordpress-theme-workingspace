@@ -144,9 +144,17 @@ $workingspaces = new WP_Query( $query );
                         <a href="#"><?php echo $location; ?></a>
                     </div>
                 <?php endif; ?>
-                <div class="detail-icontainer">
                 <?php
                     $rooms = get_field('related_rooms'); 
+
+                    if($rooms):?>
+                    <div class="detail-icontainer">
+                        <i class="fas fa-user text-muted"></i>
+                        <p class="text-muted">Capacity: <?php echo get_minimum_seat_rooms($rooms).' - '.get_maximmum_seat_rooms($rooms); ?></p>
+                    </div>
+                <?php endif; ?>
+                <div class="detail-icontainer">
+                <?php
                     $numberOfRooms =  $rooms != null ? count($rooms) : 0 ?>
                     <i class="fas fa-chair text-muted"></i>
                     <p class="text-muted">No. of rooms: <?php echo $numberOfRooms; ?></p>
