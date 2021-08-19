@@ -1054,6 +1054,8 @@ class CustomRoomsMeta {
   roomTemplate(data) {
     let template = '';
     data.forEach(value => {
+      var _value$capacity, _value$categories;
+
       template += `<div class="item" data-id="${value.ID}">
                             <a href="#">
                                 ${value.featured_image}
@@ -1061,8 +1063,9 @@ class CustomRoomsMeta {
                             <div class="detail">
                                 <h2 class="name"><a href="#">${value === null || value === void 0 ? void 0 : value.post_title}</a></h2>
                                 <div class="price">Price: <span>$${value === null || value === void 0 ? void 0 : value.room_rate}/month</span></div>
-                                ${value.categories.length > 0 ? this.categoriesTemplate(value.categories) : ''}
-                                <p>${value.post_excerpt ? value.post_excerpt : value.post_content ? value.post_content_trim : ''}</p>
+                                <div class="capacity">Capacity: <span>${(_value$capacity = value === null || value === void 0 ? void 0 : value.capacity) !== null && _value$capacity !== void 0 ? _value$capacity : 0}</span></div>
+                                ${(value === null || value === void 0 ? void 0 : (_value$categories = value.categories) === null || _value$categories === void 0 ? void 0 : _value$categories.length) > 0 ? this.categoriesTemplate(value.categories) : ''}
+                                <p>${value !== null && value !== void 0 && value.post_excerpt ? value === null || value === void 0 ? void 0 : value.post_excerpt : value !== null && value !== void 0 && value.post_content ? value === null || value === void 0 ? void 0 : value.post_content_trim : ''}</p>
                             </div>
                             <a class="btn visit-request" href="">Request a visit</a>
                         </div>`;

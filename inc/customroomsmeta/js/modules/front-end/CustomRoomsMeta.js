@@ -157,8 +157,9 @@ class CustomRoomsMeta {
                             <div class="detail">
                                 <h2 class="name"><a href="#">${value?.post_title}</a></h2>
                                 <div class="price">Price: <span>$${value?.room_rate}/month</span></div>
-                                ${value.categories.length > 0 ? this.categoriesTemplate(value.categories) : ''}
-                                <p>${value.post_excerpt ? value.post_excerpt : value.post_content ? value.post_content_trim: ''}</p>
+                                <div class="capacity">Capacity: <span>${value?.capacity ?? 0}</span></div>
+                                ${value?.categories?.length > 0 ? this.categoriesTemplate(value.categories) : ''}
+                                <p>${value?.post_excerpt ? value?.post_excerpt : value?.post_content ? value?.post_content_trim: ''}</p>
                             </div>
                             <a class="btn visit-request" href="">Request a visit</a>
                         </div>`;
