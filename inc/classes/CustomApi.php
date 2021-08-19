@@ -10,6 +10,10 @@
 
 namespace Inc\Classes;
 
+use Inc\Helpers\Posts;
+use Inc\Helpers\Rooms;
+use Inc\Helpers\Workingspaces;
+
 use WP_REST_Server;
 use WP_REST_Controller;
 use WP_Query;
@@ -63,17 +67,59 @@ class CustomApi extends WP_REST_Controller {
       return true;
     }
 
-    public function get_workingspaces() {
+    public function get_workingspaces($request) {
 
-      $results = new WP_Query(array(
-        'post_type' => 'workingspaces',
+      $post_ids = [];
+      $workingspacesMetaQuery = array('relation' => 'AND');
+
+      if(isset($request['country'])) {
+        array_push($workingspacesMetaQuery, array(
+          'key' => 'related_country',
+          'compare' => '=',
+          'value' => $request['country']
       ));
+      }
+
+      if(isset($request['room_categories'])) {
+        $rooms = Posts::get_rooms_by_categoroies(explode(',',$request['room_categories']));
+
+        foreach($rooms as $room) {
+            array_push($workingspacesMetaQuery, array(
+                'key' => 'related_rooms',
+                'compare' => 'LIKE',
+                'value' => $room->ID
+            ));
+        }
+      }
+
+      $query = array(
+        'post_type' => 'workingspaces',
+        'post__in' => $post_ids,
+        'meta_query' => $workingspacesMetaQuery
+      );
+
+      $results = new WP_Query($query);
 
       if(count($results->posts) < 1) return wp_send_json([], 200);
 
-      $results = $this->add_workingspaces_additional_details($results->posts);
+      $results = $results->posts;
+      $rooms_details =  $this->add_rooms_additional_details(Posts::get_rooms_by_workingspaces_with_id($results));
+      
+      $rooms = new Rooms($rooms_details);
 
-      return wp_send_json($results, 200);
+      if(isset($request['capacity'])) $rooms = $rooms->has_capacity($request['capacity']);
+      if(isset($request['price_range'])) $rooms = $rooms->price_range($request['price_range']);
+
+
+      $filtered_room_workingspace_ids = $rooms->workingspace_ids();
+      
+      $workingspaces = new Workingspaces($results);
+      $workingspaces = $workingspaces->has_ids($filtered_room_workingspace_ids)
+                                     ->get(); 
+
+      $filtered_workingspaces = $this->add_workingspaces_additional_details($workingspaces);
+
+      return wp_send_json($filtered_workingspaces, 200);
     }
 
     public function get_workingspace_rooms($request) {
@@ -116,7 +162,7 @@ class CustomApi extends WP_REST_Controller {
       return wp_send_json($results[0], 200);
     }
 //------------------------------------------------------------------------------
-    public function add_rooms_additional_details($posts, $workingspace_id) {
+    public function add_rooms_additional_details($posts) {
       $rooms = [];
 
       foreach($posts as $val) {
@@ -126,6 +172,7 @@ class CustomApi extends WP_REST_Controller {
         $room->room_rate = get_field('room_rate', $val->ID);
         $room->post_content_trim = wp_trim_words(strip_tags($room->post_content), 50);
         $room->post_excerpt = wp_trim_words($room->post_excerpt, 50);
+        $room->capacity = get_field('capacity', $val->ID);
 
         array_push($rooms, $room);
       }
@@ -134,17 +181,17 @@ class CustomApi extends WP_REST_Controller {
     }
 
     public function add_workingspaces_additional_details($posts) {
-      $workingspaces = [];
+        $workingspaces = [];
 
-      foreach($posts as $val) {
-        $workingspace = $val;
-        $workingspace->featured_image = esc_url(wp_get_attachment_image_src( get_post_thumbnail_id( $workingspace->ID), 'posts' )[0]);
-        $workingspace->post_content_trim = wp_trim_words(strip_tags($workingspace->post_content), 50);
-        $workingspace->post_excerpt = wp_trim_words($workingspace->post_excerpt, 50);
+        foreach ($posts as $val) {
+            $workingspace = $val;
+            $workingspace->featured_image = esc_url(wp_get_attachment_image_src(get_post_thumbnail_id($workingspace->ID), 'posts')[0]);
+            $workingspace->post_content_trim = wp_trim_words(strip_tags($workingspace->post_content), 50);
+            $workingspace->post_excerpt = wp_trim_words($workingspace->post_excerpt, 50);
 
-        array_push($workingspaces, $workingspace);
-      }
+            array_push($workingspaces, $workingspace);
+        }
 
-      return $workingspaces;
+        return $workingspaces;
     }
 }

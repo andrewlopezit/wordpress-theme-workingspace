@@ -54,7 +54,7 @@ $workingspaces = new WP_Query( $query );
             </div>
         </div>
 
-        <div class="filter">
+        <div class="filter categories">
             <div class="title">Categories: </div>
             <div class="action-container">
                 <?php
@@ -70,7 +70,7 @@ $workingspaces = new WP_Query( $query );
             </div>
         </div>
 
-        <div class="filter">
+        <div class="filter capacity">
             <div class="title">Capacity: </div>
             <div class="action-container">
                 <?php

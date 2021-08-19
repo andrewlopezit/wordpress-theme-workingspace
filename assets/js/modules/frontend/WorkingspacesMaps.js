@@ -6,6 +6,8 @@ class WorkingspacesMaps {
     constructor( ) {
         this.$workspaceContainer = $('#workspaces-map');
         this.$filterContainer = this.$workspaceContainer.find('.filter-container');
+        this.$filterCategoriesContainer = this.$filterContainer.find('.filter.categories');
+        this.$filterCapacityContainer = this.$filterContainer.find('.filter.capacity');
         this.$priceRange = this.$filterContainer.find('.filter > .action-container > .slider#price-range');
 
         this.$btnFilter =  this.$workspaceContainer.find('.action-container > .action.filter');
@@ -51,6 +53,20 @@ class WorkingspacesMaps {
                 this.filterAnimation.reverse();
                 return;
             }
+        });
+
+        this.$filterCategoriesContainer.on('click', '.action-container > button', e =>{
+            const $el = $(e.currentTarget);
+
+            $el.toggleClass('is-active');
+        });
+
+        this.$filterCapacityContainer.on('click', '.action-container > button', e => {
+            const $el = $(e.currentTarget);
+
+            $el.siblings().removeClass('is-active');
+            $el.addClass('is-active');
+
         });
     }
 }
