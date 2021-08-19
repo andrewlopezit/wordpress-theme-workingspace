@@ -117,7 +117,7 @@ class CustomApi extends WP_REST_Controller {
       $workingspaces = $workingspaces->has_ids($filtered_room_workingspace_ids)
                                      ->get(); 
 
-      $filtered_workingspaces = $this->add_workingspaces_additional_details($workingspaces);
+      $filtered_workingspaces = $this->add_workingspaces_additional_details($workingspaces, $rooms_details);
 
       return wp_send_json($filtered_workingspaces, 200);
     }
@@ -180,7 +180,7 @@ class CustomApi extends WP_REST_Controller {
       return $rooms;
     }
 
-    public function add_workingspaces_additional_details($posts) {
+    public function add_workingspaces_additional_details($posts, $rooms = null) {
         $workingspaces = [];
 
         foreach ($posts as $val) {
@@ -188,6 +188,17 @@ class CustomApi extends WP_REST_Controller {
             $workingspace->featured_image = esc_url(wp_get_attachment_image_src(get_post_thumbnail_id($workingspace->ID), 'posts')[0]);
             $workingspace->post_content_trim = wp_trim_words(strip_tags($workingspace->post_content), 50);
             $workingspace->post_excerpt = wp_trim_words($workingspace->post_excerpt, 50);
+
+            if($rooms) {
+              $capacity_list = [];
+              foreach($rooms as $room) {
+                
+                if(isset($room->workingspace_id) && $room->workingspace_id == $workingspace->ID) {
+                  array_push($capacity_list, $room->capacity);
+                }
+              }
+              $workingspace->capacity_list = $capacity_list;
+            }
 
             array_push($workingspaces, $workingspace);
         }
