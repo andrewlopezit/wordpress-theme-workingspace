@@ -83,7 +83,8 @@ class CustomMapsMeta {
     initMap(center, mapZoom = 8) {
         this.$map.css('opacity', 0);
 
-
+        if(!this.$map[0]) return;
+        
         mapboxgl.accessToken = this.mapboxPublicToken;
         this.map = new mapboxgl.Map({
             container: this.$map[0],

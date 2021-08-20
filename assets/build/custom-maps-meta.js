@@ -197,6 +197,7 @@ class CustomMapsMeta {
 
   initMap(center, mapZoom = 8) {
     this.$map.css('opacity', 0);
+    if (!this.$map[0]) return;
     mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.accessToken = this.mapboxPublicToken;
     this.map = new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.Map({
       container: this.$map[0],
