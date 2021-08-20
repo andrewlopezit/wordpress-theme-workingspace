@@ -58,7 +58,9 @@ final class Init {
 
         // Localize the script with new data
         $translation_array = array(
-            'site_url' => esc_url(site_url())
+            'site_url' => esc_url(site_url()),
+            'mapbox_public_key' => MAPBOX_PUBLIC_KEY,
+            'mapbox_secret_key' => MAPBOX_SECRET_KEY
         );
 
         wp_localize_script('custom-meta-maps', 'translation_array', $translation_array);

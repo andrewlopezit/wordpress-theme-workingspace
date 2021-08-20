@@ -8,7 +8,9 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "vlucas/phpdotenv": "5.3.x-dev"
+    },
     "autoload": {
         "psr-4": {"Inc\\": "./inc"}
     }

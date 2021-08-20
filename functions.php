@@ -52,6 +52,13 @@ if(!class_exists('WorkingspaceTheme')) {
     
         public function workingspace_variable_init() {
             $version = self::get_theme_version();
+
+            $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+            $dotenv->load();
+
+            //MAP BOX KEY
+            defined('MAPBOX_PUBLIC_KEY') or define('MAPBOX_PUBLIC_KEY', $_ENV['MAPBOX_PUBLIC_KEY']);
+            defined('MAPBOX_SECRET_KEY') or define('MAPBOX_SECRET_KEY', $_ENV['MAPBOX_SECRET_KEY']);
     
             // Theme version.
             define( 'WORKINGSPACE_THEME_VERSION', $version );

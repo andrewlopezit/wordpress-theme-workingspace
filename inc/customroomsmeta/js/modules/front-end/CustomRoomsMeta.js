@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import gsap from 'gsap';
 import api from '../Api';
-import { duration } from 'moment';
 
 class CustomRoomsMeta {
     constructor() {
