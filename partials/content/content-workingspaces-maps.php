@@ -5,6 +5,7 @@ $max_posts = get_option( 'posts_per_page' );
 
 $query = array(
     'post_type' => 'workingspaces',
+    
 );
 
 $min_room_rate = get_min_room_rate();

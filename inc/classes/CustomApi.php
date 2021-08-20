@@ -145,12 +145,18 @@ class CustomApi extends WP_REST_Controller {
       if(!$rooms) return wp_send_json_error('No results found', 404);
 
       $room_ids = array_map(function($rooms) {return $rooms->ID;}, $rooms); 
-
-      $results = new WP_Query(array(
+      
+      $query = array(
         'post_type' => 'rooms',
         's' => sanitize_text_field($reqest_search),
-        'post__in' => $request_ids ?? $room_ids
-      ));
+      );
+      
+      if($room_ids) {
+        $query['post__in'] = $request_ids;
+        $query['posts_per_page']  = -1;
+      }
+
+      $results = new WP_Query($query);
 
       $results = $this->add_rooms_additional_details($results->posts, $request_id);
       
