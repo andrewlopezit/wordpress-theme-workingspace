@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('jquery', 'moment', 'wp-polyfill'), 'version' => '07ad37f56cbd208b77654cef7ef541ca');
+<?php return array('dependencies' => array('jquery', 'moment', 'wp-polyfill'), 'version' => '3b05c5d09737aa8306486a6b5936944b');

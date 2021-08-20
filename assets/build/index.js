@@ -784,7 +784,8 @@ class WorkingspacesMaps {
     this.$filterCategoriesContainer = this.$filterContainer.find('.filter.categories');
     this.$filterCapacityContainer = this.$filterContainer.find('.filter.capacity');
     this.$priceRange = this.$filterContainer.find('.filter > .action-container > .slider#price-range');
-    this.$btnFilter = this.$workspaceContainer.find('.action-container > .action.filter'); //init slider
+    this.$btnFilter = this.$workspaceContainer.find('.action-container > .action.filter');
+    this.$btnSetFilter = this.$filterContainer.find('.btn.filter'); //init slider
 
     Object(_Slider__WEBPACK_IMPORTED_MODULE_0__["default"])({
       container: this.$priceRange.get()[0]
@@ -832,6 +833,9 @@ class WorkingspacesMaps {
       const $el = jquery__WEBPACK_IMPORTED_MODULE_1___default()(e.currentTarget);
       $el.siblings().removeClass('is-active');
       $el.addClass('is-active');
+    });
+    this.$btnSetFilter.on('click', () => {
+      this.filterAnimation.reverse();
     });
   }
 

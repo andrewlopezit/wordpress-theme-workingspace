@@ -1,7 +1,7 @@
 <?php 
 
 $country = $args['country'] ?? null;
-
+$max_posts = get_option( 'posts_per_page' );
 
 $query = array(
     'post_type' => 'workingspaces',
@@ -23,6 +23,7 @@ if(isset($country['id'])) {
 }
 
 $workingspaces = new WP_Query( $query ); 
+
 ?>
 <div id="workspaces-map">
     <div class="action-container">
@@ -169,6 +170,12 @@ $workingspaces = new WP_Query( $query );
             wp_reset_postdata();
             else : ?>
             <p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>
+            <?php endif; ?>
+            
+            <?php if(isset($country['name']) AND count($workingspaces->posts) >= (int)$max_posts):?>
+                <div class="find-all posts">
+                    <a href="#">Find more workingspaces in <span><?php echo $country['name']; ?></span></a>
+                </div>
             <?php endif; ?>
         </div>
         <div class="map"></div>

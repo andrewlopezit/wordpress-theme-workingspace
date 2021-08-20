@@ -11,6 +11,7 @@ class WorkingspacesMaps {
         this.$priceRange = this.$filterContainer.find('.filter > .action-container > .slider#price-range');
 
         this.$btnFilter =  this.$workspaceContainer.find('.action-container > .action.filter');
+        this.$btnSetFilter = this.$filterContainer.find('.btn.filter');
 
         //init slider
         slider({
@@ -66,7 +67,10 @@ class WorkingspacesMaps {
 
             $el.siblings().removeClass('is-active');
             $el.addClass('is-active');
+        });
 
+        this.$btnSetFilter.on('click', () => {
+            this.filterAnimation.reverse();
         });
     }
 }

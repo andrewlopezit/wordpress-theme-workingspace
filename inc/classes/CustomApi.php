@@ -71,6 +71,7 @@ class CustomApi extends WP_REST_Controller {
 
       $post_ids = [];
       $workingspacesMetaQuery = array('relation' => 'AND');
+      $offset = 0;
 
       if(isset($request['country'])) {
         array_push($workingspacesMetaQuery, array(
@@ -119,7 +120,16 @@ class CustomApi extends WP_REST_Controller {
 
       $filtered_workingspaces = $this->add_workingspaces_additional_details($workingspaces, $rooms_details);
 
-      return wp_send_json($filtered_workingspaces, 200);
+      $results = array(
+        'posts' => $filtered_workingspaces,
+        'pagination' => array(
+          'offset' => $offset,
+          'post_per_page' => get_option( 'posts_per_page' ),
+          'total' => wp_count_posts('workingspaces')
+        )
+      );
+
+      return wp_send_json($results, 200);
     }
 
     public function get_workingspace_rooms($request) {
