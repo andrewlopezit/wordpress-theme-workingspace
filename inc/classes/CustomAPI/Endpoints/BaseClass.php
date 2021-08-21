@@ -32,7 +32,7 @@ public function add_rooms_additional_details($posts) {
     return $rooms;
   }
 
-  public function add_workingspaces_additional_details($posts) {
+  public function add_workingspaces_additional_details($posts, $rooms = null) {
       $workingspaces = [];
 
       foreach ($posts as $val) {
@@ -43,7 +43,7 @@ public function add_rooms_additional_details($posts) {
           $workingspace->permalink = get_the_permalink($workingspace);
           $workingspace->location = get_workingspaces_location($workingspace->ID);
 
-          $rooms =  Posts::get_rooms_by_workingspaces_has_id([$workingspace], true);
+          $rooms = $rooms ?? Posts::get_rooms_by_workingspaces_has_id([$workingspace], true);
 
           if($rooms) {
             $capacity_list = [];

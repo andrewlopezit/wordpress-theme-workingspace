@@ -13,31 +13,50 @@ namespace Inc\Classes\CustomAPI\Endpoints;
 use Inc\Classes\CustomAPI\Endpoints\BaseClass;
 use Inc\Classes\CustomAPI\Endpoints\Filters;
 
+use Inc\Helpers\Posts;
+use Inc\Helpers\Rooms;
+use Inc\Helpers\Workingspaces as WorkspacesHelpers;
+
 use WP_Query;
 
 class Workingspaces extends BaseClass {
 
     public function get_workingspaces($request) {
+  
+      $filters = array(
+        'country' => $request['country'],
+        'room_categories' => $request['room_categories'],
+      );
 
-        $query =  Filters::workingspaces_filters($request);
+      $query =  Filters::workingspaces_filters($filters);
 
-        if(!$query) wp_send_json([], 200);
-  
-        $results = new WP_Query($query);
-  
-        if(count($results->posts) < 1) return wp_send_json([], 200);
-      
-        $workingspaces = $this->add_workingspaces_additional_details($results->posts);
-        
-        $results = array(
-          'posts' => $workingspaces,
-          'pagination' => array(
-            'post_per_page' => get_option( 'posts_per_page' ),
-            'total' => wp_count_posts('workingspaces')
-          )
-        );
-  
-        return wp_send_json($results, 200);
+      if(!$query) wp_send_json([], 200);
+
+      $results = new WP_Query($query);
+
+      if(count($results->posts) < 1) return wp_send_json([], 200);
+    
+      $rooms = Posts::get_rooms_by_workingspaces_has_id($results->posts, true);
+      $workingspaces = $this->add_workingspaces_additional_details($results->posts);
+
+      $filtered_rooms = new Rooms($rooms);
+      if($request['capacity']) $filtered_rooms = $filtered_rooms->capacity($request['capacity']);
+      if($request['price_range']) $filtered_rooms = $filtered_rooms->price_range($request['price_range']);
+
+      $workingspace_filtered_ids = $filtered_rooms->workingspace_ids();
+      $filtered_workingpaces = new WorkspacesHelpers($workingspaces);
+
+      $filtered_workingpaces = $filtered_workingpaces->ids($workingspace_filtered_ids)->get();
+
+      $results = array(
+        'posts' => $filtered_workingpaces,
+        'pagination' => array(
+          'post_per_page' => get_option( 'posts_per_page' ),
+          'total' => wp_count_posts('workingspaces')
+        )
+      );
+
+      return wp_send_json($results, 200);
     }
 
     public function get_workingspace_rooms($request) {

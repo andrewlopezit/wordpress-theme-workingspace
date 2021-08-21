@@ -38,10 +38,7 @@ final class Filters {
       
         if($rooms) {
           $rooms = new Rooms($rooms);
-      
           $room_ids = $rooms->ids();
-        } else {
-          return null;
         }
       }
       

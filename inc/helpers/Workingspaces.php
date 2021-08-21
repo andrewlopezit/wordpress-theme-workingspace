@@ -18,7 +18,7 @@
         $this->_workingspaces = $workingspaces;  
     }
 
-    public function has_ids($ids) {
+    public function ids($ids) {
         $filtered_workingspaces_ids = [];
 
         foreach($ids as $id) {
