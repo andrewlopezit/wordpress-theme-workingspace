@@ -53,12 +53,12 @@
     }
  }
  if(!function_exists('get_workingspaces_location')) {
-    function get_workingspaces_location() {
-        $data = get_post_meta( get_the_ID(), 'custom_maps_mapbox_form_key', true );
+    function get_workingspaces_location($id = null) {
+        $data = get_post_meta( $id ? $id : get_the_ID(), 'custom_maps_mapbox_form_key', true );
 
-        if(!isset($data['place_name'])) return null;
+        if(!isset($data)) return null;
 
-        return $data['place_name'];
+        return $data;
     }
  }
 

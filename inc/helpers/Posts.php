@@ -31,7 +31,7 @@
         return $results->posts;
     }
 
-    public static function  get_rooms_by_workingspaces_with_id($workingspaces) {
+    public static function  get_rooms_by_workingspaces_has_id($workingspaces, $has_id = false) {
         if(!isset($workingspaces)) return;
 
         $serialize_rooms = [];
@@ -41,7 +41,7 @@
 
             if($results) {
                 foreach($results as $res) {
-                    $res->workingspace_id = $workingspace->ID;
+                    if($has_id) $res->workingspace_id = $workingspace->ID;
                     array_push($serialize_rooms, serialize($res));
                 }
             }

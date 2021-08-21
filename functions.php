@@ -17,14 +17,14 @@ if(file_exists(dirname(__FILE__).'/vendor/autoload.php')) {
     require_once dirname(__FILE__).'/vendor/autoload.php';
 }
 
-if(file_exists(dirname(__FILE__).'/inc/helpers/front-end-helpers.php')) {
-    require_once dirname(__FILE__).'/inc/helpers/front-end-helpers.php';
+if(file_exists(dirname(__FILE__).'/inc/helpers/global-helpers.php')) {
+    require_once dirname(__FILE__).'/inc/helpers/global-helpers.php';
 }
 
 use Inc\Classes\ThemeSetup;
 use Inc\CustomRoomsMeta\Init as CustomRoomsMeta;
 use Inc\Custommapsmeta\Init as CustomMapsMeta;
-use Inc\Classes\CustomApi;
+use Inc\Classes\CustomAPI\CustomApi;
 
 // Core Constants.
 define( 'WORKINGSPACEWP_THEME_DIR', get_template_directory() );

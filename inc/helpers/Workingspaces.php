@@ -16,8 +16,6 @@
 
     public function __construct($workingspaces) {
         $this->_workingspaces = $workingspaces;  
-        
-        
     }
 
     public function has_ids($ids) {

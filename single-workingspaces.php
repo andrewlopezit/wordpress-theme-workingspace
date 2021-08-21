@@ -63,10 +63,10 @@
             <div class="col">
                 <h1>Find your room that suit <span>your needs.</span></h1>
                 <?php $location = get_workingspaces_location(); ?>
-                <?php if($location):?>
+                <?php if($location['place_name']):?>
                 <div class="location-container">
                     <i class="fas fa-map-marker-alt text-muted"></i>
-                    <a href="#"><?php echo $location; ?></a>
+                    <a href="#"><?php echo $location['place_name']; ?></a>
                 </div>
             <?php endif; ?>
             <?php 

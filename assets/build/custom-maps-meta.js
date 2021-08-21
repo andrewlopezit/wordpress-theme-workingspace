@@ -138,8 +138,8 @@ class CustomMapsMeta {
     this.locationSearchValue;
     this.locationSearchTimer;
     this.locationSearchResults;
-    this.mapboxtSecretToken = 'sk.eyJ1IjoiYW5kcmV3bG9wZXppdCIsImEiOiJja3NmaHFkcnIxOXl5MnZxcTRxMnl6dnVjIn0.FeYFdhahKOk9un-uF8sXpQ';
-    this.mapboxPublicToken = 'pk.eyJ1IjoiYW5kcmV3bG9wZXppdCIsImEiOiJja3NiYWE0ZzQwMjcxMnFvNHBmMDlwMHpwIn0.Arhd62cdkLAS0k7SlXoQRg'; // set location
+    this.mapboxtSecretToken = translation_array.mapbox_secret_key;
+    this.mapboxPublicToken = translation_array.mapbox_public_key; // set location
 
     if (this.$txtLocation.val()) {
       this.initMap(this.$txtLocation.val().split(','), this.mapZoom);
