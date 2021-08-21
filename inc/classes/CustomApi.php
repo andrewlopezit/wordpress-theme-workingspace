@@ -70,27 +70,33 @@ class CustomApi extends WP_REST_Controller {
     public function get_workingspaces($request) {
 
       $post_ids = [];
-      $workingspacesMetaQuery = array('relation' => 'AND');
+      $workingspacesMetaQuery = [];
       $offset = 0;
 
       if(isset($request['country'])) {
-        array_push($workingspacesMetaQuery, array(
-          'key' => 'related_country',
-          'compare' => '=',
-          'value' => $request['country']
-      ));
+        $country_meta_query = array(
+            'key' => 'related_country',
+            'compare' => '=',
+            'value' => $request['country']
+        );
+
+        array_push($workingspacesMetaQuery, $country_meta_query);
       }
 
       if(isset($request['room_categories'])) {
         $rooms = Posts::get_rooms_by_categoroies(explode(',',$request['room_categories']));
 
+        $rooms_meta_query = array('relation' => 'OR');
+        
         foreach($rooms as $room) {
-            array_push($workingspacesMetaQuery, array(
+            array_push($rooms_meta_query, array(
                 'key' => 'related_rooms',
                 'compare' => 'LIKE',
                 'value' => $room->ID
             ));
         }
+
+        array_push($workingspacesMetaQuery, $rooms_meta_query);
       }
 
       $query = array(
@@ -110,7 +116,6 @@ class CustomApi extends WP_REST_Controller {
 
       if(isset($request['capacity'])) $rooms = $rooms->has_capacity($request['capacity']);
       if(isset($request['price_range'])) $rooms = $rooms->price_range($request['price_range']);
-
 
       $filtered_room_workingspace_ids = $rooms->workingspace_ids();
       
