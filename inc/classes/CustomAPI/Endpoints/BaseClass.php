@@ -10,6 +10,8 @@
 
 namespace Inc\Classes\CustomAPI\Endpoints;
 
+use Inc\Helpers\Posts;
+
 class BaseClass {
 
 public function add_rooms_additional_details($posts) {
@@ -30,7 +32,7 @@ public function add_rooms_additional_details($posts) {
     return $rooms;
   }
 
-  public function add_workingspaces_additional_details($posts, $rooms = null) {
+  public function add_workingspaces_additional_details($posts) {
       $workingspaces = [];
 
       foreach ($posts as $val) {
@@ -40,6 +42,8 @@ public function add_rooms_additional_details($posts) {
           $workingspace->post_excerpt = wp_trim_words($workingspace->post_excerpt, 50);
           $workingspace->permalink = get_the_permalink($workingspace);
           $workingspace->location = get_workingspaces_location($workingspace->ID);
+
+          $rooms =  Posts::get_rooms_by_workingspaces_has_id([$workingspace], true);
 
           if($rooms) {
             $capacity_list = [];

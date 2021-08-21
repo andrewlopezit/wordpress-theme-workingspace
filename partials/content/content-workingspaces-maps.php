@@ -67,7 +67,7 @@ $workingspaces = new WP_Query( $query );
                    $categories = get_categories(array("child_of" => $cat_id, "hide_empty" => 0));
                 ?>
                 <?php if ( $categories ) : foreach ($categories as $category):?>
-                    <button class="btn outline small" data-id="<?php echo $category->term_id; ?>"><?php echo $category->name; ?></button>
+                    <button class="btn outline small is-active" data-id="<?php echo $category->term_id; ?>"><?php echo $category->name; ?></button>
                 <?php endforeach; 
                 else : ?>
                 <p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>

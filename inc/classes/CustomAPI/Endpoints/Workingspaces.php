@@ -12,7 +12,6 @@ namespace Inc\Classes\CustomAPI\Endpoints;
 
 use Inc\Classes\CustomAPI\Endpoints\BaseClass;
 use Inc\Classes\CustomAPI\Endpoints\Filters;
-use Inc\Helpers\Posts;
 
 use WP_Query;
 
@@ -21,16 +20,16 @@ class Workingspaces extends BaseClass {
     public function get_workingspaces($request) {
 
         $query =  Filters::workingspaces_filters($request);
-        
+
+        // return $query;
+
         if(!$query) wp_send_json([], 200);
   
         $results = new WP_Query($query);
   
         if(count($results->posts) < 1) return wp_send_json([], 200);
       
-        $workingspace_rooms = Posts::get_rooms_by_workingspaces_has_id($results->posts, true);
-
-        $workingspaces = $this->add_workingspaces_additional_details($results->posts, $workingspace_rooms);
+        $workingspaces = $this->add_workingspaces_additional_details($results->posts);
         
         $results = array(
           'posts' => $workingspaces,

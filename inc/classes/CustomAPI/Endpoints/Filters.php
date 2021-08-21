@@ -60,8 +60,9 @@ final class Filters {
         foreach($room_ids as $id) {
             array_push($rooms_meta_query, array(
                 'key' => 'related_rooms',
+                'value' => $id,
                 'compare' => 'LIKE',
-                'value' => $id
+
             ));
         }
       
