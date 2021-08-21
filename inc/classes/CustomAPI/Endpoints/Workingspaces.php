@@ -21,8 +21,6 @@ class Workingspaces extends BaseClass {
 
         $query =  Filters::workingspaces_filters($request);
 
-        // return $query;
-
         if(!$query) wp_send_json([], 200);
   
         $results = new WP_Query($query);
