@@ -159,7 +159,7 @@ const api = url => {
         priceRange
       } = filter;
       let url = `${this.endpoint}/wp-json/wp/v2/workingspaces?`;
-      if (roomCategories) url += `room_categories=${roomCategories.toString()}`;
+      if (roomCategories.length > 0) url += `room_categories=${roomCategories.toString()}`;
       if (country) url += `&country=${country}`;
       if (capacity) url += `&capacity=${capacity}`;
       if (!capacity) url += `&capacity=1up`;
