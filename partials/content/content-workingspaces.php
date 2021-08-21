@@ -17,9 +17,9 @@
             <a href="<?php the_permalink(); ?>">
                 <h4><?php the_title(); ?></h4>
             </a>
-            <?php $location = get_workingspaces_location(); ?>
+            <?php $location = get_workingspaces_location();?>
 
-            <?php if($location['place_name']):?>
+            <?php if(isset($location['place_name']) && $location['place_name']):?>
                 <div class="detail-icontainer">
                     <i class="fas fa-map-marker-alt text-muted"></i>
                     <a href="#"><?php echo $location['place_name']; ?></a>

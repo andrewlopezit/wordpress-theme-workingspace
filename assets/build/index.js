@@ -826,6 +826,7 @@ __webpack_require__.r(__webpack_exports__);
 class WorkingspacesMaps {
   constructor() {
     this.$workspaceContainer = jquery__WEBPACK_IMPORTED_MODULE_1___default()('#workspaces-map');
+    this.$labelFilterContainer = this.$workspaceContainer.find('.action-container > .label');
     this.$filterContainer = this.$workspaceContainer.find('.filter-container');
     this.$contentContainer = this.$workspaceContainer.find('.content-container');
     this.$itemContainer = this.$contentContainer.find('.item-container');
@@ -904,6 +905,7 @@ class WorkingspacesMaps {
         capacity: capacity,
         priceRange: [minimumPriceRange, maximumPriceRange]
       };
+      this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${filter.priceRange.join(' - $')}`);
       Object(_Api__WEBPACK_IMPORTED_MODULE_3__["default"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
         const {
           data: {
@@ -918,7 +920,11 @@ class WorkingspacesMaps {
 
   workingspacesTemplate(data) {
     let template = '';
-    console.log(data[0]);
+
+    if (data.length < 1) {
+      return `<p>No items match your criteria.</p>`;
+    }
+
     data.forEach(val => {
       var _val$location;
 
@@ -934,29 +940,29 @@ class WorkingspacesMaps {
       };
 
       template += `<div class="item workspace card border-top-left border--post border--hover">
-            <img class="card-img-top" src="${val.featured_image}" alt="">
-            <div class="card-body">
-                <div class="like--container shadow-sm">
-                    <i class="far fa-heart"></i>
-                </div>
-                <a href="${val === null || val === void 0 ? void 0 : val.permalink}">
-                    <h5>${val === null || val === void 0 ? void 0 : val.post_title}</h5>
-                </a>
-                ${val !== null && val !== void 0 && (_val$location = val.location) !== null && _val$location !== void 0 && _val$location.place_name ? locationTemplate(val.location.place_name) : ''}
-                <div class="detail-icontainer">
-                    <i class="fas fa-user text-muted"></i>
-                    <p class="text-muted">Capacity: ${minimumCapacity} - ${maximumCapacity}</p>
-                </div>
-                <div class="detail-icontainer">
-                    <i class="fas fa-chair text-muted"></i>
-                    <p class="text-muted">No. of rooms: ${val === null || val === void 0 ? void 0 : val.total_rooms}</p>
-                </div>
-                <div class="detail-icontainer">
-                    <span>Price range: </span>
-                    <span>${val === null || val === void 0 ? void 0 : val.price_range}</span>
-                </div>
-                </div>
-            </div>`;
+                            <img class="card-img-top" src="${val.featured_image}" alt="">
+                            <div class="card-body">
+                                <div class="like--container shadow-sm">
+                                    <i class="far fa-heart"></i>
+                                </div>
+                                <a href="${val === null || val === void 0 ? void 0 : val.permalink}">
+                                    <h5>${val === null || val === void 0 ? void 0 : val.post_title}</h5>
+                                </a>
+                                ${val !== null && val !== void 0 && (_val$location = val.location) !== null && _val$location !== void 0 && _val$location.place_name ? locationTemplate(val.location.place_name) : ''}
+                                <div class="detail-icontainer">
+                                    <i class="fas fa-user text-muted"></i>
+                                    <p class="text-muted">Capacity: ${minimumCapacity} - ${maximumCapacity}</p>
+                                </div>
+                                <div class="detail-icontainer">
+                                    <i class="fas fa-chair text-muted"></i>
+                                    <p class="text-muted">No. of rooms: ${val === null || val === void 0 ? void 0 : val.total_rooms}</p>
+                                </div>
+                                <div class="detail-icontainer">
+                                    <span>Price range: </span>
+                                    <span>${val === null || val === void 0 ? void 0 : val.price_range}</span>
+                                </div>
+                            </div>
+                        </div>`;
     });
     return template;
   }

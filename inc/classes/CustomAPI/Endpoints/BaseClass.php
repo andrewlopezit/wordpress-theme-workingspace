@@ -32,6 +32,10 @@ public function add_rooms_additional_details($posts) {
     return $rooms;
   }
 
+  // 
+  // REQUIRED SUPPLY PARAMS $ROOMS IF DIFFERENT RELATED ROOMS 
+  // OF WORKINGSPACES
+  //
   public function add_workingspaces_additional_details($posts, $rooms = null) {
       $workingspaces = [];
 
@@ -43,13 +47,13 @@ public function add_rooms_additional_details($posts) {
           $workingspace->permalink = get_the_permalink($workingspace);
           $workingspace->location = get_workingspaces_location($workingspace->ID);
 
-          $rooms = $rooms ?? Posts::get_rooms_by_workingspaces_has_id([$workingspace], true);
+          $roomsValue = $rooms ?? Posts::get_rooms_by_workingspaces_has_id([$workingspace], true);
 
-          if($rooms) {
+          if($roomsValue) {
             $capacity_list = [];
             $numberOfRooms = 0;
 
-            foreach($rooms as $room) {
+            foreach($roomsValue as $room) {
 
               if(isset($room->workingspace_id) && $room->workingspace_id == $workingspace->ID) {
                 $numberOfRooms++;
@@ -58,7 +62,7 @@ public function add_rooms_additional_details($posts) {
             }
             
             $workingspace->capacity_list = $capacity_list;
-            $workingspace->price_range = get_rooms_price_range($rooms);
+            $workingspace->price_range = get_rooms_price_range($roomsValue);
             $workingspace->total_rooms = $numberOfRooms;
           }
 

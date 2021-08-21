@@ -1537,6 +1537,9 @@ hr {
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
 }
+#workspaces-map .content-container .item-container > p {
+  margin: 50px 0;
+}
 #workspaces-map .content-container .item-container .item.workspace.card {
   border: 0;
   border-radius: 0;

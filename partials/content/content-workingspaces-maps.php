@@ -31,7 +31,7 @@ $workingspaces = new WP_Query( $query );
             <i class="fas fa-filter"></i>
             <span>View all filters</span>
         </div>
-        <span class="text-muted"><?php echo isset($country['name']) ? 'Location: '.$country['name'].', ' : '' ?> Price range: $<?php echo $min_room_rate; ?> - $<?php echo $max_room_rate; ?></span>
+        <span class="text-muted label"><?php echo isset($country['name']) ? 'Location: '.$country['name'].', ' : '' ?> Price range: $<?php echo $min_room_rate; ?> - $<?php echo $max_room_rate; ?></span>
     </div>
     <div class="filter-container shadow-sm">
         <div class="filter location">
@@ -140,7 +140,7 @@ $workingspaces = new WP_Query( $query );
                 </a>
                 <?php $location = get_workingspaces_location(); ?>
 
-                <?php if($location['place_name']):?>
+                <?php if(isset($location['place_name']) && $location['place_name']):?>
                     <div class="detail-icontainer">
                         <i class="fas fa-map-marker-alt text-muted"></i>
                         <a href="#"><?php echo $location['place_name']; ?></a>
