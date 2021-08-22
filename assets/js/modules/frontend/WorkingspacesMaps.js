@@ -81,6 +81,8 @@ class WorkingspacesMaps {
 
         this.$btnSetFilter.on('click', () => {
             this.filterAnimation.reverse();
+            this.$btnFilter.removeClass('is-active');
+
             const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
             const $activeCategories = this.$filterCategoriesContainer.find('.action-container > .btn.is-active');
             const $activeCapacity = this.$filterCapacityContainer.find('.action-container > .btn.is-active');
@@ -92,9 +94,6 @@ class WorkingspacesMaps {
             const capacities = $activeCapacity.map((i , el) => $(el).data('capacity')).get();
             const minimumPriceRange = +$priceRangeMin.html();
             const maximumPriceRange = +$priceRangeMax.html();
-
-
-            console.log(capacities);
 
             const filter = {
                 country: locationID,

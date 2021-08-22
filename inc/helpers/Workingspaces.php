@@ -47,7 +47,8 @@
           }
         }
         
-        $this->_workingspaces = $newWorkspaces;
+        $this->_workingspaces = $this->get_unique_workingspaces($newWorkspaces);
+        
       }else {
         $this->_workingspaces = $this->get_capacity_workingspaces_in_capacity($capacity);
       }
@@ -108,5 +109,12 @@
       }
 
       return $newWorkspaces;
+    }
+
+    private function get_unique_workingspaces($workingspaces) {
+      $workspace_serialize = array_map(function($workingspace) {return serialize($workingspace);}, $workingspaces);
+      $wokrspace_unique = array_unique($workspace_serialize);
+
+      return array_map(function($workingspace) {return unserialize($workingspace);}, $wokrspace_unique);
     }
  }

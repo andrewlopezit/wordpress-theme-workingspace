@@ -159,10 +159,11 @@ const api = url => {
         priceRange
       } = filter;
       let url = `${this.endpoint}/wp-json/wp/v2/workingspaces?`;
+      console.log(capacities);
       if (roomCategories.length > 0) url += `room_categories=${roomCategories.toString()}`;
       if (country) url += `&country=${country}`;
-      if (capacities) url += `&capacities=${capacities}`;
-      if (!capacities) url += `&capacity=1up`;
+      if (capacities.length >= 1) url += `&capacities=${capacities}`;
+      if (capacities.length < 1) url += `&capacities=1up`;
       if (priceRange) url += `&price_range=${priceRange.toString()}`;
       return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
     }
@@ -888,6 +889,7 @@ class WorkingspacesMaps {
     });
     this.$btnSetFilter.on('click', () => {
       this.filterAnimation.reverse();
+      this.$btnFilter.removeClass('is-active');
       const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
       const $activeCategories = this.$filterCategoriesContainer.find('.action-container > .btn.is-active');
       const $activeCapacity = this.$filterCapacityContainer.find('.action-container > .btn.is-active');
@@ -898,7 +900,6 @@ class WorkingspacesMaps {
       const capacities = $activeCapacity.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_1___default()(el).data('capacity')).get();
       const minimumPriceRange = +$priceRangeMin.html();
       const maximumPriceRange = +$priceRangeMax.html();
-      console.log(capacities);
       const filter = {
         country: locationID,
         roomCategories: categoryIds,
