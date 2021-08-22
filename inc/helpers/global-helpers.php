@@ -18,10 +18,9 @@
     
             array_push($prices, $price);
         }
-        $priceTo = count($prices) > 1 ? ' - '.number_format(max($prices),2).'/month' : '/month';
-    
-        return '$ '.number_format(min($prices),2).$priceTo;
-         
+
+        $price_range = array_unique([number_format(min($prices),2), number_format(max($prices),2)]);
+        return $price_range;
      } 
  }
 

@@ -94,7 +94,7 @@
             $newRooms = [];
            
             foreach($this->_rooms as $room) {
-                if((int)$room->room_rate >= (int)$price_range_min_max[0] AND (int)$room->room_rate <= (int)$price_range_min_max[1]) {
+                if((int)$room->room_rate >= (int)min($price_range_min_max) AND (int)$room->room_rate <= (int)max(min($price_range_min_max))) {
                     array_push($newRooms,$room);
                 }
             }

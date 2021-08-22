@@ -33,6 +33,54 @@
         return $this;
     }
 
+    public function capacity($capacity) {
+      $newWorkspaces = [];
+
+      if(strpos($capacity, 'up')) {
+        $capacity = (int) filter_var($capacity, FILTER_SANITIZE_NUMBER_INT);
+
+        foreach($this->_workingspaces as $workspace) {
+            if(min($workspace->capacity_list) >= $capacity){
+                array_push($newWorkspaces, $workspace);
+            }
+        }
+      }else if(strpos($capacity, 'down')){
+          $capacity = (int) filter_var($capacity, FILTER_SANITIZE_NUMBER_INT);
+
+          foreach($this->_workingspaces as $workspace) {
+            if(max($workspace->capacity_list) <= $capacity){
+                array_push($newWorkspaces, $workspace);
+            }
+        }
+      }else {
+        foreach($this->_workingspaces as $workspace) {
+          if(in_array($capacity, $workspace->capacity_list)){
+              array_push($newWorkspaces, $workspace);
+          }
+        }
+      }
+
+      $this->_workingspaces = $newWorkspaces;
+      return $this;
+    }
+
+    public function price_range($price_range) {
+      $newWorkspaces = [];
+      $price_range_min_max = explode(',',$price_range);
+
+      foreach($this->_workingspaces as $workspace) {
+        
+        if(count($workspace->price_range) > 0 
+        && ((int)min($workspace->price_range) >= (int)min($price_range_min_max)
+        &&  (int)max($workspace->price_range) <= (int)max($price_range_min_max))){
+            array_push($newWorkspaces, $workspace);
+        }
+      }
+
+      $this->_workingspaces = $newWorkspaces;
+      return $this;
+    }
+
     public function get(){
       return $this->_workingspaces;
     }

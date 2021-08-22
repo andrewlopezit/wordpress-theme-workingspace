@@ -36,18 +36,10 @@ class Workingspaces extends BaseClass {
 
       if(count($results->posts) < 1) return wp_send_json([], 200);
     
-      $rooms = Posts::get_rooms_by_workingspaces_has_id($results->posts, true);
       $workingspaces = $this->add_workingspaces_additional_details($results->posts);
-
-      $filtered_rooms = new Rooms($rooms);
-      if($request['capacity']) $filtered_rooms = $filtered_rooms->capacity($request['capacity']);
-      if($request['price_range']) $filtered_rooms = $filtered_rooms->price_range($request['price_range']);
-
-      $workingspace_filtered_ids = $filtered_rooms->workingspace_ids();
       $filtered_workingpaces = new WorkspacesHelpers($workingspaces);
 
-      $filtered_workingpaces = $filtered_workingpaces->ids($workingspace_filtered_ids)->get();
-
+      $filtered_workingpaces = $filtered_workingpaces->capacity($request['capacity'])->price_range($request['price_range'])->get();
       $results = array(
         'posts' => $filtered_workingpaces,
         'pagination' => array(
