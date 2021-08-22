@@ -76,7 +76,6 @@ class WorkingspacesMaps {
         this.$filterCapacityContainer.on('click', '.action-container > button', e => {
             const $el = $(e.currentTarget);
 
-            $el.siblings().removeClass('is-active');
             $el.toggleClass('is-active');
         });
 
@@ -90,15 +89,17 @@ class WorkingspacesMaps {
 
             const locationID = $activeLocation.map((i , el) => $(el).data('id'))[0];
             const categoryIds = $activeCategories.map((i , el) => $(el).data('id')).get();
-            const capacity = $activeCapacity.map((i , el) => $(el).data('capacity'))[0];
+            const capacities = $activeCapacity.map((i , el) => $(el).data('capacity')).get();
             const minimumPriceRange = +$priceRangeMin.html();
             const maximumPriceRange = +$priceRangeMax.html();
 
 
+            console.log(capacities);
+
             const filter = {
                 country: locationID,
                 roomCategories: categoryIds,
-                capacity: capacity,
+                capacities: capacities,
                 priceRange: [minimumPriceRange, maximumPriceRange]
             }
 

@@ -109,12 +109,9 @@ if(!class_exists('WorkingspaceTheme')) {
             // set image image
             $this->set_image_sizes();
 
-            // custom api
-            new CustomApi();
-
-            // load all custom meta box
-            new CustomRoomsMeta();
-            new CustomMapsMeta();
+             // load all custom meta box
+             new CustomRoomsMeta();
+             new CustomMapsMeta();
         }
 
 //------------------------------------ F U N C T I O N S ----------------------------------------
@@ -160,6 +157,8 @@ if(!class_exists('WorkingspaceTheme')) {
          * Load all core theme files
          */
         public function import_core_files() {
+            // custom api
+            new CustomApi();
         }
 
         /**

@@ -39,7 +39,7 @@ class Workingspaces extends BaseClass {
       $workingspaces = $this->add_workingspaces_additional_details($results->posts);
       $filtered_workingpaces = new WorkspacesHelpers($workingspaces);
 
-      $filtered_workingpaces = $filtered_workingpaces->capacity($request['capacity'])->price_range($request['price_range'])->get();
+      $filtered_workingpaces = $filtered_workingpaces->capacity($request['capacities'])->price_range($request['price_range'])->get();
       $results = array(
         'posts' => $filtered_workingpaces,
         'pagination' => array(

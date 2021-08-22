@@ -34,33 +34,24 @@
     }
 
     public function capacity($capacity) {
-      $newWorkspaces = [];
+      $capacity = explode(',',$capacity);
+      $capacity = count($capacity) > 1 ? $capacity: $capacity[0];
 
-      if(strpos($capacity, 'up')) {
-        $capacity = (int) filter_var($capacity, FILTER_SANITIZE_NUMBER_INT);
+      if(is_array($capacity)) {
+        $newWorkspaces = [];
 
-        foreach($this->_workingspaces as $workspace) {
-            if(min($workspace->capacity_list) >= $capacity){
-                array_push($newWorkspaces, $workspace);
-            }
-        }
-      }else if(strpos($capacity, 'down')){
-          $capacity = (int) filter_var($capacity, FILTER_SANITIZE_NUMBER_INT);
-
-          foreach($this->_workingspaces as $workspace) {
-            if(max($workspace->capacity_list) <= $capacity){
-                array_push($newWorkspaces, $workspace);
-            }
-        }
-      }else {
-        foreach($this->_workingspaces as $workspace) {
-          if(in_array($capacity, $workspace->capacity_list)){
-              array_push($newWorkspaces, $workspace);
+        foreach($capacity as $cap) {
+          $workspace = $this->get_capacity_workingspaces_in_capacity($cap);
+          if($workspace) {
+            $newWorkspaces = array_merge($newWorkspaces, $workspace);          
           }
         }
+        
+        $this->_workingspaces = $newWorkspaces;
+      }else {
+        $this->_workingspaces = $this->get_capacity_workingspaces_in_capacity($capacity);
       }
-
-      $this->_workingspaces = $newWorkspaces;
+      
       return $this;
     }
 
@@ -87,5 +78,35 @@
 
     public function get_ids() {
         return array_unique(array_map(function($workingspace) { return $workingspace->ID;}, $this->_workingspaces));
+    }
+
+    private function get_capacity_workingspaces_in_capacity($capacity) {
+      $newWorkspaces = [];
+
+      if(strpos($capacity, 'up')) {
+        $capacity = (int) filter_var($capacity, FILTER_SANITIZE_NUMBER_INT);
+
+        foreach($this->_workingspaces as $workspace) {
+            if(min($workspace->capacity_list) >= $capacity){
+                array_push($newWorkspaces, $workspace);
+            }
+        }
+      }else if(strpos($capacity, 'down')){
+          $capacity = (int) filter_var($capacity, FILTER_SANITIZE_NUMBER_INT);
+
+          foreach($this->_workingspaces as $workspace) {
+            if(max($workspace->capacity_list) <= $capacity){
+                array_push($newWorkspaces, $workspace);
+            }
+        }
+      }else {
+        foreach($this->_workingspaces as $workspace) {
+          if(in_array($capacity, $workspace->capacity_list)){
+              array_push($newWorkspaces, $workspace);
+          }
+        }
+      }
+
+      return $newWorkspaces;
     }
  }

@@ -155,14 +155,14 @@ const api = url => {
       const {
         country,
         roomCategories,
-        capacity,
+        capacities,
         priceRange
       } = filter;
       let url = `${this.endpoint}/wp-json/wp/v2/workingspaces?`;
       if (roomCategories.length > 0) url += `room_categories=${roomCategories.toString()}`;
       if (country) url += `&country=${country}`;
-      if (capacity) url += `&capacity=${capacity}`;
-      if (!capacity) url += `&capacity=1up`;
+      if (capacities) url += `&capacities=${capacities}`;
+      if (!capacities) url += `&capacity=1up`;
       if (priceRange) url += `&price_range=${priceRange.toString()}`;
       return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
     }
@@ -884,7 +884,6 @@ class WorkingspacesMaps {
     });
     this.$filterCapacityContainer.on('click', '.action-container > button', e => {
       const $el = jquery__WEBPACK_IMPORTED_MODULE_1___default()(e.currentTarget);
-      $el.siblings().removeClass('is-active');
       $el.toggleClass('is-active');
     });
     this.$btnSetFilter.on('click', () => {
@@ -896,13 +895,14 @@ class WorkingspacesMaps {
       const $priceRangeMax = this.$filterPriceRangeContainer.find('.minmax-values > div > #maximum');
       const locationID = $activeLocation.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_1___default()(el).data('id'))[0];
       const categoryIds = $activeCategories.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_1___default()(el).data('id')).get();
-      const capacity = $activeCapacity.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_1___default()(el).data('capacity'))[0];
+      const capacities = $activeCapacity.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_1___default()(el).data('capacity')).get();
       const minimumPriceRange = +$priceRangeMin.html();
       const maximumPriceRange = +$priceRangeMax.html();
+      console.log(capacities);
       const filter = {
         country: locationID,
         roomCategories: categoryIds,
-        capacity: capacity,
+        capacities: capacities,
         priceRange: [minimumPriceRange, maximumPriceRange]
       };
       this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${filter.priceRange.join(' - $')}`);
