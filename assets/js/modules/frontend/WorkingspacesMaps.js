@@ -135,6 +135,13 @@ class WorkingspacesMaps {
                     </div>`;
             }
 
+            const priceRangeTemplate = (priceRange) => {
+                return `<div class="detail-icontainer">
+                            <span>Price range: </span>
+                            <span>$${priceRange.length > 1 ? priceRange.join(' - $'): priceRange[0]}/month</span>
+                        </div>`
+            }
+
             template+= `<div class="item workspace card border-top-left border--post border--hover">
                             <img class="card-img-top" src="${val.featured_image}" alt="">
                             <div class="card-body">
@@ -153,10 +160,7 @@ class WorkingspacesMaps {
                                     <i class="fas fa-chair text-muted"></i>
                                     <p class="text-muted">No. of rooms: ${val?.total_rooms}</p>
                                 </div>
-                                <div class="detail-icontainer">
-                                    <span>Price range: </span>
-                                    <span>${val?.price_range}</span>
-                                </div>
+                                ${val?.price_range ? priceRangeTemplate(val.price_range): ''}
                             </div>
                         </div>`;
         });

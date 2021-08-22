@@ -161,10 +161,13 @@ $workingspaces = new WP_Query( $query );
                     <i class="fas fa-chair text-muted"></i>
                     <p class="text-muted">No. of rooms: <?php echo $numberOfRooms; ?></p>
                 </div>
+                <?php $price_range = get_rooms_price_range($rooms); 
+                if($price_range):?>
                 <div class="detail-icontainer">
                     <span>Price range: </span>
-                    <span><?php echo $numberOfRooms > 0 ? get_rooms_price_range($rooms): 0 ?></span>
+                    <span><?php echo count($price_range) > 1 ? '$'.implode(' - $', $price_range).'/month': $price_range[0].'/month'; ?></span>
                 </div>
+                <?php endif;?>
                 </div>
             </div>
             <?php endwhile; 

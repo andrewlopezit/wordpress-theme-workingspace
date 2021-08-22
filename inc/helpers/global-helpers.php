@@ -13,6 +13,8 @@
     function get_rooms_price_range($rooms) {
         $prices = [];
     
+        if(!$rooms) return null;
+
         foreach($rooms as $room) {
             $price = get_field('room_rate', $room->ID);
     
