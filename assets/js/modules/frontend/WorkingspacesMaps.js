@@ -1,10 +1,9 @@
-import slider from "./Slider";
 import $ from 'jquery';
 import gsap from 'gsap';
-import api from './Api';
-
+import {slider, api} from './index';
+ 
 class WorkingspacesMaps {
-    constructor( ) {
+    constructor() {
         this.$workspaceContainer = $('#workspaces-map');
         this.$labelFilterContainer = this.$workspaceContainer.find('.action-container > .label');
         this.$filterContainer = this.$workspaceContainer.find('.filter-container');

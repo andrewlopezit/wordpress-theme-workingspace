@@ -145,7 +145,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 
-const api = url => {
+const Api = url => {
   class Api {
     constructor(url) {
       this.endpoint = url;
@@ -159,7 +159,6 @@ const api = url => {
         priceRange
       } = filter;
       let url = `${this.endpoint}/wp-json/wp/v2/workingspaces?`;
-      console.log(capacities);
       if (roomCategories.length > 0) url += `room_categories=${roomCategories.toString()}`;
       if (country) url += `&country=${country}`;
       if (capacities.length >= 1) url += `&capacities=${capacities}`;
@@ -173,7 +172,7 @@ const api = url => {
   return new Api(url);
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (api);
+/* harmony default export */ __webpack_exports__["default"] = (Api);
 
 /***/ }),
 
@@ -494,9 +493,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 
 
-const slider = args => {
+const Slider = args => {
   class Slider {
-    constructor() {
+    constructor(args) {
       if (!(args !== null && args !== void 0 && args.container)) return;
       this.$slider = jquery__WEBPACK_IMPORTED_MODULE_0___default()(args.container); // local variable
 
@@ -632,7 +631,7 @@ const slider = args => {
   return new Slider(args);
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (slider);
+/* harmony default export */ __webpack_exports__["default"] = (Slider);
 
 /***/ }),
 
@@ -814,19 +813,17 @@ class TestimonialsSlider {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Slider */ "./assets/js/modules/frontend/Slider.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "jquery");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
-/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Api */ "./assets/js/modules/frontend/Api.js");
-
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
 
 
 
 
 class WorkingspacesMaps {
   constructor() {
-    this.$workspaceContainer = jquery__WEBPACK_IMPORTED_MODULE_1___default()('#workspaces-map');
+    this.$workspaceContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#workspaces-map');
     this.$labelFilterContainer = this.$workspaceContainer.find('.action-container > .label');
     this.$filterContainer = this.$workspaceContainer.find('.filter-container');
     this.$contentContainer = this.$workspaceContainer.find('.content-container');
@@ -841,7 +838,7 @@ class WorkingspacesMaps {
 
     this.siteUrl = translation_array.site_url; //init slider
 
-    Object(_Slider__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    Object(_index__WEBPACK_IMPORTED_MODULE_2__["slider"])({
       container: this.$priceRange.get()[0]
     });
     this.initAnimation(); // init events
@@ -851,7 +848,7 @@ class WorkingspacesMaps {
 
   initAnimation() {
     if (!this.$filterContainer) return;
-    this.filterAnimation = gsap__WEBPACK_IMPORTED_MODULE_2__["default"].timeline({
+    this.filterAnimation = gsap__WEBPACK_IMPORTED_MODULE_1__["default"].timeline({
       paused: true
     });
     this.$filterContainer.css({
@@ -880,11 +877,11 @@ class WorkingspacesMaps {
       }
     });
     this.$filterCategoriesContainer.on('click', '.action-container > button', e => {
-      const $el = jquery__WEBPACK_IMPORTED_MODULE_1___default()(e.currentTarget);
+      const $el = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget);
       $el.toggleClass('is-active');
     });
     this.$filterCapacityContainer.on('click', '.action-container > button', e => {
-      const $el = jquery__WEBPACK_IMPORTED_MODULE_1___default()(e.currentTarget);
+      const $el = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget);
       $el.toggleClass('is-active');
     });
     this.$btnSetFilter.on('click', () => {
@@ -895,9 +892,9 @@ class WorkingspacesMaps {
       const $activeCapacity = this.$filterCapacityContainer.find('.action-container > .btn.is-active');
       const $priceRangeMin = this.$filterPriceRangeContainer.find('.minmax-values > div > #minimum');
       const $priceRangeMax = this.$filterPriceRangeContainer.find('.minmax-values > div > #maximum');
-      const locationID = $activeLocation.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_1___default()(el).data('id'))[0];
-      const categoryIds = $activeCategories.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_1___default()(el).data('id')).get();
-      const capacities = $activeCapacity.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_1___default()(el).data('capacity')).get();
+      const locationID = $activeLocation.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).data('id'))[0];
+      const categoryIds = $activeCategories.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).data('id')).get();
+      const capacities = $activeCapacity.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).data('capacity')).get();
       const minimumPriceRange = +$priceRangeMin.html();
       const maximumPriceRange = +$priceRangeMax.html();
       const filter = {
@@ -907,7 +904,7 @@ class WorkingspacesMaps {
         priceRange: [minimumPriceRange, maximumPriceRange]
       };
       this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${filter.priceRange.join(' - $')}`);
-      Object(_Api__WEBPACK_IMPORTED_MODULE_3__["default"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
+      Object(_index__WEBPACK_IMPORTED_MODULE_2__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
         const {
           data: {
             posts
@@ -975,6 +972,26 @@ class WorkingspacesMaps {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (WorkingspacesMaps);
+
+/***/ }),
+
+/***/ "./assets/js/modules/frontend/index.js":
+/*!*********************************************!*\
+  !*** ./assets/js/modules/frontend/index.js ***!
+  \*********************************************/
+/*! exports provided: slider, api */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "slider", function() { return slider; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "api", function() { return api; });
+/* harmony import */ var _Slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Slider */ "./assets/js/modules/frontend/Slider.js");
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Api */ "./assets/js/modules/frontend/Api.js");
+
+
+const slider = _Slider__WEBPACK_IMPORTED_MODULE_0__["default"];
+const api = _Api__WEBPACK_IMPORTED_MODULE_1__["default"];
 
 /***/ }),
 

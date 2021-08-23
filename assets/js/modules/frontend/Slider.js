@@ -1,28 +1,27 @@
 import $ from 'jquery';
 
-const slider = (args) => {
-    
+const Slider = (args) => {
     class Slider{
-        constructor() {
+        constructor(args) {
             if(!args?.container) return;
             this.$slider = $(args.container);
-
+    
             // local variable
             this.width = this.$slider.width();
             this.handle;
             this.handleObj;
-
+    
             let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
             svg.setAttribute('viewBox', '0 0 ' + this.width + ' 83');
-
+    
             this.$slider.html(svg);
             this.$slider.append($('<div>').addClass('active').html(svg.cloneNode(true)));
-
+    
             this.initSlider();
-
+    
             this.createLine();
         }
-
+    
         createLine() {
             this.svgPath = new Proxy({
                 x: null,
@@ -41,13 +40,13 @@ const slider = (args) => {
                     return target[key];
                 }
             });
-
+    
             this.svgPath.x = this.width / 2;
             this.svgPath.y = 42;
             this.svgPath.b = 0;
             this.svgPath.a = this.width;
         }
-
+    
         initSlider() {
             this.$slider.slider({
                 range: true,
@@ -58,18 +57,18 @@ const slider = (args) => {
                 max: this.$slider.data('max'),
                 create: (event, ui) => {
                     const $handle = this.$slider.find('.ui-slider-handle');
-
+    
                     this.$slider.find('.ui-slider-handle').append($('<div />'));
                     
                     $(this.$slider.data('value-0')).html(this.$slider.slider('values', 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&thinsp;'));
                     $(this.$slider.data('value-1')).html(this.$slider.slider('values', 1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&thinsp;'));
                     $(this.$slider.data('range')).html((this.$slider.slider('values', 1) - this.$slider.slider('values', 0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '&thinsp;'));
-
+    
                     this.setCSSVars(this.$slider);
         
                 },
                 start: (event, ui) => {
-
+    
                     this.$slider.addClass('ui-slider-active');
                     
         
@@ -111,7 +110,7 @@ const slider = (args) => {
                 },
             });
         }
-
+    
         setCSSVars(slider) {
             let handle = slider.find('.ui-slider-handle');
             slider.css({
@@ -119,7 +118,7 @@ const slider = (args) => {
                 '--r': slider.outerWidth() - (handle.eq(1).position().left + handle.eq(1).outerWidth() / 2)
             });
         }
-
+    
         getPoint(point, i, a, smoothing) {
             let cp = (current, previous, next, reverse) => {
                     let p = previous || current,
@@ -136,7 +135,7 @@ const slider = (args) => {
                 cpe = cp(point, a[i - 1], a[i + 1], true);
             return `C ${cps[0]},${cps[1]} ${cpe[0]},${cpe[1]} ${point[0]},${point[1]}`;
         }
-
+    
         getPath(update, before, after, width) {
             let smoothing = .16,
                 points = [
@@ -154,4 +153,4 @@ const slider = (args) => {
     return new Slider(args);
 }
 
-export default slider;
+export default Slider;

@@ -112,3 +112,33 @@ input {
 hr {
 	width: 100%;
 }
+
+.loading#loading{
+	width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+	display: none;
+
+	&.is-loading {
+	    display: flex;
+	}
+
+	p {
+		width: auto;
+		font-size: 1.2em;
+		font-weight: 500;
+		color: $gray;
+		position: relative;
+	}
+	span {
+		width: 2px;
+		height: 2px;
+		margin-top: -10px;
+		background-color: $gray;
+
+		&:not(:first-child) {
+			margin-left: 3px;
+		}
+	}
+}

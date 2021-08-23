@@ -129,7 +129,9 @@ $workingspaces = new WP_Query( $query );
     <div class="content-container">
         <div class="item-container">
             <?php if ( $workingspaces->have_posts() ) : while ( $workingspaces->have_posts() ) : $workingspaces->the_post(); ?>
-            <div class="item workspace card border-top-left border--post border--hover">
+            <?php $location = get_workingspaces_location(); ?>
+
+            <div class="item workspace card border-top-left border--post border--hover" <?php echo isset($location['location']) && $location['location'] ? 'data-geolocation='.$location['location'] : ''; ?>>
             <img class="card-img-top"  src="<?php echo esc_url(wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID()), 'posts' )[0]);?>" alt="">
             <div class="card-body">
                 <div class="like--container shadow-sm">
@@ -138,8 +140,6 @@ $workingspaces = new WP_Query( $query );
                 <a href="<?php the_permalink(); ?>">
                     <h5><?php the_title(); ?></h5>
                 </a>
-                <?php $location = get_workingspaces_location(); ?>
-
                 <?php if(isset($location['place_name']) && $location['place_name']):?>
                     <div class="detail-icontainer">
                         <i class="fas fa-map-marker-alt text-muted"></i>
@@ -181,6 +181,13 @@ $workingspaces = new WP_Query( $query );
                     <a href="#">Find more workingspaces in <span><?php echo $country['name']; ?></span></a>
                 </div>
             <?php endif; ?>
+            <div class="loading" id="loading">
+                <p>Loading</p>
+                <div id="progress-bar"></div>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
         <div class="map"></div>
     </div>
