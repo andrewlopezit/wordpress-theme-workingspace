@@ -6,7 +6,7 @@ const Loading = ($loadingContainer) => {
         start() {
             if(!$loadingContainer) return;
 
-            $loadingContainer.children().remove();
+            $loadingContainer.find('.loading#loading').remove();
 
             $loadingContainer.append(`
             <div class="loading" id="loading">

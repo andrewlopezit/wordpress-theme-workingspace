@@ -468,7 +468,7 @@ const Loading = $loadingContainer => {
   class Loading {
     start() {
       if (!$loadingContainer) return;
-      $loadingContainer.children().remove();
+      $loadingContainer.find('.loading#loading').remove();
       $loadingContainer.append(`
             <div class="loading" id="loading">
                 <p>Loading</p>
