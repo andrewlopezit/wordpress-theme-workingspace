@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import gsap from 'gsap';
 import api from '../Api';
-
+import {loading} from '../../../../../assets/js/modules/frontend';
 class CustomRoomsMeta {
     constructor() {
         this.$floorplanContainer = $('.floorplan-container#custom-rooms--floorplan');
@@ -44,15 +44,19 @@ class CustomRoomsMeta {
             ids.push($(el).data('id'));
         });
 
+        const load = loading(this.$contentContainer).start();
+
         api(this.baseEndpointUrl).getPostsByIds(ids).then(result => {
             const {data} = result;
 
+            load.end();
             this.$contentContainer.append(this.roomTemplate(data));
 
             this.displayItemElement();
             this.initAnimation();
 
         }).catch(() =>{
+            load.displayError();
         });
     }
 

@@ -510,6 +510,7 @@ const Loading = $loadingContainer => {
       if (this.isDisplayMessage) return;
       this.isDisplayMessage = true;
       this.loadingbarAnimation.tweenFromTo('end');
+      this.dotsAnimation.kill();
       this.$loading.append(`<p class="error-message">${message}</p>
             <button class="btn retry">Retry</button>`);
     }
@@ -1153,6 +1154,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Api */ "./inc/customroomsmeta/js/modules/Api.js");
+/* harmony import */ var _assets_js_modules_frontend__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../assets/js/modules/frontend */ "./assets/js/modules/frontend/index.js");
+
 
 
 
@@ -1186,14 +1189,18 @@ class CustomRoomsMeta {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).addClass('is-active');
       ids.push(jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).data('id'));
     });
+    const load = Object(_assets_js_modules_frontend__WEBPACK_IMPORTED_MODULE_3__["loading"])(this.$contentContainer).start();
     Object(_Api__WEBPACK_IMPORTED_MODULE_2__["default"])(this.baseEndpointUrl).getPostsByIds(ids).then(result => {
       const {
         data
       } = result;
+      load.end();
       this.$contentContainer.append(this.roomTemplate(data));
       this.displayItemElement();
       this.initAnimation();
-    }).catch(() => {});
+    }).catch(() => {
+      load.displayError();
+    });
   }
 
   initAnimation() {

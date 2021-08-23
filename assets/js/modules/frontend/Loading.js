@@ -27,7 +27,7 @@ const Loading = ($loadingContainer) => {
 
         initAnimation() {
             this.dotsAnimation = gsap.timeline({ repeat: -1})
-            this.dotsAnimation.to($loadingContainer.find('span'), {opacity: 1, stagger: {amount: 2}})
+            this.dotsAnimation.to($loadingContainer.find('span'), {opacity: 1, stagger: {amount: 2}});
 
             this.loadingbarAnimation = gsap.timeline({ onComplete: () => this.displayError()});
             this.loadingbarAnimation.to($loadingContainer.find('.loading-bar'), {width: 70, duration: 30})
@@ -43,6 +43,7 @@ const Loading = ($loadingContainer) => {
 
             this.isDisplayMessage = true;
             this.loadingbarAnimation.tweenFromTo('end');
+            this.dotsAnimation.kill();
 
             this.$loading.append(`<p class="error-message">${message}</p>
             <button class="btn retry">Retry</button>`);
