@@ -118,10 +118,22 @@ hr {
     align-items: center;
     justify-content: center;
     padding: 2em;
-	display: none;
+	display: flex;
 
-	&.is-loading {
-	    display: flex;
+
+	.loading-bar {
+		position: absolute;
+		width: 0;
+		height: 2px;
+		margin-top: -3px;
+		margin-left: 2em;
+		background-color: var(--primary-color, $primary-color);
+	}
+	
+	.btn.retry{
+		position: absolute;
+		margin-top: 7em;
+		font-size: 12px;
 	}
 
 	p {
@@ -130,12 +142,20 @@ hr {
 		font-weight: 500;
 		color: $gray;
 		position: relative;
+		z-index: 1;
+	}
+
+	.error-message {
+		font-size: 12px;
+		position:absolute;
+		margin-top:3em
 	}
 	span {
 		width: 2px;
 		height: 2px;
 		margin-top: -10px;
 		background-color: $gray;
+		opacity: 0;
 
 		&:not(:first-child) {
 			margin-left: 3px;

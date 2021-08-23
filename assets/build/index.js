@@ -452,6 +452,79 @@ class HeroImageSlider {
 
 /***/ }),
 
+/***/ "./assets/js/modules/frontend/Loading.js":
+/*!***********************************************!*\
+  !*** ./assets/js/modules/frontend/Loading.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
+
+
+const Loading = $loadingContainer => {
+  class Loading {
+    start() {
+      if (!$loadingContainer) return;
+      $loadingContainer.children().remove();
+      $loadingContainer.append(`
+            <div class="loading" id="loading">
+                <p>Loading</p>
+                <div class="loading-bar"></div>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>`);
+      this.isDisplayMessage = false;
+      this.$loading = $loadingContainer.find('.loading#loading');
+      this.initAnimation();
+      return this;
+    }
+
+    initAnimation() {
+      this.dotsAnimation = gsap__WEBPACK_IMPORTED_MODULE_0__["default"].timeline({
+        repeat: -1
+      });
+      this.dotsAnimation.to($loadingContainer.find('span'), {
+        opacity: 1,
+        stagger: {
+          amount: 2
+        }
+      });
+      this.loadingbarAnimation = gsap__WEBPACK_IMPORTED_MODULE_0__["default"].timeline({
+        onComplete: () => this.displayError()
+      });
+      this.loadingbarAnimation.to($loadingContainer.find('.loading-bar'), {
+        width: 70,
+        duration: 30
+      }).add('end');
+    }
+
+    end() {
+      this.$loading.remove();
+    }
+
+    displayError(message = 'Takes too long to respond, please try again.') {
+      if (this.isDisplayMessage) return;
+      this.isDisplayMessage = true;
+      this.loadingbarAnimation.tweenFromTo('end');
+      this.$loading.append(`<p class="error-message">${message}</p>
+            <button class="btn retry">Retry</button>`);
+    }
+
+    event() {}
+
+  }
+
+  return new Loading($loadingContainer);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Loading);
+
+/***/ }),
+
 /***/ "./assets/js/modules/frontend/Main.js":
 /*!********************************************!*\
   !*** ./assets/js/modules/frontend/Main.js ***!
@@ -887,32 +960,10 @@ class WorkingspacesMaps {
     this.$btnSetFilter.on('click', () => {
       this.filterAnimation.reverse();
       this.$btnFilter.removeClass('is-active');
-      const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
-      const $activeCategories = this.$filterCategoriesContainer.find('.action-container > .btn.is-active');
-      const $activeCapacity = this.$filterCapacityContainer.find('.action-container > .btn.is-active');
-      const $priceRangeMin = this.$filterPriceRangeContainer.find('.minmax-values > div > #minimum');
-      const $priceRangeMax = this.$filterPriceRangeContainer.find('.minmax-values > div > #maximum');
-      const locationID = $activeLocation.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).data('id'))[0];
-      const categoryIds = $activeCategories.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).data('id')).get();
-      const capacities = $activeCapacity.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).data('capacity')).get();
-      const minimumPriceRange = +$priceRangeMin.html();
-      const maximumPriceRange = +$priceRangeMax.html();
-      const filter = {
-        country: locationID,
-        roomCategories: categoryIds,
-        capacities: capacities,
-        priceRange: [minimumPriceRange, maximumPriceRange]
-      };
-      this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${filter.priceRange.join(' - $')}`);
-      Object(_index__WEBPACK_IMPORTED_MODULE_2__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
-        const {
-          data: {
-            posts
-          }
-        } = res;
-        this.$itemContainer.children().remove();
-        this.$itemContainer.append(this.workingspacesTemplate(posts));
-      }).catch(() => {});
+      this.dislplayFilteredWorkingspaces();
+    });
+    this.$itemContainer.on('click', '.loading#loading > .btn.retry', () => {
+      this.dislplayFilteredWorkingspaces();
     });
   }
 
@@ -969,6 +1020,39 @@ class WorkingspacesMaps {
     return template;
   }
 
+  dislplayFilteredWorkingspaces() {
+    const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
+    const $activeCategories = this.$filterCategoriesContainer.find('.action-container > .btn.is-active');
+    const $activeCapacity = this.$filterCapacityContainer.find('.action-container > .btn.is-active');
+    const $priceRangeMin = this.$filterPriceRangeContainer.find('.minmax-values > div > #minimum');
+    const $priceRangeMax = this.$filterPriceRangeContainer.find('.minmax-values > div > #maximum');
+    const locationID = $activeLocation.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).data('id'))[0];
+    const categoryIds = $activeCategories.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).data('id')).get();
+    const capacities = $activeCapacity.map((i, el) => jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).data('capacity')).get();
+    const minimumPriceRange = +$priceRangeMin.html();
+    const maximumPriceRange = +$priceRangeMax.html();
+    const filter = {
+      country: locationID,
+      roomCategories: categoryIds,
+      capacities: capacities,
+      priceRange: [minimumPriceRange, maximumPriceRange]
+    };
+    this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${filter.priceRange.join(' - $')}`);
+    this.$itemContainer.children().remove();
+    const load = Object(_index__WEBPACK_IMPORTED_MODULE_2__["loading"])(this.$itemContainer).start();
+    Object(_index__WEBPACK_IMPORTED_MODULE_2__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
+      const {
+        data: {
+          posts
+        }
+      } = res;
+      load.end();
+      this.$itemContainer.append(this.workingspacesTemplate(posts));
+    }).catch(() => {
+      load.displayError();
+    });
+  }
+
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (WorkingspacesMaps);
@@ -979,19 +1063,23 @@ class WorkingspacesMaps {
 /*!*********************************************!*\
   !*** ./assets/js/modules/frontend/index.js ***!
   \*********************************************/
-/*! exports provided: slider, api */
+/*! exports provided: slider, api, loading */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "slider", function() { return slider; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "api", function() { return api; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loading", function() { return loading; });
 /* harmony import */ var _Slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Slider */ "./assets/js/modules/frontend/Slider.js");
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Api */ "./assets/js/modules/frontend/Api.js");
+/* harmony import */ var _Loading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Loading */ "./assets/js/modules/frontend/Loading.js");
+
 
 
 const slider = _Slider__WEBPACK_IMPORTED_MODULE_0__["default"];
 const api = _Api__WEBPACK_IMPORTED_MODULE_1__["default"];
+const loading = _Loading__WEBPACK_IMPORTED_MODULE_2__["default"];
 
 /***/ }),
 

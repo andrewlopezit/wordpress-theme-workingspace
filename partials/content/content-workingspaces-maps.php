@@ -181,13 +181,6 @@ $workingspaces = new WP_Query( $query );
                     <a href="#">Find more workingspaces in <span><?php echo $country['name']; ?></span></a>
                 </div>
             <?php endif; ?>
-            <div class="loading" id="loading">
-                <p>Loading</p>
-                <div id="progress-bar"></div>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
         </div>
         <div class="map"></div>
     </div>

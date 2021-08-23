@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import gsap from 'gsap';
-import {slider, api} from './index';
+import {slider, api, loading} from './index';
  
 class WorkingspacesMaps {
     constructor() {
@@ -8,7 +8,7 @@ class WorkingspacesMaps {
         this.$labelFilterContainer = this.$workspaceContainer.find('.action-container > .label');
         this.$filterContainer = this.$workspaceContainer.find('.filter-container');
         this.$contentContainer = this.$workspaceContainer.find('.content-container');
-        this.$itemContainer = this.$contentContainer.find('.item-container')
+        this.$itemContainer = this.$contentContainer.find('.item-container');
         this.$filterCategoriesContainer = this.$filterContainer.find('.filter.categories');
         this.$filterCapacityContainer = this.$filterContainer.find('.filter.capacity');
         this.$filterLocationContainer = this.$filterContainer.find('.filter.location');
@@ -82,36 +82,11 @@ class WorkingspacesMaps {
             this.filterAnimation.reverse();
             this.$btnFilter.removeClass('is-active');
 
-            const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
-            const $activeCategories = this.$filterCategoriesContainer.find('.action-container > .btn.is-active');
-            const $activeCapacity = this.$filterCapacityContainer.find('.action-container > .btn.is-active');
-            const $priceRangeMin = this.$filterPriceRangeContainer.find('.minmax-values > div > #minimum');
-            const $priceRangeMax = this.$filterPriceRangeContainer.find('.minmax-values > div > #maximum');
+            this.dislplayFilteredWorkingspaces();
+        });
 
-            const locationID = $activeLocation.map((i , el) => $(el).data('id'))[0];
-            const categoryIds = $activeCategories.map((i , el) => $(el).data('id')).get();
-            const capacities = $activeCapacity.map((i , el) => $(el).data('capacity')).get();
-            const minimumPriceRange = +$priceRangeMin.html();
-            const maximumPriceRange = +$priceRangeMax.html();
-
-            const filter = {
-                country: locationID,
-                roomCategories: categoryIds,
-                capacities: capacities,
-                priceRange: [minimumPriceRange, maximumPriceRange]
-            }
-
-            this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${filter.priceRange.join(' - $')}`);
-            
-            api(this.siteUrl).getWorkingspacesByFilter(filter).then(res =>{
-                const {data: {posts}} = res;
-                this.$itemContainer.children().remove();
-
-                this.$itemContainer.append(this.workingspacesTemplate(posts));
-            }).catch(() => {
-
-            });
-
+        this.$itemContainer.on('click', '.loading#loading > .btn.retry', () => {
+            this.dislplayFilteredWorkingspaces();
         });
     }
 
@@ -165,6 +140,41 @@ class WorkingspacesMaps {
         });
 
         return template;
+    }
+
+    dislplayFilteredWorkingspaces() {
+        const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
+            const $activeCategories = this.$filterCategoriesContainer.find('.action-container > .btn.is-active');
+            const $activeCapacity = this.$filterCapacityContainer.find('.action-container > .btn.is-active');
+            const $priceRangeMin = this.$filterPriceRangeContainer.find('.minmax-values > div > #minimum');
+            const $priceRangeMax = this.$filterPriceRangeContainer.find('.minmax-values > div > #maximum');
+
+            const locationID = $activeLocation.map((i , el) => $(el).data('id'))[0];
+            const categoryIds = $activeCategories.map((i , el) => $(el).data('id')).get();
+            const capacities = $activeCapacity.map((i , el) => $(el).data('capacity')).get();
+            const minimumPriceRange = +$priceRangeMin.html();
+            const maximumPriceRange = +$priceRangeMax.html();
+
+            const filter = {
+                country: locationID,
+                roomCategories: categoryIds,
+                capacities: capacities,
+                priceRange: [minimumPriceRange, maximumPriceRange]
+            }
+
+            this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${filter.priceRange.join(' - $')}`);
+
+            this.$itemContainer.children().remove();
+            const load =  loading(this.$itemContainer).start();
+
+            api(this.siteUrl).getWorkingspacesByFilter(filter).then(res =>{
+                const {data: {posts}} = res;
+
+                load.end();
+                this.$itemContainer.append(this.workingspacesTemplate(posts));
+            }).catch(() => {
+                load.displayError();
+            });
     }
 }
 
