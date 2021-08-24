@@ -982,6 +982,35 @@ hr {
   animation: marker-anim 1s linear infinite;
 }
 
+.mapboxgl-popup-content .title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  position: relative;
+  z-index: 1;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+}
+.mapboxgl-popup-content .title::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: 80%;
+  background-color: var(--primary-color, #FDD500);
+  z-index: -1;
+  right: -2px;
+  bottom: 2px;
+}
+.mapboxgl-popup-content p {
+  width: 100% !important;
+  margin: 5px 0;
+  font-size: 11px;
+}
+.mapboxgl-popup-content p span {
+  font-weight: 600;
+}
+
 /*------------------------------------*
 	HERO IMAGE SLIDER
 *------------------------------------*/
@@ -1653,6 +1682,7 @@ hr {
 #workspaces-map .content-container .item-container .item.workspace.card {
   border: 0;
   border-radius: 0;
+  cursor: pointer;
   position: relative;
 }
 #workspaces-map .content-container .item-container .item.workspace.card .card-img-top {
@@ -1693,7 +1723,7 @@ hr {
   justify-content: space-between;
   margin: 5px 0;
 }
-#workspaces-map .content-container .item-container .item.workspace.card .detail-icontainer span {
+#workspaces-map .content-container .item-container .item.workspace.card .detail-icontainer > span {
   font-size: 12px;
   font-weight: 600;
 }
@@ -1740,8 +1770,23 @@ hr {
   z-index: -1;
 }
 #workspaces-map .content-container .map {
+  min-height: 450px;
   height: 40%;
   margin-top: 50px;
+  position: relative;
+}
+#workspaces-map .content-container .map .btn.fit-workingspaces {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 29px;
+  height: 29px;
+  display: block;
+  padding: 0;
+  outline: none;
+  border: 0;
+  box-sizing: border-box;
+  background-color: transparent;
 }
 
 /*------------------------------------*

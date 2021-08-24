@@ -1,6 +1,6 @@
 import gsap from 'gsap';
 
-const Loading = ($loadingContainer) => {
+const Loading = ($loadingContainer, duration = 30) => {
     class Loading {
 
         start() {
@@ -30,7 +30,7 @@ const Loading = ($loadingContainer) => {
             this.dotsAnimation.to($loadingContainer.find('span'), {opacity: 1, stagger: {amount: 2}});
 
             this.loadingbarAnimation = gsap.timeline({ onComplete: () => this.displayError()});
-            this.loadingbarAnimation.to($loadingContainer.find('.loading-bar'), {width: 70, duration: 30})
+            this.loadingbarAnimation.to($loadingContainer.find('.loading-bar'), {width: 70, duration: duration})
             .add('end');
         }
 

@@ -52,3 +52,35 @@
         @include animation(marker-anim 1s linear infinite);
     }
 }
+
+.mapboxgl-popup-content{
+    .title{
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        position: relative;
+        z-index: 1;
+
+        @include fit-content;
+
+        &::after {
+            content: '';
+            position: absolute;
+            height: 2px;
+            width: 80%;
+            background-color: var(--primary-color, $primary-color);
+            z-index: -1;
+            right: -2px;
+            bottom: 2px;
+        }
+    }
+    p {
+        span{
+            font-weight: 600;
+        }
+
+        width: 100% !important;
+        margin: 5px 0;
+        font-size: 11px;
+    }
+}

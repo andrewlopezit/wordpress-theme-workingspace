@@ -144,6 +144,7 @@
             .item.workspace.card {
                 border: 0;
                 border-radius: 0;
+                cursor: pointer;
         
                 position: relative;
         
@@ -190,7 +191,7 @@
                     justify-content: space-between;
                     margin: 5px 0;
 
-                    span {
+                    & > span {
                         font-size: 12px;
                         font-weight: 600;
                     }
@@ -245,8 +246,24 @@
         }
 
         .map {
+            min-height: 450px;
             height: 40%;
             margin-top: 50px;
+            position: relative;
+
+            .btn.fit-workingspaces {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                width: 29px;
+                height: 29px;
+                display: block;
+                padding: 0;
+                outline: none;
+                border: 0;
+                box-sizing: border-box;
+                background-color: transparent;
+            }
         }
     }
 }

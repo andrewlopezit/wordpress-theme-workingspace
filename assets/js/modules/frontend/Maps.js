@@ -6,6 +6,7 @@ const Maps = (args) => {
     class Maps {
         constructor() {
             if(!args?.container) return;
+            this.markers = [];
 
             const { mapbox_public_key, mapbox_secret_key } = translation_array;
 
@@ -38,44 +39,61 @@ const Maps = (args) => {
         /**
          * 
          * @param {*} markers 
-         * @param {boolean} istFitToMarkers 
          * @returns 
          */
-        addMarkers(markers, istFitToMarkers = false) {
+        addMarkers(markers) {
             let coordinates = [];
 
             markers.forEach(marker => {
                 if(marker?.geolocation) {
-                    const template = `<div class="maps-marker">
+                    const template = `<div class="maps-marker places">
                     <div class="background"></div>
                     <img src="${marker.imgSrc}"/></div>`;
 
+                    // create the popup
+                    const popup = new mapboxgl.Popup().setHTML(
+                        `<div class="title">${marker?.title}</div>
+                        <p><span>Location: </span>${marker?.location ? marker.location : ''}</p>
+                        <p><span>Capacity: </span> ${marker?.capacity ? marker.capacity : ''}</p>
+                        <p><span>Total rooms: </span>${marker?.totalRooms ? marker.totalRooms : ''}</p>
+                        <p><span>Price range: </span> ${marker?.priceRange ? marker.priceRange : ''}</p>`
+                    );
+
                     const el = $.parseHTML(template);
 
-                    new mapboxgl.Marker(el[0])
+                   const placeMarker =  new mapboxgl.Marker(el[0])
                     .setLngLat(marker.geolocation)
+                    .setPopup(popup)
                     .addTo(this.map); 
-                }
 
-                if(istFitToMarkers) {
-                    if(marker?.geolocation) {
-                        coordinates.push(marker.geolocation);
-                    }
+                    this.markers.push(placeMarker);
                 }
             });
 
-            if(istFitToMarkers) {
-                const bounds = new mapboxgl.LngLatBounds(coordinates);
-                for (const coord of coordinates) {
-                    bounds.extend(coord);
+            return this;
+        }
+
+        fitLocations(locations) {
+            const bounds = new mapboxgl.LngLatBounds(locations);
+
+            locations.forEach(location => {
+                if(location) {
+                    bounds.extend(location);
                 }
-                     
-                this.map.fitBounds(bounds, {
-                    padding: 50
-                });
-            }
+            });
+            this.map.fitBounds(bounds, {
+                padding: 80
+            });
 
             return this;
+        }
+
+        get() {
+            return this.map;
+        }
+
+        getMarkers() {
+            return this.markers;
         }
     }
 

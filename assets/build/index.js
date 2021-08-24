@@ -464,7 +464,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
 
 
-const Loading = $loadingContainer => {
+const Loading = ($loadingContainer, duration = 30) => {
   class Loading {
     start() {
       if (!$loadingContainer) return;
@@ -498,7 +498,7 @@ const Loading = $loadingContainer => {
       });
       this.loadingbarAnimation.to($loadingContainer.find('.loading-bar'), {
         width: 70,
-        duration: 30
+        duration: duration
       }).add('end');
     }
 
@@ -575,6 +575,7 @@ const Maps = args => {
       var _args$zoom;
 
       if (!(args !== null && args !== void 0 && args.container)) return;
+      this.markers = [];
       const {
         mapbox_public_key,
         mapbox_secret_key
@@ -603,42 +604,50 @@ const Maps = args => {
     /**
      * 
      * @param {*} markers 
-     * @param {boolean} istFitToMarkers 
      * @returns 
      */
 
 
-    addMarkers(markers, istFitToMarkers = false) {
+    addMarkers(markers) {
       let coordinates = [];
       markers.forEach(marker => {
         if (marker !== null && marker !== void 0 && marker.geolocation) {
-          const template = `<div class="maps-marker">
+          const template = `<div class="maps-marker places">
                     <div class="background"></div>
-                    <img src="${marker.imgSrc}"/></div>`;
-          const el = $.parseHTML(template);
-          new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.Marker(el[0]).setLngLat(marker.geolocation).addTo(this.map);
-        }
+                    <img src="${marker.imgSrc}"/></div>`; // create the popup
 
-        if (istFitToMarkers) {
-          if (marker !== null && marker !== void 0 && marker.geolocation) {
-            coordinates.push(marker.geolocation);
-          }
+          const popup = new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.Popup().setHTML(`<div class="title">${marker === null || marker === void 0 ? void 0 : marker.title}</div>
+                        <p><span>Location: </span>${marker !== null && marker !== void 0 && marker.location ? marker.location : ''}</p>
+                        <p><span>Capacity: </span> ${marker !== null && marker !== void 0 && marker.capacity ? marker.capacity : ''}</p>
+                        <p><span>Total rooms: </span>${marker !== null && marker !== void 0 && marker.totalRooms ? marker.totalRooms : ''}</p>
+                        <p><span>Price range: </span> ${marker !== null && marker !== void 0 && marker.priceRange ? marker.priceRange : ''}</p>`);
+          const el = $.parseHTML(template);
+          const placeMarker = new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.Marker(el[0]).setLngLat(marker.geolocation).setPopup(popup).addTo(this.map);
+          this.markers.push(placeMarker);
         }
       });
-
-      if (istFitToMarkers) {
-        const bounds = new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.LngLatBounds(coordinates);
-
-        for (const coord of coordinates) {
-          bounds.extend(coord);
-        }
-
-        this.map.fitBounds(bounds, {
-          padding: 50
-        });
-      }
-
       return this;
+    }
+
+    fitLocations(locations) {
+      const bounds = new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.LngLatBounds(locations);
+      locations.forEach(location => {
+        if (location) {
+          bounds.extend(location);
+        }
+      });
+      this.map.fitBounds(bounds, {
+        padding: 80
+      });
+      return this;
+    }
+
+    get() {
+      return this.map;
+    }
+
+    getMarkers() {
+      return this.markers;
     }
 
   }
@@ -997,7 +1006,8 @@ class WorkingspacesMaps {
     this.$contentContainer = this.$workspaceContainer.find('.content-container');
     this.$labelFilterContainer = this.$contentContainer.find('.action-container > .label');
     this.$filterContainer = this.$contentContainer.find('.filter-container');
-    this.$mapContainer = this.$contentContainer.find('.map#map');
+    this.$mapContainer = this.$contentContainer.find('.map-container');
+    this.$map = this.$mapContainer.find('.map#map');
     this.$itemContainer = this.$contentContainer.find('.item-container');
     this.$filterCategoriesContainer = this.$filterContainer.find('.filter.categories');
     this.$filterCapacityContainer = this.$filterContainer.find('.filter.capacity');
@@ -1005,7 +1015,8 @@ class WorkingspacesMaps {
     this.$filterPriceRangeContainer = this.$filterContainer.find('.filter.price-range');
     this.$priceRange = this.$filterContainer.find('.filter > .action-container > .slider#price-range');
     this.$btnFilter = this.$workspaceContainer.find('.action-container > .action.filter');
-    this.$btnSetFilter = this.$filterContainer.find('.btn.filter'); //local variable
+    this.$btnSetFilter = this.$filterContainer.find('.btn.filter');
+    this.$btnFitLocations = this.$mapContainer.find('.btn.fit-workingspaces'); //local variable
 
     this.siteUrl = translation_array.site_url; //init slider
 
@@ -1020,14 +1031,44 @@ class WorkingspacesMaps {
   }
 
   initMap() {
-    var _this$$mapContainer$d;
+    var _this$$map$data$split;
 
-    const workingspaces = this.getWorkingspaces();
-    this.maps = Object(_index__WEBPACK_IMPORTED_MODULE_2__["maps"])({
-      container: this.$mapContainer.get()[0],
-      center: (_this$$mapContainer$d = this.$mapContainer.data('geolocation').split(',')) !== null && _this$$mapContainer$d !== void 0 ? _this$$mapContainer$d : null,
-      zoom: 6
-    }).control().addMarkers(workingspaces, true);
+    this.map = Object(_index__WEBPACK_IMPORTED_MODULE_2__["maps"])({
+      container: this.$map.get()[0],
+      center: (_this$$map$data$split = this.$map.data('geolocation').split(',')) !== null && _this$$map$data$split !== void 0 ? _this$$map$data$split : null,
+      zoom: 20
+    }).control();
+    this.workingspaces = this.getWorkingspacesInHtml();
+    const locations = this.workingspaces.map(workingspace => {
+      if (workingspace !== null && workingspace !== void 0 && workingspace.geolocation) return workingspace.geolocation;
+    });
+    this.setMapMarkers(locations); //
+
+    this.mapEvents();
+  }
+
+  setMapMarkers(locations) {
+    if (this.markers) this.markers.forEach(marker => marker.remove());
+
+    if (locations.length > 1) {
+      this.markers = this.map.fitLocations(locations).addMarkers(this.workingspaces).getMarkers();
+    } else {
+      this.markers = this.map.addMarkers(this.workingspaces).getMarkers();
+      this.map.get().flyTo({
+        center: locations[0],
+        essential: true,
+        zoom: 12
+      });
+    }
+  }
+
+  mapEvents() {
+    this.$map.hide();
+    const load = Object(_index__WEBPACK_IMPORTED_MODULE_2__["loading"])(this.$mapContainer, 60).start();
+    this.map.get().on('load', () => {
+      this.$map.show();
+      load.end();
+    });
   }
 
   initAnimation() {
@@ -1076,6 +1117,15 @@ class WorkingspacesMaps {
     this.$itemContainer.on('click', '.loading#loading > .btn.retry', () => {
       this.dislplayFilteredWorkingspaces();
     });
+    this.$btnFitLocations.on('click', () => {
+      const locations = this.workingspaces.map(workingspace => {
+        if (workingspace !== null && workingspace !== void 0 && workingspace.geolocation) return workingspace.geolocation;
+      });
+      this.map.fitLocations(locations);
+    });
+    this.$mapContainer.on('click', '.loading#loading > .btn.retry', () => {
+      this.initMap();
+    });
   }
 
   workingspacesTemplate(data) {
@@ -1118,11 +1168,11 @@ class WorkingspacesMaps {
                                 ${val !== null && val !== void 0 && (_val$location = val.location) !== null && _val$location !== void 0 && _val$location.place_name ? locationTemplate(val.location.place_name) : ''}
                                 <div class="detail-icontainer capacity">
                                     <i class="fas fa-user text-muted"></i>
-                                    <p class="text-muted">Capacity: ${minimumCapacity} - ${maximumCapacity}</p>
+                                    <p class="text-muted">Capacity: <span>${minimumCapacity} - ${maximumCapacity}</span></p>
                                 </div>
                                 <div class="detail-icontainer total-rooms">
                                     <i class="fas fa-chair text-muted"></i>
-                                    <p class="text-muted">No. of rooms: ${val === null || val === void 0 ? void 0 : val.total_rooms}</p>
+                                    <p class="text-muted">No. of rooms: <span>${val === null || val === void 0 ? void 0 : val.total_rooms}</span></p>
                                 </div>
                                 ${val !== null && val !== void 0 && val.price_range ? priceRangeTemplate(val.price_range) : ''}
                             </div>
@@ -1157,14 +1207,19 @@ class WorkingspacesMaps {
           posts
         }
       } = res;
-      load.end();
       this.$itemContainer.append(this.workingspacesTemplate(posts));
+      this.setWorkingspaces(posts);
+      const locations = this.workingspaces.map(workingspace => {
+        if (workingspace !== null && workingspace !== void 0 && workingspace.geolocation) return workingspace.geolocation;
+      });
+      this.setMapMarkers(locations);
+      load.end();
     }).catch(() => {
       load.displayError();
     });
   }
 
-  getWorkingspaces() {
+  getWorkingspacesInHtml() {
     let workingspaces = [];
     this.$itemContainer.find('.item').each((i, el) => {
       var _$$data$split;
@@ -1172,8 +1227,8 @@ class WorkingspacesMaps {
       const property = {
         title: jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).find('.card-body > a > h5').html(),
         location: jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).find('.card-body > .location > a').html(),
-        capacity: jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).find('.card-body > .capacity > p').html(),
-        totalRooms: jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).find('.card-body > .total-rooms > p').html(),
+        capacity: jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).find('.card-body > .capacity > p > .capacity').html(),
+        totalRooms: jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).find('.card-body > .total-rooms > p > .total-rooms').html(),
         priceRange: jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).find('.card-body > .price-range > .price').html(),
         imgSrc: jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).find('img').attr('src'),
         geolocation: (_$$data$split = jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).data('geolocation').split(',')) !== null && _$$data$split !== void 0 ? _$$data$split : null
@@ -1181,6 +1236,27 @@ class WorkingspacesMaps {
       workingspaces.push(property);
     });
     return workingspaces;
+  }
+
+  setWorkingspaces(workingspaces) {
+    let newWorkingspaces = [];
+    workingspaces.forEach(workingspace => {
+      var _workingspace$locatio, _workingspace$locatio2;
+
+      const minimumCapacity = Math.min.apply(Math, workingspace.capacity_list);
+      const maximumCapacity = Math.max.apply(Math, workingspace.capacity_list);
+      const property = {
+        title: workingspace === null || workingspace === void 0 ? void 0 : workingspace.post_title,
+        location: workingspace === null || workingspace === void 0 ? void 0 : (_workingspace$locatio = workingspace.location) === null || _workingspace$locatio === void 0 ? void 0 : _workingspace$locatio.place_name,
+        capacity: `${minimumCapacity} - ${maximumCapacity}`,
+        totalRooms: workingspace === null || workingspace === void 0 ? void 0 : workingspace.total_rooms,
+        priceRange: `${workingspace.price_range.length > 1 ? workingspace.price_range.join(' - $') : workingspace.price_range[0]}/month`,
+        imgSrc: workingspace === null || workingspace === void 0 ? void 0 : workingspace.featured_image,
+        geolocation: workingspace === null || workingspace === void 0 ? void 0 : (_workingspace$locatio2 = workingspace.location) === null || _workingspace$locatio2 === void 0 ? void 0 : _workingspace$locatio2.location.split(',')
+      };
+      newWorkingspaces.push(property);
+    });
+    this.workingspaces = newWorkingspaces;
   }
 
 }

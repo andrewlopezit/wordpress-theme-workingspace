@@ -8,7 +8,8 @@ class WorkingspacesMaps {
         this.$contentContainer = this.$workspaceContainer.find('.content-container');
         this.$labelFilterContainer = this.$contentContainer.find('.action-container > .label');
         this.$filterContainer = this.$contentContainer.find('.filter-container');
-        this.$mapContainer = this.$contentContainer.find('.map#map')
+        this.$mapContainer = this.$contentContainer.find('.map-container');
+        this.$map = this.$mapContainer.find('.map#map')
         this.$itemContainer = this.$contentContainer.find('.item-container');
         this.$filterCategoriesContainer = this.$filterContainer.find('.filter.categories');
         this.$filterCapacityContainer = this.$filterContainer.find('.filter.capacity');
@@ -18,7 +19,7 @@ class WorkingspacesMaps {
 
         this.$btnFilter =  this.$workspaceContainer.find('.action-container > .action.filter');
         this.$btnSetFilter = this.$filterContainer.find('.btn.filter');
-        
+        this.$btnFitLocations = this.$mapContainer.find('.btn.fit-workingspaces');
 
         //local variable
         this.siteUrl = translation_array.site_url;
@@ -38,13 +39,50 @@ class WorkingspacesMaps {
 
     }
     initMap() {
-        const workingspaces =  this.getWorkingspaces();
-       this.maps = maps({
-            container: this.$mapContainer.get()[0],
-            center: this.$mapContainer.data('geolocation').split(',') ?? null,
-            zoom: 6
-        }).control()
-        .addMarkers(workingspaces, true)
+        this.map =  maps({
+            container: this.$map.get()[0],
+            center: this.$map.data('geolocation').split(',') ?? null,
+            zoom: 20
+        }).control();
+
+        this.workingspaces = this.getWorkingspacesInHtml();
+        const locations = this.workingspaces.map(workingspace => {if(workingspace?.geolocation) return workingspace.geolocation});
+
+        this.setMapMarkers(locations);
+
+        //
+        this.mapEvents();
+    }
+
+    setMapMarkers(locations) {
+        if(this.markers) this.markers.forEach(marker => marker.remove());
+
+        if(locations.length > 1) {
+            this.markers = this.map
+            .fitLocations(locations)
+            .addMarkers(this.workingspaces)
+            .getMarkers();
+        }else {
+            this.markers = this.map
+            .addMarkers(this.workingspaces)
+            .getMarkers();
+
+            this.map.get().flyTo({
+                center: locations[0],
+                essential: true,
+                zoom: 12 
+            });
+        }
+    }
+
+    mapEvents() {
+        this.$map.hide();
+        const load =  loading(this.$mapContainer, 60).start();
+
+        this.map.get().on('load', () =>{
+            this.$map.show();
+            load.end();
+        });
     }
 
     initAnimation() {
@@ -102,6 +140,16 @@ class WorkingspacesMaps {
         this.$itemContainer.on('click', '.loading#loading > .btn.retry', () => {
             this.dislplayFilteredWorkingspaces();
         });
+
+        this.$btnFitLocations.on('click', ()=>{
+            const locations = this.workingspaces.map(workingspace => {if(workingspace?.geolocation) return workingspace.geolocation});
+
+            this.map.fitLocations(locations);
+        });
+
+        this.$mapContainer.on('click', '.loading#loading > .btn.retry', () =>{ 
+            this.initMap();
+        })
     }
 
     workingspacesTemplate(data) {
@@ -142,11 +190,11 @@ class WorkingspacesMaps {
                                 ${val?.location?.place_name ? locationTemplate(val.location.place_name): ''}
                                 <div class="detail-icontainer capacity">
                                     <i class="fas fa-user text-muted"></i>
-                                    <p class="text-muted">Capacity: ${minimumCapacity} - ${maximumCapacity}</p>
+                                    <p class="text-muted">Capacity: <span>${minimumCapacity} - ${maximumCapacity}</span></p>
                                 </div>
                                 <div class="detail-icontainer total-rooms">
                                     <i class="fas fa-chair text-muted"></i>
-                                    <p class="text-muted">No. of rooms: ${val?.total_rooms}</p>
+                                    <p class="text-muted">No. of rooms: <span>${val?.total_rooms}</span></p>
                                 </div>
                                 ${val?.price_range ? priceRangeTemplate(val.price_range): ''}
                             </div>
@@ -184,22 +232,27 @@ class WorkingspacesMaps {
             api(this.siteUrl).getWorkingspacesByFilter(filter).then(res =>{
                 const {data: {posts}} = res;
 
-                load.end();
                 this.$itemContainer.append(this.workingspacesTemplate(posts));
+                this.setWorkingspaces(posts);
+
+                const locations = this.workingspaces.map(workingspace => {if(workingspace?.geolocation) return workingspace.geolocation});
+                this.setMapMarkers(locations);
+
+                load.end();
             }).catch(() => {
                 load.displayError();
             });
     }
 
-    getWorkingspaces() {
+    getWorkingspacesInHtml() {
         let workingspaces = [];
 
         this.$itemContainer.find('.item').each((i, el) => {
             const property = {
                 title: $(el).find('.card-body > a > h5').html(),
                 location: $(el).find('.card-body > .location > a').html(),
-                capacity: $(el).find('.card-body > .capacity > p').html(),
-                totalRooms: $(el).find('.card-body > .total-rooms > p').html(),
+                capacity: $(el).find('.card-body > .capacity > p > .capacity').html(),
+                totalRooms: $(el).find('.card-body > .total-rooms > p > .total-rooms').html(),
                 priceRange: $(el).find('.card-body > .price-range > .price').html(),
                 imgSrc: $(el).find('img').attr('src'),
                 geolocation: $(el).data('geolocation').split(',') ?? null
@@ -209,6 +262,29 @@ class WorkingspacesMaps {
         })
 
         return workingspaces;
+    }
+
+    setWorkingspaces(workingspaces) {
+        let newWorkingspaces = [];
+
+        workingspaces.forEach(workingspace => {
+            const minimumCapacity = Math.min.apply(Math, workingspace.capacity_list);
+            const maximumCapacity = Math.max.apply(Math, workingspace.capacity_list);
+
+            const property = {
+                title: workingspace?.post_title,
+                location: workingspace?.location?.place_name,
+                capacity: `${minimumCapacity} - ${maximumCapacity}`,
+                totalRooms: workingspace?.total_rooms,
+                priceRange: `${workingspace.price_range.length > 1 ? workingspace.price_range.join(' - $'): workingspace.price_range[0]}/month`,
+                imgSrc: workingspace?.featured_image,
+                geolocation: workingspace?.location?.location.split(',')
+            };
+
+            newWorkingspaces.push(property);
+        });
+
+        this.workingspaces = newWorkingspaces;
     }
 }
 
