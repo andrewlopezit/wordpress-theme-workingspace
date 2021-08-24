@@ -85,6 +85,12 @@ if(!class_exists('WorkingspaceTheme')) {
 
                 // load all menus
                 $this->register_menus();
+
+                // load custom maps
+                $this->set_post_meta_maps();
+
+                // load custom rooms
+                $this->set_post_meta_rooms();
                 
             /** Frontend */    
             } else {
@@ -94,6 +100,10 @@ if(!class_exists('WorkingspaceTheme')) {
                 // load all scripts
                 $this->register_script();
                 $this->enqueue_scripts();
+
+                //init rooms shortcode
+                $rooms = new CustomRoomsMeta();
+                $rooms->init_shortcode();
             }
 
             /**
@@ -108,10 +118,6 @@ if(!class_exists('WorkingspaceTheme')) {
 
             // set image image
             $this->set_image_sizes();
-
-             // load all custom meta box
-             new CustomRoomsMeta();
-             new CustomMapsMeta();
         }
 
 //------------------------------------ F U N C T I O N S ----------------------------------------
@@ -251,7 +257,9 @@ if(!class_exists('WorkingspaceTheme')) {
                     'localize' => array(
                         'variable_name' => 'translation_array',
                         'value' => array(
-                            'site_url' => esc_url(site_url())
+                            'site_url' => esc_url(site_url()),
+                            'mapbox_public_key' => MAPBOX_PUBLIC_KEY,
+                            'mapbox_secret_key' => MAPBOX_SECRET_KEY
                         )
                     )
                 )
@@ -352,6 +360,33 @@ if(!class_exists('WorkingspaceTheme')) {
                 ) 
             )
             ->register();
+        }
+
+        public function set_post_meta_maps() {
+            $maps = new CustomMapsMeta();
+
+            $maps->post(
+                array(
+                'title' => 'Map Location',
+                'post' => 'workingspaces'
+                )
+            )
+            ->post(
+                array(
+                    'title' => 'Map Location',
+                    'post' => 'countries'
+                )
+            )->add();
+        }
+
+        public function set_post_meta_rooms() {
+           $room = new CustomRoomsMeta();
+           $room->post(
+               array(
+                   'title' => 'Rooms Map ( Floor Plan )',
+                   'post' => 'workingspaces'
+               )
+            )->add();
         }
 
         // setimage sizes

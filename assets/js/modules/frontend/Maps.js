@@ -1,19 +1,21 @@
+import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from "mapbox-gl";
 
-const maps = (args) => {
+const Maps = (args) => {
 
     class Maps {
         constructor() {
             if(!args?.container) return;
 
-            this.mapboxtSecretToken ='sk.eyJ1IjoiYW5kcmV3bG9wZXppdCIsImEiOiJja3NmaHFkcnIxOXl5MnZxcTRxMnl6dnVjIn0.FeYFdhahKOk9un-uF8sXpQ';
-            this.mapboxPublicToken = 'pk.eyJ1IjoiYW5kcmV3bG9wZXppdCIsImEiOiJja3NiYWE0ZzQwMjcxMnFvNHBmMDlwMHpwIn0.Arhd62cdkLAS0k7SlXoQRg';
-            
-            this.initMap();
+            const { mapbox_public_key, mapbox_secret_key } = translation_array;
 
+            this.mapboxtSecretToken = mapbox_secret_key;
+            this.mapboxPublicToken = mapbox_public_key;
+
+            this.initMap([39.657325, -4.024902], 9);
         }
 
-        initMap() {
+        initMap(center, mapZoom) {
             mapboxgl.accessToken = this.mapboxPublicToken;
             this.map = new mapboxgl.Map({
                 container: args.container,
@@ -27,4 +29,4 @@ const maps = (args) => {
     return new Maps(args);
 }
 
-export default maps;
+export default Maps;

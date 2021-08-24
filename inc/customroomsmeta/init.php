@@ -16,34 +16,39 @@ use Inc\customroomsmeta\Callbacks\FrontEndCallbacks;
 final class Init {
 
     private $custom_meta_id = 'workingSpaceRoomMetaID';
+    private $_metabox = [];
 
-    public function __construct() {
-        // initialize
-
+    public function add() {
         if(is_admin()) {
             // add meta
-            add_action( 'add_meta_boxes', array( $this, 'init' ));
+            add_action( 'add_meta_boxes', array( $this, 'add_customrooms_posts_callback' ));
             $this->enqueue_backend_scripts();
 
             // save meta
             add_action( 'save_post', array( $this, 'save_meta_custom_rooms_floorplan' ) );
         }
-
-        // shortcode 
-        add_shortcode('floorplan', array( $this, 'floor_plan_shortcode' ));
-
     }
 
-    public function init() {
-        add_meta_box(
-            $this->custom_meta_id,
-            'Rooms Map ( Floor Plan )',
-            array($this, 'render_post_type_metabox'),
-            'workingspaces',
-            'advanced',
-            'default'
-        );
+    public function init_shortcode() {
+        add_shortcode('floorplan', array( $this, 'floor_plan_shortcode' ));
+    }
 
+    public function add_customrooms_posts_callback() {
+        foreach($this->_metabox as $meta) {
+            add_meta_box(
+                $this->custom_meta_id,
+                $meta['title'],
+                array($this, 'render_post_type_metabox'),
+                $meta['post'],
+                $meta['content'] ?? 'advanced',
+                $meta['priority'] ?? 'high'
+            );
+        }
+    }
+
+    public function post($metabox) {
+        array_push($this->_metabox, $metabox);
+        return $this;
     }
 
     public function enqueue_backend_scripts() {

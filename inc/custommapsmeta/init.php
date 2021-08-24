@@ -14,11 +14,16 @@ use Inc\Custommapsmeta\Callbacks\BackEndCallbacks;
 
 final class Init {
     private $custom_meta_id = 'workingspaceMapsID';
+    private $_metabox = [];
     
     public function __construct() {
+        
+    }
+
+    public function add() {
         // initialize
         if(is_admin()) {
-            add_action('add_meta_boxes', array($this, 'init'));
+            add_action('add_meta_boxes', array($this, 'add_custommaps_posts_callback'));
             $this->enqueue_backend_scripts();
 
             // save meta
@@ -26,15 +31,22 @@ final class Init {
         }
     }
 
-    public function init() {
-        add_meta_box(
-            $this->custom_meta_id,
-            'Map Location',
-            array($this, 'render_post_type_metabox'),
-            'workingspaces',
-            'advanced',
-            'high'
-        );
+    public function add_custommaps_posts_callback() {
+        foreach($this->_metabox as $meta) {
+            add_meta_box(
+                $this->custom_meta_id,
+                $meta['title'],
+                array($this, 'render_post_type_metabox'),
+                $meta['post'],
+                $meta['content'] ?? 'advanced',
+                $meta['priority'] ?? 'high'
+            );
+        }
+    }
+
+    public function post($metabox) {
+        array_push($this->_metabox, $metabox);
+        return $this;
     }
 
     public function render_post_type_metabox($post) {

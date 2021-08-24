@@ -1,13 +1,14 @@
 import $ from 'jquery';
 import gsap from 'gsap';
-import {slider, api, loading} from './index';
+import {slider, api, loading, maps} from './index';
  
 class WorkingspacesMaps {
     constructor() {
         this.$workspaceContainer = $('#workspaces-map');
-        this.$labelFilterContainer = this.$workspaceContainer.find('.action-container > .label');
-        this.$filterContainer = this.$workspaceContainer.find('.filter-container');
         this.$contentContainer = this.$workspaceContainer.find('.content-container');
+        this.$labelFilterContainer = this.$contentContainer.find('.action-container > .label');
+        this.$filterContainer = this.$contentContainer.find('.filter-container');
+        this.$mapContainer = this.$contentContainer.find('.map#map')
         this.$itemContainer = this.$contentContainer.find('.item-container');
         this.$filterCategoriesContainer = this.$filterContainer.find('.filter.categories');
         this.$filterCapacityContainer = this.$filterContainer.find('.filter.capacity');
@@ -31,6 +32,10 @@ class WorkingspacesMaps {
 
         // init events
         this.events();
+
+        maps({
+            'container': this.$mapContainer.get()[0]
+        });
     }
 
     initAnimation() {
@@ -164,7 +169,7 @@ class WorkingspacesMaps {
 
             this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${filter.priceRange.join(' - $')}`);
 
-            this.$itemContainer.children().remove();
+            this.$itemContainer.find('.item').remove();
             const load =  loading(this.$itemContainer).start();
 
             api(this.siteUrl).getWorkingspacesByFilter(filter).then(res =>{
