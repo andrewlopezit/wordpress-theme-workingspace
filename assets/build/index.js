@@ -612,11 +612,9 @@ const Maps = args => {
       let coordinates = [];
       markers.forEach(marker => {
         if (marker !== null && marker !== void 0 && marker.geolocation) {
-          const template = `<div class="mapboxgl-marker">
-                    <div class="inner-container">
+          const template = `<div class="maps-marker">
                     <div class="background"></div>
-                    <img src="${marker.imgSrc}"/>
-                    </div></div>`;
+                    <img src="${marker.imgSrc}"/></div>`;
           const el = $.parseHTML(template);
           new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.Marker(el[0]).setLngLat(marker.geolocation).addTo(this.map);
         }

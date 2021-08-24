@@ -46,11 +46,9 @@ const Maps = (args) => {
 
             markers.forEach(marker => {
                 if(marker?.geolocation) {
-                    const template = `<div class="mapboxgl-marker">
-                    <div class="inner-container">
+                    const template = `<div class="maps-marker">
                     <div class="background"></div>
-                    <img src="${marker.imgSrc}"/>
-                    </div></div>`;
+                    <img src="${marker.imgSrc}"/></div>`;
 
                     const el = $.parseHTML(template);
 

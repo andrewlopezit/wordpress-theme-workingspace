@@ -926,20 +926,26 @@ hr {
 /*------------------------------------*
 	SOCIAL MEDIA
 *------------------------------------*/
-.mapboxgl-marker .inner-container {
+.maps-marker {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+  cursor: pointer;
+  margin-top: -35px;
 }
-.mapboxgl-marker .inner-container .background {
+.maps-marker .background {
   background: #fff;
   width: 40px;
   height: 40px;
   border-radius: 10em;
   z-index: 1;
 }
-.mapboxgl-marker .inner-container img {
+.maps-marker img {
   width: 85%;
   height: 85%;
   -o-object-fit: cover;
@@ -948,7 +954,7 @@ hr {
   position: absolute;
   z-index: 1;
 }
-.mapboxgl-marker .inner-container::after {
+.maps-marker::after {
   content: "";
   position: absolute;
   width: 80%;
@@ -963,7 +969,7 @@ hr {
   -moz-clip-path: polygon(50% 100%, 0 0, 100% 0);
   clip-path: polygon(50% 100%, 0 0, 100% 0);
 }
-.mapboxgl-marker .inner-container::before {
+.maps-marker::before {
   content: "";
   position: absolute;
   bottom: -18px;
