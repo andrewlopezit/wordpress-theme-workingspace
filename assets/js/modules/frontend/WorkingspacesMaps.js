@@ -64,6 +64,7 @@ class WorkingspacesMaps {
             .fitLocations(locations)
             .addMarkers(this.workingspaces)
             .getMarkers();
+
         }else {
             this.markers = this.map
             .addMarkers(this.workingspaces)

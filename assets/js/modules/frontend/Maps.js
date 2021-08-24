@@ -61,8 +61,10 @@ const Maps = (args) => {
 
                     const el = $.parseHTML(template);
 
+                    const loc = marker?.geolocation.map(loc => +loc);
+
                    const placeMarker =  new mapboxgl.Marker(el[0])
-                    .setLngLat(marker.geolocation)
+                    .setLngLat(loc)
                     .setPopup(popup)
                     .addTo(this.map); 
 
@@ -74,13 +76,10 @@ const Maps = (args) => {
         }
 
         fitLocations(locations) {
-            const bounds = new mapboxgl.LngLatBounds(locations);
+            const bounds = locations.reduce((bounds, coord) => {
+                return bounds.extend(coord);
+            }, new mapboxgl.LngLatBounds(locations[0], locations[0]));
 
-            locations.forEach(location => {
-                if(location) {
-                    bounds.extend(location);
-                }
-            });
             this.map.fitBounds(bounds, {
                 padding: 80
             });

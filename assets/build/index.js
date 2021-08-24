@@ -622,7 +622,8 @@ const Maps = args => {
                         <p><span>Total rooms: </span>${marker !== null && marker !== void 0 && marker.totalRooms ? marker.totalRooms : ''}</p>
                         <p><span>Price range: </span> ${marker !== null && marker !== void 0 && marker.priceRange ? marker.priceRange : ''}</p>`);
           const el = $.parseHTML(template);
-          const placeMarker = new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.Marker(el[0]).setLngLat(marker.geolocation).setPopup(popup).addTo(this.map);
+          const loc = marker === null || marker === void 0 ? void 0 : marker.geolocation.map(loc => +loc);
+          const placeMarker = new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.Marker(el[0]).setLngLat(loc).setPopup(popup).addTo(this.map);
           this.markers.push(placeMarker);
         }
       });
@@ -630,12 +631,9 @@ const Maps = args => {
     }
 
     fitLocations(locations) {
-      const bounds = new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.LngLatBounds(locations);
-      locations.forEach(location => {
-        if (location) {
-          bounds.extend(location);
-        }
-      });
+      const bounds = locations.reduce((bounds, coord) => {
+        return bounds.extend(coord);
+      }, new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.LngLatBounds(locations[0], locations[0]));
       this.map.fitBounds(bounds, {
         padding: 80
       });
