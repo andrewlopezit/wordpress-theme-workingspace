@@ -1049,6 +1049,7 @@ class WorkingspacesMaps {
 
   setMapMarkers(locations) {
     if (this.markers) this.markers.forEach(marker => marker.remove());
+    if (locations.length < 1) return;
 
     if (locations.length > 1) {
       this.markers = this.map.fitLocations(locations).addMarkers(this.workingspaces).getMarkers();
@@ -1199,7 +1200,7 @@ class WorkingspacesMaps {
       priceRange: [minimumPriceRange, maximumPriceRange]
     };
     this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${filter.priceRange.join(' - $')}`);
-    this.$itemContainer.find('.item').remove();
+    this.$itemContainer.find('.item,p').remove();
     const load = Object(_index__WEBPACK_IMPORTED_MODULE_2__["loading"])(this.$itemContainer).start();
     Object(_index__WEBPACK_IMPORTED_MODULE_2__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
       const {

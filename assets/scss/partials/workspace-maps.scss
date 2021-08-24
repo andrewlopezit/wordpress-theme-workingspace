@@ -9,6 +9,7 @@
         .item-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: fit-content(100%);
             grid-gap: 10px;
             padding-top: 50px;
 
