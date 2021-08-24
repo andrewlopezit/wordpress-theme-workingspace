@@ -62,7 +62,7 @@
         <div class="row">
             <div class="col">
                 <h1>Find your room that suit <span>your needs.</span></h1>
-                <?php $location = get_workingspaces_location(); ?>
+                <?php $location = get_location(); ?>
                 <?php if($location['place_name']):?>
                 <div class="location-container">
                     <i class="fas fa-map-marker-alt text-muted"></i>

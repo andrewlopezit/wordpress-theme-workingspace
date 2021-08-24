@@ -1,0 +1,52 @@
+
+.mapboxgl-marker{
+    .inner-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        .background {
+            background: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 10em;
+            z-index: 1;
+        }
+    
+        img {
+            width: 85%;
+            height: 85%;
+            object-fit: cover;
+            border-radius: 10em;
+            position: absolute;
+            z-index: 1;
+        }
+    
+        &::after{
+            content: "";
+            position: absolute;
+            width: 80%;
+            height: 20px;
+            bottom: -10px;
+            left: 50%;
+            background-color: var(--secondary-color, $secondary-color);
+    
+            @include transform(translateX(-50%));
+            @include clip-polygon((50% 100%, 0 0, 100% 0));
+        }
+    
+        &::before {
+            content: "";
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            width: 15%;
+            height: 2px;
+            background-color: var(--secondary-color, $secondary-color);
+    
+            @include transform(translateX(-50%));
+            @include animation(marker-anim 1s linear infinite);
+        }
+    }
+}

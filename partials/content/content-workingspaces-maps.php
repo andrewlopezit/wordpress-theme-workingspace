@@ -20,12 +20,15 @@ if(isset($country['id'])) {
             'compare' => '='
         )
     );
+
+    $country_location = get_location($country['id']);
 }
 
-$workingspaces = new WP_Query( $query ); 
 
+$workingspaces = new WP_Query( $query ); 
 ?>
 <div id="workspaces-map">
+
     <div class="content-container">
         <div class="item-container">
             
@@ -130,7 +133,7 @@ $workingspaces = new WP_Query( $query );
                 <button class="btn filter"> Save</button>
             </div>
             <?php if ( $workingspaces->have_posts() ) : while ( $workingspaces->have_posts() ) : $workingspaces->the_post(); ?>
-            <?php $location = get_workingspaces_location(); ?>
+            <?php $location = get_location(); ?>
 
             <div class="item workspace card border-top-left border--post border--hover" <?php echo isset($location['location']) && $location['location'] ? 'data-geolocation='.$location['location'] : ''; ?>>
             <img class="card-img-top"  src="<?php echo esc_url(wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID()), 'posts' )[0]);?>" alt="">
@@ -142,7 +145,7 @@ $workingspaces = new WP_Query( $query );
                     <h5><?php the_title(); ?></h5>
                 </a>
                 <?php if(isset($location['place_name']) && $location['place_name']):?>
-                    <div class="detail-icontainer">
+                    <div class="detail-icontainer location">
                         <i class="fas fa-map-marker-alt text-muted"></i>
                         <a href="#"><?php echo $location['place_name']; ?></a>
                     </div>
@@ -151,12 +154,12 @@ $workingspaces = new WP_Query( $query );
                     $rooms = get_field('related_rooms'); 
 
                     if($rooms):?>
-                    <div class="detail-icontainer">
+                    <div class="detail-icontainer capacity">
                         <i class="fas fa-user text-muted"></i>
                         <p class="text-muted">Capacity: <?php echo get_minimum_seat_rooms($rooms).' - '.get_maximmum_seat_rooms($rooms); ?></p>
                     </div>
                 <?php endif; ?>
-                <div class="detail-icontainer">
+                <div class="detail-icontainer total-rooms">
                 <?php
                     $numberOfRooms =  $rooms != null ? count($rooms) : 0 ?>
                     <i class="fas fa-chair text-muted"></i>
@@ -164,9 +167,9 @@ $workingspaces = new WP_Query( $query );
                 </div>
                 <?php $price_range = get_rooms_price_range($rooms); 
                 if($price_range):?>
-                <div class="detail-icontainer">
+                <div class="detail-icontainer price-range">
                     <span>Price range: </span>
-                    <span><?php echo count($price_range) > 1 ? '$'.implode(' - $', $price_range).'/month': $price_range[0].'/month'; ?></span>
+                    <span class="price"><?php echo count($price_range) > 1 ? '$'.implode(' - $', $price_range).'/month': $price_range[0].'/month'; ?></span>
                 </div>
                 <?php endif;?>
                 </div>
@@ -183,6 +186,7 @@ $workingspaces = new WP_Query( $query );
                 </div>
             <?php endif; ?>
         </div>
-        <div class="map" id="map"></div>
+        <div class="map" id="map" <?php echo isset($country_location['location']) && $country_location['location'] ? 'data-geolocation='.$country_location['location'] : ''; ?>>
+        </div>
     </div>
 </div>

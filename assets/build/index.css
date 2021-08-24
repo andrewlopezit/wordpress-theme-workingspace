@@ -25,6 +25,7 @@
 * - BUTTONS
 * - INPUTS
 * - SOCIAL MEDIA
+* - MAPS
 * - HERO IMAGE SLIDER
 * - CATEGORIES
 * - BRAND
@@ -920,6 +921,59 @@ hr {
   font-family: "Montserrat", sans-serif;
   text-transform: uppercase;
   font-weight: 800;
+}
+
+/*------------------------------------*
+	SOCIAL MEDIA
+*------------------------------------*/
+.mapboxgl-marker .inner-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mapboxgl-marker .inner-container .background {
+  background: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 10em;
+  z-index: 1;
+}
+.mapboxgl-marker .inner-container img {
+  width: 85%;
+  height: 85%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 10em;
+  position: absolute;
+  z-index: 1;
+}
+.mapboxgl-marker .inner-container::after {
+  content: "";
+  position: absolute;
+  width: 80%;
+  height: 20px;
+  bottom: -10px;
+  left: 50%;
+  background-color: var(--secondary-color, #00CEB5);
+  transform: translateX(-50%);
+  -webkit-clip-path: polygon(50% 100%, 0 0, 100% 0);
+  -ms-clip-path: polygon(50% 100%, 0 0, 100% 0);
+  -o-clip-path: polygon(50% 100%, 0 0, 100% 0);
+  -moz-clip-path: polygon(50% 100%, 0 0, 100% 0);
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+}
+.mapboxgl-marker .inner-container::before {
+  content: "";
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  width: 15%;
+  height: 2px;
+  background-color: var(--secondary-color, #00CEB5);
+  transform: translateX(-50%);
+  -webkit-animation: marker-anim 1s linear infinite;
+  animation: marker-anim 1s linear infinite;
 }
 
 /*------------------------------------*
@@ -2175,7 +2229,7 @@ section.testimonials {
   left: 50%;
   width: 5px;
   height: 2px;
-  background-color: var(--secondary-color, #00CEB5);
+  background-color: var(--primary-color, #FDD500);
   transform: translateX(-48%);
   -webkit-animation: marker-anim 1s linear infinite;
   animation: marker-anim 1s linear infinite;

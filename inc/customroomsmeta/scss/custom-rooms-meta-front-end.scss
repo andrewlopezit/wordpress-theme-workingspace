@@ -65,8 +65,7 @@
                 h2 {
                     margin: 0;
                     position: relative;
-                    width: -moz-fit-content;
-                    width: fit-content;
+                    @include fit-content;
 
                     a {
                         color: #000;
@@ -95,8 +94,7 @@
                 }
                 .btn.visit-request {
                     margin-top:  30px;
-                    width: -moz-fit-content;
-                    width: fit-content;
+                    @include fit-content;
                 }
             }
         }

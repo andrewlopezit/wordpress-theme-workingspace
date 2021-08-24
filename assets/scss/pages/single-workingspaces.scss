@@ -119,7 +119,7 @@ $background-color: #E6EBE9;
                     left: 50%;
                     width: 5px;
                     height: 2px;
-                    background-color: var(--secondary-color, $secondary-color);
+                    background-color: var(--primary-color, $primary-color);
     
                     @include transform(translateX(-48%));
                     @include animation(marker-anim 1s linear infinite);

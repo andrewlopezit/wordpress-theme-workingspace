@@ -33,9 +33,18 @@ class WorkingspacesMaps {
         // init events
         this.events();
 
-        maps({
-            'container': this.$mapContainer.get()[0]
-        });
+        // init map
+        this.initMap();
+
+    }
+    initMap() {
+        const workingspaces =  this.getWorkingspaces();
+       this.maps = maps({
+            container: this.$mapContainer.get()[0],
+            center: this.$mapContainer.data('geolocation').split(',') ?? null,
+            zoom: 6
+        }).control()
+        .addMarkers(workingspaces, true)
     }
 
     initAnimation() {
@@ -108,16 +117,16 @@ class WorkingspacesMaps {
 
             const locationTemplate = (location) => {
                 return `
-                    <div class="detail-icontainer">
+                    <div class="detail-icontainer location">
                         <i class="fas fa-map-marker-alt text-muted"></i>
                         <a href="#">${location}</a>
                     </div>`;
             }
 
             const priceRangeTemplate = (priceRange) => {
-                return `<div class="detail-icontainer">
+                return `<div class="detail-icontainer price-range">
                             <span>Price range: </span>
-                            <span>$${priceRange.length > 1 ? priceRange.join(' - $'): priceRange[0]}/month</span>
+                            <span class="price">$${priceRange.length > 1 ? priceRange.join(' - $'): priceRange[0]}/month</span>
                         </div>`
             }
 
@@ -131,11 +140,11 @@ class WorkingspacesMaps {
                                     <h5>${val?.post_title}</h5>
                                 </a>
                                 ${val?.location?.place_name ? locationTemplate(val.location.place_name): ''}
-                                <div class="detail-icontainer">
+                                <div class="detail-icontainer capacity">
                                     <i class="fas fa-user text-muted"></i>
                                     <p class="text-muted">Capacity: ${minimumCapacity} - ${maximumCapacity}</p>
                                 </div>
-                                <div class="detail-icontainer">
+                                <div class="detail-icontainer total-rooms">
                                     <i class="fas fa-chair text-muted"></i>
                                     <p class="text-muted">No. of rooms: ${val?.total_rooms}</p>
                                 </div>
@@ -180,6 +189,26 @@ class WorkingspacesMaps {
             }).catch(() => {
                 load.displayError();
             });
+    }
+
+    getWorkingspaces() {
+        let workingspaces = [];
+
+        this.$itemContainer.find('.item').each((i, el) => {
+            const property = {
+                title: $(el).find('.card-body > a > h5').html(),
+                location: $(el).find('.card-body > .location > a').html(),
+                capacity: $(el).find('.card-body > .capacity > p').html(),
+                totalRooms: $(el).find('.card-body > .total-rooms > p').html(),
+                priceRange: $(el).find('.card-body > .price-range > .price').html(),
+                imgSrc: $(el).find('img').attr('src'),
+                geolocation: $(el).data('geolocation').split(',') ?? null
+            };
+
+            workingspaces.push(property);
+        })
+
+        return workingspaces;
     }
 }
 

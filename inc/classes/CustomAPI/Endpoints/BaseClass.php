@@ -45,7 +45,7 @@ public function add_rooms_additional_details($posts) {
           $workingspace->post_content_trim = wp_trim_words(strip_tags($workingspace->post_content), 50);
           $workingspace->post_excerpt = wp_trim_words($workingspace->post_excerpt, 50);
           $workingspace->permalink = get_the_permalink($workingspace);
-          $workingspace->location = get_workingspaces_location($workingspace->ID);
+          $workingspace->location = get_location($workingspace->ID);
 
           $roomsValue = $rooms ?? Posts::get_rooms_by_workingspaces_has_id([$workingspace], true);
 

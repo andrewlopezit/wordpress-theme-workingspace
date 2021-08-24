@@ -572,6 +572,8 @@ __webpack_require__.r(__webpack_exports__);
 const Maps = args => {
   class Maps {
     constructor() {
+      var _args$zoom;
+
       if (!(args !== null && args !== void 0 && args.container)) return;
       const {
         mapbox_public_key,
@@ -579,17 +581,66 @@ const Maps = args => {
       } = translation_array;
       this.mapboxtSecretToken = mapbox_secret_key;
       this.mapboxPublicToken = mapbox_public_key;
-      this.initMap([39.657325, -4.024902], 9);
+      this.initMap(args.center, (_args$zoom = args.zoom) !== null && _args$zoom !== void 0 ? _args$zoom : 10);
     }
 
-    initMap(center, mapZoom) {
+    initMap(center, zoom) {
+      if (!center) return;
       mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.accessToken = this.mapboxPublicToken;
       this.map = new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.Map({
         container: args.container,
         style: 'mapbox://styles/andrewlopezit/cksbd685j2dud17pav0q5rf5w',
         center: center,
-        zoom: mapZoom
+        zoom: zoom
       });
+      return this.map;
+    }
+
+    control() {
+      this.map.addControl(new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.NavigationControl());
+      return this;
+    }
+    /**
+     * 
+     * @param {*} markers 
+     * @param {boolean} istFitToMarkers 
+     * @returns 
+     */
+
+
+    addMarkers(markers, istFitToMarkers = false) {
+      let coordinates = [];
+      markers.forEach(marker => {
+        if (marker !== null && marker !== void 0 && marker.geolocation) {
+          const template = `<div class="mapboxgl-marker">
+                    <div class="inner-container">
+                    <div class="background"></div>
+                    <img src="${marker.imgSrc}"/>
+                    </div></div>`;
+          const el = $.parseHTML(template);
+          new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.Marker(el[0]).setLngLat(marker.geolocation).addTo(this.map);
+        }
+
+        if (istFitToMarkers) {
+          if (marker !== null && marker !== void 0 && marker.geolocation) {
+            coordinates.push(marker.geolocation);
+          }
+        }
+      });
+
+      if (istFitToMarkers) {
+        const bounds = new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.LngLatBounds(coordinates);
+
+        for (const coord of coordinates) {
+          bounds.extend(coord);
+        }
+
+        this.map.fitBounds(bounds, {
+          padding: 50
+        });
+      }
+
+      return this;
     }
 
   }
@@ -965,10 +1016,20 @@ class WorkingspacesMaps {
     });
     this.initAnimation(); // init events
 
-    this.events();
-    Object(_index__WEBPACK_IMPORTED_MODULE_2__["maps"])({
-      'container': this.$mapContainer.get()[0]
-    });
+    this.events(); // init map
+
+    this.initMap();
+  }
+
+  initMap() {
+    var _this$$mapContainer$d;
+
+    const workingspaces = this.getWorkingspaces();
+    this.maps = Object(_index__WEBPACK_IMPORTED_MODULE_2__["maps"])({
+      container: this.$mapContainer.get()[0],
+      center: (_this$$mapContainer$d = this.$mapContainer.data('geolocation').split(',')) !== null && _this$$mapContainer$d !== void 0 ? _this$$mapContainer$d : null,
+      zoom: 6
+    }).control().addMarkers(workingspaces, true);
   }
 
   initAnimation() {
@@ -1034,16 +1095,16 @@ class WorkingspacesMaps {
 
       const locationTemplate = location => {
         return `
-                    <div class="detail-icontainer">
+                    <div class="detail-icontainer location">
                         <i class="fas fa-map-marker-alt text-muted"></i>
                         <a href="#">${location}</a>
                     </div>`;
       };
 
       const priceRangeTemplate = priceRange => {
-        return `<div class="detail-icontainer">
+        return `<div class="detail-icontainer price-range">
                             <span>Price range: </span>
-                            <span>$${priceRange.length > 1 ? priceRange.join(' - $') : priceRange[0]}/month</span>
+                            <span class="price">$${priceRange.length > 1 ? priceRange.join(' - $') : priceRange[0]}/month</span>
                         </div>`;
       };
 
@@ -1057,11 +1118,11 @@ class WorkingspacesMaps {
                                     <h5>${val === null || val === void 0 ? void 0 : val.post_title}</h5>
                                 </a>
                                 ${val !== null && val !== void 0 && (_val$location = val.location) !== null && _val$location !== void 0 && _val$location.place_name ? locationTemplate(val.location.place_name) : ''}
-                                <div class="detail-icontainer">
+                                <div class="detail-icontainer capacity">
                                     <i class="fas fa-user text-muted"></i>
                                     <p class="text-muted">Capacity: ${minimumCapacity} - ${maximumCapacity}</p>
                                 </div>
-                                <div class="detail-icontainer">
+                                <div class="detail-icontainer total-rooms">
                                     <i class="fas fa-chair text-muted"></i>
                                     <p class="text-muted">No. of rooms: ${val === null || val === void 0 ? void 0 : val.total_rooms}</p>
                                 </div>
@@ -1103,6 +1164,25 @@ class WorkingspacesMaps {
     }).catch(() => {
       load.displayError();
     });
+  }
+
+  getWorkingspaces() {
+    let workingspaces = [];
+    this.$itemContainer.find('.item').each((i, el) => {
+      var _$$data$split;
+
+      const property = {
+        title: jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).find('.card-body > a > h5').html(),
+        location: jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).find('.card-body > .location > a').html(),
+        capacity: jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).find('.card-body > .capacity > p').html(),
+        totalRooms: jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).find('.card-body > .total-rooms > p').html(),
+        priceRange: jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).find('.card-body > .price-range > .price').html(),
+        imgSrc: jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).find('img').attr('src'),
+        geolocation: (_$$data$split = jquery__WEBPACK_IMPORTED_MODULE_0___default()(el).data('geolocation').split(',')) !== null && _$$data$split !== void 0 ? _$$data$split : null
+      };
+      workingspaces.push(property);
+    });
+    return workingspaces;
   }
 
 }

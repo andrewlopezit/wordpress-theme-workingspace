@@ -53,8 +53,8 @@
         return in_array($category->term_id, array_map(function($categories) {return $categories->term_id;}, $categories));
     }
  }
- if(!function_exists('get_workingspaces_location')) {
-    function get_workingspaces_location($id = null) {
+ if(!function_exists('get_location')) {
+    function get_location($id = null) {
         $data = get_post_meta( $id ? $id : get_the_ID(), 'custom_maps_mapbox_form_key', true );
 
         if(!isset($data)) return null;
