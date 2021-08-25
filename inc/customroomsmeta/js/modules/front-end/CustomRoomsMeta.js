@@ -74,9 +74,13 @@ class CustomRoomsMeta {
 
         if(this.$activeItem) {
             this.activeItemAnimation = gsap.timeline({});
-            this.activeItemAnimation.from(this.$activeItem.find('a > img'), {translateX: 100, opacity: 0})
-                                    .from(this.$activeItem.find('.detail').children(), { opacity: 0, translateY: 20, ease: 'back', stagger:{ amount: 1, ease: 'stepped'} })
-                                    .from(this.$activeItem.find('a.btn.visit-request'), {opacity: 0});
+
+            if(this.$activeItem.find('a > img').length)
+            this.activeItemAnimation.from(this.$activeItem.find('a > img'), {translateX: 100, opacity: 0});
+            if(this.$activeItem.find('.detail').children().length)
+            this.activeItemAnimation.from(this.$activeItem.find('.detail').children(), { opacity: 0, translateY: 20, ease: 'back', stagger:{ amount: 1, ease: 'stepped'} })
+            if(this.$activeItem.find('a.btn.visit-request').length)
+            this.activeItemAnimation.from(this.$activeItem.find('a.btn.visit-request'), {opacity: 0});
 
             this.progressbarAnimation.play();
         }

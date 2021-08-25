@@ -5,6 +5,9 @@ import {slider, api, loading, maps} from './index';
 class WorkingspacesMaps {
     constructor() {
         this.$workspaceContainer = $('#workspaces-map');
+
+        if(!this.$workspaceContainer.length) return;
+
         this.$contentContainer = this.$workspaceContainer.find('.content-container');
         this.$labelFilterContainer = this.$contentContainer.find('.action-container > .label');
         this.$filterContainer = this.$contentContainer.find('.filter-container');

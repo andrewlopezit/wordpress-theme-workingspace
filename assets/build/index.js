@@ -881,17 +881,19 @@ class TestimonialsSlider {
     this.testimonialSliderAnimation = gsap__WEBPACK_IMPORTED_MODULE_1__["default"].timeline({
       onReverseComplete: () => this.nextItem()
     });
-    this.testimonialSliderAnimation.to(this.$content.find('p'), {
+    if (this.$content.find('p').length) this.testimonialSliderAnimation = this.testimonialSliderAnimation.to(this.$content.find('p'), {
       translateY: 0,
       opacity: 1,
       ease: 'back',
       duration: .8
-    }).to(this.$userProfile, {
+    });
+    if (this.$userProfile.length) this.testimonialSliderAnimation = this.testimonialSliderAnimation.to(this.$userProfile, {
       scale: 1,
       opacity: 1,
       ease: 'back',
       duration: .8
-    }).to(this.$content.find('.author-details'), {
+    });
+    if (this.$content.find('.autho-details').length) this.testimonialSliderAnimation = this.testimonialSliderAnimation.to(this.$content.find('.author-details'), {
       translateY: 0,
       opacity: 1,
       ease: 'back',
@@ -1002,6 +1004,7 @@ __webpack_require__.r(__webpack_exports__);
 class WorkingspacesMaps {
   constructor() {
     this.$workspaceContainer = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#workspaces-map');
+    if (!this.$workspaceContainer.length) return;
     this.$contentContainer = this.$workspaceContainer.find('.content-container');
     this.$labelFilterContainer = this.$contentContainer.find('.action-container > .label');
     this.$filterContainer = this.$contentContainer.find('.filter-container');
@@ -1451,10 +1454,11 @@ class CustomRoomsMeta {
 
     if (this.$activeItem) {
       this.activeItemAnimation = gsap__WEBPACK_IMPORTED_MODULE_1__["default"].timeline({});
-      this.activeItemAnimation.from(this.$activeItem.find('a > img'), {
+      if (this.$activeItem.find('a > img').length) this.activeItemAnimation.from(this.$activeItem.find('a > img'), {
         translateX: 100,
         opacity: 0
-      }).from(this.$activeItem.find('.detail').children(), {
+      });
+      if (this.$activeItem.find('.detail').children().length) this.activeItemAnimation.from(this.$activeItem.find('.detail').children(), {
         opacity: 0,
         translateY: 20,
         ease: 'back',
@@ -1462,7 +1466,8 @@ class CustomRoomsMeta {
           amount: 1,
           ease: 'stepped'
         }
-      }).from(this.$activeItem.find('a.btn.visit-request'), {
+      });
+      if (this.$activeItem.find('a.btn.visit-request').length) this.activeItemAnimation.from(this.$activeItem.find('a.btn.visit-request'), {
         opacity: 0
       });
       this.progressbarAnimation.play();
