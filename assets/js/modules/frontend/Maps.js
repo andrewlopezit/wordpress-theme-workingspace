@@ -56,7 +56,8 @@ const Maps = (args) => {
                         <p><span>Location: </span>${marker?.location ? marker.location : ''}</p>
                         <p><span>Capacity: </span> ${marker?.capacity ? marker.capacity : ''}</p>
                         <p><span>Total rooms: </span>${marker?.totalRooms ? marker.totalRooms : ''}</p>
-                        <p><span>Price range: </span> ${marker?.priceRange ? marker.priceRange : ''}</p>`
+                        <p><span>Price range: </span> ${marker?.priceRange ? marker.priceRange : ''}</p>
+                        `
                     );
 
                     const el = $.parseHTML(template);

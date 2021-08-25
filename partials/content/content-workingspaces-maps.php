@@ -188,7 +188,7 @@ $workingspaces = new WP_Query( $query );
         </div>
         <div class="map-container">
             <div class="map" id="map" <?php echo isset($country_location['location']) && $country_location['location'] ? 'data-geolocation='.$country_location['location'] : ''; ?>>
-                <button class="btn fit-workingspaces"><i class="fas fa-compress"></i></button>
+                <button class="btn fit-workingspaces"><i class="far fa-map"></i></button>
             </div>
         </div>
     </div>

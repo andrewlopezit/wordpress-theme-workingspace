@@ -620,7 +620,8 @@ const Maps = args => {
                         <p><span>Location: </span>${marker !== null && marker !== void 0 && marker.location ? marker.location : ''}</p>
                         <p><span>Capacity: </span> ${marker !== null && marker !== void 0 && marker.capacity ? marker.capacity : ''}</p>
                         <p><span>Total rooms: </span>${marker !== null && marker !== void 0 && marker.totalRooms ? marker.totalRooms : ''}</p>
-                        <p><span>Price range: </span> ${marker !== null && marker !== void 0 && marker.priceRange ? marker.priceRange : ''}</p>`);
+                        <p><span>Price range: </span> ${marker !== null && marker !== void 0 && marker.priceRange ? marker.priceRange : ''}</p>
+                        `);
           const el = $.parseHTML(template);
           const loc = marker === null || marker === void 0 ? void 0 : marker.geolocation.map(loc => +loc);
           const placeMarker = new mapbox_gl__WEBPACK_IMPORTED_MODULE_1___default.a.Marker(el[0]).setLngLat(loc).setPopup(popup).addTo(this.map);
@@ -1016,7 +1017,8 @@ class WorkingspacesMaps {
     this.$btnSetFilter = this.$filterContainer.find('.btn.filter');
     this.$btnFitLocations = this.$mapContainer.find('.btn.fit-workingspaces'); //local variable
 
-    this.siteUrl = translation_array.site_url; //init slider
+    this.siteUrl = translation_array.site_url;
+    this.mapZoom = 15; //init slider
 
     Object(_index__WEBPACK_IMPORTED_MODULE_2__["slider"])({
       container: this.$priceRange.get()[0]
@@ -1034,7 +1036,7 @@ class WorkingspacesMaps {
     this.map = Object(_index__WEBPACK_IMPORTED_MODULE_2__["maps"])({
       container: this.$map.get()[0],
       center: (_this$$map$data$split = this.$map.data('geolocation').split(',')) !== null && _this$$map$data$split !== void 0 ? _this$$map$data$split : null,
-      zoom: 20
+      zoom: this.mapZoom
     }).control();
     this.workingspaces = this.getWorkingspacesInHtml();
     const locations = this.workingspaces.map(workingspace => {
@@ -1056,7 +1058,7 @@ class WorkingspacesMaps {
       this.map.get().flyTo({
         center: locations[0],
         essential: true,
-        zoom: 12
+        zoom: this.mapZoom
       });
     }
   }
@@ -1124,6 +1126,21 @@ class WorkingspacesMaps {
     });
     this.$mapContainer.on('click', '.loading#loading > .btn.retry', () => {
       this.initMap();
+    });
+    this.$itemContainer.on('click', '.item', e => {
+      const $el = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.currentTarget);
+
+      if ($el) {
+        const geolocation = $el.data('geolocation').split(',');
+        this.map.get().flyTo({
+          center: geolocation,
+          essential: true,
+          zoom: this.mapZoom
+        });
+      }
+    });
+    this.$map.on('click', '.navigate', e => {
+      console.log(e.target);
     });
   }
 

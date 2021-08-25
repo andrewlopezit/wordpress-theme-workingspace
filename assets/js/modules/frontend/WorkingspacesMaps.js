@@ -23,6 +23,7 @@ class WorkingspacesMaps {
 
         //local variable
         this.siteUrl = translation_array.site_url;
+        this.mapZoom = 15;
 
         //init slider
         slider({
@@ -42,7 +43,7 @@ class WorkingspacesMaps {
         this.map =  maps({
             container: this.$map.get()[0],
             center: this.$map.data('geolocation').split(',') ?? null,
-            zoom: 20
+            zoom: this.mapZoom
         }).control();
 
         this.workingspaces = this.getWorkingspacesInHtml();
@@ -73,7 +74,7 @@ class WorkingspacesMaps {
             this.map.get().flyTo({
                 center: locations[0],
                 essential: true,
-                zoom: 12 
+                zoom: this.mapZoom
             });
         }
     }
@@ -152,7 +153,24 @@ class WorkingspacesMaps {
 
         this.$mapContainer.on('click', '.loading#loading > .btn.retry', () =>{ 
             this.initMap();
-        })
+        });
+
+        this.$itemContainer.on('click', '.item', (e) => {
+            const $el = $(e.currentTarget);
+
+            if($el) {
+                const geolocation = $el.data('geolocation').split(',');
+                this.map.get().flyTo({
+                    center: geolocation,
+                    essential: true,
+                    zoom: this.mapZoom
+                });
+            }
+        });
+
+        this.$map.on('click', '.navigate', e => {
+            console.log(e.target);
+        });
     }
 
     workingspacesTemplate(data) {
