@@ -1,5 +1,3 @@
-import $ from 'jquery';
-import gsap from 'gsap';
 import api from '../Api';
 import {loading} from '../../../../../assets/js/modules/frontend';
 class CustomRoomsMeta {
@@ -75,23 +73,32 @@ class CustomRoomsMeta {
         if(this.$activeItem) {
             this.activeItemAnimation = gsap.timeline({});
 
-            if(this.$activeItem.find('a > img').length)
-            this.activeItemAnimation.from(this.$activeItem.find('a > img'), {translateX: 100, opacity: 0});
+            if(this.$activeItem.find('a > img').length) {
+                if(this.isTouchEvent()) {
+                    this.activeItemAnimation.from(this.$activeItem.find('a > img'), { opacity: 0});
+                } else {
+                    this.activeItemAnimation.from(this.$activeItem.find('a > img'), {translateX: 100, opacity: 0});
+                }
+
+            }
+            
             if(this.$activeItem.find('.detail').children().length)
             this.activeItemAnimation.from(this.$activeItem.find('.detail').children(), { opacity: 0, translateY: 20, ease: 'back', stagger:{ amount: 1, ease: 'stepped'} })
             if(this.$activeItem.find('a.btn.visit-request').length)
             this.activeItemAnimation.from(this.$activeItem.find('a.btn.visit-request'), {opacity: 0});
 
-            this.progressbarAnimation.play();
+            if(!this.isTouchEvent()){
+                this.progressbarAnimation.play();
+            }
         }
     }
 
     events() {
-        this.$contentContainer.on('mouseover', '.item.is-display', () => this.progressbarAnimation.pause());
-        this.$contentContainer.on('mouseout', '.item.is-display', () => this.progressbarAnimation.play());
+        this.$contentContainer.on('mouseover', '.item.is-display', () => {if(!this.isTouchEvent()) this.progressbarAnimation.pause();});
+        this.$contentContainer.on('mouseout', '.item.is-display', () => {if(!this.isTouchEvent()) this.progressbarAnimation.play();});
 
-        this.$floorplanContainer.on('mouseover', 'svg > .is-active', () => this.progressbarAnimation.pause());
-        this.$floorplanContainer.on('mouseout', 'svg > .is-active', () => this.progressbarAnimation.play());
+        this.$floorplanContainer.on('mouseover', 'svg > .is-active', () => {if(!this.isTouchEvent()) this.progressbarAnimation.pause();});
+        this.$floorplanContainer.on('mouseout', 'svg > .is-active', () => {if(!this.isTouchEvent()) this.progressbarAnimation.play();});
 
         $(this.floorplanShapes).on('click', el => {
             const id = $(el.target).data('id');
@@ -119,6 +126,8 @@ class CustomRoomsMeta {
     }
 
     nextItem() {
+        if(this.isTouchEvent()) return;
+
         this.activeShapeAnimation.kill();
 
         $(this.floorplanShapes[this.indexActiveShape]).css('fill', this.secondaryColor);
@@ -134,7 +143,7 @@ class CustomRoomsMeta {
 
         $(this.floorplanShapes[this.indexActiveShape]).css('fill', this.secondaryColor);
         this.$progressbar.css('height', 0);
-        
+
         this.indexActiveShape = num;
 
         this.displayItemElement();
@@ -186,6 +195,12 @@ class CustomRoomsMeta {
         });
 
         return categoriesTemplate+'</small>';
+    }
+
+    isTouchEvent() {
+        return (('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0) ||
+        (navigator.msMaxTouchPoints > 0))
     }
 }
 

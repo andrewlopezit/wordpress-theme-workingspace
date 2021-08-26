@@ -1,7 +1,4 @@
-import $ from 'jquery';
-import gsap from 'gsap';
 import {slider, api, loading, maps} from './index';
- 
 class WorkingspacesMaps {
     constructor() {
         this.$workspaceContainer = $('#workspaces-map');

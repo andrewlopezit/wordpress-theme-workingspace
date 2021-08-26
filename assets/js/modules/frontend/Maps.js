@@ -1,6 +1,3 @@
-import 'mapbox-gl/dist/mapbox-gl.css';
-import mapboxgl from "mapbox-gl";
-
 const Maps = (args) => {
 
     class Maps {

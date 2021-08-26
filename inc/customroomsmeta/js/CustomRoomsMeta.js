@@ -1,5 +1,3 @@
-import $ from 'jquery';
-import gsap from 'gsap';
 import api from './modules/Api';
 import _ from 'lodash';
 

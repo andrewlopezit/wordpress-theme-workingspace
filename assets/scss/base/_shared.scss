@@ -162,3 +162,82 @@ hr {
 		}
 	}
 }
+
+.hero-section {
+	margin-bottom: $margin-bottom-section - 50;
+	width: 100%;
+	height: auto;
+	margin-top: 0;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+
+		background-color: rgba(#000, 0.3);
+	}
+
+	.container {
+		z-index: 1;
+		position: relative;
+		
+		.row{
+			.col{
+				padding: 4em 0;
+				display: flex;
+			}
+		}
+
+		.headline {
+			line-height: 1em;
+			color: #fff;
+
+			position: relative;
+			
+			&::before,
+			&::after {
+				content: '';
+				position: absolute;
+				top: -12px;
+				left: 0;
+
+				height: 8px;
+				width: 45%;
+	
+				background-color: var(--primary-color, $primary-color);
+			}
+
+			&::after {
+				top: auto;
+				bottom: -12px;
+				width: 100%;
+			}
+		}
+	}
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+	.hero-section {
+		
+	}
+}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) { 
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+}
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {
+}

@@ -21,10 +21,7 @@
   "devDependencies": {
     "@wordpress/scripts": "^17.0.0",
     "axios": "^0.21.1",
-    "gsap": "^3.7.1",
-    "jquery-ui-dist": "^1.12.1",
     "lodash": "^4.17.21",
-    "mapbox-gl": "^2.4.0",
     "moment": "^2.29.1",
     "vanilla-picker": "^2.11.2"
   }

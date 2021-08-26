@@ -199,8 +199,25 @@ if(!class_exists('WorkingspaceTheme')) {
                 )   
             )
             ->script(
+                array('handle' => 'gsap@3.7.1',
+                'src' => '//cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js'
+                )
+            )
+            ->script(
                 array('handle' => 'jQueryUI@1.12',
                 'src' => '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js'
+                )
+            )
+            ->script(
+                array(
+                    'handle' => 'jQueryUITouch@0.2.3',
+                    'src' => '//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js'
+                )
+            )
+            ->script(
+                array(
+                    'handle' => 'mapbox@2.3.1',
+                    'src' => '//api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'
                 )
             )
             ->script(
@@ -208,15 +225,19 @@ if(!class_exists('WorkingspaceTheme')) {
                     'handle'=> 'JqueryExtendFunction',
                     'deps' => array('jQuery@3.6'),
                     'src' => WORKINGSPACEWP_THEME_URI.'/assets/js/JqueryExtendFunction.js',
+                    'version' => $theme_version
                 )
             )
             // add the handle for defer script
             // if id or handle included in array params 
-            // it will defer in your script tag
+            // it will add defer in your script tag
             ->register(
                 array(
-                    'gsap@3.7',
+                    'jQuery@3.6',
+                    'gsap@3.7.1',
                     'jQueryUI@1.12',
+                    'jQueryUITouch@0.2.3',
+                    'mapbox@2.3.1',
                     'JqueryExtendFunction'
                 )
             );
@@ -303,6 +324,12 @@ if(!class_exists('WorkingspaceTheme')) {
                 array(
                     'handle' => 'bootstrapv5',
                     'src' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'
+                )
+            )
+            ->style(
+                array(
+                    'handle' => 'mapboxv2.3.1',
+                    'src' => '//api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css'
                 )
             )
             ->style(

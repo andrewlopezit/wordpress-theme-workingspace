@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 const Slider = (args) => {
     class Slider{
         constructor(args) {

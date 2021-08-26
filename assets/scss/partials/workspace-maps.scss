@@ -6,7 +6,7 @@
         grid-template-columns: repeat(2, 1fr);
         grid-column-gap: 20px;
 
-        .item-container {
+        & > .item-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: fit-content(100%);
@@ -21,7 +21,7 @@
                 justify-content: space-between;
                 position: absolute;
                 width: 100%;
-        
+
                 margin-bottom:  5px;
         
                 .action,
@@ -30,7 +30,7 @@
                     font-size: 12px;
                 }
         
-                .action {
+                & > .action {
                     position: relative;
                     cursor: pointer;
                     z-index: 1;
@@ -100,6 +100,14 @@
                         align-items: center;
                         justify-content: space-between;
                         font-size: 12px;
+                        flex-wrap: wrap;
+                        width: 100%;
+
+                        .title-container {
+                            p {
+                                width: 100%;
+                            }
+                        }
         
                         .range {
                             font-size: 10px;
@@ -108,7 +116,7 @@
                             color:  #fff;
                             background-color: var(--secondary-color, $secondary-color);
                         }
-                }
+                    }
         
                     .minmax-values {
                         display: flex;
@@ -125,10 +133,10 @@
                     .action-container {
                         display: inline-block;
         
-                    button {
-                        margin: 5px;
-                        text-transform: capitalize;
-                    }
+                        button {
+                            margin: 5px;
+                            text-transform: capitalize;
+                        }
                     }
                 }
         
@@ -267,4 +275,41 @@
             }
         }
     }
+}
+
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+    #workspaces-map {
+        .content-container {
+            grid-template-columns: repeat(1, 1fr);
+
+            .item-container {
+                grid-template-columns: repeat(1, 1fr);
+
+                .filter-container .filter .header-container {
+                    margin-bottom: 20px;
+                }
+                
+                .action-container > span{
+                    display: none;
+                }
+            }
+
+            .map-container {
+                display: none;
+            }
+        }
+    }
+}
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) { 
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+}
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {
 }

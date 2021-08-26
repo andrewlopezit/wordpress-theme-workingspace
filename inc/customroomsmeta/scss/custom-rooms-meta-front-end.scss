@@ -117,3 +117,44 @@
         opacity: 0;
     }
 }
+
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+    .floorplan-container#custom-rooms--floorplan {
+        .inner-container {
+            grid-template-columns: repeat(1, 1fr);
+            grid-gap: 0;
+            padding: 5px 0;
+
+            svg {
+                margin-bottom: 20px;
+            }
+
+            .content {
+                .item {
+                    &.is-display {
+                        height: auto;
+                    }
+
+                    img {
+                        height: 150px;
+                    }
+                }
+            }
+            
+        }
+    }
+}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) { 
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+}
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {
+}

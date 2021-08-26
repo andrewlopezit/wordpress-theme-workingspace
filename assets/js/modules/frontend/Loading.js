@@ -1,5 +1,3 @@
-import gsap from 'gsap';
-
 const Loading = ($loadingContainer, duration = 30) => {
     class Loading {
 
