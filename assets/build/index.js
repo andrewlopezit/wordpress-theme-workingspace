@@ -1141,9 +1141,9 @@ class WorkingspacesMaps {
                                 <div class="like--container shadow-sm">
                                     <i class="far fa-heart"></i>
                                 </div>
-                                <a href="${val === null || val === void 0 ? void 0 : val.permalink}">
-                                    <h5>${val === null || val === void 0 ? void 0 : val.post_title}</h5>
-                                </a>
+
+                                <h5><a href="${val === null || val === void 0 ? void 0 : val.permalink}">${val === null || val === void 0 ? void 0 : val.post_title}</a></h5>
+                                
                                 ${val !== null && val !== void 0 && (_val$location = val.location) !== null && _val$location !== void 0 && _val$location.place_name ? locationTemplate(val.location.place_name) : ''}
                                 <div class="detail-icontainer capacity">
                                     <i class="fas fa-user text-muted"></i>

@@ -141,9 +141,8 @@ $workingspaces = new WP_Query( $query );
                 <div class="like--container shadow-sm">
                     <i class="far fa-heart"></i>
                 </div>
-                <a href="<?php the_permalink(); ?>">
-                    <h5><?php the_title(); ?></h5>
-                </a>
+                
+                <h5><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
                 <?php if(isset($location['place_name']) && $location['place_name']):?>
                     <div class="detail-icontainer location">
                         <i class="fas fa-map-marker-alt text-muted"></i>

@@ -205,9 +205,9 @@ class WorkingspacesMaps {
                                 <div class="like--container shadow-sm">
                                     <i class="far fa-heart"></i>
                                 </div>
-                                <a href="${val?.permalink}">
-                                    <h5>${val?.post_title}</h5>
-                                </a>
+
+                                <h5><a href="${val?.permalink}">${val?.post_title}</a></h5>
+                                
                                 ${val?.location?.place_name ? locationTemplate(val.location.place_name): ''}
                                 <div class="detail-icontainer capacity">
                                     <i class="fas fa-user text-muted"></i>
