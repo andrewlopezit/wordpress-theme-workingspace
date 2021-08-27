@@ -111,8 +111,14 @@ class WorkingspacesMaps {
         });
 
         this.mapMobileAnimation = gsap.timeline({paused: true, 
+            onComplete: () => {
+                if(this.isMapLoaded) {
+                    this.$mapContainer.css('width', $(document).width() - 44);
+                    this.map.get().resize();
+                }
+            },
             onReverseComplete: () => this.$mapContainer.css('width', 0)});
-        this.mapMobileAnimation.to(this.$mapContainer, {opacity: 1, width: $(document).width() - 45});
+        this.mapMobileAnimation.to(this.$mapContainer, {opacity: 1, width: $(document).width() - 44});
 
     }
 
@@ -121,7 +127,14 @@ class WorkingspacesMaps {
         this.$btnMapView.addClass('is-active');
         this.btnMapviewAnimation = gsap.timeline({ 
             onComplete: () => this.$btnMapView.find('.btn.maps > i').attr('class', 'fas fa-times'),
-            onReverseComplete: () => this.$btnMapView.find('.btn.maps > i').attr('class', 'far fa-map')});
+            onReverseComplete: () => {
+                this.$btnMapView.find('.btn.maps > i').attr('class', 'far fa-map')
+                this.$btnMapView.css({
+                    left: 'auto',
+                    right: 0
+                });
+            }
+        });
 
         this.btnMapviewAnimation.to(this.$btnMapView, {top: 20, left: -10, padding: 5, right: 'auto'})
                                 .to(this.$btnMapView.find('.btn.maps'), {width: 35, height: 35, marginRight: 0}, '<')
@@ -190,6 +203,16 @@ class WorkingspacesMaps {
         $(document).on('scroll', e => {
             this.changePostionBtnMapOnScoll();
             
+            if(this.$btnMapView.hasClass('is-active')) {
+                this.btnMapviewAnimation.reverse();
+                this.mapMobileAnimation.reverse();
+                this.$btnMapView.removeClass('is-active');
+            }
+        });
+
+        $(window).on('resize orientationchange', e => {
+            if(this.isMapLoaded) this.map.get().resize();
+
             if(this.$btnMapView.hasClass('is-active')) {
                 this.btnMapviewAnimation.reverse();
                 this.mapMobileAnimation.reverse();
