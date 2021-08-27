@@ -197,4 +197,4 @@ $workingspaces = new WP_Query( $query );
             </div>
         </div>
     </div>
-</div>|
+</div>
