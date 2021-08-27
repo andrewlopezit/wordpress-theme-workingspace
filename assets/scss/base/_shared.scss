@@ -328,8 +328,9 @@ hr {
 			font-weight: 400;
 		}
 
-		p {
+		& > p {
 			margin: 0;
+			margin-left: 7px;
 		}
 	}
 
