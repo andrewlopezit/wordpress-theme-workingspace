@@ -48,7 +48,7 @@
                 if($price_range):?>
             <small>Starting from</small>
             <div class="price-container">
-                <div class="price"><?php echo count($price_range) > 1 ? '$'.implode(' - $', $price_range).'/month': $price_range[0].'/month'; ?></div>
+                <div class="price"><?php echo count($price_range) > 1 ? '$'.implode(' - $', $price_range).'/month': '$'.$price_range[0].'/month'; ?></div>
                 <a href="<?php the_permalink(); ?>">Explore now</a>
             </div>
             <?php endif;?>

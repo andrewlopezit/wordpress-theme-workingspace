@@ -491,6 +491,12 @@ hr {
   margin: 0;
   margin-left: 7px;
 }
+.workspace.card .price-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+}
 
 /*------------------------------------*
 	ICONS
