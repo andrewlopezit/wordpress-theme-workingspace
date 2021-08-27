@@ -263,6 +263,12 @@ hr {
 
 	position: relative;
 
+	&.workspace--default {
+		.card-img-top {
+			height: auto;
+		}
+	}
+
 	.card-img-top{
 		border-radius: 0;
 		height: 150px;

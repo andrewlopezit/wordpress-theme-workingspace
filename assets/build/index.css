@@ -421,6 +421,9 @@ hr {
   cursor: pointer;
   position: relative;
 }
+.workspace.card.workspace--default .card-img-top {
+  height: auto;
+}
 .workspace.card .card-img-top {
   border-radius: 0;
   height: 150px;
