@@ -339,12 +339,15 @@ hr {
   font-size: 12px;
 }
 .loading p {
-  width: auto;
   font-size: 1.2em;
   font-weight: 500;
   color: #4f4f4f;
   position: relative;
   z-index: 1;
+  text-align: center;
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
 }
 .loading .error-message {
   font-size: 12px;
@@ -1077,9 +1080,9 @@ hr {
   align-items: center;
   justify-content: center;
   position: relative;
-  width: -moz-fit-content;
-  width: -webkit-fit-content;
-  width: fit-content;
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
   cursor: pointer;
   margin-top: -40px;
 }
@@ -1133,9 +1136,9 @@ hr {
   margin-bottom: 5px;
   position: relative;
   z-index: 1;
-  width: -moz-fit-content;
-  width: -webkit-fit-content;
-  width: fit-content;
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
 }
 .mapboxgl-popup-content .title::after {
   content: "";
@@ -1659,9 +1662,9 @@ hr {
   transform: translateX(10px);
   border-top-left-radius: 10em;
   border-bottom-left-radius: 10em;
-  width: -moz-fit-content;
-  width: -webkit-fit-content;
-  width: fit-content;
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
 }
 #workspaces-map .content-container > .action-container .btn.maps {
   border-radius: 10em;
@@ -1708,6 +1711,15 @@ hr {
   cursor: pointer;
   z-index: 1;
 }
+#workspaces-map .content-container > .item-container > .action-container > .action.is-fixed {
+  background-color: var(--secondary-color, #00CEB5);
+  color: #fff;
+  position: fixed;
+  top: 20px;
+}
+#workspaces-map .content-container > .item-container > .action-container > .action.is-fixed i {
+  color: #fff;
+}
 #workspaces-map .content-container > .item-container > .action-container > .action::before {
   content: "";
   position: absolute;
@@ -1743,6 +1755,11 @@ hr {
   margin-top: 50px;
   z-index: 1;
   transform: translateY(100px);
+}
+#workspaces-map .content-container > .item-container .filter-container.is-fixed {
+  position: fixed;
+  top: 20px;
+  width: 40%;
 }
 #workspaces-map .content-container > .item-container .filter-container .filter:nth-last-child(2) {
   padding-bottom: 8px;
@@ -1791,9 +1808,9 @@ hr {
 }
 #workspaces-map .content-container > .item-container .filter-container .btn.filter {
   margin-top: 30px;
-  width: -moz-fit-content;
-  width: -webkit-fit-content;
-  width: fit-content;
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
 }
 #workspaces-map .content-container > .item-container > p {
   margin: 50px 0;
@@ -1831,13 +1848,23 @@ hr {
   border-bottom: 2px solid #FDD500;
   z-index: -1;
 }
-#workspaces-map .content-container .map {
+#workspaces-map .content-container .map-container {
+  width: 100%;
+}
+#workspaces-map .content-container .map-container.is-fixed {
+  position: fixed;
+  top: 20px;
+  right: 0;
+  width: 55%;
+}
+#workspaces-map .content-container .map-container .map {
+  width: 100%;
   min-height: 450px;
   height: 40%;
   margin-top: 50px;
   position: relative;
 }
-#workspaces-map .content-container .map .btn.fit-workingspaces {
+#workspaces-map .content-container .map-container .map .btn.fit-workingspaces {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -1876,6 +1903,22 @@ hr {
     z-index: 10;
     opacity: 0;
     transform: translateY(-50px);
+  }
+}
+@media (max-width: 991.98px) {
+  #workspaces-map .content-container {
+    -ms-grid-columns: 40% 60%;
+    grid-template-columns: 40% 60%;
+  }
+  #workspaces-map .content-container .item-container {
+    -ms-grid-columns: (1fr)[1];
+    grid-template-columns: repeat(1, 1fr);
+  }
+  #workspaces-map .content-container .item-container .filter-container .filter .header-container {
+    margin-bottom: 20px;
+  }
+  #workspaces-map .content-container .item-container .action-container > span {
+    display: none;
   }
 }
 /*------------------------------------*
@@ -2409,9 +2452,9 @@ section.testimonials {
 .floorplan-container#custom-rooms--floorplan .inner-container .content .item h2 {
   margin: 0;
   position: relative;
-  width: -moz-fit-content;
-  width: -webkit-fit-content;
-  width: fit-content;
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
 }
 .floorplan-container#custom-rooms--floorplan .inner-container .content .item h2 a {
   color: #000;
@@ -2437,9 +2480,9 @@ section.testimonials {
 }
 .floorplan-container#custom-rooms--floorplan .inner-container .content .item .btn.visit-request {
   margin-top: 30px;
-  width: -moz-fit-content;
-  width: -webkit-fit-content;
-  width: fit-content;
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
 }
 
 @-webkit-keyframes marker-anim {
@@ -2472,7 +2515,26 @@ section.testimonials {
     height: auto;
   }
   .floorplan-container#custom-rooms--floorplan .inner-container .content .item img {
-    height: 150px;
+    height: auto;
+    max-height: 150px;
+  }
+}
+@media (max-width: 991.98px) {
+  .floorplan-container#custom-rooms--floorplan .inner-container {
+    -ms-grid-columns: (1fr)[1];
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 0;
+    padding: 5px 0;
+  }
+  .floorplan-container#custom-rooms--floorplan .inner-container svg {
+    margin-bottom: 20px;
+  }
+  .floorplan-container#custom-rooms--floorplan .inner-container .content .item.is-display {
+    height: auto;
+  }
+  .floorplan-container#custom-rooms--floorplan .inner-container .content .item img {
+    height: auto;
+    max-height: 350px;
   }
 }
 

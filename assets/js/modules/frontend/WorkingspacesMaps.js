@@ -26,6 +26,7 @@ class WorkingspacesMaps {
         this.siteUrl = translation_array.site_url;
         this.mapZoom = 15;
         this.isMapLoaded = false;
+        this.btnFilterPositionTop = this.$btnFilter.offset().top + 500;
 
         //init slider
         rangeSlider({
@@ -201,7 +202,9 @@ class WorkingspacesMaps {
         });
 
         $(document).on('scroll', e => {
-            this.changePostionBtnMapOnScoll();
+            this.changePostionMobileBtnMap();
+            this.changeFiltersPosition();
+            this.changeMapPosition();
             
             if(this.$btnMapView.hasClass('is-active')) {
                 this.btnMapviewAnimation.reverse();
@@ -234,13 +237,45 @@ class WorkingspacesMaps {
         });
     }
 
-    changePostionBtnMapOnScoll() {
+    changePostionMobileBtnMap() {
         const btnPostionTop = parseInt(getComputedStyle(this.$btnMapView.get()[0]).getPropertyValue('--position-top'));
 
         if(window.scrollY <= btnPostionTop) {
             this.$btnMapView.css('top', (btnPostionTop + 20) - window.scrollY);
         }else {
             this.$btnMapView.css('top', 20);
+        }
+    }
+
+    changeFiltersPosition() {
+        if(!this.isTouchEvent()) return;
+        
+        if(window.scrollY >= this.btnFilterPositionTop) {
+            if(this.$btnFilter.hasClass('is-fixed')) return;
+
+            this.$btnFilter.addClass('is-fixed');
+            this.$filterContainer.addClass('is-fixed');
+        }else {
+            if(!this.$btnFilter.hasClass('is-fixed')) return;
+
+            this.$btnFilter.removeClass('is-fixed');
+            this.$filterContainer.removeClass('is-fixed');
+        }
+    }
+
+    changeMapPosition() {
+        if(!this.isTouchEvent()) return;
+        
+        if(window.scrollY >= this.btnFilterPositionTop) {
+            if(this.$mapContainer.hasClass('is-fixed')) return;
+
+            this.$mapContainer.addClass('is-fixed');
+            this.map.get().resize();
+        }else {
+            if(!this.$mapContainer.hasClass('is-fixed'));
+
+            this.$mapContainer.removeClass('is-fixed');
+            this.map.get().resize();
         }
     }
 
@@ -379,6 +414,10 @@ class WorkingspacesMaps {
         });
 
         this.workingspaces = newWorkingspaces;
+    }
+
+    isTouchEvent() {
+        return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
     }
 }
 

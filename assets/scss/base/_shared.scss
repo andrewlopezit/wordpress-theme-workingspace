@@ -162,12 +162,14 @@ hr {
 	}
 
 	p {
-		width: auto;
 		font-size: 1.2em;
 		font-weight: 500;
 		color: $gray;
 		position: relative;
 		z-index: 1;
+		text-align: center;
+
+		@include fit-content;
 	}
 
 	.error-message {

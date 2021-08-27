@@ -70,6 +70,17 @@
                     position: relative;
                     cursor: pointer;
                     z-index: 1;
+
+                    &.is-fixed {
+                        background-color: var(--secondary-color, $secondary-color);
+                        color: #fff;
+                        position: fixed;
+                        top: 20px;
+
+                        i {
+                            color: #fff;
+                        }
+                    }
         
                     &::before{
                         content: '';
@@ -116,6 +127,12 @@
                 margin-top: 50px;
         
                 z-index: 1;
+
+                &.is-fixed{
+                    position: fixed;
+                    top: 20px;
+                    width: 40%;
+                }
                 
                 @include transform(translateY(100px));
         
@@ -221,24 +238,36 @@
 
         }
 
-        .map {
-            min-height: 450px;
-            height: 40%;
-            margin-top: 50px;
-            position: relative;
+        .map-container {
+            width: 100%;
 
-            .btn.fit-workingspaces {
-                position: absolute;
-                top: 10px;
-                left: 10px;
-                width: 29px;
-                height: 29px;
-                display: block;
-                padding: 0;
-                outline: none;
-                border: 0;
-                box-sizing: border-box;
-                background-color: transparent;
+            &.is-fixed{
+                position: fixed;
+                top: 20px;
+                right: 0;
+
+                width: 55%;
+            }
+            .map {
+                width: 100%;
+                min-height: 450px;
+                height: 40%;
+                margin-top: 50px;
+                position: relative;
+    
+                .btn.fit-workingspaces {
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    width: 29px;
+                    height: 29px;
+                    display: block;
+                    padding: 0;
+                    outline: none;
+                    border: 0;
+                    box-sizing: border-box;
+                    background-color: transparent;
+                }
             }
         }
     }
@@ -281,6 +310,23 @@
 
 // Medium devices (tablets, less than 992px)
 @media (max-width: 991.98px) {
+    #workspaces-map {
+        .content-container {
+            grid-template-columns: 40% 60%;
+
+            .item-container {
+                grid-template-columns: repeat(1, 1fr);
+
+                .filter-container .filter .header-container {
+                    margin-bottom: 20px;
+                }
+                
+                .action-container > span{
+                    display: none;
+                }
+            }
+        }
+    }
 }
 
 // Large devices (desktops, less than 1200px)
