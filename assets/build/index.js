@@ -858,7 +858,7 @@ class TestimonialsSlider {
       ease: 'back',
       duration: .8
     });
-    if (this.$content.find('.autho-details').length) this.testimonialSliderAnimation = this.testimonialSliderAnimation.to(this.$content.find('.author-details'), {
+    if (this.$content.find('.author-details').length) this.testimonialSliderAnimation = this.testimonialSliderAnimation.to(this.$content.find('.author-details'), {
       translateY: 0,
       opacity: 1,
       ease: 'back',

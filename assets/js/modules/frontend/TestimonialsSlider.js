@@ -66,7 +66,7 @@ class TestimonialsSlider {
         this.testimonialSliderAnimation = this.testimonialSliderAnimation.to(this.$content.find('p'), {translateY: 0, opacity: 1, ease: 'back', duration: .8});
         if(this.$userProfile.length)
         this.testimonialSliderAnimation = this.testimonialSliderAnimation.to(this.$userProfile, {scale: 1, opacity: 1, ease: 'back', duration: .8});
-        if(this.$content.find('.autho-details').length)
+        if(this.$content.find('.author-details').length)
         this.testimonialSliderAnimation = this.testimonialSliderAnimation.to(this.$content.find('.author-details'), {translateY: 0, opacity: 1, ease: 'back', duration: .8});
 
         this.testimonialControlAnimation = gsap.timeline({ onComplete: () => this.testimonialSliderAnimation.reverse()});
