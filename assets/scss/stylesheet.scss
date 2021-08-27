@@ -22,11 +22,14 @@
 *
 * COMPONENTS
 * - ICONS
+* - SLIDER
 * - WIDGETS
 * - BUTTONS
 * - INPUTS
 * - SOCIAL MEDIA
+* - MAPS
 * - HERO IMAGE SLIDER
+* - CATEGORIES
 * - BRAND
 * - HEADER/HAMBURGER
 * - HEADER/NAVIGATION
@@ -37,12 +40,14 @@
 *
 * PARTIALS
 * - WORKSPACES
+* - WORKSPACES MAPS
 * - POSTS
 * - TESTIMONIALS
 *
 * PAGES
 * - FRONT PAGE
 * - SINGLE WORKINGSPACES
+* - CUSTOM META FLOORPLAN
 */
 
 /*------------------------------------*
@@ -74,6 +79,11 @@
 /*------------------------------------*
 	WIDGETS
 *------------------------------------*/
+@import 'components/slider';
+
+/*------------------------------------*
+	WIDGETS
+*------------------------------------*/
 @import 'components/widgets';
 
 /*------------------------------------*
@@ -92,9 +102,19 @@
 @import 'components/social-media';
 
 /*------------------------------------*
+	SOCIAL MEDIA
+*------------------------------------*/
+@import 'components/maps';
+
+/*------------------------------------*
 	HERO IMAGE SLIDER
 *------------------------------------*/
 @import 'components/hero-image-slider.scss';
+
+/*------------------------------------*
+	HERO IMAGE SLIDER
+*------------------------------------*/
+@import 'components/categories.scss';
 
 /*------------------------------------*
 	BRAND
@@ -138,6 +158,11 @@
 @import 'partials/workspace.scss';
 
 /*------------------------------------*
+	  WORKSPACES MAPS
+*------------------------------------*/
+@import 'partials/workspace-maps.scss';
+
+/*------------------------------------*
 	  POSTS
 *------------------------------------*/
 @import 'partials/posts.scss';
@@ -157,3 +182,8 @@
 	SINGLE WORKINGSPACES
 *------------------------------------*/
 @import 'pages/single-workingspaces.scss';
+
+/*------------------------------------*
+	CUSTOM META FLOORPLAN
+*------------------------------------*/
+@import '../../inc/customroomsmeta/scss/custom-rooms-meta-front-end.scss';

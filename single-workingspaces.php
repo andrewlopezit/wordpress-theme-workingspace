@@ -15,22 +15,7 @@
 
             <div class="row">
                 <div class="col">
-                    <form class="categories">
-                        <h5>Available spaces:</h5>
-                        <div class="categories-container">
-                            <?php 
-                                $cat_id = get_cat_ID('workingspaces');
-                                $categories = get_categories(array("child_of" => $cat_id, "hide_empty" => 0));
-
-                                if($categories) : foreach($categories as $category) :
-                            ?>
-                            <div class="input-group">
-                                <input type="checkbox" disabled checked>
-                                <label><?php echo $category->name; ?></label>
-                            </div>
-                            <?php endforeach;endif; ?>
-                        </div>
-                    </form>
+                    <?php get_template_part('partials/components/categories','workingspaces' , array( 'id' => get_the_ID())); ?>
                 </div>
             </div>
         </div>
@@ -75,7 +60,42 @@
 
     <section class="container spaces">
         <div class="row">
-            <div class="col">s</div>
+            <div class="col">
+                <h1>Find your room that suit <span>your needs.</span></h1>
+                <?php $location = get_location(); ?>
+                <?php if($location['place_name']):?>
+                <div class="location-container">
+                    <i class="fas fa-map-marker-alt text-muted"></i>
+                    <a href="#"><?php echo $location['place_name']; ?></a>
+                </div>
+            <?php endif; ?>
+            <?php 
+                $post_id = get_the_ID();
+                do_shortcode("[floorplan id=$post_id]"); 
+            ?>
+            </div>
+        </div>
+    </section>
+
+    <section class="full-width workingspaces">
+        <div class="container">
+            <?php 
+            $country = get_field('related_country');
+
+            if($country): ?>
+            <div class="row">
+                <div class="col">
+                    <h1>
+                        Workingspaces that you find in <span><?php echo $country->post_title; ?></span>
+                    </h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <?php get_template_part('partials/content/content', 'workingspaces-maps', array('id' => get_the_ID(),'country' => array('id' => $country->ID, 'name' => $country->post_title))); ?>
+                </div>
+            </div>
+            <?php  endif;?>
         </div>
     </section>
 </div>

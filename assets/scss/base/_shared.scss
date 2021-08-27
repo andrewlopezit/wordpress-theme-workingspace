@@ -112,3 +112,245 @@ input {
 hr {
 	width: 100%;
 }
+
+.loading{
+	&#loading,
+	&.--icon{
+		width: 100%;
+		align-items: center;
+		justify-content: center;
+		padding: 2em;
+		display: flex;
+	}
+
+	&.--icon {
+		border-radius: 10em;
+		margin-right: 10px;
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: url('../icons/Pulse-1s-200px.svg');
+		background-size: 80%;
+		background-position: center;
+
+		&::before {
+			content: '';
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: var(--secondary-color, $secondary-color);
+			border-radius: 10em;
+			z-index: -1;
+		}
+	}
+
+
+	.loading-bar {
+		position: absolute;
+		width: 0;
+		height: 2px;
+		margin-top: -3px;
+		margin-left: 2em;
+		background-color: var(--primary-color, $primary-color);
+	}
+	
+	.btn.retry{
+		position: absolute;
+		margin-top: 7em;
+		font-size: 12px;
+	}
+
+	p {
+		font-size: 1.2em;
+		font-weight: 500;
+		color: $gray;
+		position: relative;
+		z-index: 1;
+		text-align: center;
+
+		@include fit-content;
+	}
+
+	.error-message {
+		font-size: 12px;
+		position:absolute;
+		margin-top:3em
+	}
+	span {
+		width: 2px;
+		height: 2px;
+		margin-top: -10px;
+		background-color: $gray;
+		opacity: 0;
+
+		&:not(:first-child) {
+			margin-left: 3px;
+		}
+	}
+}
+
+.hero-section {
+	margin-bottom: $margin-bottom-section - 50;
+	width: 100%;
+	height: auto;
+	margin-top: 0;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+
+		background-color: rgba(#000, 0.3);
+	}
+
+	.container {
+		z-index: 1;
+		position: relative;
+		
+		.row{
+			.col{
+				padding: 4em 0;
+				display: flex;
+			}
+		}
+
+		.headline {
+			line-height: 1em;
+			color: #fff;
+
+			position: relative;
+			
+			&::before,
+			&::after {
+				content: '';
+				position: absolute;
+				top: -12px;
+				left: 0;
+
+				height: 8px;
+				width: 45%;
+	
+				background-color: var(--primary-color, $primary-color);
+			}
+
+			&::after {
+				top: auto;
+				bottom: -12px;
+				width: 100%;
+			}
+		}
+	}
+}
+
+.workspace.card {
+	border: 0;
+	border-radius: 0;
+	cursor: pointer;
+
+	position: relative;
+
+	.card-img-top{
+		border-radius: 0;
+		height: 150px;
+		object-fit: cover;
+	}
+
+	.card-body {
+		position: relative;
+		background-color: #fff;
+
+		& > .action-container { 
+			position: absolute;
+			right: 5%;
+			top: -20px;
+			display:  flex;
+			align-items: center;
+			justify-content: flex-end;
+
+			.action-like,
+			.action-map {
+				background-color: #fff;
+
+				&:not(:first-child) {
+					margin-left: 5px;
+				}
+	
+				width: 40px;
+				height: 40px;
+				border-radius: 10em;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: var(--secondary-color, $secondary-color);
+	
+				i {
+					font-size: 1.2em;
+				}
+			}
+		}
+	}
+
+	h4 > a,
+	h5 > a {
+		color: var(--title-color, $gray);
+	}
+
+	h5 {
+		--title-color: $gray;
+		@include transition($transition);
+		margin: 0;
+		font-size: 1.5em;
+	}
+
+	.detail-icontainer{
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		margin: 5px 0;
+
+		& > span {
+			font-size: 12px;
+			font-weight: 600;
+		}
+
+		a, p {
+			font-size: 12px;
+			width: 92%;
+			margin-top: -3px;
+			font-weight: 400;
+		}
+
+		& > p {
+			margin: 0;
+			margin-left: 7px;
+		}
+	}
+
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { }
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { }
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { }
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) { }

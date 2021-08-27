@@ -27,7 +27,7 @@
             </div>
         </div>
     <div class="col content">
-        <h1 class="headline title large">Coworking space.</h1>
+        <h1 class="headline title large">Coworking <span>space</span>.</h1>
         <p class="title sub-paragraph">
             Grow your business with co workingspace productivity led agile coworking spaces in Philippines that suit your business across all the metropolitan
         </p>
@@ -38,7 +38,7 @@
 
 <div class="workspace-section--background">
     <section class="container workspaces-section">
-        <h1>Explore Our Workspaces</h1>
+        <h1>Explore Our <span>Workspaces</span></h1>
         <div class="row workspaces-section">
             <div class="col">
                 <?php get_template_part('partials/content/content','workingspaces'); ?>
@@ -73,7 +73,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <div class="icon work white size-content-100"></div>
+                    <div class="icon work gray size-content-100"></div>
                     <h4>Co-working</h4>
                     <p class="text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
                     <a href="">Learn more</a>

@@ -67,7 +67,6 @@
             * 
             * $args = array(
             *  array(
-            *      handle => working-space-main-js,
             *      variable_name => working_space_main_js,
             *      value => any
             *  )

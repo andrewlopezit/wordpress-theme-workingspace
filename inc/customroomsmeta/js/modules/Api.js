@@ -4,9 +4,7 @@ const api = (url) => {
 
     class Api {
         constructor(url) {
-            const postUrl = new URL(window.location.href);
-            const postId = postUrl.searchParams.get("post");
-            this.endpoint = `${url}/wp-json/wp/v2/workingspaces/${postId}/rooms`;
+            this.endpoint = url;
         }
 
         getPostsByName(name) {

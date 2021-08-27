@@ -6,7 +6,7 @@ $data = get_post_meta( $post->ID, 'custom_rooms_floorplan_form_key', true
 );
 ?>
 
-<div class="custom-meta-rooms-container" id="custom-rooms-meta">
+<div class="custom-meta-rooms-container" id="custom-rooms-meta" data-id="<?php echo $post->ID ?>">
     <h4>SVG Floor Plan</h4>
     <div class="action-container">
         <button disabled="<?php isset($data['floorplan']); ?>" id="svg-cluster" type="button" class="components-button editor-post-featured-image__toggle

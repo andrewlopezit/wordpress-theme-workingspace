@@ -17,13 +17,14 @@ if(file_exists(dirname(__FILE__).'/vendor/autoload.php')) {
     require_once dirname(__FILE__).'/vendor/autoload.php';
 }
 
-if(file_exists(dirname(__FILE__).'/inc/helpers/front-end-helpers.php')) {
-    require_once dirname(__FILE__).'/inc/helpers/front-end-helpers.php';
+if(file_exists(dirname(__FILE__).'/inc/helpers/global-helpers.php')) {
+    require_once dirname(__FILE__).'/inc/helpers/global-helpers.php';
 }
 
 use Inc\Classes\ThemeSetup;
 use Inc\CustomRoomsMeta\Init as CustomRoomsMeta;
-use Inc\Classes\CustomApi;
+use Inc\Custommapsmeta\Init as CustomMapsMeta;
+use Inc\Classes\CustomAPI\CustomApi;
 
 // Core Constants.
 define( 'WORKINGSPACEWP_THEME_DIR', get_template_directory() );
@@ -51,6 +52,13 @@ if(!class_exists('WorkingspaceTheme')) {
     
         public function workingspace_variable_init() {
             $version = self::get_theme_version();
+
+            $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+            $dotenv->load();
+
+            //MAP BOX KEY
+            defined('MAPBOX_PUBLIC_KEY') or define('MAPBOX_PUBLIC_KEY', $_ENV['MAPBOX_PUBLIC_KEY']);
+            defined('MAPBOX_SECRET_KEY') or define('MAPBOX_SECRET_KEY', $_ENV['MAPBOX_SECRET_KEY']);
     
             // Theme version.
             define( 'WORKINGSPACE_THEME_VERSION', $version );
@@ -78,8 +86,11 @@ if(!class_exists('WorkingspaceTheme')) {
                 // load all menus
                 $this->register_menus();
 
-                // load all custom meta box
-                new CustomRoomsMeta();
+                // load custom maps
+                $this->set_post_meta_maps();
+
+                // load custom rooms
+                $this->set_post_meta_rooms();
                 
             /** Frontend */    
             } else {
@@ -89,6 +100,10 @@ if(!class_exists('WorkingspaceTheme')) {
                 // load all scripts
                 $this->register_script();
                 $this->enqueue_scripts();
+
+                //init rooms shortcode
+                $rooms = new CustomRoomsMeta();
+                $rooms->init_shortcode();
             }
 
             /**
@@ -103,9 +118,6 @@ if(!class_exists('WorkingspaceTheme')) {
 
             // set image image
             $this->set_image_sizes();
-
-            // custom api
-            new CustomApi();
         }
 
 //------------------------------------ F U N C T I O N S ----------------------------------------
@@ -151,6 +163,8 @@ if(!class_exists('WorkingspaceTheme')) {
          * Load all core theme files
          */
         public function import_core_files() {
+            // custom api
+            new CustomApi();
         }
 
         /**
@@ -185,18 +199,45 @@ if(!class_exists('WorkingspaceTheme')) {
                 )   
             )
             ->script(
+                array('handle' => 'gsap@3.7.1',
+                'src' => '//cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js'
+                )
+            )
+            ->script(
+                array('handle' => 'jQueryUI@1.12',
+                'src' => '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js'
+                )
+            )
+            ->script(
+                array(
+                    'handle' => 'jQueryUITouch@0.2.3',
+                    'src' => '//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js'
+                )
+            )
+            ->script(
+                array(
+                    'handle' => 'mapbox@2.3.1',
+                    'src' => '//api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'
+                )
+            )
+            ->script(
                 array(
                     'handle'=> 'JqueryExtendFunction',
                     'deps' => array('jQuery@3.6'),
                     'src' => WORKINGSPACEWP_THEME_URI.'/assets/js/JqueryExtendFunction.js',
+                    'version' => $theme_version
                 )
             )
             // add the handle for defer script
             // if id or handle included in array params 
-            // it will defer in your script tag
+            // it will add defer in your script tag
             ->register(
                 array(
-                    'gsap@3.7',
+                    'jQuery@3.6',
+                    'gsap@3.7.1',
+                    'jQueryUI@1.12',
+                    'jQueryUITouch@0.2.3',
+                    'mapbox@2.3.1',
                     'JqueryExtendFunction'
                 )
             );
@@ -234,6 +275,14 @@ if(!class_exists('WorkingspaceTheme')) {
                     'handle' => 'main',
                     'src' => $main_js_dir,
                     'ver' => $theme_version,
+                    'localize' => array(
+                        'variable_name' => 'translation_array',
+                        'value' => array(
+                            'site_url' => esc_url(site_url()),
+                            'mapbox_public_key' => MAPBOX_PUBLIC_KEY,
+                            'mapbox_secret_key' => MAPBOX_SECRET_KEY
+                        )
+                    )
                 )
             )
             // add the handle for defer script
@@ -275,6 +324,12 @@ if(!class_exists('WorkingspaceTheme')) {
                 array(
                     'handle' => 'bootstrapv5',
                     'src' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css'
+                )
+            )
+            ->style(
+                array(
+                    'handle' => 'mapboxv2.3.1',
+                    'src' => '//api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css'
                 )
             )
             ->style(
@@ -332,6 +387,33 @@ if(!class_exists('WorkingspaceTheme')) {
                 ) 
             )
             ->register();
+        }
+
+        public function set_post_meta_maps() {
+            $maps = new CustomMapsMeta();
+
+            $maps->post(
+                array(
+                'title' => 'Map Location',
+                'post' => 'workingspaces'
+                )
+            )
+            ->post(
+                array(
+                    'title' => 'Map Location',
+                    'post' => 'countries'
+                )
+            )->add();
+        }
+
+        public function set_post_meta_rooms() {
+           $room = new CustomRoomsMeta();
+           $room->post(
+               array(
+                   'title' => 'Rooms Map ( Floor Plan )',
+                   'post' => 'workingspaces'
+               )
+            )->add();
         }
 
         // setimage sizes

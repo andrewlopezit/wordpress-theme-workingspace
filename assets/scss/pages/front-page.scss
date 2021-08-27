@@ -80,11 +80,16 @@ section.about-our-service {
 
     .services {
         margin-top: $margin-bottom-section;
+        .card {
 
-        .col:nth-child(2) {
-            .card {
+            @include transition($transition);
+            
+            &:hover{
                 background-color: var(--secondary-color, $secondary-color);
                 .card-body {
+                    .icon {
+                        background-color: #fff;
+                    }
                     h4, p, a {
                         color: #fff;
                         &::after {
@@ -93,9 +98,6 @@ section.about-our-service {
                     }
                 }
             }
-        }
-
-        .card {
             border: 0;
             border-radius: 0;
 

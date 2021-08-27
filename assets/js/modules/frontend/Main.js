@@ -1,6 +1,3 @@
-import $ from 'jquery';
-import gsap from 'gsap';
-
 class Main {
     constructor() {
         // initialize elements variables

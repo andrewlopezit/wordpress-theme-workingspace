@@ -30,6 +30,12 @@
     mask-size: $size;
 }
 
+@mixin fit-content {
+    width: -moz-fit-content !important; 
+    width: -webkit-fit-content !important;
+    width: fit-content !important;
+}
+
 @mixin clip-polygon($args) {
     -webkit-clip-path: polygon($args);
     -ms-clip-path: polygon($args);
