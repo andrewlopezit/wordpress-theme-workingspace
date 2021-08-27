@@ -60,13 +60,23 @@ final class Init {
 
     public function enqueue_script_callback() {
         wp_enqueue_style('custom-meta-maps',WORKINGSPACE_CSS_DIR_URI.'custom-maps-meta.css');
+        wp_enqueue_style('mapboxv2.3.1','//api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css');
 
+        wp_enqueue_script(
+            'mapbox@2.3.1',
+            '//api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js',
+            '','', 
+            true
+        );
+        
         wp_enqueue_script(
             'custom-meta-maps',
             WORKINGSPACE_JS_DIR_URI.'custom-maps-meta.js',
             '',WORKINGSPACE_THEME_VERSION, 
             true
         );
+
+       
 
         // Localize the script with new data
         $translation_array = array(

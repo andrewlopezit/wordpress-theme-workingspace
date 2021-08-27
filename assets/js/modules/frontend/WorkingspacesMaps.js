@@ -1,4 +1,4 @@
-import {slider, api, loading, maps} from './index';
+import {rangeSlider, api, loading, maps} from './index';
 class WorkingspacesMaps {
     constructor() {
         this.$workspaceContainer = $('#workspaces-map');
@@ -20,13 +20,15 @@ class WorkingspacesMaps {
         this.$btnFilter =  this.$workspaceContainer.find('.action-container > .action.filter');
         this.$btnSetFilter = this.$filterContainer.find('.btn.filter');
         this.$btnFitLocations = this.$mapContainer.find('.btn.fit-workingspaces');
+        this.$btnMapView =  this.$contentContainer.find('.action-container#mobile-maps');
 
         //local variable
         this.siteUrl = translation_array.site_url;
         this.mapZoom = 15;
+        this.isMapLoaded = false;
 
         //init slider
-        slider({
+        rangeSlider({
             container: this.$priceRange.get()[0]
         });
 
@@ -37,7 +39,6 @@ class WorkingspacesMaps {
 
         // init map
         this.initMap();
-
     }
     initMap() {
         this.map =  maps({
@@ -54,7 +55,7 @@ class WorkingspacesMaps {
         //
         this.mapEvents();
     }
-
+    
     setMapMarkers(locations) {
         if(this.markers) this.markers.forEach(marker => marker.remove());
 
@@ -84,6 +85,8 @@ class WorkingspacesMaps {
         const load =  loading(this.$mapContainer, 60).start();
 
         this.map.get().on('load', () =>{
+            this.$btnMapView.html(`<button class="btn maps"><i class="far fa-map"></i></button>`);
+            this.isMapLoaded = true;
             this.$map.show();
             load.end();
         });
@@ -107,6 +110,22 @@ class WorkingspacesMaps {
             duration: .3
         });
 
+        this.mapMobileAnimation = gsap.timeline({paused: true, 
+            onReverseComplete: () => this.$mapContainer.css('width', 0)});
+        this.mapMobileAnimation.to(this.$mapContainer, {opacity: 1, width: $(document).width() - 45});
+
+    }
+
+    initBtnMobileMapAnimation() {
+        
+        this.$btnMapView.addClass('is-active');
+        this.btnMapviewAnimation = gsap.timeline({ 
+            onComplete: () => this.$btnMapView.find('.btn.maps > i').attr('class', 'fas fa-times'),
+            onReverseComplete: () => this.$btnMapView.find('.btn.maps > i').attr('class', 'far fa-map')});
+
+        this.btnMapviewAnimation.to(this.$btnMapView, {top: 20, left: -10, padding: 5, right: 'auto'})
+                                .to(this.$btnMapView.find('.btn.maps'), {width: 35, height: 35, marginRight: 0}, '<')
+                                .to(this.$btnMapView.find('.btn.maps > i'), {fontSize: 18}, '<');
     }
 
     events() {
@@ -168,9 +187,38 @@ class WorkingspacesMaps {
             }
         });
 
-        this.$map.on('click', '.navigate', e => {
-            console.log(e.target);
+        $(document).on('scroll', e => {
+            this.changePostionBtnMapOnScoll();
+            
+            if(this.$btnMapView.hasClass('is-active')) {
+                this.btnMapviewAnimation.reverse();
+                this.mapMobileAnimation.reverse();
+                this.$btnMapView.removeClass('is-active');
+            }
         });
+
+        this.$btnMapView.on('click', () => {
+            if(!this.isMapLoaded) return;
+
+            if(!this.$btnMapView.hasClass('is-active')){
+                this.initBtnMobileMapAnimation();
+                this.mapMobileAnimation.play();
+            }else{
+                this.btnMapviewAnimation.reverse();
+                this.mapMobileAnimation.reverse();
+                this.$btnMapView.removeClass('is-active');
+            }
+        });
+    }
+
+    changePostionBtnMapOnScoll() {
+        const btnPostionTop = parseInt(getComputedStyle(this.$btnMapView.get()[0]).getPropertyValue('--position-top'));
+
+        if(window.scrollY <= btnPostionTop) {
+            this.$btnMapView.css('top', (btnPostionTop + 20) - window.scrollY);
+        }else {
+            this.$btnMapView.css('top', 20);
+        }
     }
 
     workingspacesTemplate(data) {
@@ -202,8 +250,10 @@ class WorkingspacesMaps {
             template+= `<div class="item workspace card border-top-left border--post border--hover">
                             <img class="card-img-top" src="${val.featured_image}" alt="">
                             <div class="card-body">
-                                <div class="like--container shadow-sm">
-                                    <i class="far fa-heart"></i>
+                                <div class="action-container">
+                                    <div class="action-like shadow-sm">
+                                        <i class="far fa-heart"></i>
+                                    </div>
                                 </div>
 
                                 <h5><a href="${val?.permalink}">${val?.post_title}</a></h5>
@@ -270,7 +320,7 @@ class WorkingspacesMaps {
 
         this.$itemContainer.find('.item').each((i, el) => {
             const property = {
-                title: $(el).find('.card-body > a > h5').html(),
+                title: $(el).find('.card-body > h5 > a').html(),
                 location: $(el).find('.card-body > .location > a').html(),
                 capacity: $(el).find('.card-body > .capacity > p > .capacity').html(),
                 totalRooms: $(el).find('.card-body > .total-rooms > p > .total-rooms').html(),

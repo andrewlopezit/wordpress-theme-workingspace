@@ -95,9 +95,11 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _js_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/CustomMapsMeta */ "./inc/custommapsmeta/js/CustomMapsMeta.js");
+/* harmony import */ var _scss_custom_maps_meta_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./scss/custom-maps-meta.scss */ "./inc/custommapsmeta/scss/custom-maps-meta.scss");
+/* harmony import */ var _js_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/CustomMapsMeta */ "./inc/custommapsmeta/js/CustomMapsMeta.js");
 
-const customMapsMeta = new _js_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_0__["default"]();
+
+const customMapsMeta = new _js_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_1__["default"]();
 
 /***/ }),
 
@@ -112,11 +114,14 @@ const customMapsMeta = new _js_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_0__["defa
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
+
 
 
 class CustomMapsMeta {
   constructor() {
-    this.$mapContainer = $('.custom-meta-maps-container#custom-maps-meta');
+    this.$mapContainer = jquery__WEBPACK_IMPORTED_MODULE_1___default()('.custom-meta-maps-container#custom-maps-meta');
     this.$map = this.$mapContainer.find('.map-container');
     this.$searchContainer = this.$mapContainer.find('.search-container');
     this.$searchResultsContainer = this.$searchContainer.find('.search-results');
@@ -150,7 +155,7 @@ class CustomMapsMeta {
   events() {
     this.$txtSearchLocation.on('keyup', () => this.displayLocations());
     this.$searchResultsContainer.on('click', '.item', e => {
-      const index = $(e.currentTarget).data('index');
+      const index = jquery__WEBPACK_IMPORTED_MODULE_1___default()(e.currentTarget).data('index');
       if (!location) return;
       this.$txtSearchLocation.val(this.locationSearchResults[index].place_name);
       this.locationSearchValue = this.locationSearchResults[index].place_name;
@@ -254,6 +259,20 @@ class CustomMapsMeta {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (CustomMapsMeta);
+
+/***/ }),
+
+/***/ "./inc/custommapsmeta/scss/custom-maps-meta.scss":
+/*!*******************************************************!*\
+  !*** ./inc/custommapsmeta/scss/custom-maps-meta.scss ***!
+  \*******************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
 
 /***/ }),
 
@@ -2309,6 +2328,17 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
+
+/***/ }),
+
+/***/ "jquery":
+/*!*************************!*\
+  !*** external "jQuery" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["jQuery"]; }());
 
 /***/ })
 

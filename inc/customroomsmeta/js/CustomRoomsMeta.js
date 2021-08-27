@@ -1,4 +1,5 @@
 import api from './modules/Api';
+import $ from 'jquery';
 import _ from 'lodash';
 
 class CustomRoomsMeta {

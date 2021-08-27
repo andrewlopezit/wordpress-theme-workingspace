@@ -113,14 +113,17 @@ const customRommsMeta = new _js_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_1__["de
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/Api */ "./inc/customroomsmeta/js/modules/Api.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "lodash");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "lodash");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 
 class CustomRoomsMeta {
   constructor() {
-    this.$customRoomsMeta = $('#custom-rooms-meta');
+    this.$customRoomsMeta = jquery__WEBPACK_IMPORTED_MODULE_1___default()('#custom-rooms-meta');
     this.$actionContainer = this.$customRoomsMeta.find('.action-container');
     this.$contentContainer = this.$customRoomsMeta.find('.content-container');
     this.$postContainer = this.$contentContainer.find('.post-container');
@@ -170,9 +173,9 @@ class CustomRoomsMeta {
       this.initContent();
       this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
 
-      const flooplanHasDataIds = lodash__WEBPACK_IMPORTED_MODULE_1___default.a.filter(this.floorplanShapes, floorplan => $(floorplan).data('id') > 0);
+      const flooplanHasDataIds = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.filter(this.floorplanShapes, floorplan => jquery__WEBPACK_IMPORTED_MODULE_1___default()(floorplan).data('id') > 0);
 
-      const floorplanIds = lodash__WEBPACK_IMPORTED_MODULE_1___default.a.map($(flooplanHasDataIds), floorplan => $(floorplan).data('id'));
+      const floorplanIds = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.map(jquery__WEBPACK_IMPORTED_MODULE_1___default()(flooplanHasDataIds), floorplan => jquery__WEBPACK_IMPORTED_MODULE_1___default()(floorplan).data('id'));
 
       Object(_modules_Api__WEBPACK_IMPORTED_MODULE_0__["default"])(this.baseEndpointUrl).getPostsByIds([floorplanIds]).then(result => {
         this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
@@ -243,11 +246,11 @@ class CustomRoomsMeta {
         this.$searchPostContainer.removeClass('is-display');
         this.$selectedRoomsContainer.find('.item').remove();
       } // display room if it has assigned rooms
-      else if ($(e.target).data('id')) {
+      else if (jquery__WEBPACK_IMPORTED_MODULE_1___default()(e.target).data('id')) {
         if (this.isFetchingSelectedRooms) return;
         this.$selectedRoomsContainer.find('.spinner-container').addClass('is-display');
         this.isFetchingSelectedRooms = true;
-        Object(_modules_Api__WEBPACK_IMPORTED_MODULE_0__["default"])(this.baseEndpointUrl).getPostById($(e.target).data('id')).then(result => {
+        Object(_modules_Api__WEBPACK_IMPORTED_MODULE_0__["default"])(this.baseEndpointUrl).getPostById(jquery__WEBPACK_IMPORTED_MODULE_1___default()(e.target).data('id')).then(result => {
           this.$selectedRoomsContainer.find('.item').remove();
           this.$selectedRoomsContainer.find('.spinner-container').removeClass('is-display');
           this.isFetchingSelectedRooms = false;
@@ -260,7 +263,7 @@ class CustomRoomsMeta {
           this.isFetchingSelectedRooms = false;
         });
       } else {
-        this.$activeShapes = $(e.target);
+        this.$activeShapes = jquery__WEBPACK_IMPORTED_MODULE_1___default()(e.target);
         this.$searchPostContainer.addClass('is-display'); // console.log(e.target.getBoundingClientRect()); // get coordinates
 
         this.initActiveShapesAnimation();
@@ -275,26 +278,26 @@ class CustomRoomsMeta {
     this.$txtSearchInput.on('keyup', () => this.displaySearchRooms()); // assign rooms
 
     this.$searchResultsContainer.on('click', '.action-container > .assign-rooms', e => {
-      const id = $(e.target).data('id');
+      const id = jquery__WEBPACK_IMPORTED_MODULE_1___default()(e.target).data('id');
       this.assignedRoom(id);
       return;
     }); // delete assinged rooms
 
     this.$roomsContainer.on('click', '.item > .action-container > .delete-rooms', e => {
       this.$selectedRoomsContainer.find('.item').remove();
-      const $el = $(e.target);
+      const $el = jquery__WEBPACK_IMPORTED_MODULE_1___default()(e.target);
       $el.parent().parent().remove();
       this.removeRooms($el);
       return;
     }); // delete selected rooms
 
     this.$selectedRoomsContainer.on('click', '.item > .action-container > .delete-rooms', e => {
-      const $el = $(e.target);
+      const $el = jquery__WEBPACK_IMPORTED_MODULE_1___default()(e.target);
       this.removeRooms($el);
       this.$selectedRoomsContainer.find('.item').remove();
       this.destroyActiveShapeAnimation();
       this.$roomsContainer.children().each((i, el) => {
-        const $assignedRooms = $(el);
+        const $assignedRooms = jquery__WEBPACK_IMPORTED_MODULE_1___default()(el);
 
         if ($el.data('id') === $assignedRooms.data('id')) {
           $assignedRooms.remove();
@@ -305,10 +308,10 @@ class CustomRoomsMeta {
     });
     this.$roomsContainer.on('mouseenter', '.item', e => {
       this.floorplanShapes.forEach((el, i) => {
-        const id = $(el).data('id');
+        const id = jquery__WEBPACK_IMPORTED_MODULE_1___default()(el).data('id');
 
-        if ($(e.currentTarget).data('id') === id) {
-          this.$roomHover = $(this.floorplanShapes[i]);
+        if (jquery__WEBPACK_IMPORTED_MODULE_1___default()(e.currentTarget).data('id') === id) {
+          this.$roomHover = jquery__WEBPACK_IMPORTED_MODULE_1___default()(this.floorplanShapes[i]);
           this.initHoverAnimation();
           return;
         }
@@ -333,19 +336,19 @@ class CustomRoomsMeta {
   }
 
   getTotalUnAssignedRooms() {
-    return this.floorplanShapes.map(shape => $(shape).data('id')).filter(val => val > 0).length;
+    return this.floorplanShapes.map(shape => jquery__WEBPACK_IMPORTED_MODULE_1___default()(shape).data('id')).filter(val => val > 0).length;
     ;
   }
 
   removeRooms($el) {
     const id = $el.data('id');
     this.$outputContainer.find('svg').children().each((i, el) => {
-      const $el = $(el);
+      const $el = jquery__WEBPACK_IMPORTED_MODULE_1___default()(el);
 
       if ($el.data('id') === id) {
         this.destroyActiveShapeAnimation();
         $el.removeAttr('data-id style');
-        this.rooms = lodash__WEBPACK_IMPORTED_MODULE_1___default.a.remove(this.rooms, room => room.ID !== id);
+        this.rooms = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.remove(this.rooms, room => room.ID !== id);
         this.reloadContent();
         return;
       }
@@ -375,7 +378,7 @@ class CustomRoomsMeta {
           data
         } = result;
 
-        const diff = lodash__WEBPACK_IMPORTED_MODULE_1___default.a.differenceBy(data, this.rooms, 'ID');
+        const diff = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.differenceBy(data, this.rooms, 'ID');
 
         if (diff.length > 0) {
           this.roomsResults = diff;
@@ -2545,6 +2548,17 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
+
+/***/ }),
+
+/***/ "jquery":
+/*!*************************!*\
+  !*** external "jQuery" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["jQuery"]; }());
 
 /***/ }),
 

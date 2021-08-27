@@ -298,14 +298,34 @@ hr {
   width: 100%;
 }
 
-.loading#loading {
+.loading#loading, .loading.--icon {
   width: 100%;
   align-items: center;
   justify-content: center;
   padding: 2em;
   display: flex;
 }
-.loading#loading .loading-bar {
+.loading.--icon {
+  border-radius: 10em;
+  margin-right: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0ibWFyZ2luOiBhdXRvOyBiYWNrZ3JvdW5kOiBub25lOyBkaXNwbGF5OiBibG9jazsgc2hhcGUtcmVuZGVyaW5nOiBhdXRvOyIgd2lkdGg9IjIwMHB4IiBoZWlnaHQ9IjIwMHB4IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQiPgo8cmVjdCB4PSIxNy41IiB5PSIzMCIgd2lkdGg9IjE1IiBoZWlnaHQ9IjQwIiBmaWxsPSIjZmZmIj4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJ5IiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgZHVyPSIxcyIgY2FsY01vZGU9InNwbGluZSIga2V5VGltZXM9IjA7MC41OzEiIHZhbHVlcz0iMTg7MzA7MzAiIGtleVNwbGluZXM9IjAgMC41IDAuNSAxOzAgMC41IDAuNSAxIiBiZWdpbj0iLTAuMnMiPjwvYW5pbWF0ZT4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJoZWlnaHQiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiBkdXI9IjFzIiBjYWxjTW9kZT0ic3BsaW5lIiBrZXlUaW1lcz0iMDswLjU7MSIgdmFsdWVzPSI2NDs0MDs0MCIga2V5U3BsaW5lcz0iMCAwLjUgMC41IDE7MCAwLjUgMC41IDEiIGJlZ2luPSItMC4ycyI+PC9hbmltYXRlPgo8L3JlY3Q+CjxyZWN0IHg9IjQyLjUiIHk9IjMwIiB3aWR0aD0iMTUiIGhlaWdodD0iNDAiIGZpbGw9IiNmZmYiPgogIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InkiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiBkdXI9IjFzIiBjYWxjTW9kZT0ic3BsaW5lIiBrZXlUaW1lcz0iMDswLjU7MSIgdmFsdWVzPSIyMC45OTk5OTk5OTk5OTk5OTY7MzA7MzAiIGtleVNwbGluZXM9IjAgMC41IDAuNSAxOzAgMC41IDAuNSAxIiBiZWdpbj0iLTAuMXMiPjwvYW5pbWF0ZT4KICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJoZWlnaHQiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiBkdXI9IjFzIiBjYWxjTW9kZT0ic3BsaW5lIiBrZXlUaW1lcz0iMDswLjU7MSIgdmFsdWVzPSI1OC4wMDAwMDAwMDAwMDAwMTs0MDs0MCIga2V5U3BsaW5lcz0iMCAwLjUgMC41IDE7MCAwLjUgMC41IDEiIGJlZ2luPSItMC4xcyI+PC9hbmltYXRlPgo8L3JlY3Q+CjxyZWN0IHg9IjY3LjUiIHk9IjMwIiB3aWR0aD0iMTUiIGhlaWdodD0iNDAiIGZpbGw9IiNmZmYiPgogIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9InkiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiBkdXI9IjFzIiBjYWxjTW9kZT0ic3BsaW5lIiBrZXlUaW1lcz0iMDswLjU7MSIgdmFsdWVzPSIyMC45OTk5OTk5OTk5OTk5OTY7MzA7MzAiIGtleVNwbGluZXM9IjAgMC41IDAuNSAxOzAgMC41IDAuNSAxIj48L2FuaW1hdGU+CiAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iaGVpZ2h0IiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgZHVyPSIxcyIgY2FsY01vZGU9InNwbGluZSIga2V5VGltZXM9IjA7MC41OzEiIHZhbHVlcz0iNTguMDAwMDAwMDAwMDAwMDE7NDA7NDAiIGtleVNwbGluZXM9IjAgMC41IDAuNSAxOzAgMC41IDAuNSAxIj48L2FuaW1hdGU+CjwvcmVjdD4KPCEtLSBbbGRpb10gZ2VuZXJhdGVkIGJ5IGh0dHBzOi8vbG9hZGluZy5pby8gLS0+PC9zdmc+);
+  background-size: 80%;
+  background-position: center;
+}
+.loading.--icon::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--secondary-color, #00CEB5);
+  border-radius: 10em;
+  z-index: -1;
+}
+.loading .loading-bar {
   position: absolute;
   width: 0;
   height: 2px;
@@ -313,12 +333,12 @@ hr {
   margin-left: 2em;
   background-color: var(--primary-color, #FDD500);
 }
-.loading#loading .btn.retry {
+.loading .btn.retry {
   position: absolute;
   margin-top: 7em;
   font-size: 12px;
 }
-.loading#loading p {
+.loading p {
   width: auto;
   font-size: 1.2em;
   font-weight: 500;
@@ -326,19 +346,19 @@ hr {
   position: relative;
   z-index: 1;
 }
-.loading#loading .error-message {
+.loading .error-message {
   font-size: 12px;
   position: absolute;
   margin-top: 3em;
 }
-.loading#loading span {
+.loading span {
   width: 2px;
   height: 2px;
   margin-top: -10px;
   background-color: #4f4f4f;
   opacity: 0;
 }
-.loading#loading span:not(:first-child) {
+.loading span:not(:first-child) {
   margin-left: 3px;
 }
 
@@ -405,10 +425,16 @@ hr {
   position: relative;
   background-color: #fff;
 }
-.workspace.card .card-body .like--container {
+.workspace.card .card-body > .action-container {
   position: absolute;
   right: 5%;
   top: -20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.workspace.card .card-body > .action-container .action-like,
+.workspace.card .card-body > .action-container .action-map {
   background-color: #fff;
   width: 40px;
   height: 40px;
@@ -418,7 +444,12 @@ hr {
   justify-content: center;
   color: var(--secondary-color, #00CEB5);
 }
-.workspace.card .card-body .like--container i {
+.workspace.card .card-body > .action-container .action-like:not(:first-child),
+.workspace.card .card-body > .action-container .action-map:not(:first-child) {
+  margin-left: 5px;
+}
+.workspace.card .card-body > .action-container .action-like i,
+.workspace.card .card-body > .action-container .action-map i {
   font-size: 1.2em;
 }
 .workspace.card h4 > a,
@@ -1050,7 +1081,7 @@ hr {
   width: -webkit-fit-content;
   width: fit-content;
   cursor: pointer;
-  margin-top: -35px;
+  margin-top: -40px;
 }
 .maps-marker .background {
   background: #fff;
@@ -1263,7 +1294,7 @@ hr {
   padding: 10px;
   cursor: pointer;
   align-items: flex-end;
-  z-index: 10;
+  z-index: 100;
 }
 .hamburger.is-hover span, .hamburger.is-active span {
   background-color: #fff !important;
@@ -1615,6 +1646,38 @@ hr {
   -ms-grid-columns: (1fr)[2];
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 20px;
+  position: relative;
+}
+#workspaces-map .content-container > .action-container {
+  position: fixed;
+  z-index: 20;
+  --position-top: 300px;
+  top: var(--position-top);
+  right: 0;
+  background: #fff;
+  padding: 10px;
+  transform: translateX(10px);
+  border-top-left-radius: 10em;
+  border-bottom-left-radius: 10em;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+}
+#workspaces-map .content-container > .action-container .btn.maps {
+  border-radius: 10em;
+  height: 56px;
+  width: 56px;
+  padding: 0;
+  margin-right: 10px;
+}
+#workspaces-map .content-container > .action-container .btn.maps i {
+  font-size: 20px;
+}
+#workspaces-map .content-container > .action-container .btn.maps::after {
+  border-radius: 10em;
+}
+#workspaces-map .content-container > .action-container .btn.maps::before {
+  display: none;
 }
 #workspaces-map .content-container > .item-container {
   display: -ms-grid;
@@ -1803,8 +1866,16 @@ hr {
   #workspaces-map .content-container .item-container .action-container > span {
     display: none;
   }
-  #workspaces-map .content-container .map-container {
-    display: none;
+}
+@media (max-width: 767.98px) {
+  .map-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(-50px);
   }
 }
 /*------------------------------------*

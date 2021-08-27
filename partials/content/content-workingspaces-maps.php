@@ -30,6 +30,10 @@ $workingspaces = new WP_Query( $query );
 <div id="workspaces-map">
 
     <div class="content-container">
+        <div class="action-container shadow-sm d-flex d-sm-block d-md-none" id="mobile-maps">
+            <!-- <button class="btn maps"><i class="far fa-map"></i></button> -->
+            <div class="loading --icon"></div>
+        </div>
         <div class="item-container">
             
             <div class="action-container">
@@ -138,8 +142,10 @@ $workingspaces = new WP_Query( $query );
             <div class="item workspace card border-top-left border--post border--hover" <?php echo isset($location['location']) && $location['location'] ? 'data-geolocation='.$location['location'] : ''; ?>>
             <img class="card-img-top"  src="<?php echo esc_url(wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID()), 'posts' )[0]);?>" alt="">
             <div class="card-body">
-                <div class="like--container shadow-sm">
-                    <i class="far fa-heart"></i>
+                <div class="action-container">
+                    <div class="action-like shadow-sm">
+                        <i class="far fa-heart"></i>
+                    </div>
                 </div>
                 
                 <h5><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
@@ -187,8 +193,8 @@ $workingspaces = new WP_Query( $query );
         </div>
         <div class="map-container">
             <div class="map" id="map" <?php echo isset($country_location['location']) && $country_location['location'] ? 'data-geolocation='.$country_location['location'] : ''; ?>>
-                <button class="btn fit-workingspaces"><i class="far fa-map"></i></button>
+                <button class="btn fit-workingspaces"><i class="fas fa-search-location"></i></button>
             </div>
         </div>
     </div>
-</div>
+</div>|

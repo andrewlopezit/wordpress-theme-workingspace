@@ -11,8 +11,10 @@
     <div class="item workspace card border-top-left border--post border--hover">
         <img class="card-img-top"  src="<?php echo esc_url(wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID()), 'posts' )[0]);?>" alt="">
         <div class="card-body">
-            <div class="like--container shadow-sm">
-                <i class="far fa-heart"></i>
+            <div class="action-container">
+                <div class="action-like shadow-sm">
+                    <i class="far fa-heart"></i>
+                </div>
             </div>
 
             <h4><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>

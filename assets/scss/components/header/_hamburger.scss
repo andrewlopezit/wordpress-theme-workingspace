@@ -7,7 +7,7 @@ $color: $hamburger-layer-color;
     cursor: pointer;
     align-items: flex-end;
     
-    z-index: 10;
+    z-index: 100;
 
     &.is-hover,
     &.is-active {

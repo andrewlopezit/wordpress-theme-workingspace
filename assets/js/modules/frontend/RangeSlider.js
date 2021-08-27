@@ -1,5 +1,5 @@
-const Slider = (args) => {
-    class Slider{
+const RangeSlider = (args) => {
+    class RangeSlider{
         constructor(args) {
             if(!args?.container) return;
             this.$slider = $(args.container);
@@ -148,7 +148,7 @@ const Slider = (args) => {
         }
     }
 
-    return new Slider(args);
+    return new RangeSlider(args);
 }
 
-export default Slider;
+export default RangeSlider;

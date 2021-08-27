@@ -633,17 +633,17 @@ const Maps = args => {
 
 /***/ }),
 
-/***/ "./assets/js/modules/frontend/Slider.js":
-/*!**********************************************!*\
-  !*** ./assets/js/modules/frontend/Slider.js ***!
-  \**********************************************/
+/***/ "./assets/js/modules/frontend/RangeSlider.js":
+/*!***************************************************!*\
+  !*** ./assets/js/modules/frontend/RangeSlider.js ***!
+  \***************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-const Slider = args => {
-  class Slider {
+const RangeSlider = args => {
+  class RangeSlider {
     constructor(args) {
       if (!(args !== null && args !== void 0 && args.container)) return;
       this.$slider = $(args.container); // local variable
@@ -777,10 +777,10 @@ const Slider = args => {
 
   }
 
-  return new Slider(args);
+  return new RangeSlider(args);
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Slider);
+/* harmony default export */ __webpack_exports__["default"] = (RangeSlider);
 
 /***/ }),
 
@@ -978,12 +978,14 @@ class WorkingspacesMaps {
     this.$priceRange = this.$filterContainer.find('.filter > .action-container > .slider#price-range');
     this.$btnFilter = this.$workspaceContainer.find('.action-container > .action.filter');
     this.$btnSetFilter = this.$filterContainer.find('.btn.filter');
-    this.$btnFitLocations = this.$mapContainer.find('.btn.fit-workingspaces'); //local variable
+    this.$btnFitLocations = this.$mapContainer.find('.btn.fit-workingspaces');
+    this.$btnMapView = this.$contentContainer.find('.action-container#mobile-maps'); //local variable
 
     this.siteUrl = translation_array.site_url;
-    this.mapZoom = 15; //init slider
+    this.mapZoom = 15;
+    this.isMapLoaded = false; //init slider
 
-    Object(_index__WEBPACK_IMPORTED_MODULE_0__["slider"])({
+    Object(_index__WEBPACK_IMPORTED_MODULE_0__["rangeSlider"])({
       container: this.$priceRange.get()[0]
     });
     this.initAnimation(); // init events
@@ -1030,6 +1032,8 @@ class WorkingspacesMaps {
     this.$map.hide();
     const load = Object(_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$mapContainer, 60).start();
     this.map.get().on('load', () => {
+      this.$btnMapView.html(`<button class="btn maps"><i class="far fa-map"></i></button>`);
+      this.isMapLoaded = true;
       this.$map.show();
       load.end();
     });
@@ -1051,6 +1055,34 @@ class WorkingspacesMaps {
       translateY: 0,
       duration: .3
     });
+    this.mapMobileAnimation = gsap.timeline({
+      paused: true,
+      onReverseComplete: () => this.$mapContainer.css('width', 0)
+    });
+    this.mapMobileAnimation.to(this.$mapContainer, {
+      opacity: 1,
+      width: $(document).width() - 45
+    });
+  }
+
+  initBtnMobileMapAnimation() {
+    this.$btnMapView.addClass('is-active');
+    this.btnMapviewAnimation = gsap.timeline({
+      onComplete: () => this.$btnMapView.find('.btn.maps > i').attr('class', 'fas fa-times'),
+      onReverseComplete: () => this.$btnMapView.find('.btn.maps > i').attr('class', 'far fa-map')
+    });
+    this.btnMapviewAnimation.to(this.$btnMapView, {
+      top: 20,
+      left: -10,
+      padding: 5,
+      right: 'auto'
+    }).to(this.$btnMapView.find('.btn.maps'), {
+      width: 35,
+      height: 35,
+      marginRight: 0
+    }, '<').to(this.$btnMapView.find('.btn.maps > i'), {
+      fontSize: 18
+    }, '<');
   }
 
   events() {
@@ -1102,9 +1134,37 @@ class WorkingspacesMaps {
         });
       }
     });
-    this.$map.on('click', '.navigate', e => {
-      console.log(e.target);
+    $(document).on('scroll', e => {
+      this.changePostionBtnMapOnScoll();
+
+      if (this.$btnMapView.hasClass('is-active')) {
+        this.btnMapviewAnimation.reverse();
+        this.mapMobileAnimation.reverse();
+        this.$btnMapView.removeClass('is-active');
+      }
     });
+    this.$btnMapView.on('click', () => {
+      if (!this.isMapLoaded) return;
+
+      if (!this.$btnMapView.hasClass('is-active')) {
+        this.initBtnMobileMapAnimation();
+        this.mapMobileAnimation.play();
+      } else {
+        this.btnMapviewAnimation.reverse();
+        this.mapMobileAnimation.reverse();
+        this.$btnMapView.removeClass('is-active');
+      }
+    });
+  }
+
+  changePostionBtnMapOnScoll() {
+    const btnPostionTop = parseInt(getComputedStyle(this.$btnMapView.get()[0]).getPropertyValue('--position-top'));
+
+    if (window.scrollY <= btnPostionTop) {
+      this.$btnMapView.css('top', btnPostionTop + 20 - window.scrollY);
+    } else {
+      this.$btnMapView.css('top', 20);
+    }
   }
 
   workingspacesTemplate(data) {
@@ -1138,8 +1198,10 @@ class WorkingspacesMaps {
       template += `<div class="item workspace card border-top-left border--post border--hover">
                             <img class="card-img-top" src="${val.featured_image}" alt="">
                             <div class="card-body">
-                                <div class="like--container shadow-sm">
-                                    <i class="far fa-heart"></i>
+                                <div class="action-container">
+                                    <div class="action-like shadow-sm">
+                                        <i class="far fa-heart"></i>
+                                    </div>
                                 </div>
 
                                 <h5><a href="${val === null || val === void 0 ? void 0 : val.permalink}">${val === null || val === void 0 ? void 0 : val.post_title}</a></h5>
@@ -1204,7 +1266,7 @@ class WorkingspacesMaps {
       var _$$data$split;
 
       const property = {
-        title: $(el).find('.card-body > a > h5').html(),
+        title: $(el).find('.card-body > h5 > a').html(),
         location: $(el).find('.card-body > .location > a').html(),
         capacity: $(el).find('.card-body > .capacity > p > .capacity').html(),
         totalRooms: $(el).find('.card-body > .total-rooms > p > .total-rooms').html(),
@@ -1248,16 +1310,16 @@ class WorkingspacesMaps {
 /*!*********************************************!*\
   !*** ./assets/js/modules/frontend/index.js ***!
   \*********************************************/
-/*! exports provided: slider, api, loading, maps */
+/*! exports provided: rangeSlider, api, loading, maps */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "slider", function() { return slider; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "rangeSlider", function() { return rangeSlider; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "api", function() { return api; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loading", function() { return loading; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "maps", function() { return maps; });
-/* harmony import */ var _Slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Slider */ "./assets/js/modules/frontend/Slider.js");
+/* harmony import */ var _RangeSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RangeSlider */ "./assets/js/modules/frontend/RangeSlider.js");
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Api */ "./assets/js/modules/frontend/Api.js");
 /* harmony import */ var _Loading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Loading */ "./assets/js/modules/frontend/Loading.js");
 /* harmony import */ var _Maps__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Maps */ "./assets/js/modules/frontend/Maps.js");
@@ -1265,7 +1327,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const slider = _Slider__WEBPACK_IMPORTED_MODULE_0__["default"];
+const rangeSlider = _RangeSlider__WEBPACK_IMPORTED_MODULE_0__["default"];
 const api = _Api__WEBPACK_IMPORTED_MODULE_1__["default"];
 const loading = _Loading__WEBPACK_IMPORTED_MODULE_2__["default"];
 const maps = _Maps__WEBPACK_IMPORTED_MODULE_3__["default"];
