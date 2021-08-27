@@ -375,6 +375,9 @@ hr {
   background-size: cover;
   position: relative;
 }
+.hero-section.default::before {
+  display: none;
+}
 .hero-section::before {
   content: "";
   position: absolute;

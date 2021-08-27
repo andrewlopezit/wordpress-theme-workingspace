@@ -200,6 +200,12 @@ hr {
 	background-size: cover;
 	position: relative;
 
+	&.default {
+		&::before {
+			display: none;
+		}
+	}
+
 	&::before {
 		content: '';
 		position: absolute;
