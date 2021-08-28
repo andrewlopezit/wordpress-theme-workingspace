@@ -390,9 +390,10 @@ hr {
 .hero-section .container {
   z-index: 1;
   position: relative;
+  padding-top: 6em;
+  padding-bottom: 6em;
 }
 .hero-section .container .row .col {
-  padding: 4em 0;
   display: flex;
 }
 .hero-section .container .headline {
