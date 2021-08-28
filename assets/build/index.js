@@ -1211,7 +1211,7 @@ class WorkingspacesMaps {
       this.$mapContainer.addClass('is-fixed');
       this.map.get().resize();
     } else {
-      if (!this.$mapContainer.hasClass('is-fixed')) ;
+      if (!this.$mapContainer.hasClass('is-fixed')) return;
       this.$mapContainer.removeClass('is-fixed');
       this.$btnFilter.removeClass('is-active');
       this.$filterContainer.removeClass('is-active');
