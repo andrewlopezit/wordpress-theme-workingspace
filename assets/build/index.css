@@ -1930,6 +1930,9 @@ hr {
     -ms-grid-columns: (1fr)[1];
     grid-template-columns: repeat(1, 1fr);
   }
+  #workspaces-map .content-container .item-container .filter-container.is-fixed {
+    width: 36.5%;
+  }
   #workspaces-map .content-container .item-container .filter-container .filter .header-container {
     margin-bottom: 20px;
   }
@@ -1940,7 +1943,8 @@ hr {
     position: fixed;
     top: 20px;
     right: 0;
-    width: 55%;
+    width: 58%;
+    z-index: 5;
   }
 }
 @media (min-width: 1200px) {
@@ -1951,6 +1955,12 @@ hr {
   #workspaces-map .content-container .item-container {
     -ms-grid-columns: (1fr)[2];
     grid-template-columns: repeat(2, 1fr);
+  }
+  #workspaces-map .content-container .item-container .filter-container.is-fixed {
+    width: 43%;
+  }
+  #workspaces-map .content-container .map-container.is-fixed {
+    width: 50%;
   }
 }
 /*------------------------------------*

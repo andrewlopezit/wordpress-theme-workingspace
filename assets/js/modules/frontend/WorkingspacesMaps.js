@@ -248,8 +248,6 @@ class WorkingspacesMaps {
     }
 
     changeFiltersPosition() {
-        if(!this.isTouchEvent() || $(document).width() >= 1200) return;
-        
         if(window.scrollY >= this.btnFilterPositionTop) {
             if(this.$btnFilter.hasClass('is-fixed')) return;
 
@@ -264,7 +262,7 @@ class WorkingspacesMaps {
     }
 
     changeMapPosition() {
-        if(!this.isTouchEvent() || ($(document).width() <= 575.98 || $(document).width() >= 1200)) return;
+        if($(document).width() <= 575.98) return;
         
         if(window.scrollY >= this.btnFilterPositionTop) {
             if(this.$mapContainer.hasClass('is-fixed')) return;
@@ -275,6 +273,9 @@ class WorkingspacesMaps {
             if(!this.$mapContainer.hasClass('is-fixed'));
 
             this.$mapContainer.removeClass('is-fixed');
+            this.$btnFilter.removeClass('is-active');
+            this.$filterContainer.removeClass('is-active');
+            this.filterAnimation.reverse();
             this.map.get().resize();
         }
     }

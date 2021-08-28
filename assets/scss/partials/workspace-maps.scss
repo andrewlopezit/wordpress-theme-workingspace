@@ -328,8 +328,15 @@
             .item-container {
                 grid-template-columns: repeat(1, 1fr);
 
-                .filter-container .filter .header-container {
-                    margin-bottom: 20px;
+                .filter-container {
+
+                    &.is-fixed {
+                        width: 36.5%;
+                    }
+
+                    .filter .header-container {
+                        margin-bottom: 20px;
+                    }
                 }
                 
                 .action-container > span{
@@ -342,7 +349,8 @@
                     top: 20px;
                     right: 0;
     
-                    width: 55%;
+                    width: 58%;
+                    z-index: 5;
                 }
             }
         }
@@ -360,6 +368,18 @@
             grid-template-columns: repeat(2, 1fr);
             .item-container {
                 grid-template-columns: repeat(2, 1fr);
+
+                .filter-container {
+                    &.is-fixed{
+                        width: 43%;
+                    }
+                }
+            }
+
+            .map-container {
+                &.is-fixed{
+                    width: 50%;
+                }
             }
         }
     }
