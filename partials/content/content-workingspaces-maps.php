@@ -31,7 +31,6 @@ $workingspaces = new WP_Query( $query );
 
     <div class="content-container">
         <div class="action-container shadow-sm d-flex d-sm-block d-md-none" id="mobile-maps">
-            <!-- <button class="btn maps"><i class="far fa-map"></i></button> -->
             <div class="loading --icon"></div>
         </div>
         <div class="item-container">
