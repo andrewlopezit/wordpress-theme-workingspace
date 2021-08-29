@@ -1194,12 +1194,13 @@ class WorkingspacesMaps {
   changeFiltersPosition() {
     if (window.scrollY >= this.btnFilterPositionTop) {
       if (this.$btnFilter.hasClass('is-fixed')) return;
-      this.$btnFilter.addClass('is-fixed');
-      this.$filterContainer.addClass('is-fixed');
+      this.$btnFilter.addClass('is-fixed shadow');
+      this.$filterContainer.addClass('is-fixed shadow');
     } else {
       if (!this.$btnFilter.hasClass('is-fixed')) return;
-      this.$btnFilter.removeClass('is-fixed');
-      this.$filterContainer.removeClass('is-fixed');
+      this.$btnFilter.removeClass('is-fixed shadow');
+      this.filterAnimation.reverse();
+      this.$filterContainer.removeClass('is-fixed shadow');
     }
   }
 
@@ -1208,14 +1209,11 @@ class WorkingspacesMaps {
 
     if (window.scrollY >= this.btnFilterPositionTop) {
       if (this.$mapContainer.hasClass('is-fixed')) return;
-      this.$mapContainer.addClass('is-fixed');
+      this.$mapContainer.addClass('is-fixed shadow');
       this.map.get().resize();
     } else {
       if (!this.$mapContainer.hasClass('is-fixed')) return;
-      this.$mapContainer.removeClass('is-fixed');
-      this.$btnFilter.removeClass('is-active');
-      this.$filterContainer.removeClass('is-active');
-      this.filterAnimation.reverse();
+      this.$mapContainer.removeClass('is-fixed shadow');
       this.map.get().resize();
     }
   }
