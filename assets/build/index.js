@@ -969,6 +969,7 @@ class WorkingspacesMaps {
     this.$labelFilterContainer = this.$contentContainer.find('.action-container > .label');
     this.$filterContainer = this.$contentContainer.find('.filter-container');
     this.$mapContainer = this.$contentContainer.find('.map-container');
+    this.$mapSpacer = this.$mapContainer.find('.map-spacer');
     this.$map = this.$mapContainer.find('.map#map');
     this.$itemContainer = this.$contentContainer.find('.item-container');
     this.$filterCategoriesContainer = this.$filterContainer.find('.filter.categories');
@@ -1210,10 +1211,12 @@ class WorkingspacesMaps {
     if (window.scrollY >= this.btnFilterPositionTop) {
       if (this.$mapContainer.hasClass('is-fixed')) return;
       this.$mapContainer.addClass('is-fixed shadow');
+      this.$mapSpacer.hide();
       this.map.get().resize();
     } else {
       if (!this.$mapContainer.hasClass('is-fixed')) return;
       this.$mapContainer.removeClass('is-fixed shadow');
+      this.$mapSpacer.show();
       this.map.get().resize();
     }
   }

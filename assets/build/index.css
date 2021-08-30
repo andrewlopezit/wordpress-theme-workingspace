@@ -1871,11 +1871,14 @@ hr {
   right: 0;
   width: 60%;
 }
+#workspaces-map .content-container .map-container .map-spacer {
+  height: 50px;
+  width: 100%;
+}
 #workspaces-map .content-container .map-container .map {
   width: 100%;
   min-height: 450px;
   height: 40%;
-  margin-top: 50px;
   position: relative;
 }
 #workspaces-map .content-container .map-container .map .btn.fit-workingspaces {
@@ -1961,7 +1964,9 @@ hr {
     width: 43%;
   }
   #workspaces-map .content-container .map-container.is-fixed {
-    width: 50%;
+    width: 560px;
+    right: auto;
+    left: 50%;
   }
 }
 /*------------------------------------*

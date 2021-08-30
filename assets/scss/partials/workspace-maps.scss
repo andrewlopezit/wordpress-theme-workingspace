@@ -248,11 +248,16 @@
 
                 width: 60%;
             }
+
+            .map-spacer {
+                height: 50px;
+                width: 100%;
+            }
+
             .map {
                 width: 100%;
                 min-height: 450px;
                 height: 40%;
-                margin-top: 50px;
                 position: relative;
     
                 .btn.fit-workingspaces {
@@ -378,7 +383,10 @@
 
             .map-container {
                 &.is-fixed{
-                    width: 50%;
+
+                    width: 560px;
+                    right: auto;
+                    left: 50%;
                 }
             }
         }
