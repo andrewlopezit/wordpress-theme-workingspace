@@ -92,11 +92,12 @@ class WorkingspacesMaps {
         this.map.get().on('load', () =>{
             this.$btnMapView.html(`<button class="btn maps"><i class="far fa-map"></i></button>`);
 
-            this.map.get().resize();
             this.$map.show();
             this.isMapLoaded = true;
 
             load.end();
+
+            this.map.get().resize();
         });
     }
 
