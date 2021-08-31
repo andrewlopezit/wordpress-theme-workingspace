@@ -156,12 +156,10 @@ const Api = url => {
 
       for (let key in filter) {
         if (filter.hasOwnProperty(key) && filter[key]) {
-          console.log(key + " -> " + filter[key]);
           url += `${key}=${filter[key]}&`;
         }
       }
 
-      console.log(url);
       return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
     }
 
@@ -956,7 +954,10 @@ class TestimonialsSlider {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "lodash");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
+
 
 
 class WorkingspacesMaps {
@@ -978,14 +979,16 @@ class WorkingspacesMaps {
     this.$btnFilter = this.$workspaceContainer.find('.action-container > .action.filter');
     this.$btnSetFilter = this.$filterContainer.find('.btn.filter');
     this.$btnFitLocations = this.$mapContainer.find('.btn.fit-workingspaces');
-    this.$btnMapView = this.$contentContainer.find('.action-container#mobile-maps'); //local variable
+    this.$btnMapView = this.$contentContainer.find('.action-container#mobile-maps');
+    this.$btnLoadMore = this.$itemContainer.find('.btn.load-more'); //local variable
 
     this.siteUrl = translation_array.site_url;
     this.mapZoom = 15;
     this.isMapLoaded = false;
-    this.btnFilterPositionTop = this.$btnFilter.offset().top + 500; //init slider
+    this.btnFilterPositionTop = this.$btnFilter.offset().top + 500;
+    this.filterPaged = 1; //init slider
 
-    Object(_index__WEBPACK_IMPORTED_MODULE_0__["rangeSlider"])({
+    Object(_index__WEBPACK_IMPORTED_MODULE_1__["rangeSlider"])({
       container: this.$priceRange.get()[0]
     });
     this.initAnimation(); // init events
@@ -998,7 +1001,7 @@ class WorkingspacesMaps {
   initMap() {
     var _this$$map$data$split, _this$$map, _this$$map$data;
 
-    this.map = Object(_index__WEBPACK_IMPORTED_MODULE_0__["maps"])({
+    this.map = Object(_index__WEBPACK_IMPORTED_MODULE_1__["maps"])({
       container: this.$map.get()[0],
       center: (_this$$map$data$split = (_this$$map = this.$map) === null || _this$$map === void 0 ? void 0 : (_this$$map$data = _this$$map.data('geolocation')) === null || _this$$map$data === void 0 ? void 0 : _this$$map$data.split(',')) !== null && _this$$map$data$split !== void 0 ? _this$$map$data$split : null,
       zoom: this.mapZoom
@@ -1030,7 +1033,7 @@ class WorkingspacesMaps {
 
   mapEvents() {
     this.$map.hide();
-    const load = Object(_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$mapContainer, 60).start();
+    const load = Object(_index__WEBPACK_IMPORTED_MODULE_1__["loading"])(this.$mapContainer, 60).start();
     this.map.get().on('load', () => {
       this.$btnMapView.html(`<button class="btn maps"><i class="far fa-map"></i></button>`);
       this.map.get().resize();
@@ -1179,6 +1182,36 @@ class WorkingspacesMaps {
         this.$btnMapView.removeClass('is-active');
       }
     });
+    this.$btnLoadMore.on('click', () => {
+      this.filterPaged++;
+      const load = Object(_index__WEBPACK_IMPORTED_MODULE_1__["loading"])(this.$itemContainer).start();
+      const filter = this.getWorkingspaceFilter;
+      this.$btnLoadMore.hide();
+      Object(_index__WEBPACK_IMPORTED_MODULE_1__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
+        this.$btnLoadMore.show();
+        load.end();
+        const {
+          data: {
+            posts
+          }
+        } = res;
+
+        if (!posts) {
+          this.$btnLoadMore.attr('disabled', true);
+          return;
+        }
+
+        const template = this.workingspacesTemplate(posts);
+        $(template).insertBefore(this.$btnLoadMore.parent());
+        this.setWorkingspaces(posts, true);
+        const locations = this.workingspaces.map(workingspace => {
+          return workingspace === null || workingspace === void 0 ? void 0 : workingspace.geolocation;
+        });
+        this.setMapMarkers(locations);
+      }).catch(e => {
+        load.displayError();
+      });
+    });
   }
 
   changePostionMobileBtnMap() {
@@ -1289,8 +1322,8 @@ class WorkingspacesMaps {
     }
 
     this.$itemContainer.find('.item,p').remove();
-    const load = Object(_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$itemContainer).start();
-    Object(_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
+    const load = Object(_index__WEBPACK_IMPORTED_MODULE_1__["loading"])(this.$itemContainer).start();
+    Object(_index__WEBPACK_IMPORTED_MODULE_1__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
       const {
         data: {
           posts
@@ -1304,7 +1337,6 @@ class WorkingspacesMaps {
       this.setMapMarkers(locations);
       load.end();
     }).catch(e => {
-      console.log(e);
       load.displayError();
     });
   }
@@ -1344,12 +1376,12 @@ class WorkingspacesMaps {
       room_categories: categoryIds,
       capacities: capacities.length > 0 ? capacities : '1up',
       price_range: minimumPriceRange && maximumPriceRange ? `${minimumPriceRange},${maximumPriceRange}` : null,
-      paged: 1
+      paged: this.filterPaged
     };
     return filter;
   }
 
-  setWorkingspaces(workingspaces) {
+  setWorkingspaces(workingspaces, isConcat = false) {
     let newWorkingspaces = [];
     workingspaces.forEach(workingspace => {
       var _workingspace$locatio, _workingspace$locatio2, _workingspace$price_r;
@@ -1367,7 +1399,7 @@ class WorkingspacesMaps {
       if (workingspace !== null && workingspace !== void 0 && workingspace.priceRange) property.priceRange = `${(workingspace === null || workingspace === void 0 ? void 0 : (_workingspace$price_r = workingspace.price_range) === null || _workingspace$price_r === void 0 ? void 0 : _workingspace$price_r.length) > 1 ? workingspace.price_range.join(' - $') : workingspace === null || workingspace === void 0 ? void 0 : workingspace.price_range[0]}/month`;
       newWorkingspaces.push(property);
     });
-    this.workingspaces = newWorkingspaces;
+    this.workingspaces = isConcat ? this.workingspaces.concat(newWorkingspaces) : newWorkingspaces;
   }
 
   isTouchEvent() {
@@ -3736,6 +3768,17 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
+
+/***/ }),
+
+/***/ "lodash":
+/*!*************************!*\
+  !*** external "lodash" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["lodash"]; }());
 
 /***/ })
 

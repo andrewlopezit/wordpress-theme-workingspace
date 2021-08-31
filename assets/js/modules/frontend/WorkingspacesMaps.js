@@ -1,3 +1,4 @@
+import { filter } from 'lodash';
 import {rangeSlider, api, loading, maps} from './index';
 class WorkingspacesMaps {
     constructor() {
@@ -22,12 +23,14 @@ class WorkingspacesMaps {
         this.$btnSetFilter = this.$filterContainer.find('.btn.filter');
         this.$btnFitLocations = this.$mapContainer.find('.btn.fit-workingspaces');
         this.$btnMapView =  this.$contentContainer.find('.action-container#mobile-maps');
+        this.$btnLoadMore = this.$itemContainer.find('.btn.load-more');
 
         //local variable
         this.siteUrl = translation_array.site_url;
         this.mapZoom = 15;
         this.isMapLoaded = false;
         this.btnFilterPositionTop = this.$btnFilter.offset().top + 500;
+        this.filterPaged = 1;
 
         //init slider
         rangeSlider({
@@ -239,6 +242,39 @@ class WorkingspacesMaps {
                 this.$btnMapView.removeClass('is-active');
             }
         });
+
+        this.$btnLoadMore.on('click', () => {
+            this.filterPaged++;
+
+            const load =  loading(this.$itemContainer).start();
+            const filter = this.getWorkingspaceFilter;
+
+            this.$btnLoadMore.hide();
+
+            api(this.siteUrl).getWorkingspacesByFilter(filter).then(res =>{
+                this.$btnLoadMore.show();
+                load.end();
+
+                const {data: {posts}} = res;
+
+                if(!posts) {
+                    this.$btnLoadMore.attr('disabled', true);
+                    return;
+                }
+
+                const template = this.workingspacesTemplate(posts);
+
+                $(template).insertBefore(this.$btnLoadMore.parent());
+                this.setWorkingspaces(posts, true);
+
+                const locations = this.workingspaces.map(workingspace => { return workingspace?.geolocation});
+
+                this.setMapMarkers(locations);
+
+            }).catch((e) => {
+                load.displayError();
+            });
+        });
     }
 
     changePostionMobileBtnMap() {
@@ -365,7 +401,6 @@ class WorkingspacesMaps {
 
             load.end();
         }).catch((e) => {
-            console.log(e);
             load.displayError();
         });
     }
@@ -408,13 +443,13 @@ class WorkingspacesMaps {
             room_categories: categoryIds,
             capacities: capacities.length > 0 ? capacities : '1up',
             price_range: minimumPriceRange && maximumPriceRange ? `${minimumPriceRange},${maximumPriceRange}`: null,
-            paged: 1
+            paged: this.filterPaged
         }
 
         return filter;
     }
 
-    setWorkingspaces(workingspaces) {
+    setWorkingspaces(workingspaces, isConcat = false) {
         let newWorkingspaces = [];
 
         workingspaces.forEach(workingspace => {
@@ -436,7 +471,7 @@ class WorkingspacesMaps {
             newWorkingspaces.push(property);
         });
 
-        this.workingspaces = newWorkingspaces;
+        this.workingspaces = isConcat ? this.workingspaces.concat(newWorkingspaces) : newWorkingspaces;
     }
 
     isTouchEvent() {

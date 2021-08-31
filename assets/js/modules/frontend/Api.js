@@ -11,12 +11,10 @@ const Api = (url) => {
     
             for (let key in filter) {
                 if (filter.hasOwnProperty(key) && filter[key]) {
-                    console.log(key + " -> " + filter[key]);
                     url+=`${key}=${filter[key]}&`;
                 }
             }
 
-            console.log(url);
             return axios(url);
         }
     }
