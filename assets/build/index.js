@@ -1035,8 +1035,9 @@ class WorkingspacesMaps {
     const load = Object(_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$mapContainer, 60).start();
     this.map.get().on('load', () => {
       this.$btnMapView.html(`<button class="btn maps"><i class="far fa-map"></i></button>`);
-      this.isMapLoaded = true;
+      this.map.get().resize();
       this.$map.show();
+      this.isMapLoaded = true;
       load.end();
     });
   }
