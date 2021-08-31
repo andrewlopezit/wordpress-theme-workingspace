@@ -201,14 +201,32 @@ a:hover {
   .headline.large {
     font-size: 3.5em;
   }
-}
-@media (max-width: 767.98px) {
+
   .tagline.header {
     max-width: 100%;
   }
 
   p.heading--sub-paragraph {
     width: 100%;
+  }
+}
+@media (min-width: 768px) {
+  .tagline.header {
+    max-width: 100%;
+  }
+
+  p.heading--sub-paragraph {
+    width: 100%;
+  }
+}
+@media (min-width: 992px) {
+  p.heading--sub-paragraph {
+    width: 600px;
+  }
+}
+@media (min-width: 1200px) {
+  p.heading--sub-paragraph {
+    width: 600px;
   }
 }
 /*------------------------------------*
@@ -513,6 +531,21 @@ hr {
   font-weight: 600;
 }
 
+@media (max-width: 575.98px) {
+  .hero-section .container p {
+    width: 100%;
+  }
+}
+@media (min-width: 768px) {
+  .hero-section .container p {
+    width: 100%;
+  }
+}
+@media (min-width: 1200px) {
+  .hero-section .container p {
+    width: 40%;
+  }
+}
 /*------------------------------------*
 	ICONS
 *------------------------------------*/
@@ -1927,18 +1960,24 @@ hr {
     grid-template-columns: repeat(1, 1fr);
     position: relative;
   }
-  #workspaces-map .content-container .item-container {
+  #workspaces-map .content-container > .item-container {
     -ms-grid-columns: (1fr)[1];
     grid-template-columns: repeat(1, 1fr);
   }
-  #workspaces-map .content-container .item-container .filter-container.is-fixed {
+  #workspaces-map .content-container > .item-container .filter-container.is-fixed {
     width: 94% !important;
   }
-  #workspaces-map .content-container .item-container .filter-container .filter .header-container {
+  #workspaces-map .content-container > .item-container .filter-container .filter .header-container {
     margin-bottom: 20px;
   }
-  #workspaces-map .content-container .item-container .action-container > span {
+  #workspaces-map .content-container > .item-container .action-container > span {
     display: none;
+  }
+  #workspaces-map .content-container > .item-container .loading#loading,
+#workspaces-map .content-container > .item-container .find-all.posts,
+#workspaces-map .content-container > .item-container .load-more-container {
+    -ms-grid-column: 1;
+    grid-column: 1/1;
   }
   #workspaces-map .content-container .map-container {
     position: fixed;
@@ -1968,6 +2007,12 @@ hr {
   }
   #workspaces-map .content-container .item-container .action-container > span {
     display: none;
+  }
+  #workspaces-map .content-container .item-container .loading#loading,
+#workspaces-map .content-container .item-container .find-all.posts,
+#workspaces-map .content-container .item-container .load-more-container {
+    -ms-grid-column: 1;
+    grid-column: 1/1;
   }
   #workspaces-map .content-container .map-container.is-fixed {
     position: fixed;
