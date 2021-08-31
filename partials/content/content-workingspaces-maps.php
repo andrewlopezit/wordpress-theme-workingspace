@@ -173,7 +173,7 @@ $workingspaces = new WP_Query( $query );
                 if($price_range):?>
                 <div class="detail-icontainer price-range">
                     <span>Price range: </span>
-                    <span class="price"><?php echo count($price_range) > 1 ? '$'.implode(' - $', $price_range).'/month': $price_range[0].'/month'; ?></span>
+                    <span class="price"><?php echo count($price_range) > 1 ? '$'.implode(' - $', $price_range).'/month': '$'.$price_range[0].'/month'; ?></span>
                 </div>
                 <?php endif;?>
                 </div>
