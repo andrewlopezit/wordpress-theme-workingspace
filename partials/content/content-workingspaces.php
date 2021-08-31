@@ -62,5 +62,5 @@
 </div>
 
 <div class="action-container center workspace">
-    <a class="btn text-center" href="<?php esc_url(site_url())?>">View more</a>
+    <a class="btn text-center" href="<?php echo esc_url(site_url('workingspaces'))?>">View more</a>
 </div>

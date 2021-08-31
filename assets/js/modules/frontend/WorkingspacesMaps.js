@@ -1,3 +1,4 @@
+import { filter } from 'lodash';
 import {rangeSlider, api, loading, maps} from './index';
 class WorkingspacesMaps {
     constructor() {
@@ -9,6 +10,7 @@ class WorkingspacesMaps {
         this.$labelFilterContainer = this.$contentContainer.find('.action-container > .label');
         this.$filterContainer = this.$contentContainer.find('.filter-container');
         this.$mapContainer = this.$contentContainer.find('.map-container');
+        this.$mapSpacer = this.$mapContainer.find('.map-spacer');
         this.$map = this.$mapContainer.find('.map#map')
         this.$itemContainer = this.$contentContainer.find('.item-container');
         this.$filterCategoriesContainer = this.$filterContainer.find('.filter.categories');
@@ -21,12 +23,15 @@ class WorkingspacesMaps {
         this.$btnSetFilter = this.$filterContainer.find('.btn.filter');
         this.$btnFitLocations = this.$mapContainer.find('.btn.fit-workingspaces');
         this.$btnMapView =  this.$contentContainer.find('.action-container#mobile-maps');
+        this.$btnLoadMore = this.$itemContainer.find('.btn.load-more');
+        this.$btnFindAllposts = this.$itemContainer.find('.find-all.posts');
 
         //local variable
         this.siteUrl = translation_array.site_url;
         this.mapZoom = 15;
         this.isMapLoaded = false;
         this.btnFilterPositionTop = this.$btnFilter.offset().top + 500;
+        this.filterItem = 1;
 
         //init slider
         rangeSlider({
@@ -44,7 +49,7 @@ class WorkingspacesMaps {
     initMap() {
         this.map =  maps({
             container: this.$map.get()[0],
-            center: this.$map.data('geolocation').split(',') ?? null,
+            center: this.$map?.data('geolocation')?.split(',') ?? null,
             zoom: this.mapZoom
         }).control();
 
@@ -87,9 +92,13 @@ class WorkingspacesMaps {
 
         this.map.get().on('load', () =>{
             this.$btnMapView.html(`<button class="btn maps"><i class="far fa-map"></i></button>`);
-            this.isMapLoaded = true;
+
             this.$map.show();
+            this.isMapLoaded = true;
+
             load.end();
+
+            this.map.get().resize();
         });
     }
 
@@ -155,6 +164,13 @@ class WorkingspacesMaps {
             }
         });
 
+        this.$filterLocationContainer.on('click', '.action-container > button', e => {
+            const $el = $(e.currentTarget);
+
+            $el.siblings().removeClass('is-active');
+            $el.addClass('is-active');
+        });
+
         this.$filterCategoriesContainer.on('click', '.action-container > button', e =>{
             const $el = $(e.currentTarget);
 
@@ -170,6 +186,7 @@ class WorkingspacesMaps {
         this.$btnSetFilter.on('click', () => {
             this.filterAnimation.reverse();
             this.$btnFilter.removeClass('is-active');
+            this.filterItem = 1;
 
             this.dislplayFilteredWorkingspaces();
         });
@@ -235,6 +252,40 @@ class WorkingspacesMaps {
                 this.$btnMapView.removeClass('is-active');
             }
         });
+
+        this.$btnLoadMore.on('click', () => {
+            this.filterItem++;
+
+            const load =  loading(this.$itemContainer).start();
+            const filter = this.getWorkingspaceFilter;
+            filter.offset = this.workingspaces.length;
+
+            this.$btnLoadMore.hide();
+
+            api(this.siteUrl).getWorkingspacesByFilter(filter).then(res =>{
+                this.$btnLoadMore.show();
+                load.end();
+
+                const {data: {posts, pagination}} = res;
+
+                if(!posts) {
+                    this.$btnLoadMore.attr('disabled', true);
+                    return;
+                }
+
+                const template = this.workingspacesTemplate(posts);
+
+                $(template).insertBefore(this.$btnLoadMore.parent());
+                this.setWorkingspaces(posts, true);
+
+                const locations = this.workingspaces.map(workingspace => { return workingspace?.geolocation});
+
+                this.setMapMarkers(locations);
+
+            }).catch((e) => {
+                load.displayError();
+            });
+        });
     }
 
     changePostionMobileBtnMap() {
@@ -251,13 +302,14 @@ class WorkingspacesMaps {
         if(window.scrollY >= this.btnFilterPositionTop) {
             if(this.$btnFilter.hasClass('is-fixed')) return;
 
-            this.$btnFilter.addClass('is-fixed');
-            this.$filterContainer.addClass('is-fixed');
+            this.$btnFilter.addClass('is-fixed shadow');
+            this.$filterContainer.addClass('is-fixed shadow');
         }else {
             if(!this.$btnFilter.hasClass('is-fixed')) return;
 
-            this.$btnFilter.removeClass('is-fixed');
-            this.$filterContainer.removeClass('is-fixed');
+            this.$btnFilter.removeClass('is-fixed shadow');
+            this.filterAnimation.reverse();
+            this.$filterContainer.removeClass('is-fixed shadow');
         }
     }
 
@@ -267,15 +319,14 @@ class WorkingspacesMaps {
         if(window.scrollY >= this.btnFilterPositionTop) {
             if(this.$mapContainer.hasClass('is-fixed')) return;
 
-            this.$mapContainer.addClass('is-fixed');
+            this.$mapContainer.addClass('is-fixed shadow');
+            this.$mapSpacer.hide();
             this.map.get().resize();
         }else {
             if(!this.$mapContainer.hasClass('is-fixed')) return;
 
-            this.$mapContainer.removeClass('is-fixed');
-            this.$btnFilter.removeClass('is-active');
-            this.$filterContainer.removeClass('is-active');
-            this.filterAnimation.reverse();
+            this.$mapContainer.removeClass('is-fixed shadow');
+            this.$mapSpacer.show();
             this.map.get().resize();
         }
     }
@@ -283,13 +334,13 @@ class WorkingspacesMaps {
     workingspacesTemplate(data) {
         let template = '';
         
-        if(data.length < 1) {
+        if(!data ||data.length < 1) {
             return `<p>No items match your criteria.</p>`;
         }
 
         data.forEach(val => {
-            const minimumCapacity = Math.min.apply(Math, val.capacity_list);
-            const maximumCapacity = Math.max.apply(Math, val.capacity_list);
+            const minimumCapacity = val.capacity_list ? Math.min.apply(Math, val.capacity_list) : null;
+            const maximumCapacity = val.capacity_list ? Math.max.apply(Math, val.capacity_list) : null;
 
             const locationTemplate = (location) => {
                 return `
@@ -306,7 +357,14 @@ class WorkingspacesMaps {
                         </div>`
             }
 
-            template+= `<div class="item workspace card border-top-left border--post border--hover">
+            const capacityTemplate = (capacityRange) => {
+                return `<div class="detail-icontainer capacity">
+                            <i class="fas fa-user text-muted"></i>
+                            <p class="text-muted">Capacity: <span>${capacityRange[0]} - ${capacityRange[1]}</span></p>
+                        </div>`;
+            }
+
+            template+= `<div class="item workspace card border-top-left border--post border--hover" data-geolocation="${val?.location?.location}">
                             <img class="card-img-top" src="${val.featured_image}" alt="">
                             <div class="card-body">
                                 <div class="action-container">
@@ -318,13 +376,10 @@ class WorkingspacesMaps {
                                 <h5><a href="${val?.permalink}">${val?.post_title}</a></h5>
                                 
                                 ${val?.location?.place_name ? locationTemplate(val.location.place_name): ''}
-                                <div class="detail-icontainer capacity">
-                                    <i class="fas fa-user text-muted"></i>
-                                    <p class="text-muted">Capacity: <span>${minimumCapacity} - ${maximumCapacity}</span></p>
-                                </div>
+                                ${minimumCapacity || maximumCapacity ? capacityTemplate([minimumCapacity, maximumCapacity]) : ''} 
                                 <div class="detail-icontainer total-rooms">
                                     <i class="fas fa-chair text-muted"></i>
-                                    <p class="text-muted">No. of rooms: <span>${val?.total_rooms}</span></p>
+                                    <p class="text-muted">No. of rooms: <span>${val?.total_rooms ?? 0}</span></p>
                                 </div>
                                 ${val?.price_range ? priceRangeTemplate(val.price_range): ''}
                             </div>
@@ -335,43 +390,46 @@ class WorkingspacesMaps {
     }
 
     dislplayFilteredWorkingspaces() {
+    
+        const filter = this.getWorkingspaceFilter;
         const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
-            const $activeCategories = this.$filterCategoriesContainer.find('.action-container > .btn.is-active');
-            const $activeCapacity = this.$filterCapacityContainer.find('.action-container > .btn.is-active');
-            const $priceRangeMin = this.$filterPriceRangeContainer.find('.minmax-values > div > #minimum');
-            const $priceRangeMax = this.$filterPriceRangeContainer.find('.minmax-values > div > #maximum');
 
-            const locationID = $activeLocation.map((i , el) => $(el).data('id'))[0];
-            const categoryIds = $activeCategories.map((i , el) => $(el).data('id')).get();
-            const capacities = $activeCapacity.map((i , el) => $(el).data('capacity')).get();
-            const minimumPriceRange = +$priceRangeMin.html();
-            const maximumPriceRange = +$priceRangeMax.html();
+        if(filter.priceRange) {
+            const priceRange = filter.price_range.split(',');
+            this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${priceRange.join(' - $')}`);
+        }
 
-            const filter = {
-                country: locationID,
-                roomCategories: categoryIds,
-                capacities: capacities,
-                priceRange: [minimumPriceRange, maximumPriceRange]
+        this.$itemContainer.find('.item,p').remove();
+        const load =  loading(this.$itemContainer).start();
+        this.$btnLoadMore.hide();
+
+        api(this.siteUrl).getWorkingspacesByFilter(filter).then(res =>{
+            this.$btnLoadMore.show();
+
+            const {data: {posts}} = res;
+
+            if(this.$btnFindAllposts.length > 0){
+                const template = this.workingspacesTemplate(posts);
+
+                $(template).insertBefore(this.$btnFindAllposts);
+            }else if(this.$btnLoadMore.length > 0){
+                const template = this.workingspacesTemplate(posts);
+
+                $(template).insertBefore(this.$btnLoadMore.parent());
+            }else{
+                this.$itemContainer.append(this.workingspacesTemplate(posts));
             }
 
-            this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${filter.priceRange.join(' - $')}`);
+            this.setWorkingspaces(posts);
 
-            this.$itemContainer.find('.item,p').remove();
-            const load =  loading(this.$itemContainer).start();
+            const locations = this.workingspaces.map(workingspace => { return workingspace?.geolocation});
+            this.setMapMarkers(locations);
 
-            api(this.siteUrl).getWorkingspacesByFilter(filter).then(res =>{
-                const {data: {posts}} = res;
-
-                this.$itemContainer.append(this.workingspacesTemplate(posts));
-                this.setWorkingspaces(posts);
-
-                const locations = this.workingspaces.map(workingspace => {if(workingspace?.geolocation) return workingspace.geolocation});
-                this.setMapMarkers(locations);
-
-                load.end();
-            }).catch(() => {
-                load.displayError();
-            });
+            load.end();
+        }).catch((e) => {
+            console.log(e);
+            load.displayError();
+        });
     }
 
     getWorkingspacesInHtml() {
@@ -394,8 +452,37 @@ class WorkingspacesMaps {
         return workingspaces;
     }
 
-    setWorkingspaces(workingspaces) {
+    get getWorkingspaceFilter() {
+        const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
+        const $activeCategories = this.$filterCategoriesContainer.find('.action-container > .btn.is-active');
+        const $activeCapacity = this.$filterCapacityContainer.find('.action-container > .btn.is-active');
+        const $priceRangeMin = this.$filterPriceRangeContainer.find('.minmax-values > div > #minimum');
+        const $priceRangeMax = this.$filterPriceRangeContainer.find('.minmax-values > div > #maximum');
+
+        const locationID = $activeLocation.map((i , el) => $(el).data('id'))[0];
+        const categoryIds = $activeCategories.map((i , el) => $(el).data('id')).get();
+        const capacities = $activeCapacity.map((i , el) => $(el).data('capacity')).get();
+        const minimumPriceRange = +$priceRangeMin.html();
+        const maximumPriceRange = +$priceRangeMax.html();
+
+        const filter = {
+            country: locationID,
+            room_categories: categoryIds,
+            capacities: capacities.length > 0 ? capacities : '1up',
+            price_range: minimumPriceRange && maximumPriceRange ? `${minimumPriceRange},${maximumPriceRange}`: null,
+            paged: this.filterItem
+        }
+
+        return filter;
+    }
+
+    setWorkingspaces(workingspaces, isConcat = false) {
         let newWorkingspaces = [];
+
+        if(!workingspaces) {
+            this.workingspaces = [];
+            return;
+        }
 
         workingspaces.forEach(workingspace => {
             const minimumCapacity = Math.min.apply(Math, workingspace.capacity_list);
@@ -406,15 +493,17 @@ class WorkingspacesMaps {
                 location: workingspace?.location?.place_name,
                 capacity: `${minimumCapacity} - ${maximumCapacity}`,
                 totalRooms: workingspace?.total_rooms,
-                priceRange: `${workingspace.price_range.length > 1 ? workingspace.price_range.join(' - $'): workingspace.price_range[0]}/month`,
                 imgSrc: workingspace?.featured_image,
                 geolocation: workingspace?.location?.location.split(',')
             };
 
+            if(workingspace?.priceRange) 
+            property.priceRange =  `${workingspace?.price_range?.length > 1 ? workingspace.price_range.join(' - $'): workingspace?.price_range[0]}/month`;
+
             newWorkingspaces.push(property);
         });
 
-        this.workingspaces = newWorkingspaces;
+        this.workingspaces = isConcat ? this.workingspaces.concat(newWorkingspaces) : newWorkingspaces;
     }
 
     isTouchEvent() {

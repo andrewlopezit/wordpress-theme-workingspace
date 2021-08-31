@@ -24,7 +24,6 @@ if(isset($country['id'])) {
     $country_location = get_location($country['id']);
 }
 
-
 $workingspaces = new WP_Query( $query ); 
 ?>
 <div id="workspaces-map">
@@ -173,7 +172,7 @@ $workingspaces = new WP_Query( $query );
                 if($price_range):?>
                 <div class="detail-icontainer price-range">
                     <span>Price range: </span>
-                    <span class="price"><?php echo count($price_range) > 1 ? '$'.implode(' - $', $price_range).'/month': $price_range[0].'/month'; ?></span>
+                    <span class="price"><?php echo count($price_range) > 1 ? '$'.implode(' - $', $price_range).'/month': '$'.$price_range[0].'/month'; ?></span>
                 </div>
                 <?php endif;?>
                 </div>
@@ -184,13 +183,24 @@ $workingspaces = new WP_Query( $query );
             <p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>
             <?php endif; ?>
             
-            <?php if(isset($country['name']) AND count($workingspaces->posts) >= (int)$max_posts):?>
+            <?php if((isset($country['name']) AND count($workingspaces->posts) >= (int)$max_posts) AND is_single()):?>
                 <div class="find-all posts">
-                    <a href="#">Find more workingspaces in <span><?php echo $country['name']; ?></span></a>
+                    <?php 
+                        $country_id = $country['id'];
+                        $country_name = $country['name'];
+                    ?>
+                    <a href="<?php echo esc_url(site_url("workingspaces?country_id=$country_id&country_name=$country_name")) ?>">Find more workingspaces in <span><?php echo $country['name']; ?></span></a>
+                </div>
+            <?php endif; ?>
+
+            <?php if(is_page()):?>
+                <div class="load-more-container">
+                    <button class="btn load-more">Load more</button>
                 </div>
             <?php endif; ?>
         </div>
         <div class="map-container">
+            <div class="map-spacer"></div>
             <div class="map" id="map" <?php echo isset($country_location['location']) && $country_location['location'] ? 'data-geolocation='.$country_location['location'] : ''; ?>>
                 <button class="btn fit-workingspaces"><i class="fas fa-search-location"></i></button>
             </div>

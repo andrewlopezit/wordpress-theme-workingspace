@@ -7,16 +7,14 @@ const Api = (url) => {
         }
     
         getWorkingspacesByFilter(filter) {
-            const {country, roomCategories, capacities, priceRange} = filter;
             let url =`${this.endpoint}/wp-json/wp/v2/workingspaces?`;
     
-            if(roomCategories.length > 0) url+=`room_categories=${roomCategories.toString()}`;
-            if(country) url+=`&country=${country}`;
-            if(capacities.length >= 1) url+= `&capacities=${capacities}`;
-            if(capacities.length < 1) url+= `&capacities=1up`;
-    
-            if(priceRange) url+=`&price_range=${priceRange.toString()}`;
-            
+            for (let key in filter) {
+                if (filter.hasOwnProperty(key) && filter[key]) {
+                    url+=`${key}=${filter[key]}&`;
+                }
+            }
+
             return axios(url);
         }
     }

@@ -57,6 +57,8 @@
     }
 
     public function price_range($price_range) {
+      if(!isset($price_range) || !is_array($this->_workingspaces)) return $this;
+
       $newWorkspaces = [];
       $price_range_min_max = explode(',',$price_range);
 
@@ -74,6 +76,8 @@
     }
 
     public function get(){
+      if(!is_array($this->_workingspaces)) return array();
+
       return $this->_workingspaces;
     }
 
