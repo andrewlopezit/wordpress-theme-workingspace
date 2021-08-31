@@ -24,6 +24,7 @@ class WorkingspacesMaps {
         this.$btnFitLocations = this.$mapContainer.find('.btn.fit-workingspaces');
         this.$btnMapView =  this.$contentContainer.find('.action-container#mobile-maps');
         this.$btnLoadMore = this.$itemContainer.find('.btn.load-more');
+        this.$btnFindAllposts = this.$itemContainer.find('.find-all.posts');
 
         //local variable
         this.siteUrl = translation_array.site_url;
@@ -161,6 +162,13 @@ class WorkingspacesMaps {
                 this.filterAnimation.reverse();
                 return;
             }
+        });
+
+        this.$filterLocationContainer.on('click', '.action-container > button', e => {
+            const $el = $(e.currentTarget);
+
+            $el.siblings().removeClass('is-active');
+            $el.addClass('is-active');
         });
 
         this.$filterCategoriesContainer.on('click', '.action-container > button', e =>{
@@ -324,7 +332,7 @@ class WorkingspacesMaps {
     workingspacesTemplate(data) {
         let template = '';
         
-        if(data.length < 1) {
+        if(!data ||data.length < 1) {
             return `<p>No items match your criteria.</p>`;
         }
 
@@ -390,11 +398,25 @@ class WorkingspacesMaps {
 
         this.$itemContainer.find('.item,p').remove();
         const load =  loading(this.$itemContainer).start();
+        this.$btnLoadMore.hide();
 
         api(this.siteUrl).getWorkingspacesByFilter(filter).then(res =>{
+            this.$btnLoadMore.show();
+
             const {data: {posts}} = res;
 
-            this.$itemContainer.append(this.workingspacesTemplate(posts));
+            if(this.$btnFindAllposts.length > 0){
+                const template = this.workingspacesTemplate(posts);
+
+                $(template).insertBefore(this.$btnFindAllposts);
+            }else if(this.$btnLoadMore.length > 0){
+                const template = this.workingspacesTemplate(posts);
+
+                $(template).insertBefore(this.$btnLoadMore.parent());
+            }else{
+                this.$itemContainer.append(this.workingspacesTemplate(posts));
+            }
+
             this.setWorkingspaces(posts);
 
             const locations = this.workingspaces.map(workingspace => { return workingspace?.geolocation});
@@ -402,6 +424,7 @@ class WorkingspacesMaps {
 
             load.end();
         }).catch((e) => {
+            console.log(e);
             load.displayError();
         });
     }
@@ -452,6 +475,11 @@ class WorkingspacesMaps {
 
     setWorkingspaces(workingspaces, isConcat = false) {
         let newWorkingspaces = [];
+
+        if(!workingspaces) {
+            this.workingspaces = [];
+            return;
+        }
 
         workingspaces.forEach(workingspace => {
             const minimumCapacity = Math.min.apply(Math, workingspace.capacity_list);
