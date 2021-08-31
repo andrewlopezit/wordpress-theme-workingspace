@@ -31,7 +31,7 @@
         <p class="title sub-paragraph">
             Grow your business with co workingspace productivity led agile coworking spaces in Philippines that suit your business across all the metropolitan
         </p>
-        <a class="btn" href="">Request a visit</a>
+        <a class="btn" href="<?php echo esc_url(site_url('workingspaces'))?>">Explore spaces</a>
     </div>
    </div>
 </section>
