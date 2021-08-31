@@ -10,17 +10,16 @@ const Maps = (args) => {
             this.mapboxtSecretToken = mapbox_secret_key;
             this.mapboxPublicToken = mapbox_public_key;
 
-            this.initMap(args.center, args.zoom ?? 10);
+            this.initMap(args?.center, args.zoom ?? 10);
         }
 
         initMap(center, zoom) {
-            if(!center) return;
 
             mapboxgl.accessToken = this.mapboxPublicToken;
             this.map = new mapboxgl.Map({
                 container: args.container,
                 style: 'mapbox://styles/andrewlopezit/cksbd685j2dud17pav0q5rf5w',
-                center: center,
+                center: args?.center ? args.center : [121.0, 14.583331],
                 zoom: zoom
             });
 

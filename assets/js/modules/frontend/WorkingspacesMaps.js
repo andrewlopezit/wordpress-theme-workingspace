@@ -45,7 +45,7 @@ class WorkingspacesMaps {
     initMap() {
         this.map =  maps({
             container: this.$map.get()[0],
-            center: this.$map.data('geolocation').split(',') ?? null,
+            center: this.$map?.data('geolocation')?.split(',') ?? null,
             zoom: this.mapZoom
         }).control();
 
@@ -289,8 +289,8 @@ class WorkingspacesMaps {
         }
 
         data.forEach(val => {
-            const minimumCapacity = Math.min.apply(Math, val.capacity_list);
-            const maximumCapacity = Math.max.apply(Math, val.capacity_list);
+            const minimumCapacity = val.capacity_list ? Math.min.apply(Math, val.capacity_list) : null;
+            const maximumCapacity = val.capacity_list ? Math.max.apply(Math, val.capacity_list) : null;
 
             const locationTemplate = (location) => {
                 return `
@@ -307,7 +307,14 @@ class WorkingspacesMaps {
                         </div>`
             }
 
-            template+= `<div class="item workspace card border-top-left border--post border--hover">
+            const capacityTemplate = (capacityRange) => {
+                return `<div class="detail-icontainer capacity">
+                            <i class="fas fa-user text-muted"></i>
+                            <p class="text-muted">Capacity: <span>${capacityRange[0]} - ${capacityRange[1]}</span></p>
+                        </div>`;
+            }
+
+            template+= `<div class="item workspace card border-top-left border--post border--hover" data-geolocation="${val?.location?.location}">
                             <img class="card-img-top" src="${val.featured_image}" alt="">
                             <div class="card-body">
                                 <div class="action-container">
@@ -319,13 +326,10 @@ class WorkingspacesMaps {
                                 <h5><a href="${val?.permalink}">${val?.post_title}</a></h5>
                                 
                                 ${val?.location?.place_name ? locationTemplate(val.location.place_name): ''}
-                                <div class="detail-icontainer capacity">
-                                    <i class="fas fa-user text-muted"></i>
-                                    <p class="text-muted">Capacity: <span>${minimumCapacity} - ${maximumCapacity}</span></p>
-                                </div>
+                                ${minimumCapacity || maximumCapacity ? capacityTemplate([minimumCapacity, maximumCapacity]) : ''} 
                                 <div class="detail-icontainer total-rooms">
                                     <i class="fas fa-chair text-muted"></i>
-                                    <p class="text-muted">No. of rooms: <span>${val?.total_rooms}</span></p>
+                                    <p class="text-muted">No. of rooms: <span>${val?.total_rooms ?? 0}</span></p>
                                 </div>
                                 ${val?.price_range ? priceRangeTemplate(val.price_range): ''}
                             </div>
@@ -336,43 +340,28 @@ class WorkingspacesMaps {
     }
 
     dislplayFilteredWorkingspaces() {
+        const filter = this.getWorkingspaceFilter;
         const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
-            const $activeCategories = this.$filterCategoriesContainer.find('.action-container > .btn.is-active');
-            const $activeCapacity = this.$filterCapacityContainer.find('.action-container > .btn.is-active');
-            const $priceRangeMin = this.$filterPriceRangeContainer.find('.minmax-values > div > #minimum');
-            const $priceRangeMax = this.$filterPriceRangeContainer.find('.minmax-values > div > #maximum');
 
-            const locationID = $activeLocation.map((i , el) => $(el).data('id'))[0];
-            const categoryIds = $activeCategories.map((i , el) => $(el).data('id')).get();
-            const capacities = $activeCapacity.map((i , el) => $(el).data('capacity')).get();
-            const minimumPriceRange = +$priceRangeMin.html();
-            const maximumPriceRange = +$priceRangeMax.html();
+        this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${filter.priceRange.join(' - $')}`);
 
-            const filter = {
-                country: locationID,
-                roomCategories: categoryIds,
-                capacities: capacities,
-                priceRange: [minimumPriceRange, maximumPriceRange]
-            }
+        this.$itemContainer.find('.item,p').remove();
+        const load =  loading(this.$itemContainer).start();
 
-            this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${filter.priceRange.join(' - $')}`);
+        api(this.siteUrl).getWorkingspacesByFilter(filter).then(res =>{
+            const {data: {posts}} = res;
 
-            this.$itemContainer.find('.item,p').remove();
-            const load =  loading(this.$itemContainer).start();
+            this.$itemContainer.append(this.workingspacesTemplate(posts));
+            this.setWorkingspaces(posts);
 
-            api(this.siteUrl).getWorkingspacesByFilter(filter).then(res =>{
-                const {data: {posts}} = res;
+            const locations = this.workingspaces.map(workingspace => { return workingspace?.geolocation});
+            this.setMapMarkers(locations);
 
-                this.$itemContainer.append(this.workingspacesTemplate(posts));
-                this.setWorkingspaces(posts);
-
-                const locations = this.workingspaces.map(workingspace => {if(workingspace?.geolocation) return workingspace.geolocation});
-                this.setMapMarkers(locations);
-
-                load.end();
-            }).catch(() => {
-                load.displayError();
-            });
+            load.end();
+        }).catch((e) => {
+            console.log(e);
+            load.displayError();
+        });
     }
 
     getWorkingspacesInHtml() {
@@ -395,6 +384,29 @@ class WorkingspacesMaps {
         return workingspaces;
     }
 
+    get getWorkingspaceFilter() {
+        const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
+        const $activeCategories = this.$filterCategoriesContainer.find('.action-container > .btn.is-active');
+        const $activeCapacity = this.$filterCapacityContainer.find('.action-container > .btn.is-active');
+        const $priceRangeMin = this.$filterPriceRangeContainer.find('.minmax-values > div > #minimum');
+        const $priceRangeMax = this.$filterPriceRangeContainer.find('.minmax-values > div > #maximum');
+
+        const locationID = $activeLocation.map((i , el) => $(el).data('id'))[0];
+        const categoryIds = $activeCategories.map((i , el) => $(el).data('id')).get();
+        const capacities = $activeCapacity.map((i , el) => $(el).data('capacity')).get();
+        const minimumPriceRange = +$priceRangeMin.html();
+        const maximumPriceRange = +$priceRangeMax.html();
+
+        const filter = {
+            country: locationID,
+            roomCategories: categoryIds,
+            capacities: capacities,
+            priceRange: [minimumPriceRange, maximumPriceRange]
+        }
+
+        return filter;
+    }
+
     setWorkingspaces(workingspaces) {
         let newWorkingspaces = [];
 
@@ -407,10 +419,12 @@ class WorkingspacesMaps {
                 location: workingspace?.location?.place_name,
                 capacity: `${minimumCapacity} - ${maximumCapacity}`,
                 totalRooms: workingspace?.total_rooms,
-                priceRange: `${workingspace.price_range.length > 1 ? workingspace.price_range.join(' - $'): workingspace.price_range[0]}/month`,
                 imgSrc: workingspace?.featured_image,
                 geolocation: workingspace?.location?.location.split(',')
             };
+
+            if(workingspace?.priceRange) 
+            property.priceRange =  `${workingspace?.price_range?.length > 1 ? workingspace.price_range.join(' - $'): workingspace?.price_range[0]}/month`;
 
             newWorkingspaces.push(property);
         });

@@ -14,8 +14,8 @@ const Api = (url) => {
             if(country) url+=`&country=${country}`;
             if(capacities.length >= 1) url+= `&capacities=${capacities}`;
             if(capacities.length < 1) url+= `&capacities=1up`;
-    
-            if(priceRange) url+=`&price_range=${priceRange.toString()}`;
+
+            if(priceRange[0]) url+=`&price_range=${priceRange.toString()}`;
             
             return axios(url);
         }

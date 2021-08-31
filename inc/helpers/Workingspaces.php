@@ -57,6 +57,8 @@
     }
 
     public function price_range($price_range) {
+      if(!isset($price_range)) return $this;
+
       $newWorkspaces = [];
       $price_range_min_max = explode(',',$price_range);
 
@@ -74,6 +76,8 @@
     }
 
     public function get(){
+      if(!is_array($this->_workingspaces)) return array();
+
       return $this->_workingspaces;
     }
 
@@ -86,6 +90,8 @@
 
       if(strpos($capacity, 'up')) {
         $capacity = (int) filter_var($capacity, FILTER_SANITIZE_NUMBER_INT);
+
+        return $capacity;
 
         foreach($this->_workingspaces as $workspace) {
             if(min($workspace->capacity_list) >= $capacity){

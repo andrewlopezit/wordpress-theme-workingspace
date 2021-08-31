@@ -13,8 +13,6 @@ namespace Inc\Classes\CustomAPI\Endpoints;
 use Inc\Classes\CustomAPI\Endpoints\BaseClass;
 use Inc\Classes\CustomAPI\Endpoints\Filters;
 
-use Inc\Helpers\Posts;
-use Inc\Helpers\Rooms;
 use Inc\Helpers\Workingspaces as WorkspacesHelpers;
 
 use WP_Query;
@@ -41,7 +39,7 @@ class Workingspaces extends BaseClass {
 
       $filtered_workingpaces = $filtered_workingpaces->capacity($request['capacities'])->price_range($request['price_range'])->get();
       $results = array(
-        'posts' => $filtered_workingpaces,
+        'posts' => $filtered_workingpaces ? $filtered_workingpaces : $workingspaces,
         'pagination' => array(
           'post_per_page' => get_option( 'posts_per_page' ),
           'total' => wp_count_posts('workingspaces')

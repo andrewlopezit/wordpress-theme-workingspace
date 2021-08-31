@@ -163,7 +163,7 @@ const Api = url => {
       if (country) url += `&country=${country}`;
       if (capacities.length >= 1) url += `&capacities=${capacities}`;
       if (capacities.length < 1) url += `&capacities=1up`;
-      if (priceRange) url += `&price_range=${priceRange.toString()}`;
+      if (priceRange[0]) url += `&price_range=${priceRange.toString()}`;
       return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
     }
 
@@ -523,8 +523,9 @@ __webpack_require__.r(__webpack_exports__);
 class Main {
   constructor() {
     // initialize elements variables
-    this.workingspacesContainer = $('#workingspaces');
-    this.workspaceCardPosts = $('.card-border--hover'); // init elements
+    this.$heroSectionContainer = $(document).find('.hero-section > .container');
+    this.$heroTitle = this.$heroSectionContainer.find('.row > .col > .headline');
+    this.$heroSubTitle = this.$heroSectionContainer.find('.row > .col > p'); // init elements
     // init gsap animation
     // initialize events function
   }
@@ -557,16 +558,15 @@ const Maps = args => {
       } = translation_array;
       this.mapboxtSecretToken = mapbox_secret_key;
       this.mapboxPublicToken = mapbox_public_key;
-      this.initMap(args.center, (_args$zoom = args.zoom) !== null && _args$zoom !== void 0 ? _args$zoom : 10);
+      this.initMap(args === null || args === void 0 ? void 0 : args.center, (_args$zoom = args.zoom) !== null && _args$zoom !== void 0 ? _args$zoom : 10);
     }
 
     initMap(center, zoom) {
-      if (!center) return;
       mapboxgl.accessToken = this.mapboxPublicToken;
       this.map = new mapboxgl.Map({
         container: args.container,
         style: 'mapbox://styles/andrewlopezit/cksbd685j2dud17pav0q5rf5w',
-        center: center,
+        center: args !== null && args !== void 0 && args.center ? args.center : [121.0, 14.583331],
         zoom: zoom
       });
       return this.map;
@@ -998,11 +998,11 @@ class WorkingspacesMaps {
   }
 
   initMap() {
-    var _this$$map$data$split;
+    var _this$$map$data$split, _this$$map, _this$$map$data;
 
     this.map = Object(_index__WEBPACK_IMPORTED_MODULE_0__["maps"])({
       container: this.$map.get()[0],
-      center: (_this$$map$data$split = this.$map.data('geolocation').split(',')) !== null && _this$$map$data$split !== void 0 ? _this$$map$data$split : null,
+      center: (_this$$map$data$split = (_this$$map = this.$map) === null || _this$$map === void 0 ? void 0 : (_this$$map$data = _this$$map.data('geolocation')) === null || _this$$map$data === void 0 ? void 0 : _this$$map$data.split(',')) !== null && _this$$map$data$split !== void 0 ? _this$$map$data$split : null,
       zoom: this.mapZoom
     }).control();
     this.workingspaces = this.getWorkingspacesInHtml();
@@ -1229,10 +1229,10 @@ class WorkingspacesMaps {
     }
 
     data.forEach(val => {
-      var _val$location;
+      var _val$location, _val$location2, _val$total_rooms;
 
-      const minimumCapacity = Math.min.apply(Math, val.capacity_list);
-      const maximumCapacity = Math.max.apply(Math, val.capacity_list);
+      const minimumCapacity = val.capacity_list ? Math.min.apply(Math, val.capacity_list) : null;
+      const maximumCapacity = val.capacity_list ? Math.max.apply(Math, val.capacity_list) : null;
 
       const locationTemplate = location => {
         return `
@@ -1249,7 +1249,14 @@ class WorkingspacesMaps {
                         </div>`;
       };
 
-      template += `<div class="item workspace card border-top-left border--post border--hover">
+      const capacityTemplate = capacityRange => {
+        return `<div class="detail-icontainer capacity">
+                            <i class="fas fa-user text-muted"></i>
+                            <p class="text-muted">Capacity: <span>${capacityRange[0]} - ${capacityRange[1]}</span></p>
+                        </div>`;
+      };
+
+      template += `<div class="item workspace card border-top-left border--post border--hover" data-geolocation="${val === null || val === void 0 ? void 0 : (_val$location = val.location) === null || _val$location === void 0 ? void 0 : _val$location.location}">
                             <img class="card-img-top" src="${val.featured_image}" alt="">
                             <div class="card-body">
                                 <div class="action-container">
@@ -1260,14 +1267,11 @@ class WorkingspacesMaps {
 
                                 <h5><a href="${val === null || val === void 0 ? void 0 : val.permalink}">${val === null || val === void 0 ? void 0 : val.post_title}</a></h5>
                                 
-                                ${val !== null && val !== void 0 && (_val$location = val.location) !== null && _val$location !== void 0 && _val$location.place_name ? locationTemplate(val.location.place_name) : ''}
-                                <div class="detail-icontainer capacity">
-                                    <i class="fas fa-user text-muted"></i>
-                                    <p class="text-muted">Capacity: <span>${minimumCapacity} - ${maximumCapacity}</span></p>
-                                </div>
+                                ${val !== null && val !== void 0 && (_val$location2 = val.location) !== null && _val$location2 !== void 0 && _val$location2.place_name ? locationTemplate(val.location.place_name) : ''}
+                                ${minimumCapacity || maximumCapacity ? capacityTemplate([minimumCapacity, maximumCapacity]) : ''} 
                                 <div class="detail-icontainer total-rooms">
                                     <i class="fas fa-chair text-muted"></i>
-                                    <p class="text-muted">No. of rooms: <span>${val === null || val === void 0 ? void 0 : val.total_rooms}</span></p>
+                                    <p class="text-muted">No. of rooms: <span>${(_val$total_rooms = val === null || val === void 0 ? void 0 : val.total_rooms) !== null && _val$total_rooms !== void 0 ? _val$total_rooms : 0}</span></p>
                                 </div>
                                 ${val !== null && val !== void 0 && val.price_range ? priceRangeTemplate(val.price_range) : ''}
                             </div>
@@ -1277,22 +1281,8 @@ class WorkingspacesMaps {
   }
 
   dislplayFilteredWorkingspaces() {
+    const filter = this.getWorkingspaceFilter;
     const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
-    const $activeCategories = this.$filterCategoriesContainer.find('.action-container > .btn.is-active');
-    const $activeCapacity = this.$filterCapacityContainer.find('.action-container > .btn.is-active');
-    const $priceRangeMin = this.$filterPriceRangeContainer.find('.minmax-values > div > #minimum');
-    const $priceRangeMax = this.$filterPriceRangeContainer.find('.minmax-values > div > #maximum');
-    const locationID = $activeLocation.map((i, el) => $(el).data('id'))[0];
-    const categoryIds = $activeCategories.map((i, el) => $(el).data('id')).get();
-    const capacities = $activeCapacity.map((i, el) => $(el).data('capacity')).get();
-    const minimumPriceRange = +$priceRangeMin.html();
-    const maximumPriceRange = +$priceRangeMax.html();
-    const filter = {
-      country: locationID,
-      roomCategories: categoryIds,
-      capacities: capacities,
-      priceRange: [minimumPriceRange, maximumPriceRange]
-    };
     this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${filter.priceRange.join(' - $')}`);
     this.$itemContainer.find('.item,p').remove();
     const load = Object(_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$itemContainer).start();
@@ -1305,11 +1295,12 @@ class WorkingspacesMaps {
       this.$itemContainer.append(this.workingspacesTemplate(posts));
       this.setWorkingspaces(posts);
       const locations = this.workingspaces.map(workingspace => {
-        if (workingspace !== null && workingspace !== void 0 && workingspace.geolocation) return workingspace.geolocation;
+        return workingspace === null || workingspace === void 0 ? void 0 : workingspace.geolocation;
       });
       this.setMapMarkers(locations);
       load.end();
-    }).catch(() => {
+    }).catch(e => {
+      console.log(e);
       load.displayError();
     });
   }
@@ -1333,10 +1324,30 @@ class WorkingspacesMaps {
     return workingspaces;
   }
 
+  get getWorkingspaceFilter() {
+    const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
+    const $activeCategories = this.$filterCategoriesContainer.find('.action-container > .btn.is-active');
+    const $activeCapacity = this.$filterCapacityContainer.find('.action-container > .btn.is-active');
+    const $priceRangeMin = this.$filterPriceRangeContainer.find('.minmax-values > div > #minimum');
+    const $priceRangeMax = this.$filterPriceRangeContainer.find('.minmax-values > div > #maximum');
+    const locationID = $activeLocation.map((i, el) => $(el).data('id'))[0];
+    const categoryIds = $activeCategories.map((i, el) => $(el).data('id')).get();
+    const capacities = $activeCapacity.map((i, el) => $(el).data('capacity')).get();
+    const minimumPriceRange = +$priceRangeMin.html();
+    const maximumPriceRange = +$priceRangeMax.html();
+    const filter = {
+      country: locationID,
+      roomCategories: categoryIds,
+      capacities: capacities,
+      priceRange: [minimumPriceRange, maximumPriceRange]
+    };
+    return filter;
+  }
+
   setWorkingspaces(workingspaces) {
     let newWorkingspaces = [];
     workingspaces.forEach(workingspace => {
-      var _workingspace$locatio, _workingspace$locatio2;
+      var _workingspace$locatio, _workingspace$locatio2, _workingspace$price_r;
 
       const minimumCapacity = Math.min.apply(Math, workingspace.capacity_list);
       const maximumCapacity = Math.max.apply(Math, workingspace.capacity_list);
@@ -1345,10 +1356,10 @@ class WorkingspacesMaps {
         location: workingspace === null || workingspace === void 0 ? void 0 : (_workingspace$locatio = workingspace.location) === null || _workingspace$locatio === void 0 ? void 0 : _workingspace$locatio.place_name,
         capacity: `${minimumCapacity} - ${maximumCapacity}`,
         totalRooms: workingspace === null || workingspace === void 0 ? void 0 : workingspace.total_rooms,
-        priceRange: `${workingspace.price_range.length > 1 ? workingspace.price_range.join(' - $') : workingspace.price_range[0]}/month`,
         imgSrc: workingspace === null || workingspace === void 0 ? void 0 : workingspace.featured_image,
         geolocation: workingspace === null || workingspace === void 0 ? void 0 : (_workingspace$locatio2 = workingspace.location) === null || _workingspace$locatio2 === void 0 ? void 0 : _workingspace$locatio2.location.split(',')
       };
+      if (workingspace !== null && workingspace !== void 0 && workingspace.priceRange) property.priceRange = `${(workingspace === null || workingspace === void 0 ? void 0 : (_workingspace$price_r = workingspace.price_range) === null || _workingspace$price_r === void 0 ? void 0 : _workingspace$price_r.length) > 1 ? workingspace.price_range.join(' - $') : workingspace === null || workingspace === void 0 ? void 0 : workingspace.price_range[0]}/month`;
       newWorkingspaces.push(property);
     });
     this.workingspaces = newWorkingspaces;

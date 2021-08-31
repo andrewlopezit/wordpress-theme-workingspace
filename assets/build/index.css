@@ -395,10 +395,17 @@ hr {
 }
 .hero-section .container .row .col {
   display: flex;
+  flex-direction: column;
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
 }
 .hero-section .container .headline {
   line-height: 1em;
   color: #fff;
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
   position: relative;
 }
 .hero-section .container .headline::before, .hero-section .container .headline::after {
@@ -414,6 +421,13 @@ hr {
   top: auto;
   bottom: -12px;
   width: 100%;
+}
+.hero-section .container p {
+  width: 40%;
+  font-size: 18px;
+  color: #fff;
+  margin-top: 2em;
+  font-weight: 500;
 }
 
 .workspace.card {
@@ -1276,6 +1290,9 @@ hr {
   background-color: #fff;
   margin-top: 2em;
   padding: 2em;
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
 }
 .categories.--workingspaces .categories-container {
   display: flex;

@@ -70,8 +70,4 @@ final class Filters {
       
         return $query;
     }
-
-    public static function rooms_filters($request) {
-
-    }
 }
