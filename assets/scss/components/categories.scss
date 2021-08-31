@@ -4,6 +4,9 @@
         background-color: #fff;
         margin-top: 2em;
         padding: 2em;
+
+        @include fit-content;
+        
         .categories-container {
             display: flex;
             flex-direction: column;
