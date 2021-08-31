@@ -152,18 +152,16 @@ const Api = url => {
     }
 
     getWorkingspacesByFilter(filter) {
-      const {
-        country,
-        roomCategories,
-        capacities,
-        priceRange
-      } = filter;
       let url = `${this.endpoint}/wp-json/wp/v2/workingspaces?`;
-      if (roomCategories.length > 0) url += `room_categories=${roomCategories.toString()}`;
-      if (country) url += `&country=${country}`;
-      if (capacities.length >= 1) url += `&capacities=${capacities}`;
-      if (capacities.length < 1) url += `&capacities=1up`;
-      if (priceRange[0]) url += `&price_range=${priceRange.toString()}`;
+
+      for (let key in filter) {
+        if (filter.hasOwnProperty(key) && filter[key]) {
+          console.log(key + " -> " + filter[key]);
+          url += `${key}=${filter[key]}&`;
+        }
+      }
+
+      console.log(url);
       return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
     }
 
@@ -1284,7 +1282,12 @@ class WorkingspacesMaps {
   dislplayFilteredWorkingspaces() {
     const filter = this.getWorkingspaceFilter;
     const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
-    this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${filter.priceRange.join(' - $')}`);
+
+    if (filter.priceRange) {
+      const priceRange = filter.price_range.split(',');
+      this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${priceRange.join(' - $')}`);
+    }
+
     this.$itemContainer.find('.item,p').remove();
     const load = Object(_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$itemContainer).start();
     Object(_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
@@ -1338,9 +1341,10 @@ class WorkingspacesMaps {
     const maximumPriceRange = +$priceRangeMax.html();
     const filter = {
       country: locationID,
-      roomCategories: categoryIds,
-      capacities: capacities,
-      priceRange: [minimumPriceRange, maximumPriceRange]
+      room_categories: categoryIds,
+      capacities: capacities.length > 0 ? capacities : '1up',
+      price_range: minimumPriceRange && maximumPriceRange ? `${minimumPriceRange},${maximumPriceRange}` : null,
+      paged: 1
     };
     return filter;
   }

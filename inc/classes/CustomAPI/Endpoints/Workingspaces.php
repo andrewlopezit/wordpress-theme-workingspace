@@ -28,6 +28,14 @@ class Workingspaces extends BaseClass {
 
       $query =  Filters::workingspaces_filters($filters);
 
+      if($request['paged']) {
+        $per_page = get_option( 'posts_per_page' );
+        $offset = ((int)$request['paged']* $per_page) - $per_page;
+
+        $query['paged'] = (int)$request['paged'];
+        $query['offset'] = $offset;
+      }
+
       if(!$query) wp_send_json([], 200);
 
       $results = new WP_Query($query);

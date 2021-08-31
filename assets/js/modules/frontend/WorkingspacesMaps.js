@@ -346,7 +346,10 @@ class WorkingspacesMaps {
         const filter = this.getWorkingspaceFilter;
         const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
 
-        this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${filter.priceRange.join(' - $')}`);
+        if(filter.priceRange) {
+            const priceRange = filter.price_range.split(',');
+            this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${priceRange.join(' - $')}`);
+        }
 
         this.$itemContainer.find('.item,p').remove();
         const load =  loading(this.$itemContainer).start();
@@ -402,9 +405,10 @@ class WorkingspacesMaps {
 
         const filter = {
             country: locationID,
-            roomCategories: categoryIds,
-            capacities: capacities,
-            priceRange: [minimumPriceRange, maximumPriceRange]
+            room_categories: categoryIds,
+            capacities: capacities.length > 0 ? capacities : '1up',
+            price_range: minimumPriceRange && maximumPriceRange ? `${minimumPriceRange},${maximumPriceRange}`: null,
+            paged: 1
         }
 
         return filter;

@@ -24,7 +24,6 @@ if(isset($country['id'])) {
     $country_location = get_location($country['id']);
 }
 
-
 $workingspaces = new WP_Query( $query ); 
 ?>
 <div id="workspaces-map">
@@ -187,6 +186,12 @@ $workingspaces = new WP_Query( $query );
             <?php if(isset($country['name']) AND count($workingspaces->posts) >= (int)$max_posts):?>
                 <div class="find-all posts">
                     <a href="#">Find more workingspaces in <span><?php echo $country['name']; ?></span></a>
+                </div>
+            <?php endif; ?>
+
+            <?php if(is_page()):?>
+                <div class="load-more-container">
+                    <button class="btn load-more">Load more</button>
                 </div>
             <?php endif; ?>
         </div>
