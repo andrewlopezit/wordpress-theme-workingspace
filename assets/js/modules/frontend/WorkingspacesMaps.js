@@ -31,7 +31,7 @@ class WorkingspacesMaps {
         this.mapZoom = 15;
         this.isMapLoaded = false;
         this.btnFilterPositionTop = this.$btnFilter.offset().top + 500;
-        this.filterPaged = 1;
+        this.filterItem = 1;
 
         //init slider
         rangeSlider({
@@ -186,6 +186,7 @@ class WorkingspacesMaps {
         this.$btnSetFilter.on('click', () => {
             this.filterAnimation.reverse();
             this.$btnFilter.removeClass('is-active');
+            this.filterItem = 1;
 
             this.dislplayFilteredWorkingspaces();
         });
@@ -253,10 +254,11 @@ class WorkingspacesMaps {
         });
 
         this.$btnLoadMore.on('click', () => {
-            this.filterPaged++;
+            this.filterItem++;
 
             const load =  loading(this.$itemContainer).start();
             const filter = this.getWorkingspaceFilter;
+            filter.offset = this.workingspaces.length;
 
             this.$btnLoadMore.hide();
 
@@ -264,7 +266,7 @@ class WorkingspacesMaps {
                 this.$btnLoadMore.show();
                 load.end();
 
-                const {data: {posts}} = res;
+                const {data: {posts, pagination}} = res;
 
                 if(!posts) {
                     this.$btnLoadMore.attr('disabled', true);
@@ -388,6 +390,7 @@ class WorkingspacesMaps {
     }
 
     dislplayFilteredWorkingspaces() {
+    
         const filter = this.getWorkingspaceFilter;
         const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
 
@@ -467,7 +470,7 @@ class WorkingspacesMaps {
             room_categories: categoryIds,
             capacities: capacities.length > 0 ? capacities : '1up',
             price_range: minimumPriceRange && maximumPriceRange ? `${minimumPriceRange},${maximumPriceRange}`: null,
-            paged: this.filterPaged
+            paged: this.filterItem
         }
 
         return filter;

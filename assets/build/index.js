@@ -987,7 +987,7 @@ class WorkingspacesMaps {
     this.mapZoom = 15;
     this.isMapLoaded = false;
     this.btnFilterPositionTop = this.$btnFilter.offset().top + 500;
-    this.filterPaged = 1; //init slider
+    this.filterItem = 1; //init slider
 
     Object(_index__WEBPACK_IMPORTED_MODULE_1__["rangeSlider"])({
       container: this.$priceRange.get()[0]
@@ -1130,6 +1130,7 @@ class WorkingspacesMaps {
     this.$btnSetFilter.on('click', () => {
       this.filterAnimation.reverse();
       this.$btnFilter.removeClass('is-active');
+      this.filterItem = 1;
       this.dislplayFilteredWorkingspaces();
     });
     this.$itemContainer.on('click', '.loading#loading > .btn.retry', () => {
@@ -1189,16 +1190,18 @@ class WorkingspacesMaps {
       }
     });
     this.$btnLoadMore.on('click', () => {
-      this.filterPaged++;
+      this.filterItem++;
       const load = Object(_index__WEBPACK_IMPORTED_MODULE_1__["loading"])(this.$itemContainer).start();
       const filter = this.getWorkingspaceFilter;
+      filter.offset = this.workingspaces.length;
       this.$btnLoadMore.hide();
       Object(_index__WEBPACK_IMPORTED_MODULE_1__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
         this.$btnLoadMore.show();
         load.end();
         const {
           data: {
-            posts
+            posts,
+            pagination
           }
         } = res;
 
@@ -1395,7 +1398,7 @@ class WorkingspacesMaps {
       room_categories: categoryIds,
       capacities: capacities.length > 0 ? capacities : '1up',
       price_range: minimumPriceRange && maximumPriceRange ? `${minimumPriceRange},${maximumPriceRange}` : null,
-      paged: this.filterPaged
+      paged: this.filterItem
     };
     return filter;
   }

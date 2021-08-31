@@ -183,9 +183,13 @@ $workingspaces = new WP_Query( $query );
             <p><?php esc_html_e( 'Sorry, no posts matched your criteria.' ); ?></p>
             <?php endif; ?>
             
-            <?php if(isset($country['name']) AND count($workingspaces->posts) >= (int)$max_posts):?>
+            <?php if((isset($country['name']) AND count($workingspaces->posts) >= (int)$max_posts) AND is_single()):?>
                 <div class="find-all posts">
-                    <a href="#">Find more workingspaces in <span><?php echo $country['name']; ?></span></a>
+                    <?php 
+                        $country_id = $country['id'];
+                        $country_name = $country['name'];
+                    ?>
+                    <a href="<?php echo esc_url(site_url("workingspaces?country_id=$country_id&country_name=$country_name")) ?>">Find more workingspaces in <span><?php echo $country['name']; ?></span></a>
                 </div>
             <?php endif; ?>
 

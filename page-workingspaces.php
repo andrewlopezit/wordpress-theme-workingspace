@@ -1,6 +1,10 @@
 <?php
 get_header();
 
+if(isset($_GET['country_id']) && isset($_GET['country_name'])) {
+    $country = array('country' => array('id' => $_GET['country_id'], 'name' => $_GET['country_name']));
+}
+
 if ( have_posts() ) : 
     while ( have_posts() ) : the_post();
 ?>   
@@ -28,7 +32,7 @@ wp_reset_postdata();
 <section class="container">
     <div class="row">
         <div class="col">
-            <?php get_template_part('partials/content/content', 'workingspaces-maps'); ?>
+            <?php get_template_part('partials/content/content', 'workingspaces-maps', isset($country) ? $country : null); ?>
         </div>
     </div>
 </section>

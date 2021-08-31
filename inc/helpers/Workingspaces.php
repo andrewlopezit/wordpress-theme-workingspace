@@ -91,8 +91,6 @@
       if(strpos($capacity, 'up')) {
         $capacity = (int) filter_var($capacity, FILTER_SANITIZE_NUMBER_INT);
 
-        return $capacity;
-
         foreach($this->_workingspaces as $workspace) {
             if(min($workspace->capacity_list) >= $capacity){
                 array_push($newWorkspaces, $workspace);
