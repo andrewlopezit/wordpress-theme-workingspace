@@ -30,6 +30,7 @@
 * - MAPS
 * - HERO IMAGE SLIDER
 * - CATEGORIES
+* - FEATURED POSTS
 * - BRAND
 * - HEADER/HAMBURGER
 * - HEADER/NAVIGATION
@@ -76,7 +77,6 @@
 *------------------------------------*/
 @import 'components/icons';
 
-
 /*------------------------------------*
 	WIDGETS
 *------------------------------------*/
@@ -113,9 +113,15 @@
 @import 'components/hero-image-slider.scss';
 
 /*------------------------------------*
-	HERO IMAGE SLIDER
+	CATEGORIES
 *------------------------------------*/
 @import 'components/categories.scss';
+
+/*------------------------------------*
+	FEATURED POSTS
+*------------------------------------*/
+@import 'components/featured-posts.scss';
+
 
 /*------------------------------------*
 	BRAND

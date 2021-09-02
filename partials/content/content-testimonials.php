@@ -1,4 +1,4 @@
-<div class="testimonial-slider" id="testimonials-slider">
+<div class="testimonial-slider default" id="testimonials-slider">
     <div class="stage-container">
         <?php
             $args = array(

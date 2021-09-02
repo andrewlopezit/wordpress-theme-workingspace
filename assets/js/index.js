@@ -21,11 +21,12 @@ const hompage = document.querySelector(".home");
 
 if(hompage) {
     heroImageSlider = new HeroImageSlider();
-    testimonialsSlider = new TestimonialsSlider();
 }
 
 hamburgerMenu = new HamburgerMenu();
 main  = new Main();
+testimonialsSlider = new TestimonialsSlider();
+
 
 // include front-end init
 customRoomsMeta = new CustomRoomsMeta();

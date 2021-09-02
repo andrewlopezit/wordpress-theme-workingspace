@@ -1,5 +1,4 @@
-.testimonial-slider#testimonials-slider {
-
+.testimonial-slider.default#testimonials-slider {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -129,7 +128,6 @@
         }
     }
 }
-
 
 // Extra small devices (portrait phones, less than 576px)
 @media (max-width: 575.98px) { 

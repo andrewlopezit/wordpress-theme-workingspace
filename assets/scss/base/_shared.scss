@@ -370,6 +370,120 @@ hr {
 
 }
 
+.item.card.post {
+	border: 0;
+	border-radius: 0;
+
+	position: relative;
+
+	.card-img-top{
+		border-radius: 0;
+	}
+
+	.card-body {
+		display: flex;
+		flex-direction: column;
+		position: relative;
+
+		.author-container {
+			position: absolute;
+			top: 0;
+			left: 0;
+
+			display: flex;
+			align-items: center;
+			flex-direction: row;
+
+			top: -25px;
+			background-color: #fff;
+			padding: 5px 10px;
+			color: var(--secondary-color, $secondary-color);
+			font-weight: 600;
+			font-size: .9em;
+
+			.author-details {
+				margin: 0 10px;
+				a {
+					color: var(--secondary-color, $secondary-color);
+					font-size: .875em;
+					text-transform: capitalize;
+				}
+				small {
+					text-transform: capitalize;
+				}
+			}
+		}
+
+		h5 {
+			color: #000;
+		}
+
+		.btn {
+			width: 50%;
+			align-self: center;
+			
+			@include transform(scale(0.9));
+		}
+
+	}
+
+	&.image-side {
+		display: flex;
+		align-items: center;
+		flex-direction: row;
+
+		&.border-top-left.border--post::before {
+			height: 100%;
+		}
+
+		img {
+			width: 40%;
+			height: 100%;
+
+			object-fit: cover;
+			object-position: center;
+		}
+
+		.card-body {
+			height: 100%;
+			padding: 1em 0.6em;
+
+			.author-container {
+				top: 0;
+			}
+			
+			a {
+				h5 {
+					margin: 0;
+					margin-top: 10px;
+				}
+			}
+
+			p {
+				display: none;
+			}
+
+			.btn {
+				display: none;
+			}
+		}
+
+		&.image-side--no-author {
+			.card-body {
+				.author-container {
+					display: none;
+				}
+
+				a {
+					h5 {
+						margin: 0;
+					}
+				}
+			}
+		}
+	}
+}
+
 // Extra small devices (portrait phones, less than 576px)
 @media (max-width: 575.98px) { 
 	.hero-section {
@@ -382,7 +496,9 @@ hr {
 }
 
 // Small devices (landscape phones, 576px and up)
-@media (min-width: 576px) { }
+@media (min-width: 576px) {
+	
+ }
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) { 
