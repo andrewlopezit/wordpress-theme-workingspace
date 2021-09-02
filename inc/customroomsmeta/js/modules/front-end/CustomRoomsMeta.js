@@ -6,7 +6,7 @@ class CustomRoomsMeta {
     constructor() {
         this.$floorplanContainer = $('.floorplan-container#custom-rooms--floorplan');
 
-        if(this.$floorplanContainer.length < 1)  return;
+        if(!this.$floorplanContainer.length)  return;
         
         this.$contentContainer = this.$floorplanContainer.find('.content');
         this.$progressbar = this.$contentContainer.find('.floorplan-progressbar');
