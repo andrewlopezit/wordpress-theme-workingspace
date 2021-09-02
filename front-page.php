@@ -104,7 +104,7 @@
 
         <div class="row">
             <div class="col">
-                <?php get_template_part('partials/content/content','post'); ?>
+                <?php get_template_part('partials/content/content','post', array('posts_per_page' => 3)); ?>
             </div>
         </div>
     </div>

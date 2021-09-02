@@ -1,11 +1,13 @@
 <div class="post-list" id="posts">
 <?php
-    $args = array(
+    $sql_query = array(
         'post_type' => 'post',
-        'posts_per_page' => '3'
     );
 
-    $query = new WP_Query( $args ); 
+    if(isset($args['posts_per_page']))
+    $sql_query['posts_per_page'] = $args['posts_per_page'];
+
+    $query = new WP_Query( $sql_query ); 
 ?>
     <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
     <div class="item post card border-top-left border--post">
@@ -40,6 +42,10 @@
     <?php endif; ?>
 </div>
 
-<div class="action-container center post">
-    <a class="btn text-center" href="<?php esc_url(site_url())?>">View more</a>
-</div>
+<?php 
+$totalPublishPosts = (int) wp_count_posts('post')->publish;
+if(count($query->posts) < (int)get_option( 'posts_per_page' ) && count($query->posts) < $totalPublishPosts ): ?>
+    <div class="action-container center post">
+        <a class="btn text-center" href="<?php esc_url(site_url())?>">View more</a>
+    </div>
+<?php endif; ?>

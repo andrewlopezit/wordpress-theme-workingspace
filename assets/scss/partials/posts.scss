@@ -3,64 +3,6 @@
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 2em;
     grid-row-gap: 4em;
-
-    .item.card.post {
-        border: 0;
-        border-radius: 0;
-
-        position: relative;
-
-        .card-img-top{
-            border-radius: 0;
-        }
-
-        .card-body {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-
-            .author-container {
-                position: absolute;
-                top: 0;
-                left: 0;
-
-                display: flex;
-                align-items: center;
-                flex-direction: row;
-
-                top: -25px;
-                background-color: #fff;
-                padding: 5px 10px;
-                color: var(--secondary-color, $secondary-color);
-                font-weight: 600;
-                font-size: .9em;
-
-                .author-details {
-                    margin: 0 10px;
-                    a {
-                        color: var(--secondary-color, $secondary-color);
-                        font-size: .875em;
-                        text-transform: capitalize;
-                    }
-                    small {
-                        text-transform: capitalize;
-                    }
-                }
-            }
-
-            h5 {
-                color: #000;
-            }
-
-            .btn {
-                width: 50%;
-                align-self: center;
-                
-                @include transform(scale(0.9));
-            }
-
-        }
-    }
 }
 
 .action-container.post {
