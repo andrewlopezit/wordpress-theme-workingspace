@@ -39,15 +39,15 @@
 *
 * PARTIALS
 * - WORKSPACES
-* - WORKSPACES MAPS
 * - POSTS
 * - TESTIMONIALS
 *
 * PAGES
+* - CUSTOM META FLOORPLAN
+* - CUSTOM WORKINGSPACE MAPS
 * - FRONT PAGE
 * - SINGLE WORKINGSPACES
 * - NEWS & INSIGHTS
-* - CUSTOM META FLOORPLAN
 */
 /*------------------------------------*
 	FONTS
@@ -1908,7 +1908,324 @@ hr {
   }
 }
 /*------------------------------------*
-	  WORKSPACES MAPS
+	  POSTS
+*------------------------------------*/
+.post-list#posts {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 2em;
+  grid-row-gap: 4em;
+}
+
+.action-container.post {
+  margin: 50px 0;
+}
+
+@media (max-width: 767.98px) {
+  .post-list#posts {
+    -ms-grid-columns: (1fr)[1] !important;
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+  .post-list#posts .item.card.post:nth-child(3) {
+    display: flex !important;
+  }
+}
+@media (max-width: 991.98px) {
+  .post-list#posts {
+    -ms-grid-columns: (1fr)[2];
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .post-list#posts .item.card.post:nth-child(3) {
+    display: none !important;
+  }
+}
+/*------------------------------------*
+	  POSTS
+*------------------------------------*/
+.testimonial-slider.default#testimonials-slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.testimonial-slider.default#testimonials-slider .stage-container {
+  width: 100%;
+}
+.testimonial-slider.default#testimonials-slider .stage-container .item {
+  align-items: center;
+  justify-content: space-between;
+  padding: 4em 0;
+  display: none;
+}
+.testimonial-slider.default#testimonials-slider .stage-container .item.is-active {
+  display: flex;
+}
+.testimonial-slider.default#testimonials-slider .stage-container .item .content p {
+  width: 80%;
+  max-width: 750px;
+  margin: 4em 2em;
+  font-size: 17px;
+  position: relative;
+  opacity: 0;
+  transform: translateY(100px);
+}
+.testimonial-slider.default#testimonials-slider .stage-container .item .content p::before {
+  content: "";
+  position: absolute;
+  top: -5em;
+  left: -1.5em;
+  width: 8em;
+  height: 8em;
+  background-image: url(images/quote.409be49a.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.testimonial-slider.default#testimonials-slider .stage-container .item .content .author-details {
+  display: flex;
+  flex-direction: column;
+  margin: 0 2em;
+  opacity: 0;
+  transform: translateY(50px);
+}
+.testimonial-slider.default#testimonials-slider .stage-container .item .content .author-details .profession {
+  font-size: 15px;
+  font-weight: 500;
+}
+.testimonial-slider.default#testimonials-slider .stage-container .item .content .author-details .signature img {
+  width: 200px;
+  height: 50px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  -o-object-position: center;
+     object-position: center;
+}
+.testimonial-slider.default#testimonials-slider .stage-container .item .user-profile {
+  position: relative;
+  display: none;
+  opacity: 0;
+  transform: scale(0);
+}
+.testimonial-slider.default#testimonials-slider .stage-container .item .user-profile.is-display {
+  display: inline;
+}
+.testimonial-slider.default#testimonials-slider .stage-container .item .user-profile::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--primary-color, #FDD500);
+  z-index: -1;
+  transform: translate(5px, 5px);
+}
+.testimonial-slider.default#testimonials-slider .controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5em;
+}
+.testimonial-slider.default#testimonials-slider .controls span {
+  width: 40px;
+  height: 4px;
+  background-color: transparent;
+  margin: 0 10px;
+  background-color: rgba(0, 206, 181, 0.5);
+  position: relative;
+  display: none;
+  cursor: pointer;
+}
+.testimonial-slider.default#testimonials-slider .controls span.is-active, .testimonial-slider.default#testimonials-slider .controls span.is-display {
+  display: inline;
+}
+.testimonial-slider.default#testimonials-slider .controls span .duration-progress {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  background-color: #00CEB5;
+  z-index: -1;
+}
+
+@media (max-width: 767.98px) {
+  .testimonial-slider#testimonials-slider .stage-container .item {
+    position: relative;
+    padding-top: 6em;
+  }
+  .testimonial-slider#testimonials-slider .stage-container .item .user-profile {
+    position: absolute;
+    top: -1.5em;
+    width: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .testimonial-slider#testimonials-slider .stage-container .item .user-profile img {
+    width: 100%;
+  }
+}
+/*------------------------------------*
+	P A G E S
+*------------------------------------*/
+/*------------------------------------*
+	CUSTOM META FLOORPLAN
+*------------------------------------*/
+.floorplan-container#custom-rooms--floorplan .inner-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2em;
+  padding: 5px 0;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container svg rect,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polygon,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polyline {
+  opacity: 0.5 !important;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container svg rect.is-active,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polygon.is-active,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polyline.is-active {
+  cursor: pointer;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container svg rect.is-active:hover,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polygon.is-active:hover,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polyline.is-active:hover {
+  fill: var(--primary-color, #FDD500) !important;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container svg rect:not(.is-active),
+.floorplan-container#custom-rooms--floorplan .inner-container svg polygon:not(.is-active),
+.floorplan-container#custom-rooms--floorplan .inner-container svg polyline:not(.is-active) {
+  transition: all 400ms ease;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container svg rect:not(.is-active):hover,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polygon:not(.is-active):hover,
+.floorplan-container#custom-rooms--floorplan .inner-container svg polyline:not(.is-active):hover {
+  opacity: 0.1 !important;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container .content {
+  position: relative;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container .content .floorplan-progressbar {
+  position: absolute;
+  width: 5px;
+  top: 0;
+  right: 0;
+  height: 0;
+  z-index: 5;
+  background-color: var(--primary-color, #FDD500);
+}
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item {
+  position: relative;
+  display: none;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item.is-display {
+  display: flex;
+  flex-direction: column;
+  height: 572px;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item img {
+  width: 100%;
+  height: 280px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item h2 {
+  margin: 0;
+  position: relative;
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item h2 a {
+  color: #000;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item h2::after {
+  content: "";
+  position: absolute;
+  width: 60%;
+  right: 10%;
+  bottom: 8px;
+  border: 2px solid #FDD500;
+  z-index: -1;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item p {
+  margin-top: 10px !important;
+  margin: 0;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item .price {
+  font-weight: 600;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item .price span {
+  margin-left: 1.2em;
+}
+.floorplan-container#custom-rooms--floorplan .inner-container .content .item .btn.visit-request {
+  margin-top: 30px;
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
+}
+
+@-webkit-keyframes marker-anim {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes marker-anim {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@media (max-width: 575.98px) {
+  .floorplan-container#custom-rooms--floorplan .inner-container {
+    -ms-grid-columns: (1fr)[1];
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 0;
+    padding: 5px 0;
+  }
+  .floorplan-container#custom-rooms--floorplan .inner-container svg {
+    margin-bottom: 20px;
+  }
+  .floorplan-container#custom-rooms--floorplan .inner-container .content .item.is-display {
+    height: auto;
+  }
+  .floorplan-container#custom-rooms--floorplan .inner-container .content .item img {
+    height: auto;
+    max-height: 150px;
+  }
+}
+@media (max-width: 991.98px) {
+  .floorplan-container#custom-rooms--floorplan .inner-container {
+    -ms-grid-columns: (1fr)[1];
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 0;
+    padding: 5px 0;
+  }
+  .floorplan-container#custom-rooms--floorplan .inner-container svg {
+    margin-bottom: 20px;
+  }
+  .floorplan-container#custom-rooms--floorplan .inner-container .content .item.is-display {
+    height: auto;
+  }
+  .floorplan-container#custom-rooms--floorplan .inner-container .content .item img {
+    height: auto;
+    max-height: 350px;
+  }
+}
+/*------------------------------------*
+	CUSTOM WORKINGSPACE MAPS
 *------------------------------------*/
 #workspaces-map {
   position: relative;
@@ -2254,168 +2571,6 @@ hr {
   }
 }
 /*------------------------------------*
-	  POSTS
-*------------------------------------*/
-.post-list#posts {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (1fr)[3];
-  grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 2em;
-  grid-row-gap: 4em;
-}
-
-.action-container.post {
-  margin: 50px 0;
-}
-
-@media (max-width: 767.98px) {
-  .post-list#posts {
-    -ms-grid-columns: (1fr)[1] !important;
-    grid-template-columns: repeat(1, 1fr) !important;
-  }
-  .post-list#posts .item.card.post:nth-child(3) {
-    display: flex !important;
-  }
-}
-@media (max-width: 991.98px) {
-  .post-list#posts {
-    -ms-grid-columns: (1fr)[2];
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .post-list#posts .item.card.post:nth-child(3) {
-    display: none !important;
-  }
-}
-/*------------------------------------*
-	  POSTS
-*------------------------------------*/
-.testimonial-slider.default#testimonials-slider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-.testimonial-slider.default#testimonials-slider .stage-container {
-  width: 100%;
-}
-.testimonial-slider.default#testimonials-slider .stage-container .item {
-  align-items: center;
-  justify-content: space-between;
-  padding: 4em 0;
-  display: none;
-}
-.testimonial-slider.default#testimonials-slider .stage-container .item.is-active {
-  display: flex;
-}
-.testimonial-slider.default#testimonials-slider .stage-container .item .content p {
-  width: 80%;
-  max-width: 750px;
-  margin: 4em 2em;
-  font-size: 17px;
-  position: relative;
-  opacity: 0;
-  transform: translateY(100px);
-}
-.testimonial-slider.default#testimonials-slider .stage-container .item .content p::before {
-  content: "";
-  position: absolute;
-  top: -5em;
-  left: -1.5em;
-  width: 8em;
-  height: 8em;
-  background-image: url(images/quote.409be49a.png);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-.testimonial-slider.default#testimonials-slider .stage-container .item .content .author-details {
-  display: flex;
-  flex-direction: column;
-  margin: 0 2em;
-  opacity: 0;
-  transform: translateY(50px);
-}
-.testimonial-slider.default#testimonials-slider .stage-container .item .content .author-details .profession {
-  font-size: 15px;
-  font-weight: 500;
-}
-.testimonial-slider.default#testimonials-slider .stage-container .item .content .author-details .signature img {
-  width: 200px;
-  height: 50px;
-  -o-object-fit: contain;
-     object-fit: contain;
-  -o-object-position: center;
-     object-position: center;
-}
-.testimonial-slider.default#testimonials-slider .stage-container .item .user-profile {
-  position: relative;
-  display: none;
-  opacity: 0;
-  transform: scale(0);
-}
-.testimonial-slider.default#testimonials-slider .stage-container .item .user-profile.is-display {
-  display: inline;
-}
-.testimonial-slider.default#testimonials-slider .stage-container .item .user-profile::after {
-  position: absolute;
-  content: "";
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: var(--primary-color, #FDD500);
-  z-index: -1;
-  transform: translate(5px, 5px);
-}
-.testimonial-slider.default#testimonials-slider .controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5em;
-}
-.testimonial-slider.default#testimonials-slider .controls span {
-  width: 40px;
-  height: 4px;
-  background-color: transparent;
-  margin: 0 10px;
-  background-color: rgba(0, 206, 181, 0.5);
-  position: relative;
-  display: none;
-  cursor: pointer;
-}
-.testimonial-slider.default#testimonials-slider .controls span.is-active, .testimonial-slider.default#testimonials-slider .controls span.is-display {
-  display: inline;
-}
-.testimonial-slider.default#testimonials-slider .controls span .duration-progress {
-  position: absolute;
-  content: "";
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  background-color: #00CEB5;
-  z-index: -1;
-}
-
-@media (max-width: 767.98px) {
-  .testimonial-slider#testimonials-slider .stage-container .item {
-    position: relative;
-    padding-top: 6em;
-  }
-  .testimonial-slider#testimonials-slider .stage-container .item .user-profile {
-    position: absolute;
-    top: -1.5em;
-    width: 120px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .testimonial-slider#testimonials-slider .stage-container .item .user-profile img {
-    width: 100%;
-  }
-}
-/*------------------------------------*
-	P A G E S
 	FRONT PAGE
 *------------------------------------*/
 .hero-section {
@@ -2764,160 +2919,6 @@ section.testimonials {
 }
 .page-news-insights.page .our-client.posts h1 {
   margin-top: 20px;
-}
-
-/*------------------------------------*
-	CUSTOM META FLOORPLAN
-*------------------------------------*/
-.floorplan-container#custom-rooms--floorplan .inner-container {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (1fr)[2];
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 2em;
-  padding: 5px 0;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container svg rect,
-.floorplan-container#custom-rooms--floorplan .inner-container svg polygon,
-.floorplan-container#custom-rooms--floorplan .inner-container svg polyline {
-  opacity: 0.5 !important;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container svg rect.is-active,
-.floorplan-container#custom-rooms--floorplan .inner-container svg polygon.is-active,
-.floorplan-container#custom-rooms--floorplan .inner-container svg polyline.is-active {
-  cursor: pointer;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container svg rect.is-active:hover,
-.floorplan-container#custom-rooms--floorplan .inner-container svg polygon.is-active:hover,
-.floorplan-container#custom-rooms--floorplan .inner-container svg polyline.is-active:hover {
-  fill: var(--primary-color, #FDD500) !important;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container svg rect:not(.is-active),
-.floorplan-container#custom-rooms--floorplan .inner-container svg polygon:not(.is-active),
-.floorplan-container#custom-rooms--floorplan .inner-container svg polyline:not(.is-active) {
-  transition: all 400ms ease;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container svg rect:not(.is-active):hover,
-.floorplan-container#custom-rooms--floorplan .inner-container svg polygon:not(.is-active):hover,
-.floorplan-container#custom-rooms--floorplan .inner-container svg polyline:not(.is-active):hover {
-  opacity: 0.1 !important;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container .content {
-  position: relative;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container .content .floorplan-progressbar {
-  position: absolute;
-  width: 5px;
-  top: 0;
-  right: 0;
-  height: 0;
-  z-index: 5;
-  background-color: var(--primary-color, #FDD500);
-}
-.floorplan-container#custom-rooms--floorplan .inner-container .content .item {
-  position: relative;
-  display: none;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container .content .item.is-display {
-  display: flex;
-  flex-direction: column;
-  height: 572px;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container .content .item img {
-  width: 100%;
-  height: 280px;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -o-object-position: center;
-     object-position: center;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container .content .item h2 {
-  margin: 0;
-  position: relative;
-  width: -moz-fit-content !important;
-  width: -webkit-fit-content !important;
-  width: fit-content !important;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container .content .item h2 a {
-  color: #000;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container .content .item h2::after {
-  content: "";
-  position: absolute;
-  width: 60%;
-  right: 10%;
-  bottom: 8px;
-  border: 2px solid #FDD500;
-  z-index: -1;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container .content .item p {
-  margin-top: 10px !important;
-  margin: 0;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container .content .item .price {
-  font-weight: 600;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container .content .item .price span {
-  margin-left: 1.2em;
-}
-.floorplan-container#custom-rooms--floorplan .inner-container .content .item .btn.visit-request {
-  margin-top: 30px;
-  width: -moz-fit-content !important;
-  width: -webkit-fit-content !important;
-  width: fit-content !important;
-}
-
-@-webkit-keyframes marker-anim {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-@keyframes marker-anim {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-@media (max-width: 575.98px) {
-  .floorplan-container#custom-rooms--floorplan .inner-container {
-    -ms-grid-columns: (1fr)[1];
-    grid-template-columns: repeat(1, 1fr);
-    grid-gap: 0;
-    padding: 5px 0;
-  }
-  .floorplan-container#custom-rooms--floorplan .inner-container svg {
-    margin-bottom: 20px;
-  }
-  .floorplan-container#custom-rooms--floorplan .inner-container .content .item.is-display {
-    height: auto;
-  }
-  .floorplan-container#custom-rooms--floorplan .inner-container .content .item img {
-    height: auto;
-    max-height: 150px;
-  }
-}
-@media (max-width: 991.98px) {
-  .floorplan-container#custom-rooms--floorplan .inner-container {
-    -ms-grid-columns: (1fr)[1];
-    grid-template-columns: repeat(1, 1fr);
-    grid-gap: 0;
-    padding: 5px 0;
-  }
-  .floorplan-container#custom-rooms--floorplan .inner-container svg {
-    margin-bottom: 20px;
-  }
-  .floorplan-container#custom-rooms--floorplan .inner-container .content .item.is-display {
-    height: auto;
-  }
-  .floorplan-container#custom-rooms--floorplan .inner-container .content .item img {
-    height: auto;
-    max-height: 350px;
-  }
 }
 
 /*# sourceMappingURL=index.css.map*/

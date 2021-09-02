@@ -4,6 +4,9 @@ class TestimonialsSlider {
 
         // init variables
         this.$testimonialSlider = $('#testimonials-slider');
+
+        if(!this.$testimonialSlider.length) return;
+
         this.$controlsContainer = this.$testimonialSlider.find('.controls')
         this.$controls = this.$controlsContainer.find('span');
         this.$items = this.$testimonialSlider.find('.item');

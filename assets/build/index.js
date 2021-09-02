@@ -101,7 +101,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/frontend/TestimonialsSlider */ "./assets/js/modules/frontend/TestimonialsSlider.js");
 /* harmony import */ var _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/frontend/Main */ "./assets/js/modules/frontend/Main.js");
 /* harmony import */ var _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta */ "./inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta.js");
-/* harmony import */ var _modules_frontend_WorkingspacesMaps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/frontend/WorkingspacesMaps */ "./assets/js/modules/frontend/WorkingspacesMaps.js");
+/* harmony import */ var _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta */ "./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js");
  // import modules
 
 
@@ -116,7 +116,7 @@ let hamburgerMenu;
 let testimonialsSlider;
 let main;
 let customRoomsMeta;
-let workingspacesMaps;
+let customMapsMeta;
 const hompage = document.querySelector(".home");
 
 if (hompage) {
@@ -128,7 +128,7 @@ main = new _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_4__["default"]();
 testimonialsSlider = new _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_3__["default"](); // include front-end init
 
 customRoomsMeta = new _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_5__["default"]();
-workingspacesMaps = new _modules_frontend_WorkingspacesMaps__WEBPACK_IMPORTED_MODULE_6__["default"]();
+customMapsMeta = new _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_6__["default"]();
 
 /***/ }),
 
@@ -793,6 +793,7 @@ class TestimonialsSlider {
   constructor() {
     // init variables
     this.$testimonialSlider = $('#testimonials-slider');
+    if (!this.$testimonialSlider.length) return;
     this.$controlsContainer = this.$testimonialSlider.find('.controls');
     this.$controls = this.$controlsContainer.find('span');
     this.$items = this.$testimonialSlider.find('.item'); // init local variable
@@ -945,19 +946,58 @@ class TestimonialsSlider {
 
 /***/ }),
 
-/***/ "./assets/js/modules/frontend/WorkingspacesMaps.js":
-/*!*********************************************************!*\
-  !*** ./assets/js/modules/frontend/WorkingspacesMaps.js ***!
-  \*********************************************************/
+/***/ "./assets/js/modules/frontend/index.js":
+/*!*********************************************!*\
+  !*** ./assets/js/modules/frontend/index.js ***!
+  \*********************************************/
+/*! exports provided: rangeSlider, api, loading, maps */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "rangeSlider", function() { return rangeSlider; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "api", function() { return api; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loading", function() { return loading; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "maps", function() { return maps; });
+/* harmony import */ var _RangeSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RangeSlider */ "./assets/js/modules/frontend/RangeSlider.js");
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Api */ "./assets/js/modules/frontend/Api.js");
+/* harmony import */ var _Loading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Loading */ "./assets/js/modules/frontend/Loading.js");
+/* harmony import */ var _Maps__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Maps */ "./assets/js/modules/frontend/Maps.js");
+
+
+
+
+const rangeSlider = _RangeSlider__WEBPACK_IMPORTED_MODULE_0__["default"];
+const api = _Api__WEBPACK_IMPORTED_MODULE_1__["default"];
+const loading = _Loading__WEBPACK_IMPORTED_MODULE_2__["default"];
+const maps = _Maps__WEBPACK_IMPORTED_MODULE_3__["default"];
+
+/***/ }),
+
+/***/ "./assets/scss/stylesheet.scss":
+/*!*************************************!*\
+  !*** ./assets/scss/stylesheet.scss ***!
+  \*************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js":
+/*!*******************************************************************!*\
+  !*** ./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js ***!
+  \*******************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "lodash");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
-
+/* harmony import */ var _assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../assets/js/modules/frontend/index */ "./assets/js/modules/frontend/index.js");
 
 
 class WorkingspacesMaps {
@@ -989,7 +1029,7 @@ class WorkingspacesMaps {
     this.btnFilterPositionTop = this.$btnFilter.offset().top + 500;
     this.filterItem = 1; //init slider
 
-    Object(_index__WEBPACK_IMPORTED_MODULE_1__["rangeSlider"])({
+    Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["rangeSlider"])({
       container: this.$priceRange.get()[0]
     });
     this.initAnimation(); // init events
@@ -1002,7 +1042,7 @@ class WorkingspacesMaps {
   initMap() {
     var _this$$map$data$split, _this$$map, _this$$map$data;
 
-    this.map = Object(_index__WEBPACK_IMPORTED_MODULE_1__["maps"])({
+    this.map = Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["maps"])({
       container: this.$map.get()[0],
       center: (_this$$map$data$split = (_this$$map = this.$map) === null || _this$$map === void 0 ? void 0 : (_this$$map$data = _this$$map.data('geolocation')) === null || _this$$map$data === void 0 ? void 0 : _this$$map$data.split(',')) !== null && _this$$map$data$split !== void 0 ? _this$$map$data$split : null,
       zoom: this.mapZoom
@@ -1034,7 +1074,7 @@ class WorkingspacesMaps {
 
   mapEvents() {
     this.$map.hide();
-    const load = Object(_index__WEBPACK_IMPORTED_MODULE_1__["loading"])(this.$mapContainer, 60).start();
+    const load = Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$mapContainer, 60).start();
     this.map.get().on('load', () => {
       this.$btnMapView.html(`<button class="btn maps"><i class="far fa-map"></i></button>`);
       this.$map.show();
@@ -1191,11 +1231,11 @@ class WorkingspacesMaps {
     });
     this.$btnLoadMore.on('click', () => {
       this.filterItem++;
-      const load = Object(_index__WEBPACK_IMPORTED_MODULE_1__["loading"])(this.$itemContainer).start();
+      const load = Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$itemContainer).start();
       const filter = this.getWorkingspaceFilter;
       filter.offset = this.workingspaces.length;
       this.$btnLoadMore.hide();
-      Object(_index__WEBPACK_IMPORTED_MODULE_1__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
+      Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
         this.$btnLoadMore.show();
         load.end();
         const {
@@ -1331,9 +1371,9 @@ class WorkingspacesMaps {
     }
 
     this.$itemContainer.find('.item,p').remove();
-    const load = Object(_index__WEBPACK_IMPORTED_MODULE_1__["loading"])(this.$itemContainer).start();
+    const load = Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$itemContainer).start();
     this.$btnLoadMore.hide();
-    Object(_index__WEBPACK_IMPORTED_MODULE_1__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
+    Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
       this.$btnLoadMore.show();
       const {
         data: {
@@ -1440,48 +1480,6 @@ class WorkingspacesMaps {
 
 /***/ }),
 
-/***/ "./assets/js/modules/frontend/index.js":
-/*!*********************************************!*\
-  !*** ./assets/js/modules/frontend/index.js ***!
-  \*********************************************/
-/*! exports provided: rangeSlider, api, loading, maps */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "rangeSlider", function() { return rangeSlider; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "api", function() { return api; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loading", function() { return loading; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "maps", function() { return maps; });
-/* harmony import */ var _RangeSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RangeSlider */ "./assets/js/modules/frontend/RangeSlider.js");
-/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Api */ "./assets/js/modules/frontend/Api.js");
-/* harmony import */ var _Loading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Loading */ "./assets/js/modules/frontend/Loading.js");
-/* harmony import */ var _Maps__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Maps */ "./assets/js/modules/frontend/Maps.js");
-
-
-
-
-const rangeSlider = _RangeSlider__WEBPACK_IMPORTED_MODULE_0__["default"];
-const api = _Api__WEBPACK_IMPORTED_MODULE_1__["default"];
-const loading = _Loading__WEBPACK_IMPORTED_MODULE_2__["default"];
-const maps = _Maps__WEBPACK_IMPORTED_MODULE_3__["default"];
-
-/***/ }),
-
-/***/ "./assets/scss/stylesheet.scss":
-/*!*************************************!*\
-  !*** ./assets/scss/stylesheet.scss ***!
-  \*************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "./inc/customroomsmeta/js/modules/Api.js":
 /*!***********************************************!*\
   !*** ./inc/customroomsmeta/js/modules/Api.js ***!
@@ -1535,7 +1533,7 @@ const api = url => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Api */ "./inc/customroomsmeta/js/modules/Api.js");
-/* harmony import */ var _assets_js_modules_frontend__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../assets/js/modules/frontend */ "./assets/js/modules/frontend/index.js");
+/* harmony import */ var _assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../assets/js/modules/frontend/index */ "./assets/js/modules/frontend/index.js");
 
 
 
@@ -1568,7 +1566,7 @@ class CustomRoomsMeta {
       $(el).addClass('is-active');
       ids.push($(el).data('id'));
     });
-    const load = Object(_assets_js_modules_frontend__WEBPACK_IMPORTED_MODULE_1__["loading"])(this.$contentContainer).start();
+    const load = Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_1__["loading"])(this.$contentContainer).start();
     Object(_Api__WEBPACK_IMPORTED_MODULE_0__["default"])(this.baseEndpointUrl).getPostsByIds(ids).then(result => {
       const {
         data
@@ -3796,17 +3794,6 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-
-/***/ }),
-
-/***/ "lodash":
-/*!*************************!*\
-  !*** external "lodash" ***!
-  \*************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-(function() { module.exports = window["lodash"]; }());
 
 /***/ })
 

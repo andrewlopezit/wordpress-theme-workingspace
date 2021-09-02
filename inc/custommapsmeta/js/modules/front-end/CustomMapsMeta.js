@@ -1,5 +1,5 @@
-import { filter } from 'lodash';
-import {rangeSlider, api, loading, maps} from './index';
+import {rangeSlider, api, loading, maps} from '../../../../../assets/js/modules/frontend/index';
+
 class WorkingspacesMaps {
     constructor() {
         this.$workspaceContainer = $('#workspaces-map');

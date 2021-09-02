@@ -3,8 +3,12 @@ get_header();
 
 if ( have_posts() ) : 
     while ( have_posts() ) : the_post();
+
+    $imageSrc = get_hero_background_src();
 ?>   
-    <section class="hero-section" style="background-image: url('<?php the_post_thumbnail_url('hero_background'); ?>')">
+
+    <?php if($imageSrc):?>
+    <section class="hero-section" <?php echo isset($imageSrc) ? 'style= "background-image: url('.$imageSrc.')";' : '';?>>
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -16,6 +20,7 @@ if ( have_posts() ) :
             </div>
         </div>
     </section>
+    <?php endif;?>
 <?php
         the_content();
     endwhile;

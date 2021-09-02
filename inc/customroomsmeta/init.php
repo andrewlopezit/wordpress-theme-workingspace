@@ -107,7 +107,7 @@ final class Init {
 		update_post_meta( $post_id, 'custom_rooms_floorplan_form_key', $data );
     }
 
-    public function floor_plan_shortcode($args) {
+    public function floor_plan_shortcode($args = null) {
         $this->frontend = new FrontEndCallbacks();
         $this->frontend->index($args);
     }

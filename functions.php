@@ -100,10 +100,6 @@ if(!class_exists('WorkingspaceTheme')) {
                 // load all scripts
                 $this->register_script();
                 $this->enqueue_scripts();
-
-                //init rooms shortcode
-                $rooms = new CustomRoomsMeta();
-                $rooms->init_shortcode();
             }
 
             /**
@@ -118,6 +114,15 @@ if(!class_exists('WorkingspaceTheme')) {
 
             // set image image
             $this->set_image_sizes();
+
+            //init rooms shortcode
+            $rooms = new CustomRoomsMeta();
+            $rooms->init_shortcode();
+
+
+            //init workingspace maps shortcode
+            $workingspace_maps = new CustomMapsMeta();
+            $workingspace_maps->init_shortcode();
         }
 
 //------------------------------------ F U N C T I O N S ----------------------------------------

@@ -7,7 +7,7 @@ import HamburgerMenu from './modules/frontend/HamburgerMenu';
 import TestimonialsSlider from './modules/frontend/TestimonialsSlider';
 import Main from './modules/frontend/Main';
 import CustomRoomsMeta from '../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta';
-import WorkingspacesMaps from './modules/frontend/WorkingspacesMaps';
+import CustomMapsMeta from '../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta';
 
 // instantiate module classes
 let heroImageSlider;
@@ -15,7 +15,7 @@ let hamburgerMenu;
 let testimonialsSlider;
 let main;
 let customRoomsMeta;
-let workingspacesMaps;
+let customMapsMeta;
 
 const hompage = document.querySelector(".home");
 
@@ -30,4 +30,4 @@ testimonialsSlider = new TestimonialsSlider();
 
 // include front-end init
 customRoomsMeta = new CustomRoomsMeta();
-workingspacesMaps = new WorkingspacesMaps()
+customMapsMeta = new CustomMapsMeta();

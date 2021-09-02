@@ -11,13 +11,14 @@
 namespace Inc\Custommapsmeta;
 
 use Inc\Custommapsmeta\Callbacks\BackEndCallbacks;
+use Inc\Custommapsmeta\Callbacks\FrontEndCallbacks;
 
 final class Init {
     private $custom_meta_id = 'workingspaceMapsID';
     private $_metabox = [];
     
-    public function __construct() {
-        
+    public function init_shortcode() {
+        add_shortcode('workingspaces_maps', array( $this, 'floor_plan_shortcode' ));
     }
 
     public function add() {
@@ -113,5 +114,10 @@ final class Init {
             'place_name' => sanitize_text_field($_POST['place_name'])
 		);
 		update_post_meta( $post_id, 'custom_maps_mapbox_form_key', $data );
+    }
+
+    public function floor_plan_shortcode($args = null) {
+        $this->frontend = new FrontEndCallbacks();
+        $this->frontend->index($args);
     }
 }
