@@ -162,7 +162,7 @@ function editComponent(props) {
                                         posts.map((post, postIndex) => {
                                             return (
                                                 <div data-index={i} data-id={post.ID} className="post" 
-                                                    onClick={() => addFeaturedPost(postCollection[i][postIndex])}>
+                                                    onClick={e => {addFeaturedPost(postCollection[i][postIndex]); e.currentTarget.remove();}}>
                                                     <img src={post?.featured_image}/>
                                                     <span>{post?.post_title}</span>
                                                 </div>

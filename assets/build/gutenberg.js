@@ -269,7 +269,10 @@ function editComponent(props) {
             "data-index": i,
             "data-id": post.ID,
             className: "post",
-            onClick: () => addFeaturedPost(postCollection[i][postIndex])
+            onClick: e => {
+              addFeaturedPost(postCollection[i][postIndex]);
+              e.currentTarget.remove();
+            }
           }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
             src: post === null || post === void 0 ? void 0 : post.featured_image
           }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", null, post === null || post === void 0 ? void 0 : post.post_title));

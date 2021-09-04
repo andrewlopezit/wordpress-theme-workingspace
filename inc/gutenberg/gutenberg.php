@@ -10,6 +10,8 @@
 
 namespace Inc\Gutenberg;
 
+use Inc\Gutenberg\Callbacks\FrontEndCallbacks;
+
 class Gutenberg {
 
     public function init() {
@@ -29,7 +31,6 @@ class Gutenberg {
         wp_register_style('custom-gutenberg-css', WORKINGSPACE_CSS_DIR_URI.'gutenberg.css');
 
         register_block_type('workingspaces/featured-posts', array(
-            'render_callback' => array($this, 'featured_posts_blocks_callback'),
             'editor_script' => 'custom-gutenberg-js',
             'editor_style' => 'custom-gutenberg-css'
         ));
@@ -53,7 +54,9 @@ class Gutenberg {
         );
     }
 
-    public function featured_posts_blocks_callback() {
-        return 'TEST';
+    public function featured_posts_blocks_callback($args) {
+        $this->frontend = new FrontEndCallbacks();
+        $this->frontend->featured_posts($args);
+       return ob_get_clean();
     }
 }

@@ -8,10 +8,10 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Custommapsmeta\Callbacks;
+namespace Inc\Gutenberg\Callbacks;
 
 final class FrontEndCallbacks {
-    public function index($args) {
-        return require WORKINGSPACE_INC_DIR.'custommapsmeta/callbacks/views/front-index.php';
+    public function featured_posts($args) {
+        return require WORKINGSPACE_INC_DIR.'gutenberg/callbacks/views/featured-posts.php';
     }
 }
