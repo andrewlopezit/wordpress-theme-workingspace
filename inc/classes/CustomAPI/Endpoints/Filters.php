@@ -115,6 +115,15 @@ final class Filters {
         $query['s'] = $request['search'];
       }
 
+      if($request['ids']) {
+        $ids = explode(',',$request['ids']);
+
+        if(is_array($ids)) {
+          $query['post__in'] = $ids;
+          $query['posts_per_page'] = -1;
+        }
+      }
+
       return $query;
     }
 }

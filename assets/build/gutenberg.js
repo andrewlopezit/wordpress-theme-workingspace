@@ -129,7 +129,7 @@ registerBlockType("workingspaces/featured-posts", {
     searchPostName: {
       type: 'string'
     },
-    postIds: {
+    posts: {
       type: 'array'
     }
   },
@@ -141,7 +141,7 @@ registerBlockType("workingspaces/featured-posts", {
 
 function editComponent(props) {
   const [posts, setPosts] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
-  const [postCollection, setPostCollection] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])();
+  const [postCollection, setPostCollection] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
   const {
     attributes: {
       searchPostName,
@@ -149,17 +149,7 @@ function editComponent(props) {
     }
   } = props;
   let debounceSearchTimter;
-  const searchPostTitle = ['Workingspaces', 'Rooms', 'Posts'];
-
-  function setAttributesPostName(name) {
-    clearInterval(debounceSearchTimter);
-    debounceSearchTimter = setTimeout(() => {
-      props.setAttributes({
-        searchPostName: name
-      });
-    }, 800);
-  } // init posts display
-
+  const searchPostTitle = ['Workingspaces', 'Rooms', 'Posts']; // init posts display
 
   Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
     async function getPosts() {
@@ -167,17 +157,35 @@ function editComponent(props) {
         path: 'wp/v2/workingspaces?per_page=4',
         method: 'GET'
       });
-      const postIds = results.map(map => {
-        return map.ID;
-      });
       props.setAttributes({
-        postIds: postIds
+        posts: results
       });
-      setPosts(results);
     }
 
     getPosts();
-  }, []); // display posts on search name
+  }, []);
+
+  function setAttributePostName(name) {
+    clearInterval(debounceSearchTimter);
+    debounceSearchTimter = setTimeout(() => {
+      props.setAttributes({
+        searchPostName: name
+      });
+    }, 800);
+  }
+
+  function removePostById(id) {
+    if (props.attributes.posts.length <= 1) return;
+
+    const postsClone = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.cloneDeep(props.attributes.posts);
+
+    const currentPosts = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.filter(postsClone, postClone => postClone.ID !== +id);
+
+    props.setAttributes({
+      posts: currentPosts
+    });
+  } // display posts on search name
+
 
   Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
     if (!searchPostName) return;
@@ -200,8 +208,19 @@ function editComponent(props) {
     getCollectionPostsByName();
   }, [searchPostName]); // display post by id
 
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
+    async function getPostsByIds() {
+      const results = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default()({
+        path: ''
+      });
+    }
+  }, [postIds]);
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
+    setPosts(props.attributes.posts);
+  }, [props.attributes.posts]);
+
   function displaySearchPostCollection() {
-    if (!postCollection) {
+    if (!postCollection || postCollection.length < 1) {
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
         className: "search-posts-container"
       }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading..."));
@@ -224,7 +243,7 @@ function editComponent(props) {
     }));
   }
 
-  if (!posts) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
+  if (!posts || posts.length < 1) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
   return [Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(InspectorControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(PanelBody, {
     title: "Posts Setting"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
@@ -234,7 +253,7 @@ function editComponent(props) {
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("input", {
     class: "components-text-control__input",
     placeholder: "posts, rooms, and workingspaces",
-    onChange: e => setAttributesPostName(e.target.value)
+    onChange: e => setAttributePostName(e.target.value)
   })), searchPostName ? displaySearchPostCollection() : '', Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "post-container"
   }, posts.map(post => {
@@ -248,12 +267,10 @@ function editComponent(props) {
       id: post === null || post === void 0 ? void 0 : post.ID,
       className: "components-button is-secondary"
     }, "Replace"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(Button, {
-      id: post === null || post === void 0 ? void 0 : post.ID,
+      "data-id": post === null || post === void 0 ? void 0 : post.ID,
       className: "components-button is-link is-destructive",
       onClick: e => {
-        lodash__WEBPACK_IMPORTED_MODULE_3___default.a.remove(prop.attributes.postIds, postId => {
-          postId === e.target.id;
-        });
+        removePostById(e.target.getAttribute('data-id'));
       }
     }, "Remove")));
   }))))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {

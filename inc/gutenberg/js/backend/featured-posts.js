@@ -20,9 +20,9 @@ registerBlockType("workingspaces/featured-posts", {
         searchPostName: {
             type: 'string',
         },
-        postIds: {
+        posts: {
             type: 'array',
-        }
+        },
     },
   
     edit: editComponent,
@@ -33,19 +33,11 @@ registerBlockType("workingspaces/featured-posts", {
 
 function editComponent(props) {
     const [posts, setPosts] = useState('');
-    const [postCollection, setPostCollection] = useState();
+    const [postCollection, setPostCollection] = useState('');
     const {attributes: {searchPostName, postIds}} = props;
     let debounceSearchTimter;
     
     const searchPostTitle = ['Workingspaces', 'Rooms', 'Posts'];
-
-    function setAttributesPostName(name) {
-        clearInterval(debounceSearchTimter);
-
-        debounceSearchTimter = setTimeout(() => {
-            props.setAttributes({searchPostName: name});
-        }, 800);
-    }
 
     // init posts display
     useEffect(() => {
@@ -55,13 +47,28 @@ function editComponent(props) {
                 method: 'GET'
             });
 
-            const postIds = results.map(map => { return map.ID; });
-            props.setAttributes({postIds: postIds});
-
-            setPosts(results);
+            props.setAttributes({posts: results});
         }
+
         getPosts();
     }, []);
+
+    function setAttributePostName(name) {
+        clearInterval(debounceSearchTimter);
+
+        debounceSearchTimter = setTimeout(() => {
+            props.setAttributes({searchPostName: name});
+        }, 800);
+    }
+
+    function removePostById(id) {
+        if(props.attributes.posts.length <= 1 ) return;
+        
+        const postsClone = _.cloneDeep(props.attributes.posts);
+
+        const currentPosts = _.filter(postsClone, postClone =>  postClone.ID !== +id);
+        props.setAttributes({posts: currentPosts});
+    }
 
     // display posts on search name
     useEffect(() => {
@@ -93,10 +100,20 @@ function editComponent(props) {
     }, [searchPostName]);
 
     // display post by id
-    
+    useEffect(() => {
+        async function getPostsByIds() {
+            const results = await apiFetch({
+                path: ''
+            });
+        }
+    }, [postIds]);
+
+    useEffect(() => {
+        setPosts(props.attributes.posts);
+    }, [props.attributes.posts])
 
     function displaySearchPostCollection() {
-        if(!postCollection) {
+        if(!postCollection || postCollection.length < 1) {
             return (
                 <div className="search-posts-container">
                     <p>Loading...</p>
@@ -129,7 +146,7 @@ function editComponent(props) {
         );
     }
 
-    if (!posts) return <p>Loading...</p>
+    if (!posts ||posts.length < 1) return <p>Loading...</p>
     return [
         <InspectorControls>
             <PanelBody title={"Posts Setting"}>
@@ -137,7 +154,7 @@ function editComponent(props) {
                     <div class="components-base-control__field css-11vcxb9-StyledField e1puf3u1">
                         <input class="components-text-control__input" 
                         placeholder="posts, rooms, and workingspaces"
-                        onChange={e => setAttributesPostName(e.target.value)}/>
+                        onChange={e => setAttributePostName(e.target.value)}/>
                     </div>
                         {searchPostName ? displaySearchPostCollection() : ''}
                     <div className="post-container">
@@ -148,9 +165,11 @@ function editComponent(props) {
                                         <img src={post.featured_image}/>
                                         <div className="action-container">
                                             <Button id={post?.ID} className="components-button is-secondary">Replace</Button>
-                                            <Button id={post?.ID} className="components-button is-link is-destructive" 
-                                                onClick={e => {_.remove(prop.attributes.postIds, postId => {postId === e.target.id})}}>
-                                                    Remove
+                                            <Button data-id={post?.ID} className="components-button is-link is-destructive" 
+                                                onClick={e =>  {
+                                                    removePostById(e.target.getAttribute('data-id'));
+                                                }}>
+                                                Remove
                                             </Button>
                                         </div>
                                     </div>

@@ -106,6 +106,7 @@
 }
 .workingspace.gutenberg--inspector-controls.featured-posts {
   position: relative;
+  height: 380px;
 }
 .workingspace.gutenberg--inspector-controls.featured-posts .search-posts-container {
   position: absolute;
