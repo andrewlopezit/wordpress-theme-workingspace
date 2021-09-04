@@ -17,9 +17,6 @@ registerBlockType("workingspaces/featured-posts", {
     category: "workingspace-blocks",
     // custom attributes
     attributes: {
-        searchPostName: {
-            type: 'string',
-        },
         featuredPosts: {
             type: 'array',
         },
@@ -34,7 +31,11 @@ registerBlockType("workingspaces/featured-posts", {
 function editComponent(props) {
     const [featuredPosts, setFeaturedPosts] = useState('');
     const [postCollection, setPostCollection] = useState('');
-    const {attributes: {searchPostName}} = props;
+    const [searchPostName, setSearchPostName] = useState('');
+    const [isDisplaySearchPost, setIsDisplaySearchPost] = useState('');
+    const [isLoadingSearchPost, setIsLoadingSearchPost] = useState('');
+    const [selectedReplaceIndex, setSelectedReplaceIndex] = useState('');
+
     let debounceSearchTimter;
     
     const searchPostTitle = ['Workingspaces', 'Rooms', 'Posts'];
@@ -55,19 +56,30 @@ function editComponent(props) {
 
     function setAttributePostName(name) {
         clearInterval(debounceSearchTimter);
+        setIsLoadingSearchPost(true);
+        setIsDisplaySearchPost(false);
 
         debounceSearchTimter = setTimeout(() => {
-            props.setAttributes({searchPostName: name});
+            setSearchPostName(name);
         }, 800);
     }
 
     function addFeaturedPost(post) {
+        setIsDisplaySearchPost(false);
+
+        if(props.attributes.featuredPosts.length >= 4) return;
+
         const postsClone = _.cloneDeep(props.attributes.featuredPosts);
 
-        if(postsClone.length >= 4) return;
+        if(selectedReplaceIndex) {
+            postsClone[selectedReplaceIndex] = posts;
+        }else {
+            postsClone.push(post);
+        }
 
-        postsClone.push(post);
         props.setAttributes({featuredPosts: postsClone});
+        props.setAttributes({searchPostName: null});
+        setSelectedReplaceIndex(null);
     }
 
     function removeFeaturedPost(id) {
@@ -81,9 +93,11 @@ function editComponent(props) {
 
     // display posts on search name
     useEffect(() => {
-        if(!searchPostName) return;
-
-        setPostCollection(null);
+        if(!searchPostName) {
+            setIsLoadingSearchPost(false);
+            setIsDisplaySearchPost(false);
+            return;
+        }
 
         async function getCollectionPostsByName() {
             
@@ -105,13 +119,15 @@ function editComponent(props) {
             const collectionPost =  [];
             
             const lookup = _.keyBy(props.attributes.featuredPosts, post => { return post.ID;});
-            
+
             results.forEach(result => {
                 const filteredPosts = _.filter(result, result => lookup[result.ID]  === undefined);
                 collectionPost.push(filteredPosts);
             });
 
             setPostCollection(collectionPost);
+            setIsLoadingSearchPost(false);
+            setIsDisplaySearchPost(true);
         }
         
         getCollectionPostsByName();
@@ -123,37 +139,48 @@ function editComponent(props) {
     }, [props.attributes.featuredPosts])
 
     function displaySearchPostCollection() {
-        if(!postCollection || postCollection.length < 1) {
+        if(isLoadingSearchPost) {
             return (
-                <div className="search-posts-container">
+                <div className='search-posts-container '>
                     <p>Loading...</p>
                 </div>
             );
         }
 
-        return (
-            <div className="search-posts-container">
-                {
-                    postCollection.map((posts, i) => {
-                        return (
-                            <div className="post-container">
-                                <div className="title">{searchPostTitle[i]}</div>
-                                {
-                                    posts.map((post, postIndex) => {
-                                        return (
-                                            <div data-index={i} data-id={post.ID} className="post" onClick={() => addFeaturedPost(postCollection[i][postIndex])}>
-                                                <img src={post?.featured_image}/>
-                                                <span>{post?.post_title}</span>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                        )
-                    })
-                }
-            </div>
-        );
+        if(isDisplaySearchPost && postCollection) {
+            return (
+                <div className='search-posts-container'>
+                    {   
+                        postCollection.map((posts, i) => {
+                            return (
+                                <div className="post-container">
+                                    <div className="title">{searchPostTitle[i]}</div>
+                                    {
+                                        posts.map((post, postIndex) => {
+                                            return (
+                                                <div data-index={i} data-id={post.ID} className="post" 
+                                                    onClick={() => addFeaturedPost(postCollection[i][postIndex])}>
+                                                    <img src={post?.featured_image}/>
+                                                    <span>{post?.post_title}</span>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            );
+        }
+
+        if(isDisplaySearchPost && !postCollection) {
+            return (
+                <div className='search-posts-container'>
+                    <p>No posts to load</p>
+                </div>
+            );
+        }
     }
 
     if (!featuredPosts ||featuredPosts.length < 1) return <p>Loading...</p>
@@ -166,15 +193,18 @@ function editComponent(props) {
                         placeholder="posts, rooms, and workingspaces"
                         onChange={e => setAttributePostName(e.target.value)}/>
                     </div>
-                        {searchPostName ? displaySearchPostCollection() : ''}
+                        {(isLoadingSearchPost || isDisplaySearchPost) ? displaySearchPostCollection() : ''}
                     <div className="post-container">
                         {
-                            featuredPosts.map(post => {
+                            featuredPosts.map((post, i) => {
                                 return (
                                     <div class="posts">
                                         <img src={post.featured_image}/>
                                         <div className="action-container">
-                                            <Button id={post?.ID} className="components-button is-secondary">Replace</Button>
+                                            <Button className="components-button is-secondary"
+                                                onClick={e => { 
+                                                    setIsDisplaySearchPost(true); 
+                                                    setSelectedReplaceIndex(i);}}>Replace</Button>
                                             <Button data-id={post?.ID} className="components-button is-link is-destructive" 
                                                 onClick={e =>  {
                                                     removeFeaturedPost(e.target.getAttribute('data-id'));

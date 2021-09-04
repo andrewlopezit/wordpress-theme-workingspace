@@ -126,9 +126,6 @@ registerBlockType("workingspaces/featured-posts", {
   category: "workingspace-blocks",
   // custom attributes
   attributes: {
-    searchPostName: {
-      type: 'string'
-    },
     featuredPosts: {
       type: 'array'
     }
@@ -142,11 +139,10 @@ registerBlockType("workingspaces/featured-posts", {
 function editComponent(props) {
   const [featuredPosts, setFeaturedPosts] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
   const [postCollection, setPostCollection] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
-  const {
-    attributes: {
-      searchPostName
-    }
-  } = props;
+  const [searchPostName, setSearchPostName] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
+  const [isDisplaySearchPost, setIsDisplaySearchPost] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
+  const [isLoadingSearchPost, setIsLoadingSearchPost] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
+  const [selectedReplaceIndex, setSelectedReplaceIndex] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
   let debounceSearchTimter;
   const searchPostTitle = ['Workingspaces', 'Rooms', 'Posts']; // init posts display
 
@@ -166,21 +162,32 @@ function editComponent(props) {
 
   function setAttributePostName(name) {
     clearInterval(debounceSearchTimter);
+    setIsLoadingSearchPost(true);
+    setIsDisplaySearchPost(false);
     debounceSearchTimter = setTimeout(() => {
-      props.setAttributes({
-        searchPostName: name
-      });
+      setSearchPostName(name);
     }, 800);
   }
 
   function addFeaturedPost(post) {
+    setIsDisplaySearchPost(false);
+    if (props.attributes.featuredPosts.length >= 4) return;
+
     const postsClone = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.cloneDeep(props.attributes.featuredPosts);
 
-    if (postsClone.length >= 4) return;
-    postsClone.push(post);
+    if (selectedReplaceIndex) {
+      postsClone[selectedReplaceIndex] = posts;
+    } else {
+      postsClone.push(post);
+    }
+
     props.setAttributes({
       featuredPosts: postsClone
     });
+    props.setAttributes({
+      searchPostName: null
+    });
+    setSelectedReplaceIndex(null);
   }
 
   function removeFeaturedPost(id) {
@@ -197,8 +204,11 @@ function editComponent(props) {
 
 
   Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
-    if (!searchPostName) return;
-    setPostCollection(null);
+    if (!searchPostName) {
+      setIsLoadingSearchPost(false);
+      setIsDisplaySearchPost(false);
+      return;
+    }
 
     async function getCollectionPostsByName() {
       const results = await Promise.all([_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default()({
@@ -223,6 +233,8 @@ function editComponent(props) {
         collectionPost.push(filteredPosts);
       });
       setPostCollection(collectionPost);
+      setIsLoadingSearchPost(false);
+      setIsDisplaySearchPost(true);
     }
 
     getCollectionPostsByName();
@@ -232,30 +244,38 @@ function editComponent(props) {
   }, [props.attributes.featuredPosts]);
 
   function displaySearchPostCollection() {
-    if (!postCollection || postCollection.length < 1) {
+    if (isLoadingSearchPost) {
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-        className: "search-posts-container"
+        className: "search-posts-container "
       }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading..."));
     }
 
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-      className: "search-posts-container"
-    }, postCollection.map((posts, i) => {
+    if (isDisplaySearchPost && postCollection) {
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-        className: "post-container"
-      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-        className: "title"
-      }, searchPostTitle[i]), posts.map((post, postIndex) => {
+        className: "search-posts-container"
+      }, postCollection.map((posts, i) => {
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-          "data-index": i,
-          "data-id": post.ID,
-          className: "post",
-          onClick: () => addFeaturedPost(postCollection[i][postIndex])
-        }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
-          src: post === null || post === void 0 ? void 0 : post.featured_image
-        }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", null, post === null || post === void 0 ? void 0 : post.post_title));
+          className: "post-container"
+        }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+          className: "title"
+        }, searchPostTitle[i]), posts.map((post, postIndex) => {
+          return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+            "data-index": i,
+            "data-id": post.ID,
+            className: "post",
+            onClick: () => addFeaturedPost(postCollection[i][postIndex])
+          }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
+            src: post === null || post === void 0 ? void 0 : post.featured_image
+          }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", null, post === null || post === void 0 ? void 0 : post.post_title));
+        }));
       }));
-    }));
+    }
+
+    if (isDisplaySearchPost && !postCollection) {
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+        className: "search-posts-container"
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "No posts to load"));
+    }
   }
 
   if (!featuredPosts || featuredPosts.length < 1) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
@@ -269,9 +289,9 @@ function editComponent(props) {
     class: "components-text-control__input",
     placeholder: "posts, rooms, and workingspaces",
     onChange: e => setAttributePostName(e.target.value)
-  })), searchPostName ? displaySearchPostCollection() : '', Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+  })), isLoadingSearchPost || isDisplaySearchPost ? displaySearchPostCollection() : '', Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "post-container"
-  }, featuredPosts.map(post => {
+  }, featuredPosts.map((post, i) => {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
       class: "posts"
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
@@ -279,8 +299,11 @@ function editComponent(props) {
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
       className: "action-container"
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(Button, {
-      id: post === null || post === void 0 ? void 0 : post.ID,
-      className: "components-button is-secondary"
+      className: "components-button is-secondary",
+      onClick: e => {
+        setIsDisplaySearchPost(true);
+        setSelectedReplaceIndex(i);
+      }
     }, "Replace"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(Button, {
       "data-id": post === null || post === void 0 ? void 0 : post.ID,
       className: "components-button is-link is-destructive",
