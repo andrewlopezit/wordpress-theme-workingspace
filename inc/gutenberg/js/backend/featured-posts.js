@@ -20,7 +20,7 @@ registerBlockType("workingspaces/featured-posts", {
         searchPostName: {
             type: 'string',
         },
-        posts: {
+        featuredPosts: {
             type: 'array',
         },
     },
@@ -32,9 +32,9 @@ registerBlockType("workingspaces/featured-posts", {
 });
 
 function editComponent(props) {
-    const [posts, setPosts] = useState('');
+    const [featuredPosts, setFeaturedPosts] = useState('');
     const [postCollection, setPostCollection] = useState('');
-    const {attributes: {searchPostName, postIds}} = props;
+    const {attributes: {searchPostName}} = props;
     let debounceSearchTimter;
     
     const searchPostTitle = ['Workingspaces', 'Rooms', 'Posts'];
@@ -47,7 +47,7 @@ function editComponent(props) {
                 method: 'GET'
             });
 
-            props.setAttributes({posts: results});
+            props.setAttributes({featuredPosts: results});
         }
 
         getPosts();
@@ -61,13 +61,22 @@ function editComponent(props) {
         }, 800);
     }
 
-    function removePostById(id) {
-        if(props.attributes.posts.length <= 1 ) return;
-        
-        const postsClone = _.cloneDeep(props.attributes.posts);
+    function addFeaturedPost(post) {
+        const postsClone = _.cloneDeep(props.attributes.featuredPosts);
+
+        if(postsClone.length >= 4) return;
+
+        postsClone.push(post);
+        props.setAttributes({featuredPosts: postsClone});
+    }
+
+    function removeFeaturedPost(id) {
+        if(props.attributes.featuredPosts.length <= 1 ) return;
+
+        const postsClone = _.cloneDeep(props.attributes.featuredPosts);
 
         const currentPosts = _.filter(postsClone, postClone =>  postClone.ID !== +id);
-        props.setAttributes({posts: currentPosts});
+        props.setAttributes({featuredPosts: currentPosts});
     }
 
     // display posts on search name
@@ -78,7 +87,7 @@ function editComponent(props) {
 
         async function getCollectionPostsByName() {
             
-            const collections = await Promise.all([
+            const results = await Promise.all([
                 apiFetch({
                     path: `wp/v2/workingspaces?search=${searchPostName}`,
                     method: 'GET'
@@ -92,25 +101,26 @@ function editComponent(props) {
                     method: 'GET'
                 })
             ]);
-            setPostCollection(collections);
+
+            const collectionPost =  [];
+            
+            const lookup = _.keyBy(props.attributes.featuredPosts, post => { return post.ID;});
+            
+            results.forEach(result => {
+                const filteredPosts = _.filter(result, result => lookup[result.ID]  === undefined);
+                collectionPost.push(filteredPosts);
+            });
+
+            setPostCollection(collectionPost);
         }
         
         getCollectionPostsByName();
 
     }, [searchPostName]);
 
-    // display post by id
     useEffect(() => {
-        async function getPostsByIds() {
-            const results = await apiFetch({
-                path: ''
-            });
-        }
-    }, [postIds]);
-
-    useEffect(() => {
-        setPosts(props.attributes.posts);
-    }, [props.attributes.posts])
+        setFeaturedPosts(props.attributes.featuredPosts);
+    }, [props.attributes.featuredPosts])
 
     function displaySearchPostCollection() {
         if(!postCollection || postCollection.length < 1) {
@@ -129,9 +139,9 @@ function editComponent(props) {
                             <div className="post-container">
                                 <div className="title">{searchPostTitle[i]}</div>
                                 {
-                                    posts.map(post => {
+                                    posts.map((post, postIndex) => {
                                         return (
-                                            <div className="post">
+                                            <div data-index={i} data-id={post.ID} className="post" onClick={() => addFeaturedPost(postCollection[i][postIndex])}>
                                                 <img src={post?.featured_image}/>
                                                 <span>{post?.post_title}</span>
                                             </div>
@@ -146,7 +156,7 @@ function editComponent(props) {
         );
     }
 
-    if (!posts ||posts.length < 1) return <p>Loading...</p>
+    if (!featuredPosts ||featuredPosts.length < 1) return <p>Loading...</p>
     return [
         <InspectorControls>
             <PanelBody title={"Posts Setting"}>
@@ -159,7 +169,7 @@ function editComponent(props) {
                         {searchPostName ? displaySearchPostCollection() : ''}
                     <div className="post-container">
                         {
-                            posts.map(post => {
+                            featuredPosts.map(post => {
                                 return (
                                     <div class="posts">
                                         <img src={post.featured_image}/>
@@ -167,7 +177,7 @@ function editComponent(props) {
                                             <Button id={post?.ID} className="components-button is-secondary">Replace</Button>
                                             <Button data-id={post?.ID} className="components-button is-link is-destructive" 
                                                 onClick={e =>  {
-                                                    removePostById(e.target.getAttribute('data-id'));
+                                                    removeFeaturedPost(e.target.getAttribute('data-id'));
                                                 }}>
                                                 Remove
                                             </Button>
@@ -182,7 +192,7 @@ function editComponent(props) {
         </InspectorControls>,
         <div class="workingspace gutenberg--featured-posts">
         {
-                posts.map(post => {
+                featuredPosts.map(post => {
                     return (
                         <div class="item featured">
                             <img src={post?.featured_image}/>

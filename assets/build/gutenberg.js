@@ -129,7 +129,7 @@ registerBlockType("workingspaces/featured-posts", {
     searchPostName: {
       type: 'string'
     },
-    posts: {
+    featuredPosts: {
       type: 'array'
     }
   },
@@ -140,12 +140,11 @@ registerBlockType("workingspaces/featured-posts", {
 });
 
 function editComponent(props) {
-  const [posts, setPosts] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
+  const [featuredPosts, setFeaturedPosts] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
   const [postCollection, setPostCollection] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
   const {
     attributes: {
-      searchPostName,
-      postIds
+      searchPostName
     }
   } = props;
   let debounceSearchTimter;
@@ -158,7 +157,7 @@ function editComponent(props) {
         method: 'GET'
       });
       props.setAttributes({
-        posts: results
+        featuredPosts: results
       });
     }
 
@@ -174,15 +173,25 @@ function editComponent(props) {
     }, 800);
   }
 
-  function removePostById(id) {
-    if (props.attributes.posts.length <= 1) return;
+  function addFeaturedPost(post) {
+    const postsClone = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.cloneDeep(props.attributes.featuredPosts);
 
-    const postsClone = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.cloneDeep(props.attributes.posts);
+    if (postsClone.length >= 4) return;
+    postsClone.push(post);
+    props.setAttributes({
+      featuredPosts: postsClone
+    });
+  }
+
+  function removeFeaturedPost(id) {
+    if (props.attributes.featuredPosts.length <= 1) return;
+
+    const postsClone = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.cloneDeep(props.attributes.featuredPosts);
 
     const currentPosts = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.filter(postsClone, postClone => postClone.ID !== +id);
 
     props.setAttributes({
-      posts: currentPosts
+      featuredPosts: currentPosts
     });
   } // display posts on search name
 
@@ -192,7 +201,7 @@ function editComponent(props) {
     setPostCollection(null);
 
     async function getCollectionPostsByName() {
-      const collections = await Promise.all([_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default()({
+      const results = await Promise.all([_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default()({
         path: `wp/v2/workingspaces?search=${searchPostName}`,
         method: 'GET'
       }), _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default()({
@@ -202,22 +211,25 @@ function editComponent(props) {
         path: `wp/v2/posts?search=${searchPostName}`,
         method: 'GET'
       })]);
-      setPostCollection(collections);
+      const collectionPost = [];
+
+      const lookup = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.keyBy(props.attributes.featuredPosts, post => {
+        return post.ID;
+      });
+
+      results.forEach(result => {
+        const filteredPosts = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.filter(result, result => lookup[result.ID] === undefined);
+
+        collectionPost.push(filteredPosts);
+      });
+      setPostCollection(collectionPost);
     }
 
     getCollectionPostsByName();
-  }, [searchPostName]); // display post by id
-
+  }, [searchPostName]);
   Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
-    async function getPostsByIds() {
-      const results = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default()({
-        path: ''
-      });
-    }
-  }, [postIds]);
-  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
-    setPosts(props.attributes.posts);
-  }, [props.attributes.posts]);
+    setFeaturedPosts(props.attributes.featuredPosts);
+  }, [props.attributes.featuredPosts]);
 
   function displaySearchPostCollection() {
     if (!postCollection || postCollection.length < 1) {
@@ -233,9 +245,12 @@ function editComponent(props) {
         className: "post-container"
       }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
         className: "title"
-      }, searchPostTitle[i]), posts.map(post => {
+      }, searchPostTitle[i]), posts.map((post, postIndex) => {
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-          className: "post"
+          "data-index": i,
+          "data-id": post.ID,
+          className: "post",
+          onClick: () => addFeaturedPost(postCollection[i][postIndex])
         }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
           src: post === null || post === void 0 ? void 0 : post.featured_image
         }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", null, post === null || post === void 0 ? void 0 : post.post_title));
@@ -243,7 +258,7 @@ function editComponent(props) {
     }));
   }
 
-  if (!posts || posts.length < 1) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
+  if (!featuredPosts || featuredPosts.length < 1) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
   return [Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(InspectorControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(PanelBody, {
     title: "Posts Setting"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
@@ -256,7 +271,7 @@ function editComponent(props) {
     onChange: e => setAttributePostName(e.target.value)
   })), searchPostName ? displaySearchPostCollection() : '', Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "post-container"
-  }, posts.map(post => {
+  }, featuredPosts.map(post => {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
       class: "posts"
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
@@ -270,12 +285,12 @@ function editComponent(props) {
       "data-id": post === null || post === void 0 ? void 0 : post.ID,
       className: "components-button is-link is-destructive",
       onClick: e => {
-        removePostById(e.target.getAttribute('data-id'));
+        removeFeaturedPost(e.target.getAttribute('data-id'));
       }
     }, "Remove")));
   }))))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "workingspace gutenberg--featured-posts"
-  }, posts.map(post => {
+  }, featuredPosts.map(post => {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
       class: "item featured"
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
