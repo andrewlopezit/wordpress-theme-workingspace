@@ -343,17 +343,17 @@ function editComponent(props) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _scss_gutenberg_backend_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/gutenberg-backend.scss */ "./inc/gutenberg/scss/gutenberg-backend.scss");
+/* harmony import */ var _scss_back_end_gutenberg_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/back-end/gutenberg.scss */ "./inc/gutenberg/scss/back-end/gutenberg.scss");
 /* harmony import */ var _backend_featured_posts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./backend/featured-posts */ "./inc/gutenberg/js/backend/featured-posts.js");
 
 
 
 /***/ }),
 
-/***/ "./inc/gutenberg/scss/gutenberg-backend.scss":
-/*!***************************************************!*\
-  !*** ./inc/gutenberg/scss/gutenberg-backend.scss ***!
-  \***************************************************/
+/***/ "./inc/gutenberg/scss/back-end/gutenberg.scss":
+/*!****************************************************!*\
+  !*** ./inc/gutenberg/scss/back-end/gutenberg.scss ***!
+  \****************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 

@@ -28,7 +28,6 @@
 * - MAPS
 * - HERO IMAGE SLIDER
 * - CATEGORIES
-* - FEATURED POSTS
 * - BRAND
 * - HEADER/HAMBURGER
 * - HEADER/NAVIGATION
@@ -41,6 +40,9 @@
 * - WORKSPACES
 * - POSTS
 * - TESTIMONIALS
+*
+* - GUTENBERG
+*
 *
 * PAGES
 * - CUSTOM META FLOORPLAN
@@ -1430,123 +1432,6 @@ hr {
 }
 
 /*------------------------------------*
-	FEATURED POSTS
-*------------------------------------*/
-.featured-posts {
-  display: -ms-grid;
-  display: grid;
-  grid-gap: 5px;
-  margin-bottom: 80px;
-      grid-template-areas: "featured-1 featured-2 featured-2" "featured-1 featured-3 featured-4";
-}
-.featured-posts .item.featured {
-  position: relative;
-}
-.featured-posts .item.featured:nth-child(n+5) {
-  display: none;
-}
-.featured-posts .item.featured:nth-child(1) {
-  -ms-grid-row: 1;
-  -ms-grid-row-span: 3;
-  -ms-grid-column: 1;
-  width: 600px;
-  height: 455px;
-  grid-area: featured-1;
-}
-.featured-posts .item.featured:nth-child(1) .overlay {
-  font-size: 1.5em;
-}
-.featured-posts .item.featured:nth-child(2) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 3;
-  -ms-grid-column-span: 3;
-  height: 250px;
-  grid-area: featured-2;
-}
-.featured-posts .item.featured:nth-child(2) .overlay {
-  font-size: 1.4em;
-}
-.featured-posts .item.featured:nth-child(2) .overlay .detail-container h6::before, .featured-posts .item.featured:nth-child(2) .overlay .detail-container h6::after {
-  height: 3px;
-}
-.featured-posts .item.featured:nth-child(2) .overlay .detail-container h6::before {
-  top: -0.3em;
-}
-.featured-posts .item.featured:nth-child(2) .overlay .detail-container h6::after {
-  bottom: -0.3em;
-}
-.featured-posts .item.featured:nth-child(3), .featured-posts .item.featured:nth-child(4) {
-  height: 200px;
-}
-.featured-posts .item.featured:nth-child(3) .overlay .detail-container h6::before, .featured-posts .item.featured:nth-child(3) .overlay .detail-container h6::after, .featured-posts .item.featured:nth-child(4) .overlay .detail-container h6::before, .featured-posts .item.featured:nth-child(4) .overlay .detail-container h6::after {
-  height: 2px;
-}
-.featured-posts .item.featured:nth-child(3) .overlay .detail-container h6::before, .featured-posts .item.featured:nth-child(4) .overlay .detail-container h6::before {
-  top: -0.2em;
-}
-.featured-posts .item.featured:nth-child(3) .overlay .detail-container h6::after, .featured-posts .item.featured:nth-child(4) .overlay .detail-container h6::after {
-  bottom: -0.2em;
-}
-.featured-posts .item.featured:nth-child(3) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 3;
-  grid-area: featured-3;
-}
-.featured-posts .item.featured:nth-child(3) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 5;
-  grid-area: featured-4;
-}
-.featured-posts .item.featured img {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -o-object-position: center;
-     object-position: center;
-}
-.featured-posts .item.featured .overlay {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  align-items: flex-end;
-  background: black;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5046393557) 0%, rgba(0, 212, 255, 0) 50%);
-}
-.featured-posts .item.featured .overlay .detail-container {
-  width: 100%;
-  padding: 1em;
-}
-.featured-posts .item.featured .overlay .detail-container h6 {
-  margin: 0;
-  position: relative;
-  width: -moz-fit-content !important;
-  width: -webkit-fit-content !important;
-  width: fit-content !important;
-}
-.featured-posts .item.featured .overlay .detail-container h6 a {
-  color: #fff;
-}
-.featured-posts .item.featured .overlay .detail-container h6::before, .featured-posts .item.featured .overlay .detail-container h6::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 4px;
-  background-color: var(--primary-color, #FDD500);
-}
-.featured-posts .item.featured .overlay .detail-container h6::before {
-  width: 35%;
-  top: -0.5em;
-}
-.featured-posts .item.featured .overlay .detail-container h6::after {
-  bottom: -0.5em;
-  left: 0;
-}
-
-/*------------------------------------*
 	BRAND
 *------------------------------------*/
 .brand {
@@ -1942,7 +1827,7 @@ hr {
   }
 }
 /*------------------------------------*
-	  POSTS
+	  T E S T I M O N I A L S
 *------------------------------------*/
 .testimonial-slider.default#testimonials-slider {
   display: flex;
@@ -2068,6 +1953,9 @@ hr {
     width: 100%;
   }
 }
+/*------------------------------------*
+	  G U T E N B E R G
+*------------------------------------*/
 /*------------------------------------*
 	P A G E S
 *------------------------------------*/

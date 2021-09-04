@@ -30,7 +30,6 @@
 * - MAPS
 * - HERO IMAGE SLIDER
 * - CATEGORIES
-* - FEATURED POSTS
 * - BRAND
 * - HEADER/HAMBURGER
 * - HEADER/NAVIGATION
@@ -43,6 +42,9 @@
 * - WORKSPACES
 * - POSTS
 * - TESTIMONIALS
+*
+* - GUTENBERG
+*
 *
 * PAGES
 * - CUSTOM META FLOORPLAN
@@ -118,12 +120,6 @@
 @import 'components/categories.scss';
 
 /*------------------------------------*
-	FEATURED POSTS
-*------------------------------------*/
-@import 'components/featured-posts.scss';
-
-
-/*------------------------------------*
 	BRAND
 *------------------------------------*/
 @import 'components/brand.scss';
@@ -170,9 +166,14 @@
 @import 'partials/posts.scss';
 
 /*------------------------------------*
-	  POSTS
+	  T E S T I M O N I A L S
 *------------------------------------*/
 @import 'partials/testimonials.scss';
+
+/*------------------------------------*
+	  G U T E N B E R G
+*------------------------------------*/
+@import '../../inc//gutenberg/scss/front-end/gutenberg.scss';
 
 /*------------------------------------*
 	P A G E S

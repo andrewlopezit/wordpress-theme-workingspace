@@ -16,6 +16,8 @@ class Gutenberg {
         if(is_admin()) {
             add_action('init', array($this, 'enqueue_backend_script_style_callback'));
             add_filter( 'block_categories_all', array($this, 'workingspace_block_categories'));
+        }else {
+            $this->register_front_end_blocks();
         }
     }
 
@@ -30,6 +32,12 @@ class Gutenberg {
             'render_callback' => array($this, 'featured_posts_blocks_callback'),
             'editor_script' => 'custom-gutenberg-js',
             'editor_style' => 'custom-gutenberg-css'
+        ));
+    }
+
+    public function register_front_end_blocks() {
+        register_block_type('workingspaces/featured-posts', array(
+            'render_callback' => array($this, 'featured_posts_blocks_callback'),
         ));
     }
 
