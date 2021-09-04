@@ -29,7 +29,6 @@ public function add_rooms_additional_details($posts) {
       $room->post_content_trim = wp_trim_words(strip_tags($room->post_content), 50);
       $room->post_excerpt = wp_trim_words($room->post_excerpt, 50);
       $room->capacity = get_field('capacity', $val->ID);
-      $room->post_type = 'rooms';
 
       array_push($rooms, $room);
     }
@@ -50,7 +49,6 @@ public function add_rooms_additional_details($posts) {
       $post->categories =  get_the_category($post->ID);
       $post->post_content_trim = wp_trim_words(strip_tags($post->post_content), 50);
       $post->post_excerpt = wp_trim_words($post->post_excerpt, 50);
-      $post->post_type = 'posts';
 
       array_push($newPosts, $post);
     }
@@ -94,7 +92,6 @@ public function add_rooms_additional_details($posts) {
             $workingspace->capacity_list = $capacity_list;
             $workingspace->price_range = get_rooms_price_range($roomsValue);
             $workingspace->total_rooms = $numberOfRooms;
-            $workingspace->post_type = 'workingspaces';
           }
 
           array_push($workingspaces, $workingspace);
