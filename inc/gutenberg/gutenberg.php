@@ -57,6 +57,6 @@ class Gutenberg {
     public function featured_posts_blocks_callback($args) {
         $this->frontend = new FrontEndCallbacks();
         $this->frontend->featured_posts($args);
-       return ob_get_clean();
+        return ob_get_clean();
     }
 }
