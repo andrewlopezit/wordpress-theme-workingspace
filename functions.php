@@ -38,8 +38,6 @@ if(file_exists(WORKINGSPACEWP_THEME_DIR.'/inc/customizer/working-space-theme-cus
 if(!class_exists('WorkingspaceTheme')) {
 
     final class WorkingspaceTheme {
-        private static $theme_setup;
-    
         /**
          * Main Theme Constructor
          */
