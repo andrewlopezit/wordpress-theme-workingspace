@@ -137,6 +137,8 @@ registerBlockType("workingspaces/featured-posts", {
 });
 
 function editComponent(props) {
+  var _props$attributes2, _props$attributes3, _props$attributes4, _props$attributes5;
+
   const [featuredPosts, setFeaturedPosts] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
   const [postCollection, setPostCollection] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
   const [searchPostName, setSearchPostName] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
@@ -147,7 +149,9 @@ function editComponent(props) {
   const searchPostTitle = ['Workingspaces', 'Rooms', 'Posts']; // init posts display
 
   Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
-    if (!featuredPosts) return;
+    var _props$attributes;
+
+    if ((props === null || props === void 0 ? void 0 : (_props$attributes = props.attributes) === null || _props$attributes === void 0 ? void 0 : _props$attributes.featuredPosts) !== undefined) return;
 
     async function getPosts() {
       const results = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default()({
@@ -280,7 +284,7 @@ function editComponent(props) {
     }
   }
 
-  if (!featuredPosts || featuredPosts.length < 1) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
+  if (!(props !== null && props !== void 0 && (_props$attributes2 = props.attributes) !== null && _props$attributes2 !== void 0 && _props$attributes2.featuredPosts) || (props === null || props === void 0 ? void 0 : (_props$attributes3 = props.attributes) === null || _props$attributes3 === void 0 ? void 0 : _props$attributes3.featuredPosts.length) < 1) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
   return [Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(InspectorControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(PanelBody, {
     title: "Posts Setting"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
@@ -293,7 +297,7 @@ function editComponent(props) {
     onChange: e => setAttributePostName(e.target.value)
   })), isLoadingSearchPost || isDisplaySearchPost ? displaySearchPostCollection() : '', Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "post-container"
-  }, featuredPosts.map((post, i) => {
+  }, props === null || props === void 0 ? void 0 : (_props$attributes4 = props.attributes) === null || _props$attributes4 === void 0 ? void 0 : _props$attributes4.featuredPosts.map((post, i) => {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
       class: "posts"
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
@@ -315,7 +319,7 @@ function editComponent(props) {
     }, "Remove")));
   }))))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     class: "workingspace gutenberg--featured-posts"
-  }, featuredPosts.map(post => {
+  }, props === null || props === void 0 ? void 0 : (_props$attributes5 = props.attributes) === null || _props$attributes5 === void 0 ? void 0 : _props$attributes5.featuredPosts.map(post => {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
       class: "item featured"
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {

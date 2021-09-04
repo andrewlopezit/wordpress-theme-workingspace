@@ -24,7 +24,7 @@ registerBlockType("workingspaces/featured-posts", {
   
     edit: editComponent,
     save: () => {
-      return null
+      return null;
     },
 });
 
@@ -42,9 +42,10 @@ function editComponent(props) {
 
     // init posts display
     useEffect(() => {
-        if(!featuredPosts) return;
+        if( props?.attributes?.featuredPosts !== undefined) return;
 
         async function getPosts() {
+            
             const results = await apiFetch({
                 path: 'wp/v2/workingspaces?per_page=4',
                 method: 'GET'
@@ -185,7 +186,7 @@ function editComponent(props) {
         }
     }
 
-    if (!featuredPosts ||featuredPosts.length < 1) return <p>Loading...</p>
+    if (!props?.attributes?.featuredPosts ||props?.attributes?.featuredPosts.length < 1) return <p>Loading...</p>
     return [
         <InspectorControls>
             <PanelBody title={"Posts Setting"}>
@@ -198,7 +199,7 @@ function editComponent(props) {
                         {(isLoadingSearchPost || isDisplaySearchPost) ? displaySearchPostCollection() : ''}
                     <div className="post-container">
                         {
-                            featuredPosts.map((post, i) => {
+                            props?.attributes?.featuredPosts.map((post, i) => {
                                 return (
                                     <div class="posts">
                                         <img src={post.featured_image}/>
@@ -224,7 +225,7 @@ function editComponent(props) {
         </InspectorControls>,
         <div class="workingspace gutenberg--featured-posts">
         {
-                featuredPosts.map(post => {
+                props?.attributes?.featuredPosts.map(post => {
                     return (
                         <div class="item featured">
                             <img src={post?.featured_image}/>
