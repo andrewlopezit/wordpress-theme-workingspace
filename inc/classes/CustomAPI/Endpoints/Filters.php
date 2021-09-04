@@ -32,6 +32,30 @@ final class Filters {
       
         array_push($related_rooms_meta_query, $country_meta_query);
       }
+
+      if(isset($request['paged']) && isset($request['offset'])) {
+        $offset = $request['offset'];
+  
+        $query['paged'] = (int)$request['paged'];
+        $query['offset'] = $offset;
+      }
+  
+      if(isset($request['per_page'])) {
+        $query['posts_per_page'] = $request['per_page'];
+      }
+      
+      if($request['search']) {
+        $query['s'] = $request['search'];
+      }
+
+      if($request['ids']) {
+        $ids = explode(',',$request['ids']);
+
+        if(is_array($ids)) {
+          $query['post__in'] = $ids;
+          $query['posts_per_page'] = -1;
+        }
+      }
       
       if(isset($request['room_categories'])) {
         $rooms = Posts::get_rooms_by_categoroies(explode(',',$request['room_categories']));
@@ -41,7 +65,6 @@ final class Filters {
           $room_ids = $rooms->ids();
         }
       }
-      
       $rooms = new Rooms();
       if(isset($request['capacity'])) {
         $room_ids = array_unique(array_merge($room_ids, $rooms->capacity($request['capacity'])->ids()));
@@ -69,5 +92,29 @@ final class Filters {
       if($related_rooms_meta_query) $query['meta_query'] = $related_rooms_meta_query;
       
         return $query;
+    }
+
+    public static function rooms_filters($request) {
+      $query = array(
+        'post_type' => 'rooms'
+      );
+
+      if($request['search']) {
+        $query['s'] = $request['search'];
+      }
+
+      return $query;
+    }
+
+    public static function posts_filters($request) {
+      $query = array(
+        'post_type' => 'post'
+      );
+
+      if($request['search']) {
+        $query['s'] = $request['search'];
+      }
+
+      return $query;
     }
 }

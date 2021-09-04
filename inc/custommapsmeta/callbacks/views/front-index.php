@@ -1,5 +1,7 @@
 <?php 
 ob_start();
+
+if(is_admin()) return;
 $country = $args['country'] ?? null;
 $max_posts = get_option( 'posts_per_page' );
 
@@ -26,6 +28,7 @@ if(isset($country['id'])) {
 
 $workingspaces = new WP_Query( $query ); 
 ?>
+
 <div class="container">
     <div class="row">
         <div class="col">

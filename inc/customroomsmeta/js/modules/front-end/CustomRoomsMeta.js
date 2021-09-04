@@ -1,7 +1,6 @@
 
 import api from '../Api';
 import {loading} from '../../../../../assets/js/modules/frontend/index';
-
 class CustomRoomsMeta {
     constructor() {
         this.$floorplanContainer = $('.floorplan-container#custom-rooms--floorplan');

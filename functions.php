@@ -25,6 +25,7 @@ use Inc\Classes\ThemeSetup;
 use Inc\CustomRoomsMeta\Init as CustomRoomsMeta;
 use Inc\Custommapsmeta\Init as CustomMapsMeta;
 use Inc\Classes\CustomAPI\CustomApi;
+use Inc\Gutenberg\Gutenberg;
 
 // Core Constants.
 define( 'WORKINGSPACEWP_THEME_DIR', get_template_directory() );
@@ -69,7 +70,7 @@ if(!class_exists('WorkingspaceTheme')) {
             // Javascript and CSS Paths.
             define( 'WORKINGSPACE_JS_DIR_URI', WORKINGSPACEWP_THEME_URI . '/assets/build/' );
             define( 'WORKINGSPACE_CSS_DIR_URI', WORKINGSPACEWP_THEME_URI . '/assets/build/' );
-    
+            
             // Include Paths.
             define( 'WORKINGSPACE_INC_DIR', WORKINGSPACEWP_THEME_DIR . '/inc/' );
             define( 'WORKINGSPACE_INC_DIR_URI', WORKINGSPACEWP_THEME_URI . '/inc/' );
@@ -87,10 +88,10 @@ if(!class_exists('WorkingspaceTheme')) {
                 $this->register_menus();
 
                 // load custom maps
-                $this->set_post_meta_maps();
+                $this->add_posts_meta_map();
 
                 // load custom rooms
-                $this->set_post_meta_rooms();
+                $this->add_posts_meta_room();
                 
             /** Frontend */    
             } else {
@@ -123,6 +124,10 @@ if(!class_exists('WorkingspaceTheme')) {
             //init workingspace maps shortcode
             $workingspace_maps = new CustomMapsMeta();
             $workingspace_maps->init_shortcode();
+
+            // init gutenberg blocks
+            $gutenberg = new Gutenberg();
+            $gutenberg->init();
         }
 
 //------------------------------------ F U N C T I O N S ----------------------------------------
@@ -394,7 +399,7 @@ if(!class_exists('WorkingspaceTheme')) {
             ->register();
         }
 
-        public function set_post_meta_maps() {
+        public function add_posts_meta_map() {
             $maps = new CustomMapsMeta();
 
             $maps->post(
@@ -411,7 +416,7 @@ if(!class_exists('WorkingspaceTheme')) {
             )->add();
         }
 
-        public function set_post_meta_rooms() {
+        public function add_posts_meta_room() {
            $room = new CustomRoomsMeta();
            $room->post(
                array(

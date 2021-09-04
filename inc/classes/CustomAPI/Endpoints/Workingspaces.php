@@ -23,34 +23,22 @@ class Workingspaces extends BaseClass {
 
   public function get_workingspaces($request) {
 
-    $filters = array(
-      'country' => $request['country'],
-      'room_categories' => $request['room_categories'],
-    );
-
-    $query =  Filters::workingspaces_filters($filters);
-
-    if($request['paged'] && $request['offset']) {
-      $offset = $request['offset'];
-
-      $query['paged'] = (int)$request['paged'];
-      $query['offset'] = $offset;
-    }
+    $query =  Filters::workingspaces_filters($request);
 
     if(!$query) wp_send_json([], 200);
 
     $results = new WP_Query($query);
 
-    if(count($results->posts) < 1 && count($this->_paginated_posts) < 1) return wp_send_json([], 200);
+    if(count($results->posts) < 1&& count($this->_paginated_posts) < 1) return wp_send_json([], 200);
   
     $workingspaces = $this->add_workingspaces_additional_details($results->posts);
     $filtered_workingpaces = new WorkspacesHelpers($workingspaces);
 
     $filtered_workingpaces = $filtered_workingpaces->capacity($request['capacities'])->price_range($request['price_range'])->get();
     
-    if((count($filtered_workingpaces) < (int) get_option( 'posts_per_page' ) &&
-        count($this->_paginated_posts) < (int) get_option( 'posts_per_page' )) &&
-        count($results->posts) > 0) {
+    if((isset($request['paged']) || isset($request['offset'])) && 
+       count($results->posts) > 0 &&
+       count($this->_paginated_posts) < (int) get_option( 'posts_per_page' )) {
       
         $per_page = get_option( 'posts_per_page' );
         $request['paged'] = (int)$request['paged']+1;
@@ -63,16 +51,21 @@ class Workingspaces extends BaseClass {
       $this->get_workingspaces($request);
     }
 
-    $results = array(
-      'posts' => count($this->_paginated_posts) > 0 ? $this->_paginated_posts : $filtered_workingpaces,
-      'pagination' => array(
-        'offset' => $request['offset'],
-        'post_per_page' => get_option( 'posts_per_page' ),
-        'total' => wp_count_posts('workingspaces')
-      )
-    );
+    if(count($this->_paginated_posts)) {
+      $results = array(
+        'posts' => $this->_paginated_posts,
+        'pagination' => array(
+          'offset' => $request['offset'],
+          'post_per_page' => get_option( 'posts_per_page' ),
+          'total' => wp_count_posts('workingspaces')
+        )
+      );
 
-    return wp_send_json($results, 200);
+      return wp_send_json($results, 200);
+    }
+
+    return $workingspaces;
+
   }
 
   public function get_workingspace_rooms($request) {

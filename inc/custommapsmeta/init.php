@@ -18,7 +18,7 @@ final class Init {
     private $_metabox = [];
     
     public function init_shortcode() {
-        add_shortcode('workingspaces_maps', array( $this, 'floor_plan_shortcode' ));
+        add_shortcode('workingspaces_maps', array( $this, 'workingspace_maps_shortcode' ));
     }
 
     public function add() {
@@ -69,6 +69,13 @@ final class Init {
             '','', 
             true
         );
+
+        wp_enqueue_script(
+            'gsap@3.7.1',
+            '//cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js',
+            '','', 
+            true
+        );
         
         wp_enqueue_script(
             'custom-meta-maps',
@@ -116,7 +123,7 @@ final class Init {
 		update_post_meta( $post_id, 'custom_maps_mapbox_form_key', $data );
     }
 
-    public function floor_plan_shortcode($args = null) {
+    public function workingspace_maps_shortcode($args = null) {
         $this->frontend = new FrontEndCallbacks();
         $this->frontend->index($args);
     }

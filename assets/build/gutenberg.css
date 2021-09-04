@@ -1,0 +1,165 @@
+.workingspace.gutenberg--featured-posts {
+  display: -ms-grid;
+  display: grid;
+  grid-gap: 5px;
+      grid-template-areas: "featured-1 featured-2 featured-2" "featured-1 featured-3 featured-4";
+}
+.workingspace.gutenberg--featured-posts .item.featured {
+  position: relative;
+}
+.workingspace.gutenberg--featured-posts .item.featured:nth-child(1) {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 3;
+  -ms-grid-column: 1;
+  width: 450px;
+  height: 305px;
+  grid-area: featured-1;
+}
+.workingspace.gutenberg--featured-posts .item.featured:nth-child(1) .overlay {
+  font-size: 1.5em;
+}
+.workingspace.gutenberg--featured-posts .item.featured:nth-child(2) {
+  -ms-grid-row: 1;
+  -ms-grid-column: 3;
+  -ms-grid-column-span: 3;
+  height: 150px;
+  grid-area: featured-2;
+}
+.workingspace.gutenberg--featured-posts .item.featured:nth-child(2) .overlay {
+  font-size: 1.4em;
+}
+.workingspace.gutenberg--featured-posts .item.featured:nth-child(2) .overlay .detail-container h6::before, .workingspace.gutenberg--featured-posts .item.featured:nth-child(2) .overlay .detail-container h6::after {
+  height: 3px;
+}
+.workingspace.gutenberg--featured-posts .item.featured:nth-child(2) .overlay .detail-container h6::before {
+  top: -0.3em;
+}
+.workingspace.gutenberg--featured-posts .item.featured:nth-child(2) .overlay .detail-container h6::after {
+  bottom: -0.3em;
+}
+.workingspace.gutenberg--featured-posts .item.featured:nth-child(3), .workingspace.gutenberg--featured-posts .item.featured:nth-child(4) {
+  height: 150px;
+}
+.workingspace.gutenberg--featured-posts .item.featured:nth-child(3) .overlay .detail-container h6::before, .workingspace.gutenberg--featured-posts .item.featured:nth-child(3) .overlay .detail-container h6::after, .workingspace.gutenberg--featured-posts .item.featured:nth-child(4) .overlay .detail-container h6::before, .workingspace.gutenberg--featured-posts .item.featured:nth-child(4) .overlay .detail-container h6::after {
+  height: 2px;
+}
+.workingspace.gutenberg--featured-posts .item.featured:nth-child(3) .overlay .detail-container h6::before, .workingspace.gutenberg--featured-posts .item.featured:nth-child(4) .overlay .detail-container h6::before {
+  top: -0.2em;
+}
+.workingspace.gutenberg--featured-posts .item.featured:nth-child(3) .overlay .detail-container h6::after, .workingspace.gutenberg--featured-posts .item.featured:nth-child(4) .overlay .detail-container h6::after {
+  bottom: -0.2em;
+}
+.workingspace.gutenberg--featured-posts .item.featured:nth-child(3) {
+  -ms-grid-row: 3;
+  -ms-grid-column: 3;
+  grid-area: featured-3;
+}
+.workingspace.gutenberg--featured-posts .item.featured:nth-child(4) {
+  -ms-grid-row: 3;
+  -ms-grid-column: 5;
+  grid-area: featured-4;
+}
+.workingspace.gutenberg--featured-posts .item.featured img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+.workingspace.gutenberg--featured-posts .item.featured .overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  background: black;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5046393557) 0%, rgba(0, 212, 255, 0) 50%);
+}
+.workingspace.gutenberg--featured-posts .item.featured .overlay .detail-container {
+  width: 100%;
+  padding: 1em;
+}
+.workingspace.gutenberg--featured-posts .item.featured .overlay .detail-container h6 {
+  --border-color: #FDD500;
+  margin: 0;
+  position: relative;
+  color: #fff;
+  font-weight: 500;
+}
+.workingspace.gutenberg--featured-posts .item.featured .overlay .detail-container h6::before, .workingspace.gutenberg--featured-posts .item.featured .overlay .detail-container h6::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background-color: var(--border-color);
+}
+.workingspace.gutenberg--featured-posts .item.featured .overlay .detail-container h6::before {
+  width: 35%;
+  top: -0.5em;
+}
+.workingspace.gutenberg--featured-posts .item.featured .overlay .detail-container h6::after {
+  bottom: -0.5em;
+  left: 0;
+}
+.workingspace.gutenberg--inspector-controls.featured-posts {
+  position: relative;
+}
+.workingspace.gutenberg--inspector-controls.featured-posts .search-posts-container {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1em;
+  overflow: auto;
+  background-color: #fff;
+}
+.workingspace.gutenberg--inspector-controls.featured-posts .search-posts-container > .post-container {
+  cursor: pointer;
+}
+.workingspace.gutenberg--inspector-controls.featured-posts .search-posts-container > .post-container:not(:first-child) .title {
+  margin-top: 20px;
+}
+.workingspace.gutenberg--inspector-controls.featured-posts .search-posts-container > .post-container .title {
+  font-weight: 600;
+  border-bottom: 1px solid #ccc;
+}
+.workingspace.gutenberg--inspector-controls.featured-posts .search-posts-container > .post-container .post {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+.workingspace.gutenberg--inspector-controls.featured-posts .search-posts-container > .post-container .post img {
+  width: 70px;
+  height: 50px;
+  margin-right: 10px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+.workingspace.gutenberg--inspector-controls.featured-posts > .post-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 5px;
+  margin-top: 20px;
+}
+.workingspace.gutenberg--inspector-controls.featured-posts > .post-container .action-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.workingspace.gutenberg--inspector-controls.featured-posts > .post-container .action-container .components-button.is-secondary {
+  height: 30px;
+  margin-bottom: 5px;
+}
+.workingspace.gutenberg--inspector-controls.featured-posts > .post-container .action-container .components-button.is-link.is-destructive {
+  padding: 8px 10px;
+}
+
+/*# sourceMappingURL=gutenberg.css.map*/

@@ -11,6 +11,8 @@
 namespace Inc\Classes\CustomAPI;
 
 use Inc\Classes\CustomAPI\Endpoints\Workingspaces;
+use Inc\Classes\CustomAPI\Endpoints\Rooms;
+use Inc\Classes\CustomAPI\Endpoints\Posts;
 use WP_REST_SERVER;
 
 
@@ -18,6 +20,9 @@ class Routes {
     
     public function __construct() {
 
+        //----------------------------------------
+        //   W O R K I N G S P A C E S
+        //----------------------------------------
         add_action('rest_api_init', function() {
             register_rest_route('wp/v2', 'workingspaces/(?P<id>\d+)/rooms', array(
               'methods' => WP_REST_SERVER::READABLE,
@@ -31,6 +36,7 @@ class Routes {
               ),
               'permission_callback' => array($this, 'get_permission_callback')
             ));
+
             register_rest_route('wp/v2', 'workingspaces/(?P<id>\d+)/rooms/(?P<room_id>\d+)', array(
               'methods' => WP_REST_SERVER::READABLE,
               'callback' => array(new Workingspaces(), 'get_workingspace_room_byid'),
@@ -49,10 +55,6 @@ class Routes {
               'permission_callback' => array(new Workingspaces(), 'get_permission_callback')
             ));
 
-            //----------------------------------------
-            //   W O R K I N G S P A C E S
-            //----------------------------------------
-
             register_rest_route('wp/v2', 'workingspaces', array(
               'methods' => WP_REST_SERVER::READABLE,
               'callback' => array(new Workingspaces(), 'get_workingspaces'),
@@ -60,7 +62,25 @@ class Routes {
               ),
               'permission_callback' => array($this, 'get_permission_callback')
             ));
-          });
+
+            //----------------------------------------
+            //   R O O M S
+            //----------------------------------------
+            register_rest_route('wp/v2', 'rooms', array(
+              'methods' => WP_REST_SERVER::READABLE,
+              'callback' => array(new Rooms(), 'get_rooms'),
+              'permission_callback' => array($this, 'get_permission_callback')
+            ));
+
+            //----------------------------------------
+            //   P O S T S
+            //----------------------------------------
+            register_rest_route('wp/v2', 'posts', array(
+              'methods' => WP_REST_SERVER::READABLE,
+              'callback' => array(new Posts(), 'get_posts'),
+              'permission_callback' => array($this, 'get_permission_callback')
+            ));
+        });
         
     }
 

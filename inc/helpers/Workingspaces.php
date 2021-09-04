@@ -88,6 +88,8 @@
     private function get_capacity_workingspaces_in_capacity($capacity) {
       $newWorkspaces = [];
 
+      if(!$capacity) return $this;
+
       if(strpos($capacity, 'up')) {
         $capacity = (int) filter_var($capacity, FILTER_SANITIZE_NUMBER_INT);
 
