@@ -142,11 +142,13 @@ function editComponent(props) {
   const [searchPostName, setSearchPostName] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
   const [isDisplaySearchPost, setIsDisplaySearchPost] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
   const [isLoadingSearchPost, setIsLoadingSearchPost] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
-  const [selectedReplaceIndex, setSelectedReplaceIndex] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
+  const [selectedReplaceIndex, setSelectedReplaceIndex] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(undefined);
   let debounceSearchTimter;
   const searchPostTitle = ['Workingspaces', 'Rooms', 'Posts']; // init posts display
 
   Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
+    if (!featuredPosts) return;
+
     async function getPosts() {
       const results = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default()({
         path: 'wp/v2/workingspaces?per_page=4',
@@ -171,12 +173,12 @@ function editComponent(props) {
 
   function addFeaturedPost(post) {
     setIsDisplaySearchPost(false);
-    if (props.attributes.featuredPosts.length >= 4) return;
+    if (props.attributes.featuredPosts.length >= 4 && selectedReplaceIndex === undefined) return;
 
     const postsClone = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.cloneDeep(props.attributes.featuredPosts);
 
-    if (selectedReplaceIndex) {
-      postsClone[selectedReplaceIndex] = posts;
+    if (selectedReplaceIndex !== undefined) {
+      postsClone[selectedReplaceIndex] = post;
     } else {
       postsClone.push(post);
     }
@@ -187,7 +189,7 @@ function editComponent(props) {
     props.setAttributes({
       searchPostName: null
     });
-    setSelectedReplaceIndex(null);
+    setSelectedReplaceIndex(undefined);
   }
 
   function removeFeaturedPost(id) {

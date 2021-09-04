@@ -34,7 +34,7 @@ function editComponent(props) {
     const [searchPostName, setSearchPostName] = useState('');
     const [isDisplaySearchPost, setIsDisplaySearchPost] = useState('');
     const [isLoadingSearchPost, setIsLoadingSearchPost] = useState('');
-    const [selectedReplaceIndex, setSelectedReplaceIndex] = useState('');
+    const [selectedReplaceIndex, setSelectedReplaceIndex] = useState(undefined);
 
     let debounceSearchTimter;
     
@@ -42,6 +42,8 @@ function editComponent(props) {
 
     // init posts display
     useEffect(() => {
+        if(!featuredPosts) return;
+
         async function getPosts() {
             const results = await apiFetch({
                 path: 'wp/v2/workingspaces?per_page=4',
@@ -67,19 +69,19 @@ function editComponent(props) {
     function addFeaturedPost(post) {
         setIsDisplaySearchPost(false);
 
-        if(props.attributes.featuredPosts.length >= 4) return;
+        if(props.attributes.featuredPosts.length >= 4 && selectedReplaceIndex === undefined) return;
 
         const postsClone = _.cloneDeep(props.attributes.featuredPosts);
 
-        if(selectedReplaceIndex) {
-            postsClone[selectedReplaceIndex] = posts;
+        if(selectedReplaceIndex !== undefined) {
+            postsClone[selectedReplaceIndex] = post;
         }else {
             postsClone.push(post);
         }
 
         props.setAttributes({featuredPosts: postsClone});
         props.setAttributes({searchPostName: null});
-        setSelectedReplaceIndex(null);
+        setSelectedReplaceIndex(undefined);
     }
 
     function removeFeaturedPost(id) {
