@@ -1,5 +1,6 @@
-<?php ob_start();?>
 <?php
+ob_start();
+
 if(is_admin()) return;
 $country = $args['country'] ?? null;
 $max_posts = get_option( 'posts_per_page' );
