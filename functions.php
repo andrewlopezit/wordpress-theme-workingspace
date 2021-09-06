@@ -26,6 +26,7 @@ use Inc\CustomRoomsMeta\Init as CustomRoomsMeta;
 use Inc\Custommapsmeta\Init as CustomMapsMeta;
 use Inc\Classes\CustomAPI\CustomApi;
 use Inc\Gutenberg\Gutenberg;
+use Inc\Shortcodes\Shortcodes;
 
 // Core Constants.
 define( 'WORKINGSPACEWP_THEME_DIR', get_template_directory() );
@@ -126,6 +127,10 @@ if(!class_exists('WorkingspaceTheme')) {
             // init gutenberg blocks
             $gutenberg = new Gutenberg();
             $gutenberg->init();
+
+            //init shortcodes
+            $shorcodes = new Shortcodes();
+            $shorcodes->init();
         }
 
 //------------------------------------ F U N C T I O N S ----------------------------------------

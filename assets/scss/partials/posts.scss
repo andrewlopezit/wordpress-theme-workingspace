@@ -1,8 +1,98 @@
+$background-color: #E6EBE9;
+
 .post-list#posts {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-column-gap: 2em;
-    grid-row-gap: 4em;
+
+    .post-list.post-list--filters {
+        margin-top: 10px;
+        padding: 1em;
+        background-color: lighten($background-color, 5%);
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+
+        .label{
+            font-weight: 500;
+
+            span {
+                color: var(--secondary-color, $secondary-color);
+            }
+        }
+
+        .action-container.categories {
+            margin-left: 10px;
+            
+            @include fit-content;
+
+            a {
+                margin: 0 5px;
+
+                &:not(:first-child) {
+                    border-left: 1px solid #ccc;
+                    padding-left: 10px;
+                }
+            }
+        }
+    }
+
+    .inner-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: 2em;
+        grid-row-gap: 4em;
+    }
+
+    &.post-list--secondary {
+        .inner-container {
+            grid-template-columns: repeat(2, 1fr);
+            grid-row-gap: 1em;
+
+            .item.card.post {
+                &:nth-child(n+3) {
+                    display: flex;
+                    align-items: center;
+                    flex-direction: row;
+
+                    &.border-top-left.border--post::before {
+                        height: 100%;
+                    }
+
+                    img {
+                        width: 40%;
+                        height: 100%;
+
+                        object-fit: cover;
+                        object-position: center;
+                    }
+
+                    .card-body {
+                        height: 100%;
+                        padding: 1em 0.6em;
+
+                        .author-container {
+                            top: 0;
+                        }
+                        
+                        a {
+                            h5 {
+                                margin: 0;
+                                margin-top: 10px;
+                            }
+                        }
+
+                        p {
+                            display: none;
+                        }
+                    }
+                }
+
+                .card-body {
+                    .btn {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .action-container.post {

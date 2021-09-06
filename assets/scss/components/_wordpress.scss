@@ -1,0 +1,40 @@
+.wp-block-columns {
+    margin: auto;
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+
+    .wp-block-column {
+        width: 100%;
+        max-width: 100%;
+        padding-right: calc(var(--bs-gutter-x) * .5);
+        padding-left: calc(var(--bs-gutter-x) * .5);
+        margin-top: var(--bs-gutter-y);
+    }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+	
+ }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { }
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+    .wp-block-columns {
+        width: 1200px;
+        max-width: 1140px;
+    }
+}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) { }
