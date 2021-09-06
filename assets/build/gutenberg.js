@@ -337,6 +337,76 @@ function editComponent(props) {
 
 /***/ }),
 
+/***/ "./inc/gutenberg/js/backend/latest-posts.js":
+/*!**************************************************!*\
+  !*** ./inc/gutenberg/js/backend/latest-posts.js ***!
+  \**************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+const {
+  registerBlockType
+} = wp.blocks;
+const __ = wp.i18n.__;
+registerBlockType("workingspaces/latest-posts", {
+  // built-in attributes
+  title: "Latest posts",
+  description: "Display latest posts",
+  icon: "format-aside",
+  category: "workingspace-blocks",
+  // custom attributes
+  attributes: {
+    latestPosts: {
+      type: 'array'
+    }
+  },
+  edit: editComponent,
+  save: () => {
+    return null;
+  }
+});
+
+function editComponent(props) {
+  var _props$attributes, _props$attributes2;
+
+  async function getLatestPosts() {
+    const latestPosts = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default()({
+      path: 'wp/v2/posts?per_page=4',
+      method: 'GET'
+    });
+    props.setAttributes({
+      latestPosts: latestPosts
+    });
+  }
+
+  getLatestPosts();
+  if (!(props !== null && props !== void 0 && (_props$attributes = props.attributes) !== null && _props$attributes !== void 0 && _props$attributes.latestPosts)) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "workingspace gutenberg--latest-posts"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "post-container"
+  }, props === null || props === void 0 ? void 0 : (_props$attributes2 = props.attributes) === null || _props$attributes2 === void 0 ? void 0 : _props$attributes2.latestPosts.map(post => {
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+      className: "post"
+    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
+      src: post === null || post === void 0 ? void 0 : post.featured_image
+    }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", null, post === null || post === void 0 ? void 0 : post.post_title));
+  })));
+}
+
+/***/ }),
+
 /***/ "./inc/gutenberg/js/gutenberg.js":
 /*!***************************************!*\
   !*** ./inc/gutenberg/js/gutenberg.js ***!
@@ -348,6 +418,8 @@ function editComponent(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scss_back_end_gutenberg_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/back-end/gutenberg.scss */ "./inc/gutenberg/scss/back-end/gutenberg.scss");
 /* harmony import */ var _backend_featured_posts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./backend/featured-posts */ "./inc/gutenberg/js/backend/featured-posts.js");
+/* harmony import */ var _backend_latest_posts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./backend/latest-posts */ "./inc/gutenberg/js/backend/latest-posts.js");
+
 
 
 

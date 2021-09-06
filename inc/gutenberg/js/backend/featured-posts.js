@@ -21,7 +21,6 @@ registerBlockType("workingspaces/featured-posts", {
             type: 'array',
         },
     },
-  
     edit: editComponent,
     save: () => {
       return null;

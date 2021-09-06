@@ -167,4 +167,24 @@
   padding: 8px 10px;
 }
 
+.workingspace.gutenberg--latest-posts {
+  margin-top: -1.8em;
+}
+.workingspace.gutenberg--latest-posts .post-container .post {
+  display: flex;
+  align-items: center;
+}
+.workingspace.gutenberg--latest-posts .post-container .post:not(:first-child) {
+  margin-top: 10px;
+}
+.workingspace.gutenberg--latest-posts .post-container .post img {
+  width: 100px;
+  height: 80px;
+  margin-right: 10px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+
 /*# sourceMappingURL=gutenberg.css.map*/
