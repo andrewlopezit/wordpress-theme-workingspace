@@ -13,7 +13,7 @@
 
     $query = new WP_Query( $sql_query ); 
 ?>
-<?php if($args['filters'] && $args['filters'] == 'enable'): ?>
+<?php if(isset($args['filters']) && $args['filters'] == 'enable'): ?>
     <div class="post-list post-list--filters">
         <div class="label">Latest:</div>
         <div class="action-container categories">
