@@ -38,7 +38,17 @@ class Gutenberg {
     }
 
     public function register_front_end_blocks() {
+        /**
+         *  FRONT END GUTENBERG BLOCKS
+         * 
+         *  Featured Posts
+         */
         register_block_type('workingspaces/featured-posts', array(
+            'render_callback' => array($this, 'featured_posts_blocks_callback'),
+        ));
+
+        // Custom latest posts
+        register_block_type('workingspaces/latest-posts', array(
             'render_callback' => array($this, 'featured_posts_blocks_callback'),
         ));
     }

@@ -1,8 +1,12 @@
 import apiFetch from "@wordpress/api-fetch";
-import { useEffect } from "react";
+import { useState } from "react";
 
 const { registerBlockType } = wp.blocks;
+import { __experimentalInputControl as InputControl } from '@wordpress/components';
+
+
 const __ = wp.i18n.__;
+
 registerBlockType("workingspaces/latest-posts", {
     // built-in attributes
     title: "Latest posts",
@@ -11,6 +15,11 @@ registerBlockType("workingspaces/latest-posts", {
     category: "workingspace-blocks",
     // custom attributes
     attributes: {
+        title: {
+            type :'string',
+            default: 'Recent Posts: '
+        },
+
         latestPosts: {
             type: 'array'
         }
@@ -22,6 +31,7 @@ registerBlockType("workingspaces/latest-posts", {
 });
 
 function editComponent(props) {
+    const [ postTitle, setPostTitle ] = useState( props?.attributes?.title );
 
     async function getLatestPosts() {
         const latestPosts = await apiFetch({
@@ -37,6 +47,11 @@ function editComponent(props) {
 
     return (
         <div className="workingspace gutenberg--latest-posts">
+            <InputControl className="title" 
+                   value={props?.attributes?.title} 
+                   onClick={() => console.log('test')}
+                   onChange={ ( nextValue ) => {setIsInputDisable( nextValue ); props.setAttributes({title: nextValue})} }/>
+
             <div className="post-container">
                 {
                     props?.attributes?.latestPosts.map(post => {

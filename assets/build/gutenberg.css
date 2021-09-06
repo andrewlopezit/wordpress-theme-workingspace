@@ -170,6 +170,10 @@
 .workingspace.gutenberg--latest-posts {
   margin-top: -1.8em;
 }
+.workingspace.gutenberg--latest-posts .title {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
 .workingspace.gutenberg--latest-posts .post-container .post {
   display: flex;
   align-items: center;

@@ -352,12 +352,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
 const {
   registerBlockType
 } = wp.blocks;
+
 const __ = wp.i18n.__;
 registerBlockType("workingspaces/latest-posts", {
   // built-in attributes
@@ -367,6 +370,10 @@ registerBlockType("workingspaces/latest-posts", {
   category: "workingspace-blocks",
   // custom attributes
   attributes: {
+    title: {
+      type: 'string',
+      default: 'Recent Posts: '
+    },
     latestPosts: {
       type: 'array'
     }
@@ -378,7 +385,9 @@ registerBlockType("workingspaces/latest-posts", {
 });
 
 function editComponent(props) {
-  var _props$attributes, _props$attributes2;
+  var _props$attributes, _props$attributes2, _props$attributes3, _props$attributes4;
+
+  const [postTitle, setPostTitle] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(props === null || props === void 0 ? void 0 : (_props$attributes = props.attributes) === null || _props$attributes === void 0 ? void 0 : _props$attributes.title);
 
   async function getLatestPosts() {
     const latestPosts = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default()({
@@ -391,12 +400,22 @@ function editComponent(props) {
   }
 
   getLatestPosts();
-  if (!(props !== null && props !== void 0 && (_props$attributes = props.attributes) !== null && _props$attributes !== void 0 && _props$attributes.latestPosts)) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
+  if (!(props !== null && props !== void 0 && (_props$attributes2 = props.attributes) !== null && _props$attributes2 !== void 0 && _props$attributes2.latestPosts)) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "workingspace gutenberg--latest-posts"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
+    className: "title",
+    value: props === null || props === void 0 ? void 0 : (_props$attributes3 = props.attributes) === null || _props$attributes3 === void 0 ? void 0 : _props$attributes3.title,
+    onClick: () => console.log('test'),
+    onChange: nextValue => {
+      setIsInputDisable(nextValue);
+      props.setAttributes({
+        title: nextValue
+      });
+    }
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "post-container"
-  }, props === null || props === void 0 ? void 0 : (_props$attributes2 = props.attributes) === null || _props$attributes2 === void 0 ? void 0 : _props$attributes2.latestPosts.map(post => {
+  }, props === null || props === void 0 ? void 0 : (_props$attributes4 = props.attributes) === null || _props$attributes4 === void 0 ? void 0 : _props$attributes4.latestPosts.map(post => {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
       className: "post"
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
@@ -447,6 +466,17 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports) {
 
 (function() { module.exports = window["wp"]["apiFetch"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/components":
+/*!************************************!*\
+  !*** external ["wp","components"] ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["wp"]["components"]; }());
 
 /***/ }),
 

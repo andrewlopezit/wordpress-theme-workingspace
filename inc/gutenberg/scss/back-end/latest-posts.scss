@@ -1,6 +1,11 @@
 .workingspace {
     &.gutenberg--latest-posts {
         margin-top: -1.8em;
+
+        .title {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
         
         .post-container {
             .post {
