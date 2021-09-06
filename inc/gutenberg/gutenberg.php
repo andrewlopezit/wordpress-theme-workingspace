@@ -27,7 +27,8 @@ class Gutenberg {
     }
 
     public function enqueue_backend_script_style_callback() {
-        wp_register_script('custom-gutenberg-js', WORKINGSPACE_JS_DIR_URI.'gutenberg.js',array('wp-blocks', 'wp-components', 'wp-compose', 'wp-editor', 'wp-element', 'wp-hooks'));
+        wp_register_script('custom-gutenberg-js', WORKINGSPACE_JS_DIR_URI.'gutenberg.js',
+                     array('wp-blocks', 'wp-components', 'wp-compose', 'wp-editor', 'wp-element', 'wp-hooks'));
         wp_register_style('custom-gutenberg-css', WORKINGSPACE_CSS_DIR_URI.'gutenberg.css');
 
         register_block_type('workingspaces/featured-posts', array(
