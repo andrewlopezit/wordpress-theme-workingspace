@@ -415,7 +415,11 @@ hr {
 		}
 
 		h5 {
-			color: #000;
+			margin: 0;
+
+			a {
+				color: #000;
+			}
 		}
 
 		.btn {

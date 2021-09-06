@@ -575,6 +575,9 @@ hr {
   text-transform: capitalize;
 }
 .item.card.post .card-body h5 {
+  margin: 0;
+}
+.item.card.post .card-body h5 a {
   color: #000;
 }
 .item.card.post .card-body .btn {
@@ -1850,8 +1853,8 @@ hr {
   display: grid;
   -ms-grid-columns: (1fr)[3];
   grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 2em;
-  grid-row-gap: 4em;
+  grid-column-gap: 1em;
+  grid-row-gap: 2em;
 }
 .post-list#posts.post-list--secondary .inner-container {
   -ms-grid-columns: (1fr)[2];
@@ -1881,9 +1884,11 @@ hr {
 .post-list#posts.post-list--secondary .inner-container .item.card.post:nth-child(n+3) .card-body .author-container {
   top: 0;
 }
-.post-list#posts.post-list--secondary .inner-container .item.card.post:nth-child(n+3) .card-body a h5 {
-  margin: 0;
+.post-list#posts.post-list--secondary .inner-container .item.card.post:nth-child(n+3) .card-body h5 {
   margin-top: 10px;
+}
+.post-list#posts.post-list--secondary .inner-container .item.card.post:nth-child(n+3) .card-body h5 a {
+  font-size: 1em;
 }
 .post-list#posts.post-list--secondary .inner-container .item.card.post:nth-child(n+3) .card-body p {
   display: none;

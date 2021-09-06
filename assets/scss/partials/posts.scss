@@ -37,8 +37,8 @@ $background-color: #E6EBE9;
     .inner-container {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        grid-column-gap: 2em;
-        grid-row-gap: 4em;
+        grid-column-gap: 1em;
+        grid-row-gap: 2em;
     }
 
     &.post-list--secondary {
@@ -72,10 +72,11 @@ $background-color: #E6EBE9;
                             top: 0;
                         }
                         
-                        a {
-                            h5 {
-                                margin: 0;
-                                margin-top: 10px;
+                        h5 {
+                            margin-top: 10px;
+
+                            a {
+                                font-size: 1em;
                             }
                         }
 
