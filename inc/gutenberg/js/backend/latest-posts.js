@@ -6,7 +6,8 @@ import { __ } from '@wordpress/i18n';
 import {Panel,
         PanelBody,
         PanelRow,
-        TextControl } from '@wordpress/components';
+        TextControl,
+        BaseControl } from '@wordpress/components';
 import {
     InspectorControls,
     ColorPalette
@@ -76,30 +77,36 @@ function editComponent(props) {
     return [
         <InspectorControls>
             <Panel>
-                <PanelBody title="Title Color">
+                <PanelBody title="Header">
                     <PanelRow>
-                    <ColorPalette
-                    onChange={color => props.setAttributes({
-                        header: {
-                            title: props?.attributes?.header?.title,
-                            color: color,
-                            backgroundColor: props?.attributes?.header?.backgroundColor
-                        }
-                    })}
-                        />
+                    <BaseControl id="header-color" label="Text Color">
+                        <ColorPalette
+                            id="header-color"
+                            label="Color"
+                            onChange={color => props.setAttributes({
+                                header: {
+                                    title: props?.attributes?.header?.title,
+                                    color: color,
+                                    backgroundColor: props?.attributes?.header?.backgroundColor
+                                }
+                            })}
+                                />
+                    </BaseControl>
+                        
                     </PanelRow>
-                </PanelBody>
-                <PanelBody title="Title Background Color">
                     <PanelRow>
-                    <ColorPalette
-                    onChange={color => props.setAttributes({
-                        header: {
-                            title: props?.attributes?.header?.title,
-                            color: props?.attributes?.header?.color,
-                            backgroundColor: color
-                        }
-                    })}
-                        />
+                        <BaseControl id="header-background-color" label="Background Color">
+                            <ColorPalette
+                                id="header-background-color"
+                                onChange={color => props.setAttributes({
+                                    header: {
+                                        title: props?.attributes?.header?.title,
+                                        color: props?.attributes?.header?.color,
+                                        backgroundColor: color
+                                    }
+                                })}
+                                    />
+                        </BaseControl>
                     </PanelRow>
                 </PanelBody>
             </Panel>
