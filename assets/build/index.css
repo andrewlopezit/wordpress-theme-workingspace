@@ -139,18 +139,20 @@ h3 {
 }
 
 h4 {
-  line-height: 1em;
+  line-height: 1.2em;
   font-weight: 400;
 }
 
 h5 {
   font-size: 1.2em;
   font-weight: 400;
+  line-height: 1.1em;
 }
 
 h6 {
   font-size: 1em;
   font-weight: 400;
+  line-height: 1em;
 }
 
 .headline.title {
@@ -582,6 +584,7 @@ hr {
 }
 .item.card.post .card-body h5 {
   margin: 0;
+  margin-bottom: 10px;
 }
 .item.card.post .card-body h5 a {
   color: #000;
@@ -1890,6 +1893,7 @@ hr {
   top: 0;
 }
 .post-list#posts.post-list--secondary .inner-container .item.card.post:nth-child(n+3) .card-body h5 {
+  margin: 0;
   margin-top: 10px;
 }
 .post-list#posts.post-list--secondary .inner-container .item.card.post:nth-child(n+3) .card-body h5 a {
