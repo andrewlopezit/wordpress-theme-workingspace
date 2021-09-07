@@ -1,8 +1,10 @@
 $background-color: #E6EBE9;
 
 .hero-section {
-    margin-top: 20px;
-    margin-bottom: $margin-bottom-section;
+    &.front-page {
+        margin-bottom: $margin-bottom-section;
+    }
+
     .content {
         display: flex;
         justify-content: center;

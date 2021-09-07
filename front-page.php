@@ -1,7 +1,7 @@
 <?php
     get_header();
 ?>
-<section class="container hero-section default">
+<section class="container hero-section default front-page">
    <div class="row">
         <div class="col">
             <div class="image-slider" id="hero-image-slider">

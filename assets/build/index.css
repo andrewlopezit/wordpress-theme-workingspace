@@ -1660,6 +1660,7 @@ hr {
 .header {
   margin-top: 20px;
   margin-bottom: 20px;
+  padding-bottom: 30px;
   position: relative;
 }
 
@@ -2697,8 +2698,7 @@ hr {
 /*------------------------------------*
 	FRONT PAGE
 *------------------------------------*/
-.hero-section {
-  margin-top: 20px;
+.hero-section.front-page {
   margin-bottom: 80px;
 }
 .hero-section .content {
