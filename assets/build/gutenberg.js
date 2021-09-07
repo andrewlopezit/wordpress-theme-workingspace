@@ -377,15 +377,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])("wor
   // custom attributes
   attributes: {
     header: {
-      title: {
-        type: 'string'
-      },
-      color: {
-        type: 'string'
-      },
-      backgroundColor: {
-        type: 'string'
-      }
+      type: 'object'
     },
     latestPosts: {
       type: 'array'
@@ -398,7 +390,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])("wor
 });
 
 function editComponent(props) {
-  var _props$attributes$hea, _props$attributes, _props$attributes$hea2, _props$attributes3, _props$attributes4, _props$attributes4$he, _props$attributes5, _props$attributes5$he, _props$attributes10;
+  var _props$attributes$hea, _props$attributes, _props$attributes$hea2, _props$attributes4, _props$attributes5, _props$attributes5$he, _props$attributes6, _props$attributes6$he, _props$attributes7, _props$attributes7$he, _props$attributes9, _props$attributes9$he, _props$attributes11;
 
   const title = (_props$attributes$hea = props === null || props === void 0 ? void 0 : (_props$attributes = props.attributes) === null || _props$attributes === void 0 ? void 0 : (_props$attributes$hea2 = _props$attributes.header) === null || _props$attributes$hea2 === void 0 ? void 0 : _props$attributes$hea2.title) !== null && _props$attributes$hea !== void 0 ? _props$attributes$hea : 'Recent Posts: ';
   const [postTitle, setPostTitle] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(title);
@@ -420,16 +412,18 @@ function editComponent(props) {
     getLatestPosts();
   }, []);
   Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
+    var _props$attributes3;
+
     props === null || props === void 0 ? void 0 : props.setAttributes({
-      header: {
+      header: { ...(props === null || props === void 0 ? void 0 : (_props$attributes3 = props.attributes) === null || _props$attributes3 === void 0 ? void 0 : _props$attributes3.header),
         title: postTitle
       }
     });
-  }, postTitle);
-  if (!(props !== null && props !== void 0 && (_props$attributes3 = props.attributes) !== null && _props$attributes3 !== void 0 && _props$attributes3.latestPosts)) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
+  }, [postTitle]);
+  if (!(props !== null && props !== void 0 && (_props$attributes4 = props.attributes) !== null && _props$attributes4 !== void 0 && _props$attributes4.latestPosts)) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
   const titleStyle = {
-    color: props === null || props === void 0 ? void 0 : (_props$attributes4 = props.attributes) === null || _props$attributes4 === void 0 ? void 0 : (_props$attributes4$he = _props$attributes4.header) === null || _props$attributes4$he === void 0 ? void 0 : _props$attributes4$he.color,
-    backgroundColor: props === null || props === void 0 ? void 0 : (_props$attributes5 = props.attributes) === null || _props$attributes5 === void 0 ? void 0 : (_props$attributes5$he = _props$attributes5.header) === null || _props$attributes5$he === void 0 ? void 0 : _props$attributes5$he.backgroundColor
+    color: props === null || props === void 0 ? void 0 : (_props$attributes5 = props.attributes) === null || _props$attributes5 === void 0 ? void 0 : (_props$attributes5$he = _props$attributes5.header) === null || _props$attributes5$he === void 0 ? void 0 : _props$attributes5$he.color,
+    backgroundColor: props === null || props === void 0 ? void 0 : (_props$attributes6 = props.attributes) === null || _props$attributes6 === void 0 ? void 0 : (_props$attributes6$he = _props$attributes6.header) === null || _props$attributes6$he === void 0 ? void 0 : _props$attributes6$he.backgroundColor
   };
   return [Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["Panel"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["PanelBody"], {
     title: "Header"
@@ -439,14 +433,13 @@ function editComponent(props) {
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__["ColorPalette"], {
     id: "header-color",
     label: "Color",
+    value: props === null || props === void 0 ? void 0 : (_props$attributes7 = props.attributes) === null || _props$attributes7 === void 0 ? void 0 : (_props$attributes7$he = _props$attributes7.header) === null || _props$attributes7$he === void 0 ? void 0 : _props$attributes7$he.color,
     onChange: color => {
-      var _props$attributes6, _props$attributes6$he, _props$attributes7, _props$attributes7$he;
+      var _props$attributes8;
 
-      return props.setAttributes({
-        header: {
-          title: props === null || props === void 0 ? void 0 : (_props$attributes6 = props.attributes) === null || _props$attributes6 === void 0 ? void 0 : (_props$attributes6$he = _props$attributes6.header) === null || _props$attributes6$he === void 0 ? void 0 : _props$attributes6$he.title,
-          color: color,
-          backgroundColor: props === null || props === void 0 ? void 0 : (_props$attributes7 = props.attributes) === null || _props$attributes7 === void 0 ? void 0 : (_props$attributes7$he = _props$attributes7.header) === null || _props$attributes7$he === void 0 ? void 0 : _props$attributes7$he.backgroundColor
+      return props === null || props === void 0 ? void 0 : props.setAttributes({
+        header: { ...(props === null || props === void 0 ? void 0 : (_props$attributes8 = props.attributes) === null || _props$attributes8 === void 0 ? void 0 : _props$attributes8.header),
+          color: color
         }
       });
     }
@@ -455,13 +448,12 @@ function editComponent(props) {
     label: "Background Color"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__["ColorPalette"], {
     id: "header-background-color",
+    value: props === null || props === void 0 ? void 0 : (_props$attributes9 = props.attributes) === null || _props$attributes9 === void 0 ? void 0 : (_props$attributes9$he = _props$attributes9.header) === null || _props$attributes9$he === void 0 ? void 0 : _props$attributes9$he.backgroundColor,
     onChange: color => {
-      var _props$attributes8, _props$attributes8$he, _props$attributes9, _props$attributes9$he;
+      var _props$attributes10;
 
-      return props.setAttributes({
-        header: {
-          title: props === null || props === void 0 ? void 0 : (_props$attributes8 = props.attributes) === null || _props$attributes8 === void 0 ? void 0 : (_props$attributes8$he = _props$attributes8.header) === null || _props$attributes8$he === void 0 ? void 0 : _props$attributes8$he.title,
-          color: props === null || props === void 0 ? void 0 : (_props$attributes9 = props.attributes) === null || _props$attributes9 === void 0 ? void 0 : (_props$attributes9$he = _props$attributes9.header) === null || _props$attributes9$he === void 0 ? void 0 : _props$attributes9$he.color,
+      return props === null || props === void 0 ? void 0 : props.setAttributes({
+        header: { ...(props === null || props === void 0 ? void 0 : (_props$attributes10 = props.attributes) === null || _props$attributes10 === void 0 ? void 0 : _props$attributes10.header),
           backgroundColor: color
         }
       });
@@ -477,7 +469,7 @@ function editComponent(props) {
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "post-container"
-  }, props === null || props === void 0 ? void 0 : (_props$attributes10 = props.attributes) === null || _props$attributes10 === void 0 ? void 0 : _props$attributes10.latestPosts.map(post => {
+  }, props === null || props === void 0 ? void 0 : (_props$attributes11 = props.attributes) === null || _props$attributes11 === void 0 ? void 0 : _props$attributes11.latestPosts.map(post => {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
       className: "post"
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {

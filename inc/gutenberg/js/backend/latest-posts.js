@@ -22,17 +22,7 @@ registerBlockType("workingspaces/latest-posts", {
     // custom attributes
     attributes: {
         header: {
-            title: {
-                type :'string',
-            },
-
-            color: {
-                type: 'string'
-            },
-
-            backgroundColor: {
-                type: 'string'
-            }
+            type: 'object'
         },
         latestPosts: {
             type: 'array'
@@ -64,8 +54,8 @@ function editComponent(props) {
     }, []);
 
     useEffect(() => {
-        props?.setAttributes({header: {title: postTitle}});
-    }, postTitle)
+        props?.setAttributes({header: {...props?.attributes?.header, title: postTitle}});
+    }, [postTitle])
 
     if(!props?.attributes?.latestPosts) return <p>Loading...</p>
 
@@ -83,13 +73,8 @@ function editComponent(props) {
                         <ColorPalette
                             id="header-color"
                             label="Color"
-                            onChange={color => props.setAttributes({
-                                header: {
-                                    title: props?.attributes?.header?.title,
-                                    color: color,
-                                    backgroundColor: props?.attributes?.header?.backgroundColor
-                                }
-                            })}
+                            value={props?.attributes?.header?.color}
+                            onChange={color => props?.setAttributes({header: {...props?.attributes?.header, color: color }})}
                                 />
                     </BaseControl>
                         
@@ -98,13 +83,8 @@ function editComponent(props) {
                         <BaseControl id="header-background-color" label="Background Color">
                             <ColorPalette
                                 id="header-background-color"
-                                onChange={color => props.setAttributes({
-                                    header: {
-                                        title: props?.attributes?.header?.title,
-                                        color: props?.attributes?.header?.color,
-                                        backgroundColor: color
-                                    }
-                                })}
+                                value={props?.attributes?.header?.backgroundColor}
+                                onChange={color => props?.setAttributes({header: {...props?.attributes?.header, backgroundColor: color }})}
                                     />
                         </BaseControl>
                     </PanelRow>
