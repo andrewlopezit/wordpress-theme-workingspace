@@ -99,26 +99,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/api-fetch */ "@wordpress/api-fetch");
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "lodash");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "lodash");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_7__);
 
 
 
 
-const {
-  registerBlockType
-} = wp.blocks;
-const __ = wp.i18n.__;
-const {
-  PanelBody,
-  Button
-} = wp.components;
-const {
-  InspectorControls
-} = wp.blockEditor;
-registerBlockType("workingspaces/featured-posts", {
+
+
+
+
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_4__["registerBlockType"])("workingspaces/featured-posts", {
   // built-in attributes
   title: "Featured Posts",
   description: "Display  posts",
@@ -139,16 +140,16 @@ registerBlockType("workingspaces/featured-posts", {
 function editComponent(props) {
   var _props$attributes2, _props$attributes3, _props$attributes4, _props$attributes5;
 
-  const [featuredPosts, setFeaturedPosts] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
-  const [postCollection, setPostCollection] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
-  const [searchPostName, setSearchPostName] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
-  const [isDisplaySearchPost, setIsDisplaySearchPost] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
-  const [isLoadingSearchPost, setIsLoadingSearchPost] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])('');
-  const [selectedReplaceIndex, setSelectedReplaceIndex] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(undefined);
+  const [featuredPosts, setFeaturedPosts] = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])('');
+  const [postCollection, setPostCollection] = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])('');
+  const [searchPostName, setSearchPostName] = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])('');
+  const [isDisplaySearchPost, setIsDisplaySearchPost] = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])('');
+  const [isLoadingSearchPost, setIsLoadingSearchPost] = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])('');
+  const [selectedReplaceIndex, setSelectedReplaceIndex] = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(undefined);
   let debounceSearchTimter;
   const searchPostTitle = ['Workingspaces', 'Rooms', 'Posts']; // init posts display
 
-  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
+  Object(react__WEBPACK_IMPORTED_MODULE_3__["useEffect"])(() => {
     var _props$attributes;
 
     if ((props === null || props === void 0 ? void 0 : (_props$attributes = props.attributes) === null || _props$attributes === void 0 ? void 0 : _props$attributes.featuredPosts) !== undefined) return;
@@ -179,7 +180,7 @@ function editComponent(props) {
     setIsDisplaySearchPost(false);
     if (props.attributes.featuredPosts.length >= 4 && selectedReplaceIndex === undefined) return;
 
-    const postsClone = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.cloneDeep(props.attributes.featuredPosts);
+    const postsClone = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.cloneDeep(props.attributes.featuredPosts);
 
     if (selectedReplaceIndex !== undefined) {
       postsClone[selectedReplaceIndex] = post;
@@ -199,9 +200,9 @@ function editComponent(props) {
   function removeFeaturedPost(id) {
     if (props.attributes.featuredPosts.length <= 1) return;
 
-    const postsClone = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.cloneDeep(props.attributes.featuredPosts);
+    const postsClone = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.cloneDeep(props.attributes.featuredPosts);
 
-    const currentPosts = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.filter(postsClone, postClone => postClone.ID !== +id);
+    const currentPosts = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.filter(postsClone, postClone => postClone.ID !== +id);
 
     props.setAttributes({
       featuredPosts: currentPosts
@@ -209,7 +210,7 @@ function editComponent(props) {
   } // display posts on search name
 
 
-  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
+  Object(react__WEBPACK_IMPORTED_MODULE_3__["useEffect"])(() => {
     if (!searchPostName) {
       setIsLoadingSearchPost(false);
       setIsDisplaySearchPost(false);
@@ -229,12 +230,12 @@ function editComponent(props) {
       })]);
       const collectionPost = [];
 
-      const lookup = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.keyBy(props.attributes.featuredPosts, post => {
+      const lookup = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.keyBy(props.attributes.featuredPosts, post => {
         return post.ID;
       });
 
       results.forEach(result => {
-        const filteredPosts = lodash__WEBPACK_IMPORTED_MODULE_3___default.a.filter(result, result => lookup[result.ID] === undefined);
+        const filteredPosts = lodash__WEBPACK_IMPORTED_MODULE_2___default.a.filter(result, result => lookup[result.ID] === undefined);
 
         collectionPost.push(filteredPosts);
       });
@@ -245,7 +246,7 @@ function editComponent(props) {
 
     getCollectionPostsByName();
   }, [searchPostName]);
-  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
+  Object(react__WEBPACK_IMPORTED_MODULE_3__["useEffect"])(() => {
     setFeaturedPosts(props.attributes.featuredPosts);
   }, [props.attributes.featuredPosts]);
 
@@ -288,7 +289,7 @@ function editComponent(props) {
   }
 
   if (!(props !== null && props !== void 0 && (_props$attributes2 = props.attributes) !== null && _props$attributes2 !== void 0 && _props$attributes2.featuredPosts) || (props === null || props === void 0 ? void 0 : (_props$attributes3 = props.attributes) === null || _props$attributes3 === void 0 ? void 0 : _props$attributes3.featuredPosts.length) < 1) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
-  return [Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(InspectorControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(PanelBody, {
+  return [Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_7__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["PanelBody"], {
     title: "Posts Setting"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "workingspace gutenberg--inspector-controls featured-posts"
@@ -307,13 +308,13 @@ function editComponent(props) {
       src: post.featured_image
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
       className: "action-container"
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(Button, {
+    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["Button"], {
       className: "components-button is-secondary",
       onClick: e => {
         setIsDisplaySearchPost(true);
         setSelectedReplaceIndex(i);
       }
-    }, "Replace"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(Button, {
+    }, "Replace"), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__["Button"], {
       "data-id": post === null || post === void 0 ? void 0 : post.ID,
       className: "components-button is-link is-destructive",
       onClick: e => {
@@ -331,7 +332,7 @@ function editComponent(props) {
       class: "overlay"
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
       class: "detail-container"
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h6", null, __(post === null || post === void 0 ? void 0 : post.post_title)))));
+    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h6", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])(post === null || post === void 0 ? void 0 : post.post_title)))));
   }))];
 }
 
@@ -352,17 +353,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__);
 
 
 
-const {
-  registerBlockType
-} = wp.blocks;
 
-const __ = wp.i18n.__;
-registerBlockType("workingspaces/latest-posts", {
+
+
+
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])("workingspaces/latest-posts", {
   // built-in attributes
   title: "Latest posts",
   description: "Display latest posts",
@@ -370,9 +376,16 @@ registerBlockType("workingspaces/latest-posts", {
   category: "workingspace-blocks",
   // custom attributes
   attributes: {
-    title: {
-      type: 'string',
-      default: 'Recent Posts: '
+    header: {
+      title: {
+        type: 'string'
+      },
+      color: {
+        type: 'string'
+      },
+      backgroundColor: {
+        type: 'string'
+      }
     },
     latestPosts: {
       type: 'array'
@@ -385,43 +398,85 @@ registerBlockType("workingspaces/latest-posts", {
 });
 
 function editComponent(props) {
-  var _props$attributes, _props$attributes2, _props$attributes3, _props$attributes4;
+  var _props$attributes$hea, _props$attributes, _props$attributes$hea2, _props$attributes3, _props$attributes4, _props$attributes4$he, _props$attributes5, _props$attributes5$he, _props$attributes10;
 
-  const [postTitle, setPostTitle] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(props === null || props === void 0 ? void 0 : (_props$attributes = props.attributes) === null || _props$attributes === void 0 ? void 0 : _props$attributes.title);
+  const title = (_props$attributes$hea = props === null || props === void 0 ? void 0 : (_props$attributes = props.attributes) === null || _props$attributes === void 0 ? void 0 : (_props$attributes$hea2 = _props$attributes.header) === null || _props$attributes$hea2 === void 0 ? void 0 : _props$attributes$hea2.title) !== null && _props$attributes$hea !== void 0 ? _props$attributes$hea : 'Recent Posts: ';
+  const [postTitle, setPostTitle] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(title);
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
+    var _props$attributes2;
 
-  async function getLatestPosts() {
-    const latestPosts = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default()({
-      path: 'wp/v2/posts?per_page=4',
-      method: 'GET'
-    });
-    props.setAttributes({
-      latestPosts: latestPosts
-    });
-  }
+    if ((props === null || props === void 0 ? void 0 : (_props$attributes2 = props.attributes) === null || _props$attributes2 === void 0 ? void 0 : _props$attributes2.latestPosts) !== undefined) return;
 
-  getLatestPosts();
-  if (!(props !== null && props !== void 0 && (_props$attributes2 = props.attributes) !== null && _props$attributes2 !== void 0 && _props$attributes2.latestPosts)) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    className: "workingspace gutenberg--latest-posts"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
-    className: "title",
-    value: props === null || props === void 0 ? void 0 : (_props$attributes3 = props.attributes) === null || _props$attributes3 === void 0 ? void 0 : _props$attributes3.title,
-    onClick: () => console.log('test'),
-    onChange: nextValue => {
-      setIsInputDisable(nextValue);
-      props.setAttributes({
-        title: nextValue
+    async function getLatestPosts() {
+      const results = await _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default()({
+        path: 'wp/v2/posts?per_page=4',
+        method: 'GET'
       });
+      props.setAttributes({
+        latestPosts: results
+      });
+    }
+
+    getLatestPosts();
+  }, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
+    props === null || props === void 0 ? void 0 : props.setAttributes({
+      header: {
+        title: postTitle
+      }
+    });
+  }, postTitle);
+  if (!(props !== null && props !== void 0 && (_props$attributes3 = props.attributes) !== null && _props$attributes3 !== void 0 && _props$attributes3.latestPosts)) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
+  const titleStyle = {
+    color: props === null || props === void 0 ? void 0 : (_props$attributes4 = props.attributes) === null || _props$attributes4 === void 0 ? void 0 : (_props$attributes4$he = _props$attributes4.header) === null || _props$attributes4$he === void 0 ? void 0 : _props$attributes4$he.color,
+    backgroundColor: props === null || props === void 0 ? void 0 : (_props$attributes5 = props.attributes) === null || _props$attributes5 === void 0 ? void 0 : (_props$attributes5$he = _props$attributes5.header) === null || _props$attributes5$he === void 0 ? void 0 : _props$attributes5$he.backgroundColor
+  };
+  return [Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["Panel"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["PanelBody"], {
+    title: "Title Color"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__["ColorPalette"], {
+    onChange: color => {
+      var _props$attributes6, _props$attributes6$he, _props$attributes7, _props$attributes7$he;
+
+      return props.setAttributes({
+        header: {
+          title: props === null || props === void 0 ? void 0 : (_props$attributes6 = props.attributes) === null || _props$attributes6 === void 0 ? void 0 : (_props$attributes6$he = _props$attributes6.header) === null || _props$attributes6$he === void 0 ? void 0 : _props$attributes6$he.title,
+          color: color,
+          backgroundColor: props === null || props === void 0 ? void 0 : (_props$attributes7 = props.attributes) === null || _props$attributes7 === void 0 ? void 0 : (_props$attributes7$he = _props$attributes7.header) === null || _props$attributes7$he === void 0 ? void 0 : _props$attributes7$he.backgroundColor
+        }
+      });
+    }
+  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["PanelBody"], {
+    title: "Title Background Color"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_6__["ColorPalette"], {
+    onChange: color => {
+      var _props$attributes8, _props$attributes8$he, _props$attributes9, _props$attributes9$he;
+
+      return props.setAttributes({
+        header: {
+          title: props === null || props === void 0 ? void 0 : (_props$attributes8 = props.attributes) === null || _props$attributes8 === void 0 ? void 0 : (_props$attributes8$he = _props$attributes8.header) === null || _props$attributes8$he === void 0 ? void 0 : _props$attributes8$he.title,
+          color: props === null || props === void 0 ? void 0 : (_props$attributes9 = props.attributes) === null || _props$attributes9 === void 0 ? void 0 : (_props$attributes9$he = _props$attributes9.header) === null || _props$attributes9$he === void 0 ? void 0 : _props$attributes9$he.color,
+          backgroundColor: color
+        }
+      });
+    }
+  }))))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "workingspace gutenberg--latest-posts"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__["TextControl"], {
+    className: "title",
+    value: postTitle,
+    style: titleStyle,
+    onChange: nextValue => {
+      setPostTitle(Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])(nextValue));
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "post-container"
-  }, props === null || props === void 0 ? void 0 : (_props$attributes4 = props.attributes) === null || _props$attributes4 === void 0 ? void 0 : _props$attributes4.latestPosts.map(post => {
+  }, props === null || props === void 0 ? void 0 : (_props$attributes10 = props.attributes) === null || _props$attributes10 === void 0 ? void 0 : _props$attributes10.latestPosts.map(post => {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
       className: "post"
     }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
       src: post === null || post === void 0 ? void 0 : post.featured_image
     }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("span", null, post === null || post === void 0 ? void 0 : post.post_title));
-  })));
+  })))];
 }
 
 /***/ }),
@@ -469,6 +524,28 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "@wordpress/block-editor":
+/*!*************************************!*\
+  !*** external ["wp","blockEditor"] ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["wp"]["blockEditor"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/blocks":
+/*!********************************!*\
+  !*** external ["wp","blocks"] ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["wp"]["blocks"]; }());
+
+/***/ }),
+
 /***/ "@wordpress/components":
 /*!************************************!*\
   !*** external ["wp","components"] ***!
@@ -488,6 +565,17 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports) {
 
 (function() { module.exports = window["wp"]["element"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/i18n":
+/*!******************************!*\
+  !*** external ["wp","i18n"] ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["wp"]["i18n"]; }());
 
 /***/ }),
 

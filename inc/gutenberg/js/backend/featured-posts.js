@@ -1,13 +1,15 @@
-import apiFetch from "@wordpress/api-fetch";
-import {useState, useEffect} from "react";
+import apiFetch from '@wordpress/api-fetch';
 import _ from 'lodash';
+import {useState, useEffect} from 'react';
+import { registerBlockType } from '@wordpress/blocks';
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
-const __ = wp.i18n.__;
-
-const { PanelBody, Button } = wp.components;
-const { InspectorControls } = wp.blockEditor;
-
+import { 
+    PanelBody, 
+    Button } from '@wordpress/components';
+import {
+    InspectorControls,
+} from '@wordpress/block-editor';
 
 registerBlockType("workingspaces/featured-posts", {
     // built-in attributes
@@ -21,6 +23,7 @@ registerBlockType("workingspaces/featured-posts", {
             type: 'array',
         },
     },
+
     edit: editComponent,
     save: () => {
       return null;
@@ -240,4 +243,3 @@ function editComponent(props) {
         </div>
     ];
 }
-  

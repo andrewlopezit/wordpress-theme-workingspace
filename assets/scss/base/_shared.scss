@@ -72,6 +72,15 @@ input {
 			width: 40%;		
 		}
 	}
+
+	&.border--thin {
+		&::before {
+			border-top: 3px solid var(--primary-color, $primary-color);
+			border-left: 3px solid var(--primary-color, $primary-color);
+			height: 100%;
+			width: 100%;		
+		}
+	}
 }
 
 .border-right-bottom {

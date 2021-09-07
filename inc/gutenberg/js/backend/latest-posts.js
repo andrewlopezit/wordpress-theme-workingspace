@@ -1,11 +1,16 @@
-import apiFetch from "@wordpress/api-fetch";
-import { useState } from "react";
+import apiFetch from '@wordpress/api-fetch';
+import {useState, useEffect} from 'react';
+import { registerBlockType } from '@wordpress/blocks';
+import { __ } from '@wordpress/i18n';
 
-const { registerBlockType } = wp.blocks;
-import { __experimentalInputControl as InputControl } from '@wordpress/components';
-
-
-const __ = wp.i18n.__;
+import {Panel,
+        PanelBody,
+        PanelRow,
+        TextControl } from '@wordpress/components';
+import {
+    InspectorControls,
+    ColorPalette
+} from '@wordpress/block-editor';
 
 registerBlockType("workingspaces/latest-posts", {
     // built-in attributes
@@ -15,11 +20,19 @@ registerBlockType("workingspaces/latest-posts", {
     category: "workingspace-blocks",
     // custom attributes
     attributes: {
-        title: {
-            type :'string',
-            default: 'Recent Posts: '
-        },
+        header: {
+            title: {
+                type :'string',
+            },
 
+            color: {
+                type: 'string'
+            },
+
+            backgroundColor: {
+                type: 'string'
+            }
+        },
         latestPosts: {
             type: 'array'
         }
@@ -31,26 +44,71 @@ registerBlockType("workingspaces/latest-posts", {
 });
 
 function editComponent(props) {
-    const [ postTitle, setPostTitle ] = useState( props?.attributes?.title );
+    const title = props?.attributes?.header?.title ?? 'Recent Posts: ';
+    const [postTitle, setPostTitle] = useState(title);
+    
+    useEffect(() => {
+        if( props?.attributes?.latestPosts !== undefined) return;
 
-    async function getLatestPosts() {
-        const latestPosts = await apiFetch({
-            path: 'wp/v2/posts?per_page=4',
-            method: 'GET'
-        });
+        async function getLatestPosts() {
+            const results = await apiFetch({
+                path: 'wp/v2/posts?per_page=4',
+                method: 'GET'
+            });
+    
+            props.setAttributes({latestPosts: results});
+        }
+        getLatestPosts();
 
-        props.setAttributes({latestPosts: latestPosts});
-    }
-    getLatestPosts();
+    }, []);
+
+    useEffect(() => {
+        props?.setAttributes({header: {title: postTitle}});
+    }, postTitle)
 
     if(!props?.attributes?.latestPosts) return <p>Loading...</p>
 
-    return (
+    const titleStyle = {
+        color: props?.attributes?.header?.color,
+        backgroundColor: props?.attributes?.header?.backgroundColor
+    }
+
+    return [
+        <InspectorControls>
+            <Panel>
+                <PanelBody title="Title Color">
+                    <PanelRow>
+                    <ColorPalette
+                    onChange={color => props.setAttributes({
+                        header: {
+                            title: props?.attributes?.header?.title,
+                            color: color,
+                            backgroundColor: props?.attributes?.header?.backgroundColor
+                        }
+                    })}
+                        />
+                    </PanelRow>
+                </PanelBody>
+                <PanelBody title="Title Background Color">
+                    <PanelRow>
+                    <ColorPalette
+                    onChange={color => props.setAttributes({
+                        header: {
+                            title: props?.attributes?.header?.title,
+                            color: props?.attributes?.header?.color,
+                            backgroundColor: color
+                        }
+                    })}
+                        />
+                    </PanelRow>
+                </PanelBody>
+            </Panel>
+        </InspectorControls>,
         <div className="workingspace gutenberg--latest-posts">
-            <InputControl className="title" 
-                   value={props?.attributes?.title} 
-                   onClick={() => console.log('test')}
-                   onChange={ ( nextValue ) => {setIsInputDisable( nextValue ); props.setAttributes({title: nextValue})} }/>
+        <TextControl className="title"
+            value={postTitle} 
+            style={titleStyle}
+            onChange={ nextValue => {setPostTitle(__(nextValue))}}/>
 
             <div className="post-container">
                 {
@@ -65,6 +123,5 @@ function editComponent(props) {
                 }
             </div>
         </div>
-    );
+    ];
 }
-  

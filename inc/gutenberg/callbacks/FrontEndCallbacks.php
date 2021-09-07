@@ -14,4 +14,8 @@ final class FrontEndCallbacks {
     public function featured_posts($args) {
         return require WORKINGSPACE_INC_DIR.'gutenberg/callbacks/views/featured-posts.php';
     }
+
+    public function latest_posts($args) {
+        return require WORKINGSPACE_INC_DIR.'gutenberg/callbacks/views/latest-posts.php';
+    }
 }

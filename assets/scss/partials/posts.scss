@@ -3,7 +3,6 @@ $background-color: #E6EBE9;
 .post-list#posts {
 
     .post-list.post-list--filters {
-        margin-top: 10px;
         padding: 1em;
         background-color: lighten($background-color, 5%);
         display: flex;
@@ -90,6 +89,36 @@ $background-color: #E6EBE9;
                     .btn {
                         display: none;
                     }
+                }
+            }
+        }
+    }
+
+    &.post-list--recent-posts {
+        & > .title {
+            padding: 1em;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        & > .inner-container {
+            grid-template-columns: repeat(1, 1fr);
+            grid-row-gap: 1em;
+
+
+            .image-container {
+                img {
+                    height: 100%;
+                }
+            }
+
+           & > .item.card.post {
+                flex-direction: row;
+
+                .card-img-top {
+                    width: 100px;
                 }
             }
         }

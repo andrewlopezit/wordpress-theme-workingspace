@@ -290,6 +290,12 @@ input:focus {
   height: 30%;
   width: 40%;
 }
+.border-top-left.border--thin::before {
+  border-top: 3px solid var(--primary-color, #FDD500);
+  border-left: 3px solid var(--primary-color, #FDD500);
+  height: 100%;
+  width: 100%;
+}
 
 .border-right-bottom {
   position: relative;
@@ -1822,7 +1828,6 @@ hr {
 	  POSTS
 *------------------------------------*/
 .post-list#posts .post-list.post-list--filters {
-  margin-top: 10px;
   padding: 1em;
   background-color: #f4f6f5;
   display: flex;
@@ -1895,6 +1900,27 @@ hr {
 }
 .post-list#posts.post-list--secondary .inner-container .item.card.post .card-body .btn {
   display: none;
+}
+.post-list#posts.post-list--recent-posts > .title {
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+.post-list#posts.post-list--recent-posts > .inner-container {
+  -ms-grid-columns: (1fr)[1];
+  grid-template-columns: repeat(1, 1fr);
+  grid-row-gap: 1em;
+}
+.post-list#posts.post-list--recent-posts > .inner-container .image-container img {
+  height: 100%;
+}
+.post-list#posts.post-list--recent-posts > .inner-container > .item.card.post {
+  flex-direction: row;
+}
+.post-list#posts.post-list--recent-posts > .inner-container > .item.card.post .card-img-top {
+  width: 100px;
 }
 
 .action-container.post {
