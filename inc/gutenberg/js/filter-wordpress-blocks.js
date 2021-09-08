@@ -1,12 +1,13 @@
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
-const { InspectorControls } = wp.blockEditor;
+const { InspectorControls, InspectorAdvancedControls } = wp.blockEditor;
 const {
   PanelBody,
   PanelRow,
   BaseControl,
   Button,
-  TextHighlight
+  TextHighlight,
+  ToggleControl
 } = wp.components;
 
 const { useState, useEffect } = React;
@@ -23,10 +24,12 @@ const BORDER_BOTTOM_TEXT_ALLOWED_BLOCKS = [
 wp.domReady(() => {
 /**
  * ATTRIBUTES
+ * 
+ * TEXT BORDER
  */
  wp.hooks.addFilter(
   "blocks.registerBlockType",
-  "workingspace/headingBorderAttributes",
+  "workingspace/textBorderAttribute",
   (settings) => {
     if (BORDER_BOTTOM_TEXT_ALLOWED_BLOCKS.includes(settings.name)) {
       settings.attributes = {
@@ -40,12 +43,32 @@ wp.domReady(() => {
   }
 );
 
+// COLUMNS
+wp.hooks.addFilter(
+  "blocks.registerBlockType",
+  "workingspace/columnsContainerAttributes",
+  (settings) => {
+    if (settings.name === 'core/columns') {
+      settings.attributes = {
+        ...settings.attributes,
+        isFullWidth: {
+          type: "boolean",
+          default: false
+        },
+      };
+    }
+    return settings;
+  }
+);
+
 /**
  * BLOCKS
+ * 
+ * TEXT BORDER
  */
   wp.hooks.addFilter(
       "editor.BlockEdit",
-      "workingspace/headingBorderBlocks",
+      "workingspace/textBorderBlocks",
       wp.compose.createHigherOrderComponent(
 
         (BlockEdit) => (props) => {
@@ -101,7 +124,50 @@ wp.domReady(() => {
       )
   );
 
+// COLUMNS CONTAINER
+wp.hooks.addFilter(
+  "editor.BlockEdit",
+  "workingspace/columnsContainer",
+  wp.compose.createHigherOrderComponent(
+    (BlockEdit) => (props) => {
+      if (props.name === 'core/columns') {
+        return (
+          <Fragment>
+            <BlockEdit {...props}/>
+            <InspectorAdvancedControls>
+                <PanelRow>
+                  <ToggleControl
+                    label="Full width"
+                    checked={ props?.attributes?.isFullWidth }
+                    onChange={ () => {props.setAttributes({isFullWidth: !props.attributes.isFullWidth})} }
+                  />
+                </PanelRow>  
+            </InspectorAdvancedControls>
+          </Fragment>
+        )
+      }
+      return <BlockEdit {...props} />;
+    },
+    "workingspacecClumnsContainer"
+  )
+);
+
 /**
  * FRONT END BLOCKS
+ * 
+ * COLUMNS CONTAINER
  */
+
+ wp.hooks.addFilter(
+  "blocks.getSaveContent.extraProps",
+  "workingspace/columnsContainerSave",
+  (props, block, attributes) => {
+    if (block.name === 'core/columns') {
+      if (attributes.isFullWidth) {
+        props.className = props.className+' full-width';
+      }
+    }
+    return props;
+  }
+);
 });

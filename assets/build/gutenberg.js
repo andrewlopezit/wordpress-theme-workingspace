@@ -499,14 +499,16 @@ const {
   registerBlockType
 } = wp.blocks;
 const {
-  InspectorControls
+  InspectorControls,
+  InspectorAdvancedControls
 } = wp.blockEditor;
 const {
   PanelBody,
   PanelRow,
   BaseControl,
   Button,
-  TextHighlight
+  TextHighlight,
+  ToggleControl
 } = wp.components;
 const {
   useState,
@@ -525,8 +527,10 @@ const BORDER_BOTTOM_TEXT_ALLOWED_BLOCKS = ['core/heading'];
 wp.domReady(() => {
   /**
    * ATTRIBUTES
+   * 
+   * TEXT BORDER
    */
-  wp.hooks.addFilter("blocks.registerBlockType", "workingspace/headingBorderAttributes", settings => {
+  wp.hooks.addFilter("blocks.registerBlockType", "workingspace/textBorderAttribute", settings => {
     if (BORDER_BOTTOM_TEXT_ALLOWED_BLOCKS.includes(settings.name)) {
       settings.attributes = { ...settings.attributes,
         highlightedText: {
@@ -536,12 +540,27 @@ wp.domReady(() => {
     }
 
     return settings;
+  }); // COLUMNS
+
+  wp.hooks.addFilter("blocks.registerBlockType", "workingspace/columnsContainerAttributes", settings => {
+    if (settings.name === 'core/columns') {
+      settings.attributes = { ...settings.attributes,
+        isFullWidth: {
+          type: "boolean",
+          default: false
+        }
+      };
+    }
+
+    return settings;
   });
   /**
    * BLOCKS
+   * 
+   * TEXT BORDER
    */
 
-  wp.hooks.addFilter("editor.BlockEdit", "workingspace/headingBorderBlocks", wp.compose.createHigherOrderComponent(BlockEdit => props => {
+  wp.hooks.addFilter("editor.BlockEdit", "workingspace/textBorderBlocks", wp.compose.createHigherOrderComponent(BlockEdit => props => {
     if (BORDER_BOTTOM_TEXT_ALLOWED_BLOCKS.includes(props.name)) {
       var _props$attributes, _props$attributes2, _props$attributes4, _props$attributes5;
 
@@ -586,10 +605,40 @@ wp.domReady(() => {
     }
 
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(BlockEdit, props);
-  }, "workingspaceHeadingBodrderBlocks"));
+  }, "workingspaceHeadingBodrderBlocks")); // COLUMNS CONTAINER
+
+  wp.hooks.addFilter("editor.BlockEdit", "workingspace/columnsContainer", wp.compose.createHigherOrderComponent(BlockEdit => props => {
+    if (props.name === 'core/columns') {
+      var _props$attributes6;
+
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(Fragment, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(BlockEdit, props), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(InspectorAdvancedControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(PanelRow, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(ToggleControl, {
+        label: "Full width",
+        checked: props === null || props === void 0 ? void 0 : (_props$attributes6 = props.attributes) === null || _props$attributes6 === void 0 ? void 0 : _props$attributes6.isFullWidth,
+        onChange: () => {
+          props.setAttributes({
+            isFullWidth: !props.attributes.isFullWidth
+          });
+        }
+      }))));
+    }
+
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(BlockEdit, props);
+  }, "workingspacecClumnsContainer"));
   /**
    * FRONT END BLOCKS
+   * 
+   * COLUMNS CONTAINER
    */
+
+  wp.hooks.addFilter("blocks.getSaveContent.extraProps", "workingspace/columnsContainerSave", (props, block, attributes) => {
+    if (block.name === 'core/columns') {
+      if (attributes.isFullWidth) {
+        props.className = props.className + ' full-width';
+      }
+    }
+
+    return props;
+  });
 });
 
 /***/ }),
