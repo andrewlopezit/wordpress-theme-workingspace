@@ -2095,6 +2095,7 @@ hr {
   align-items: center;
   justify-content: center;
   padding: 1.5em;
+  z-index: 5;
 }
 .testimonial-slider.default#testimonials-slider .controls span {
   width: 40px;
