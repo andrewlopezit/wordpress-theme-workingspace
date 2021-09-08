@@ -155,7 +155,7 @@ wp.hooks.addFilter(
 /**
  * FRONT END BLOCKS
  * 
- * COLUMNS CONTAINER
+ * FILTER BLOCKS CLASSNAME
  */
 
  wp.hooks.addFilter(

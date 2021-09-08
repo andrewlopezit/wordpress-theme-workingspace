@@ -627,7 +627,7 @@ wp.domReady(() => {
   /**
    * FRONT END BLOCKS
    * 
-   * COLUMNS CONTAINER
+   * FILTER BLOCKS CLASSNAME
    */
 
   wp.hooks.addFilter("blocks.getSaveContent.extraProps", "workingspace/columnsContainerSave", (props, block, attributes) => {
