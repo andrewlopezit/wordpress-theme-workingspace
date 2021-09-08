@@ -480,6 +480,117 @@ function editComponent(props) {
 
 /***/ }),
 
+/***/ "./inc/gutenberg/js/filter-wordpress-blocks.js":
+/*!*****************************************************!*\
+  !*** ./inc/gutenberg/js/filter-wordpress-blocks.js ***!
+  \*****************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+
+const {
+  __
+} = wp.i18n;
+const {
+  registerBlockType
+} = wp.blocks;
+const {
+  InspectorControls
+} = wp.blockEditor;
+const {
+  PanelBody,
+  PanelRow,
+  BaseControl,
+  Button,
+  TextHighlight
+} = wp.components;
+const {
+  useState,
+  useEffect
+} = React;
+const {
+  Fragment
+} = wp.element;
+const {
+  addFilter
+} = wp.hooks;
+const {
+  createHigherOrderComponent
+} = wp.compose;
+const BORDER_BOTTOM_TEXT_ALLOWED_BLOCKS = ['core/heading'];
+wp.domReady(() => {
+  /**
+   * ATTRIBUTES
+   */
+  wp.hooks.addFilter("blocks.registerBlockType", "workingspace/headingBorderAttributes", settings => {
+    if (BORDER_BOTTOM_TEXT_ALLOWED_BLOCKS.includes(settings.name)) {
+      settings.attributes = { ...settings.attributes,
+        highlightedText: {
+          type: "string"
+        }
+      };
+    }
+
+    return settings;
+  });
+  /**
+   * BLOCKS
+   */
+
+  wp.hooks.addFilter("editor.BlockEdit", "workingspace/headingBorderBlocks", wp.compose.createHigherOrderComponent(BlockEdit => props => {
+    if (BORDER_BOTTOM_TEXT_ALLOWED_BLOCKS.includes(props.name)) {
+      var _props$attributes, _props$attributes2, _props$attributes4, _props$attributes5;
+
+      const [highlightedText, setHighlightedText] = useState(props === null || props === void 0 ? void 0 : (_props$attributes = props.attributes) === null || _props$attributes === void 0 ? void 0 : _props$attributes.highlightedText);
+      const [headingContent, setHeadingContent] = useState(props === null || props === void 0 ? void 0 : (_props$attributes2 = props.attributes) === null || _props$attributes2 === void 0 ? void 0 : _props$attributes2.content.replace(/<\/?[^>]+(>|$)/g, ""));
+      useEffect(() => {
+        const content = headingContent.replace(highlightedText, `<mark>${highlightedText}</mark>`);
+        props.setAttributes({ ...props,
+          content: content,
+          highlightedText: highlightedText
+        });
+      }, [highlightedText]);
+      useEffect(() => {
+        var _props$attributes3;
+
+        setHeadingContent(props === null || props === void 0 ? void 0 : (_props$attributes3 = props.attributes) === null || _props$attributes3 === void 0 ? void 0 : _props$attributes3.content.replace(/<\/?[^>]+(>|$)/g, ""));
+      }, [(_props$attributes4 = props.attributes) === null || _props$attributes4 === void 0 ? void 0 : _props$attributes4.content]);
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(Fragment, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(BlockEdit, props), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(InspectorControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(PanelBody, {
+        title: "Border",
+        initialOpen: false
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(PanelRow, {
+        className: "workingspace gutenberg--inspector-controls heading-border"
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(BaseControl, {
+        label: "Text Border Bottom",
+        help: "highlight the text to add border"
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+        className: "container"
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h2", {
+        onMouseUp: () => {
+          if (window.getSelection) {
+            const text = window.getSelection().toString();
+            setHighlightedText(text);
+          } else if (document.selection) {
+            const text = document.selection.createRange().text;
+            setHighlightedText(text);
+          }
+        }
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(TextHighlight, {
+        text: headingContent,
+        highlight: props === null || props === void 0 ? void 0 : (_props$attributes5 = props.attributes) === null || _props$attributes5 === void 0 ? void 0 : _props$attributes5.highlightedText
+      }))))))));
+    }
+
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(BlockEdit, props);
+  }, "workingspaceHeadingBodrderBlocks"));
+});
+
+/***/ }),
+
 /***/ "./inc/gutenberg/js/gutenberg.js":
 /*!***************************************!*\
   !*** ./inc/gutenberg/js/gutenberg.js ***!
@@ -490,8 +601,10 @@ function editComponent(props) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scss_back_end_gutenberg_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scss/back-end/gutenberg.scss */ "./inc/gutenberg/scss/back-end/gutenberg.scss");
-/* harmony import */ var _backend_featured_posts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./backend/featured-posts */ "./inc/gutenberg/js/backend/featured-posts.js");
-/* harmony import */ var _backend_latest_posts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./backend/latest-posts */ "./inc/gutenberg/js/backend/latest-posts.js");
+/* harmony import */ var _filter_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./filter-wordpress-blocks */ "./inc/gutenberg/js/filter-wordpress-blocks.js");
+/* harmony import */ var _backend_featured_posts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./backend/featured-posts */ "./inc/gutenberg/js/backend/featured-posts.js");
+/* harmony import */ var _backend_latest_posts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./backend/latest-posts */ "./inc/gutenberg/js/backend/latest-posts.js");
+
 
 
 

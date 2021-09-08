@@ -1,3 +1,13 @@
+.workingspace.gutenberg--inspector-controls.heading-border .container {
+  margin-left: 2px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+.workingspace.gutenberg--inspector-controls.heading-border .container h2 {
+  margin: 0;
+}
+
 .workingspace.gutenberg--featured-posts {
   display: -ms-grid;
   display: grid;
