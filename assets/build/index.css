@@ -141,6 +141,21 @@ h6 mark::after {
   background-color: var(--primary-color, #FDD500);
   z-index: -1;
 }
+h1.center span::after, h1.center mark::after,
+h2.center span::after,
+h2.center mark::after,
+h3.center span::after,
+h3.center mark::after,
+h4.center span::after,
+h4.center mark::after,
+h5.center span::after,
+h5.center mark::after,
+h6.center span::after,
+h6.center mark::after {
+  right: 10%;
+  left: 10%;
+  width: 80%;
+}
 h1 mark::after,
 h2 mark::after,
 h3 mark::after,
@@ -2851,15 +2866,6 @@ section.blog-post {
 section.blog-post h1 {
   position: relative;
   margin-bottom: 40px;
-}
-section.blog-post h1::after {
-  content: "";
-  position: absolute;
-  border: 2px solid var(--primary-color, #FDD500);
-  width: 10%;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
 }
 section.blog-post .heading--sub-paragraph {
   margin-bottom: 50px;

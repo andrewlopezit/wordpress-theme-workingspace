@@ -97,7 +97,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1 class="text-center">News & Insights</h1>
+                <h1 class="text-center center"><span>News & Insights</span></h1>
                 <p class="text-center heading--sub-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pharetra nunc mollis etiam quis. Adipiscing viverra convallis orci tortor.</p>
             </div>
         </div>

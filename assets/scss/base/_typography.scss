@@ -30,6 +30,16 @@
         }
     }
 
+    &.center {
+        span, mark {
+            &::after {
+                right: 10%;
+                left: 10%;
+                width: 80%;
+            }
+        }
+    }
+
     mark {
         &::after {
             bottom: 8px;
