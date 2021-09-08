@@ -106,20 +106,32 @@ h6 {
   margin: 0 0 20px;
   line-height: 1.4;
 }
-
-h1 {
-  font-size: 2.5em;
-  line-height: 1.2em;
-}
-h1.--border-left {
-  border-left: 6px solid var(--primary-color, #FDD500);
-  padding-left: 0.8em;
-}
-h1 span {
+h1 span, h1 mark,
+h2 span,
+h2 mark,
+h3 span,
+h3 mark,
+h4 span,
+h4 mark,
+h5 span,
+h5 mark,
+h6 span,
+h6 mark {
   position: relative;
   z-index: 1;
+  background-color: transparent !important;
 }
-h1 span::after {
+h1 span::after, h1 mark::after,
+h2 span::after,
+h2 mark::after,
+h3 span::after,
+h3 mark::after,
+h4 span::after,
+h4 mark::after,
+h5 span::after,
+h5 mark::after,
+h6 span::after,
+h6 mark::after {
   content: "";
   position: absolute;
   width: 80%;
@@ -128,6 +140,23 @@ h1 span::after {
   bottom: 6px;
   background-color: var(--primary-color, #FDD500);
   z-index: -1;
+}
+h1 mark::after,
+h2 mark::after,
+h3 mark::after,
+h4 mark::after,
+h5 mark::after,
+h6 mark::after {
+  bottom: 8px;
+}
+
+h1 {
+  font-size: 2.5em;
+  line-height: 1.2em;
+}
+h1.--border-left {
+  border-left: 6px solid var(--primary-color, #FDD500);
+  padding-left: 0.8em;
 }
 
 h2 {

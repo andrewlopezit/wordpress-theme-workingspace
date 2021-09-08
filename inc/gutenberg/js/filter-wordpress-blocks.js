@@ -99,5 +99,9 @@ wp.domReady(() => {
         },
         "workingspaceHeadingBodrderBlocks"
       )
-    );
+  );
+
+/**
+ * FRONT END BLOCKS
+ */
 });

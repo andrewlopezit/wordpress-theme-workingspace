@@ -587,6 +587,9 @@ wp.domReady(() => {
 
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(BlockEdit, props);
   }, "workingspaceHeadingBodrderBlocks"));
+  /**
+   * FRONT END BLOCKS
+   */
 });
 
 /***/ }),
