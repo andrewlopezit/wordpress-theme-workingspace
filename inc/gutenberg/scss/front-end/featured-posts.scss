@@ -140,3 +140,56 @@
         }
     }
 }
+
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+    .gutenberg--featured-post {
+        .featured-posts {
+            grid-template-areas: 
+            "featured-1"
+            "featured-2"
+            "featured-3"
+            "featured-4";
+            
+            .item.featured {
+                &:nth-child(1),
+                &:nth-child(2),
+                &:nth-child(3),
+                &:nth-child(4){
+                    width: 100%;
+                    height: auto;
+                }
+
+                .overlay {
+                    .detail-container {
+                        h6 {
+                            font-size: 18px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+	
+ }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+	
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { }
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+	
+ }
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) { }
