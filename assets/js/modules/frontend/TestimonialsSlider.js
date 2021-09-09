@@ -72,8 +72,8 @@ class TestimonialsSlider {
         if(this.$content.find('.author-details').length)
         this.testimonialSliderAnimation = this.testimonialSliderAnimation.to(this.$content.find('.author-details'), {translateY: 0, opacity: 1, ease: 'back', duration: .8});
 
-        this.testimonialControlAnimation = gsap.timeline({ onComplete: () => this.testimonialSliderAnimation.reverse()});
-        this.testimonialControlAnimation.to(this.$activeControl.find('.duration-progress'), {width: '100%', duration: this.sliderDuration});
+        // this.testimonialControlAnimation = gsap.timeline({ onComplete: () => this.testimonialSliderAnimation.reverse()});
+        // this.testimonialControlAnimation.to(this.$activeControl.find('.duration-progress'), {width: '100%', duration: this.sliderDuration});
     }
 
     paginateControls() {

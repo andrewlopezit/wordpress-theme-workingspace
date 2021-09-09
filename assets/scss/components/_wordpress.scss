@@ -3,8 +3,9 @@
     --bs-gutter-x: 1.5rem;
     --bs-gutter-y: 0;
 
-    width: 1200px;
-    max-width: 1140px;
+    width: auto;
+    max-width: 1200px;
+    padding: 0 !important;
 
     &.full-width {
         width: 100%;
