@@ -157,7 +157,6 @@ $background-color: #E6EBE9;
 // Extra small devices (portrait phones, less than 576px)
 @media (max-width: 575.98px) { 
     .post-list#posts {
-        display: none;
         &.post-list--secondary {
             .inner-container {
                 grid-template-columns: repeat(1, 1fr);  
@@ -184,6 +183,12 @@ $background-color: #E6EBE9;
 @media (max-width: 991.98px) {
     .post-list#posts {
         grid-template-columns: repeat(2, 1fr);
+
+        &.post-list--secondary {
+            .inner-container{
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
 
         .item.card.post {
             &:nth-child(3) {
