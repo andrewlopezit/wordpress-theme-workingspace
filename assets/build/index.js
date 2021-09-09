@@ -1843,12 +1843,17 @@ class CustomRoomsMeta {
 
   roomTemplate(data) {
     let template = '';
+
+    const imageTemplate = src => {
+      return `<img src="${src}"/>`;
+    };
+
     data.forEach(value => {
       var _value$capacity, _value$categories;
 
       template += `<div class="item" data-id="${value.ID}">
                             <a href="#">
-                                ${value.featured_image}
+                                ${value !== null && value !== void 0 && value.featured_image ? imageTemplate(value.featured_image) : ''}
                             </a>
                             <div class="detail">
                                 <h2 class="name"><a href="#">${value === null || value === void 0 ? void 0 : value.post_title}</a></h2>
