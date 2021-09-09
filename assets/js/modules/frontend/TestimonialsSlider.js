@@ -4,6 +4,9 @@ class TestimonialsSlider {
 
         // init variables
         this.$testimonialSlider = $('#testimonials-slider');
+
+        if(!this.$testimonialSlider.length) return;
+
         this.$controlsContainer = this.$testimonialSlider.find('.controls')
         this.$controls = this.$controlsContainer.find('span');
         this.$items = this.$testimonialSlider.find('.item');
@@ -69,8 +72,8 @@ class TestimonialsSlider {
         if(this.$content.find('.author-details').length)
         this.testimonialSliderAnimation = this.testimonialSliderAnimation.to(this.$content.find('.author-details'), {translateY: 0, opacity: 1, ease: 'back', duration: .8});
 
-        this.testimonialControlAnimation = gsap.timeline({ onComplete: () => this.testimonialSliderAnimation.reverse()});
-        this.testimonialControlAnimation.to(this.$activeControl.find('.duration-progress'), {width: '100%', duration: this.sliderDuration});
+        // this.testimonialControlAnimation = gsap.timeline({ onComplete: () => this.testimonialSliderAnimation.reverse()});
+        // this.testimonialControlAnimation.to(this.$activeControl.find('.duration-progress'), {width: '100%', duration: this.sliderDuration});
     }
 
     paginateControls() {

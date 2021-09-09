@@ -1,8 +1,10 @@
 $background-color: #E6EBE9;
 
 .hero-section {
-    margin-top: 20px;
-    margin-bottom: $margin-bottom-section;
+    &.front-page {
+        margin-bottom: $margin-bottom-section;
+    }
+
     .content {
         display: flex;
         justify-content: center;
@@ -147,17 +149,6 @@ section.blog-post {
     h1 {
         position: relative;
         margin-bottom: 40px;
-        
-        &::after {
-            content: '';
-            position: absolute;
-            border: 2px solid var(--primary-color, $primary-color);
-            width: 10%;
-            bottom: -10px;
-            left: 50%;
-
-            @include transform(translateX(-50%));
-        }
     }
     
     .heading--sub-paragraph {

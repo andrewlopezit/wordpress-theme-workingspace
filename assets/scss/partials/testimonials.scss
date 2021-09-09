@@ -3,11 +3,13 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    width: 100vw;
+    max-width: 100%;
 
-    .stage-container {
+    & > .stage-container {
         width: 100%;
 
-        .item {
+        & >.item {
             align-items: center;
             justify-content: space-between;
             padding: 4em 0;
@@ -93,11 +95,12 @@
         }
     }
 
-    .controls {
+    & > .controls {
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 1.5em;
+        z-index: 5;
 
         span {
             width: 40px;
@@ -132,11 +135,8 @@
 // Extra small devices (portrait phones, less than 576px)
 @media (max-width: 575.98px) { 
 
-}
+    .testimonial-slider.default#testimonials-slider  {
 
-// Small devices (landscape phones, less than 768px)
-@media (max-width: 767.98px) { 
-    .testimonial-slider#testimonials-slider {
         .stage-container {
             .item {
                 position: relative;
@@ -157,15 +157,65 @@
             }
         }
     }
-   
 }
 
-// Medium devices (tablets, less than 992px)
-@media (max-width: 991.98px) {
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+	
+ }
 
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+    .testimonial-slider.default#testimonials-slider  {
+        .stage-container {
+            .item {
+                position: relative;
+                padding-top: 6em;
+                
+                .user-profile {
+                    position: absolute;
+                    top: -1.5em;
+                    width: 120px;
+                    left: 50%;
+
+                    @include transform(translateX(-50%));
+
+                    img {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
 }
 
-// Large devices (desktops, less than 1200px)
-@media (max-width: 1199.98px) {
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+    .testimonial-slider.default#testimonials-slider  {
+        .stage-container {
+            .item {
+                position: relative;
+                padding: 4em 0;
+                
+                .user-profile {
+                    position: relative;
+                    display: none;
+                    opacity: 0;
 
+                    top: auto;
+                    width: auto;
+                    left: auto;
+
+                    @include transform(scale(0));
+                }
+            }
+        }
+    }
 }
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) { }

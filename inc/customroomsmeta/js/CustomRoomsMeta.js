@@ -6,6 +6,9 @@ class CustomRoomsMeta {
 
     constructor() {
         this.$customRoomsMeta = $('#custom-rooms-meta');
+
+        if(!this.$customRoomsMeta.length) return;
+
         this.$actionContainer = this.$customRoomsMeta.find('.action-container');
         
         this.$contentContainer = this.$customRoomsMeta.find('.content-container');
@@ -331,9 +334,14 @@ class CustomRoomsMeta {
     roomTemplate(data, isContent = false) {
         let template ='';
 
+        const imageTemplate = (image) =>{
+            
+            return `<img src="${image}"/>`;
+        }
+
         data.forEach(value => {
             template+= `<div class="item" data-id="${value.ID}">
-                            ${value.featured_image}
+                            ${value?.featured_image ? imageTemplate(value?.featured_image) : ''}
                             <div class="detail">
                                 <h4 class="name">${value.post_title}</h4>
                                 <div class="price">$${value.room_rate}/month</div>

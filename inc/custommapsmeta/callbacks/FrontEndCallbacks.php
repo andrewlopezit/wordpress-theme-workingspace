@@ -8,8 +8,10 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Custommapmeta\Callbacks;
+namespace Inc\Custommapsmeta\Callbacks;
 
 final class FrontEndCallbacks {
-    
+    public function index($args) {
+        return require WORKINGSPACE_INC_DIR.'custommapsmeta/callbacks/views/front-index.php';
+    }
 }

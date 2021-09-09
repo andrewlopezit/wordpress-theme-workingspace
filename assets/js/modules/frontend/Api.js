@@ -7,15 +7,27 @@ const Api = (url) => {
         }
     
         getWorkingspacesByFilter(filter) {
-            let url =`${this.endpoint}/wp-json/wp/v2/workingspaces?`;
-    
+            let url =`${this.endpoint}/wp-json/wp/v2/workingspaces?${this.getStringFilterUrl(filter)}`;
+
+            return axios(url);
+        }
+
+        getPostsByFilter(filter) {
+            let url =`${this.endpoint}/wp-json/wp/v2/posts?${this.getStringFilterUrl(filter)}`;
+
+            return axios(url);
+        }
+
+        getStringFilterUrl(filter) {
+            let url = '';
+
             for (let key in filter) {
                 if (filter.hasOwnProperty(key) && filter[key]) {
                     url+=`${key}=${filter[key]}&`;
                 }
             }
 
-            return axios(url);
+            return url;
         }
     }
 

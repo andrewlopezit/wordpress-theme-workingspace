@@ -1,0 +1,33 @@
+.workingspace {
+    &.gutenberg--latest-posts {
+        margin-top: -1.8em;
+
+        & > .title {
+            .components-text-control__input{
+                font-size: 16px;
+                margin-bottom: 10px;
+                padding: 10px;
+                width: 100%;
+            }
+        }
+        
+        .post-container {
+            .post {
+                display: flex;
+                align-items: center;
+
+                &:not(:first-child) {
+                    margin-top: 10px;
+                }
+
+                img {
+                    width: 100px;
+                    height: 80px;
+                    margin-right: 10px;
+                    object-fit: cover;
+                    object-position: center;
+                }
+            }
+        }
+    }
+}

@@ -26,11 +26,11 @@
 * - WIDGETS
 * - BUTTONS
 * - INPUTS
+* - WORDPRESS
 * - SOCIAL MEDIA
 * - MAPS
 * - HERO IMAGE SLIDER
 * - CATEGORIES
-* - FEATURED POSTS
 * - BRAND
 * - HEADER/HAMBURGER
 * - HEADER/NAVIGATION
@@ -41,15 +41,18 @@
 *
 * PARTIALS
 * - WORKSPACES
-* - WORKSPACES MAPS
 * - POSTS
 * - TESTIMONIALS
 *
+* - GUTENBERG
+*
+*
 * PAGES
+* - CUSTOM META FLOORPLAN
+* - CUSTOM WORKINGSPACE MAPS
 * - FRONT PAGE
 * - SINGLE WORKINGSPACES
 * - NEWS & INSIGHTS
-* - CUSTOM META FLOORPLAN
 */
 
 /*------------------------------------*
@@ -98,6 +101,11 @@
 @import 'components/inputs';
 
 /*------------------------------------*
+	WORDPRESS
+*------------------------------------*/
+@import 'components/wordpress';
+
+/*------------------------------------*
 	SOCIAL MEDIA
 *------------------------------------*/
 @import 'components/social-media';
@@ -116,12 +124,6 @@
 	CATEGORIES
 *------------------------------------*/
 @import 'components/categories.scss';
-
-/*------------------------------------*
-	FEATURED POSTS
-*------------------------------------*/
-@import 'components/featured-posts.scss';
-
 
 /*------------------------------------*
 	BRAND
@@ -165,24 +167,37 @@
 @import 'partials/workspace.scss';
 
 /*------------------------------------*
-	  WORKSPACES MAPS
-*------------------------------------*/
-@import 'partials/workspace-maps.scss';
-
-/*------------------------------------*
 	  POSTS
 *------------------------------------*/
 @import 'partials/posts.scss';
 
 /*------------------------------------*
-	  POSTS
+	  T E S T I M O N I A L S
 *------------------------------------*/
 @import 'partials/testimonials.scss';
 
 /*------------------------------------*
+	  G U T E N B E R G
+*------------------------------------*/
+@import '../../inc//gutenberg/scss/front-end/gutenberg.scss';
+
+/*------------------------------------*
 	P A G E S
+*------------------------------------*/
+/*------------------------------------*
+	CUSTOM META FLOORPLAN
+*------------------------------------*/
+@import '../../inc/customroomsmeta/scss/custom-rooms-meta-front-end.scss';
+
+/*------------------------------------*
+	CUSTOM WORKINGSPACE MAPS
+*------------------------------------*/
+@import '../../inc/custommapsmeta/scss/custom-maps-meta-front-end.scss';
+
+/*------------------------------------*
 	FRONT PAGE
 *------------------------------------*/
+
 @import 'pages/front-page.scss';
 
 /*------------------------------------*
@@ -194,8 +209,3 @@
 	NEWS & INSIGHTS
 *------------------------------------*/
 @import 'pages/page-news-insights.scss';
-
-/*------------------------------------*
-	CUSTOM META FLOORPLAN
-*------------------------------------*/
-@import '../../inc/customroomsmeta/scss/custom-rooms-meta-front-end.scss';

@@ -1,4 +1,6 @@
 <?php 
+if(is_admin()) return;
+
     ob_start();
     if(!isset($args['id'])) {
         echo '<p class="text-center">No Floor plan to load.</p>';

@@ -12,6 +12,6 @@ namespace Inc\customroomsmeta\Callbacks;
 
 final class FrontEndCallbacks {
     public function index($args) {
-        return require_once WORKINGSPACE_INC_DIR.'customroomsmeta/callbacks/views/front-index.php';
+        return require WORKINGSPACE_INC_DIR.'customroomsmeta/callbacks/views/front-index.php';
     }
 }

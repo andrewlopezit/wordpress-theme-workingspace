@@ -1,0 +1,14 @@
+.workingspace{
+    &.gutenberg--inspector-controls.heading-border {
+        .container {
+            margin-left: 2px;
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+
+            h2 {
+                margin: 0;
+            }
+        }
+    }
+}

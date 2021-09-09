@@ -1,5 +1,5 @@
-import { filter } from 'lodash';
-import {rangeSlider, api, loading, maps} from './index';
+import {rangeSlider, api, loading, maps} from '../../../../../assets/js/modules/frontend/index';
+
 class WorkingspacesMaps {
     constructor() {
         this.$workspaceContainer = $('#workspaces-map');
@@ -338,31 +338,31 @@ class WorkingspacesMaps {
             return `<p>No items match your criteria.</p>`;
         }
 
+        const locationTemplate = (location) => {
+            return `
+                <div class="detail-icontainer location">
+                    <i class="fas fa-map-marker-alt text-muted"></i>
+                    <a href="#">${location}</a>
+                </div>`;
+        }
+
+        const priceRangeTemplate = (priceRange) => {
+            return `<div class="detail-icontainer price-range">
+                        <span>Price range: </span>
+                        <span class="price">$${priceRange.length > 1 ? priceRange.join(' - $'): priceRange[0]}/month</span>
+                    </div>`
+        }
+
+        const capacityTemplate = (capacityRange) => {
+            return `<div class="detail-icontainer capacity">
+                        <i class="fas fa-user text-muted"></i>
+                        <p class="text-muted">Capacity: <span>${capacityRange[0]} - ${capacityRange[1]}</span></p>
+                    </div>`;
+        }
+
         data.forEach(val => {
             const minimumCapacity = val.capacity_list ? Math.min.apply(Math, val.capacity_list) : null;
             const maximumCapacity = val.capacity_list ? Math.max.apply(Math, val.capacity_list) : null;
-
-            const locationTemplate = (location) => {
-                return `
-                    <div class="detail-icontainer location">
-                        <i class="fas fa-map-marker-alt text-muted"></i>
-                        <a href="#">${location}</a>
-                    </div>`;
-            }
-
-            const priceRangeTemplate = (priceRange) => {
-                return `<div class="detail-icontainer price-range">
-                            <span>Price range: </span>
-                            <span class="price">$${priceRange.length > 1 ? priceRange.join(' - $'): priceRange[0]}/month</span>
-                        </div>`
-            }
-
-            const capacityTemplate = (capacityRange) => {
-                return `<div class="detail-icontainer capacity">
-                            <i class="fas fa-user text-muted"></i>
-                            <p class="text-muted">Capacity: <span>${capacityRange[0]} - ${capacityRange[1]}</span></p>
-                        </div>`;
-            }
 
             template+= `<div class="item workspace card border-top-left border--post border--hover" data-geolocation="${val?.location?.location}">
                             <img class="card-img-top" src="${val.featured_image}" alt="">

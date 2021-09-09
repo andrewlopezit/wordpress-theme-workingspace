@@ -19,17 +19,43 @@ public function add_rooms_additional_details($posts) {
 
     foreach($posts as $val) {
       $room = $val;
-      $room->featured_image = get_the_post_thumbnail($room->ID,'posts');
+      $imageSrc = wp_get_attachment_image_src(get_post_thumbnail_id($room->ID), 'posts');
+      
+      if($imageSrc)
+      $room->featured_image = esc_url($imageSrc[0]);
+      
       $room->categories =  get_the_category($room->ID);
       $room->room_rate = get_field('room_rate', $val->ID);
       $room->post_content_trim = wp_trim_words(strip_tags($room->post_content), 50);
       $room->post_excerpt = wp_trim_words($room->post_excerpt, 50);
       $room->capacity = get_field('capacity', $val->ID);
+      $room->permalink = get_the_permalink($room);
 
       array_push($rooms, $room);
     }
 
     return $rooms;
+  }
+
+  public function add_posts_additional_details($posts) {
+    $newPosts = [];
+
+    foreach($posts as $val) {
+      $post = $val;
+      $imageSrc = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'posts');
+      
+      if($imageSrc)
+      $post->featured_image = esc_url($imageSrc[0]);
+      
+      $post->categories =  get_the_category($post->ID);
+      $post->post_content_trim = wp_trim_words(strip_tags($post->post_content), 50);
+      $post->post_excerpt = wp_trim_words($post->post_excerpt, 50);
+      $post->permalink = get_the_permalink($post);
+
+      array_push($newPosts, $post);
+    }
+
+    return $newPosts;
   }
 
   // 
@@ -41,7 +67,11 @@ public function add_rooms_additional_details($posts) {
 
       foreach ($posts as $val) {
           $workingspace = $val;
-          $workingspace->featured_image = esc_url(wp_get_attachment_image_src(get_post_thumbnail_id($workingspace->ID), 'posts')[0]);
+          $imageSrc = wp_get_attachment_image_src(get_post_thumbnail_id($workingspace->ID), 'posts');
+      
+          if($imageSrc)
+          $workingspace->featured_image = esc_url($imageSrc[0]);
+
           $workingspace->post_content_trim = wp_trim_words(strip_tags($workingspace->post_content), 50);
           $workingspace->post_excerpt = wp_trim_words($workingspace->post_excerpt, 50);
           $workingspace->permalink = get_the_permalink($workingspace);
