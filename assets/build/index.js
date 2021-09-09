@@ -100,9 +100,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/frontend/HamburgerMenu */ "./assets/js/modules/frontend/HamburgerMenu.js");
 /* harmony import */ var _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/frontend/TestimonialsSlider */ "./assets/js/modules/frontend/TestimonialsSlider.js");
 /* harmony import */ var _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/frontend/Main */ "./assets/js/modules/frontend/Main.js");
-/* harmony import */ var _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta */ "./inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta.js");
-/* harmony import */ var _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta */ "./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js");
+/* harmony import */ var _modules_frontend_Posts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/frontend/Posts */ "./assets/js/modules/frontend/Posts.js");
+/* harmony import */ var _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta */ "./inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta.js");
+/* harmony import */ var _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta */ "./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js");
  // import modules
+
 
 
 
@@ -117,6 +119,7 @@ let testimonialsSlider;
 let main;
 let customRoomsMeta;
 let customMapsMeta;
+let posts;
 const hompage = document.querySelector(".home");
 
 if (hompage) {
@@ -125,10 +128,11 @@ if (hompage) {
 
 hamburgerMenu = new _modules_frontend_HamburgerMenu__WEBPACK_IMPORTED_MODULE_2__["default"]();
 main = new _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_4__["default"]();
-testimonialsSlider = new _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_3__["default"](); // include front-end init
+testimonialsSlider = new _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_3__["default"]();
+posts = new _modules_frontend_Posts__WEBPACK_IMPORTED_MODULE_5__["default"](); // include front-end init
 
-customRoomsMeta = new _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_5__["default"]();
-customMapsMeta = new _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_6__["default"]();
+customRoomsMeta = new _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_6__["default"]();
+customMapsMeta = new _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_7__["default"]();
 
 /***/ }),
 
@@ -152,7 +156,17 @@ const Api = url => {
     }
 
     getWorkingspacesByFilter(filter) {
-      let url = `${this.endpoint}/wp-json/wp/v2/workingspaces?`;
+      let url = `${this.endpoint}/wp-json/wp/v2/workingspaces?${this.getStringFilterUrl(filter)}`;
+      return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
+    }
+
+    getPostsByFilter(filter) {
+      let url = `${this.endpoint}/wp-json/wp/v2/posts?${this.getStringFilterUrl(filter)}`;
+      return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
+    }
+
+    getStringFilterUrl(filter) {
+      let url = '';
 
       for (let key in filter) {
         if (filter.hasOwnProperty(key) && filter[key]) {
@@ -160,7 +174,7 @@ const Api = url => {
         }
       }
 
-      return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
+      return url;
     }
 
   }
@@ -626,6 +640,136 @@ const Maps = args => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Maps);
+
+/***/ }),
+
+/***/ "./assets/js/modules/frontend/Posts.js":
+/*!*********************************************!*\
+  !*** ./assets/js/modules/frontend/Posts.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
+
+
+class Posts {
+  constructor() {
+    this.$post = $('.post-list#posts');
+    if (!this.$post.length) return;
+    this.$postFilterContainer = this.$post.find('.post-list.post-list--filters');
+    this.$postContainer = this.$post.find('.inner-container.posts');
+    this.$btnViewMore = this.$post.siblings('.action-container.post.view-more');
+    this.postFilter; //local variable
+
+    this.siteUrl = translation_array.site_url;
+    this.initPostFilter();
+    this.events();
+  }
+
+  initPostFilter() {
+    const $el = this.$postFilterContainer.find('.is-active');
+    const filter = {
+      cat_name: $el.data('cat-name') === 'all' ? '' : $el.data('cat-name'),
+      paged: 1
+    };
+    this.postFilter = filter;
+  }
+
+  events() {
+    this.$postFilterContainer.on('click', 'a', e => {
+      e.preventDefault();
+      const $el = $(e.currentTarget);
+      $el.siblings().removeClass('is-active');
+      $el.addClass('is-active');
+      this.setSiteUrl($el.attr('href'));
+      this.postFilter = {
+        cat_name: $el.data('cat-name') === 'all' ? '' : $el.data('cat-name'),
+        paged: 1
+      };
+      this.$postContainer.children().remove();
+      const load = Object(_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$postContainer).start();
+      Object(_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getPostsByFilter(this.postFilter).then(result => {
+        const {
+          data
+        } = result;
+        load.end();
+        this.$postContainer.append(this.postsTemplate(data));
+      }).catch(() => {
+        load.end();
+      });
+    });
+    this.$btnViewMore.on('click', e => {
+      if (!this.$postFilterContainer.length) return;
+      e.preventDefault();
+      this.postFilter.paged++;
+      const load = Object(_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$postContainer).start();
+      Object(_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getPostsByFilter(this.postFilter).then(result => {
+        const {
+          data
+        } = result;
+        load.end();
+
+        if (data.length < 1) {
+          this.$btnViewMore.hide();
+          return;
+        }
+
+        this.$postContainer.append(this.postsTemplate(data));
+      }).catch(() => {
+        load.end();
+      });
+    });
+  }
+
+  setSiteUrl(params) {
+    const url = window.location.href.split('?');
+    window.history.pushState("", "", url[0] + params);
+    return;
+  }
+
+  postsTemplate(data) {
+    let template = '';
+
+    if (!data || data.length < 1) {
+      return `<p>No items match your criteria.</p>`;
+    }
+
+    data.forEach(val => {
+      var _val$post_content_tri;
+
+      template += `<div class="item post card border-top-left border--post">
+                            <img class="card-img-top" src="${val === null || val === void 0 ? void 0 : val.featured_image}" alt="">
+                            <div class="card-body">
+                                <div class="author-container">
+                                    <i class="fas fa-book-reader"></i>
+                                    <div class="author-details">
+                                        <span>
+                                            <a href="http://localhost:8888/wordpress-development" title="Visit admin’s website" rel="author external">admin</a>                            </span>,
+                                        <span>
+                                            <small>September 09 2021</small>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <h5>
+                                    <a href="${val === null || val === void 0 ? void 0 : val.permalink}">${val === null || val === void 0 ? void 0 : val.post_title}</a>
+                                </h5>
+
+                                <p>${(_val$post_content_tri = val === null || val === void 0 ? void 0 : val.post_content_trim) !== null && _val$post_content_tri !== void 0 ? _val$post_content_tri : val === null || val === void 0 ? void 0 : val.post_excerpt}</p>
+
+                                <a class="btn text-center" href="${val === null || val === void 0 ? void 0 : val.permalink}">Read more</a>
+                            </div>
+                        </div>`;
+    });
+    return template;
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Posts);
 
 /***/ }),
 
@@ -1309,34 +1453,33 @@ class WorkingspacesMaps {
       return `<p>No items match your criteria.</p>`;
     }
 
+    const locationTemplate = location => {
+      return `
+                <div class="detail-icontainer location">
+                    <i class="fas fa-map-marker-alt text-muted"></i>
+                    <a href="#">${location}</a>
+                </div>`;
+    };
+
+    const priceRangeTemplate = priceRange => {
+      return `<div class="detail-icontainer price-range">
+                        <span>Price range: </span>
+                        <span class="price">$${priceRange.length > 1 ? priceRange.join(' - $') : priceRange[0]}/month</span>
+                    </div>`;
+    };
+
+    const capacityTemplate = capacityRange => {
+      return `<div class="detail-icontainer capacity">
+                        <i class="fas fa-user text-muted"></i>
+                        <p class="text-muted">Capacity: <span>${capacityRange[0]} - ${capacityRange[1]}</span></p>
+                    </div>`;
+    };
+
     data.forEach(val => {
       var _val$location, _val$location2, _val$total_rooms;
 
       const minimumCapacity = val.capacity_list ? Math.min.apply(Math, val.capacity_list) : null;
       const maximumCapacity = val.capacity_list ? Math.max.apply(Math, val.capacity_list) : null;
-
-      const locationTemplate = location => {
-        return `
-                    <div class="detail-icontainer location">
-                        <i class="fas fa-map-marker-alt text-muted"></i>
-                        <a href="#">${location}</a>
-                    </div>`;
-      };
-
-      const priceRangeTemplate = priceRange => {
-        return `<div class="detail-icontainer price-range">
-                            <span>Price range: </span>
-                            <span class="price">$${priceRange.length > 1 ? priceRange.join(' - $') : priceRange[0]}/month</span>
-                        </div>`;
-      };
-
-      const capacityTemplate = capacityRange => {
-        return `<div class="detail-icontainer capacity">
-                            <i class="fas fa-user text-muted"></i>
-                            <p class="text-muted">Capacity: <span>${capacityRange[0]} - ${capacityRange[1]}</span></p>
-                        </div>`;
-      };
-
       template += `<div class="item workspace card border-top-left border--post border--hover" data-geolocation="${val === null || val === void 0 ? void 0 : (_val$location = val.location) === null || _val$location === void 0 ? void 0 : _val$location.location}">
                             <img class="card-img-top" src="${val.featured_image}" alt="">
                             <div class="card-body">

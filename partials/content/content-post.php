@@ -11,25 +11,35 @@
     if(isset($args['posts_per_page']))
     $sql_query['posts_per_page'] = $args['posts_per_page'];
 
-    $query = new WP_Query( $sql_query ); 
+    $cat = isset($_GET['cat']) ? $_GET['cat'] : 'all';
+    if($cat !== 'all') {
+        $sql_query['category_name'] = $cat;
+    }
+
+    $query = new WP_Query( $sql_query );
+
 ?>
 <?php if(isset($args['filters']) && $args['filters'] == 'enable'): ?>
     <div class="post-list post-list--filters">
         <div class="label">Latest:</div>
         <div class="action-container categories">
-        <a href="?filter=all">All</a>
+        <a href="?cat=all" <?php echo $cat === 'all' ? 'class="is-active"': '' ?> data-cat-name="all">All</a>
         <?php 
             $cat_id = get_cat_ID('posts');
             $categories = get_categories(array("child_of" => $cat_id, "hide_empty" => 0));
 
             if($categories) : foreach($categories as $category) :
         ?>
-            <a href="?filter=<?php echo $category->slug ?>"><?php echo $category->name; ?></a>
+            <a href="?cat=<?php echo $category->slug ?>" 
+                <?php echo $cat === $category->slug ? 'class="is-active"': '' ?>
+                data-cat-name="<?php echo $category->slug; ?>">
+                <?php echo $category->name; ?>
+            </a>
         <?php endforeach;endif; ?>
         </div>
     </div>
 <?php endif;?>
-   <div class="inner-container">
+   <div class="inner-container posts">
         <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
             <div class="item post card border-top-left border--post">
                 <img class="card-img-top"  src="<?php echo esc_url(wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID()), 'posts' )[0]);?>" alt="">
@@ -67,8 +77,8 @@
 
 <?php 
 $totalPublishPosts = (int) wp_count_posts('post')->publish;
-if(count($query->posts) < (int)get_option( 'posts_per_page' ) && count($query->posts) < $totalPublishPosts ): ?>
-    <div class="action-container center post">
+if(count($query->posts) < $totalPublishPosts ): ?>
+    <div class="action-container center post view-more">
         <a class="btn text-center" href="<?php esc_url(site_url())?>">View more</a>
     </div>
 <?php endif; ?>

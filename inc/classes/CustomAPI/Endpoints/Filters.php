@@ -128,6 +128,17 @@ final class Filters {
         }
       }
 
+      if(isset($request['cat_name'])) {
+        $query['category_name'] = $request['cat_name'];
+      }
+
+      if(isset($request['paged'])) {
+        $per_page = get_option( 'posts_per_page' );
+
+        $query['paged'] = isset($request['paged']);
+        $query['offset'] = ((int)$request['paged']* $per_page) - $per_page;
+      }
+
       return $query;
     }
 }

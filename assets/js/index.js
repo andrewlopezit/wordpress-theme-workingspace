@@ -6,6 +6,7 @@ import HeroImageSlider from './modules/frontend/HeroImageSlider';
 import HamburgerMenu from './modules/frontend/HamburgerMenu';
 import TestimonialsSlider from './modules/frontend/TestimonialsSlider';
 import Main from './modules/frontend/Main';
+import Posts from './modules/frontend/Posts';
 import CustomRoomsMeta from '../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta';
 import CustomMapsMeta from '../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta';
 
@@ -16,6 +17,7 @@ let testimonialsSlider;
 let main;
 let customRoomsMeta;
 let customMapsMeta;
+let posts;
 
 const hompage = document.querySelector(".home");
 
@@ -26,6 +28,7 @@ if(hompage) {
 hamburgerMenu = new HamburgerMenu();
 main  = new Main();
 testimonialsSlider = new TestimonialsSlider();
+posts = new Posts();
 
 
 // include front-end init
