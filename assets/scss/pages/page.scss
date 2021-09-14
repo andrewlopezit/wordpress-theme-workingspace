@@ -1,0 +1,19 @@
+.page {
+    .image-hero-background.absolute {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+
+        background-position: center;
+        background-size: cover;
+
+        &::before {
+            content: '';
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(#000, .2);
+        }
+    }
+}

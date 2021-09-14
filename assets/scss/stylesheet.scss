@@ -50,9 +50,9 @@
 * PAGES
 * - CUSTOM META FLOORPLAN
 * - CUSTOM WORKINGSPACE MAPS
+* - PAGE
 * - FRONT PAGE
 * - SINGLE WORKINGSPACES
-* - NEWS & INSIGHTS
 */
 
 /*------------------------------------*
@@ -195,6 +195,11 @@
 @import '../../inc/custommapsmeta/scss/custom-maps-meta-front-end.scss';
 
 /*------------------------------------*
+	PAGE
+*------------------------------------*/
+@import 'pages/page.scss';
+
+/*------------------------------------*
 	FRONT PAGE
 *------------------------------------*/
 
@@ -204,8 +209,3 @@
 	SINGLE WORKINGSPACES
 *------------------------------------*/
 @import 'pages/single-workingspaces.scss';
-
-/*------------------------------------*
-	NEWS & INSIGHTS
-*------------------------------------*/
-@import 'pages/page-news-insights.scss';

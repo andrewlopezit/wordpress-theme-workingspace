@@ -17,6 +17,7 @@
         position: relative;
         z-index: 1;
         background-color: transparent !important;
+        color: inherit;
 
         &::after {
             content: '';
@@ -90,6 +91,16 @@
 
     &.large{
         font-size: 4em;
+    }
+
+    &.hero {
+        font-size: 3em;
+        width: 50%;
+        line-height: 1em;
+    }
+
+    &.has-text-align-center {
+        margin: auto;
     }
  }
 

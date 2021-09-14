@@ -48,9 +48,9 @@
 * PAGES
 * - CUSTOM META FLOORPLAN
 * - CUSTOM WORKINGSPACE MAPS
+* - PAGE
 * - FRONT PAGE
 * - SINGLE WORKINGSPACES
-* - NEWS & INSIGHTS
 */
 /*------------------------------------*
 	FONTS
@@ -120,6 +120,7 @@ h6 mark {
   position: relative;
   z-index: 1;
   background-color: transparent !important;
+  color: inherit;
 }
 h1 span::after, h1 mark::after,
 h2 span::after,
@@ -205,6 +206,14 @@ h6 {
 }
 .headline.large {
   font-size: 4em;
+}
+.headline.hero {
+  font-size: 3em;
+  width: 50%;
+  line-height: 1em;
+}
+.headline.has-text-align-center {
+  margin: auto;
 }
 
 .tagline {
@@ -450,10 +459,7 @@ hr {
   background-size: cover;
   position: relative;
 }
-.hero-section.default::before {
-  display: none;
-}
-.hero-section::before {
+.hero-section.has-image::before {
   content: "";
   position: absolute;
   top: 0;
@@ -461,6 +467,9 @@ hr {
   bottom: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.3);
+}
+.hero-section.default::before {
+  display: none;
 }
 .hero-section .container {
   z-index: 1;
@@ -1717,6 +1726,10 @@ hr {
 /*------------------------------------*
 	HEADER
 *------------------------------------*/
+.background-header {
+  background-color: #fff;
+}
+
 .header {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -2913,6 +2926,25 @@ hr {
   }
 }
 /*------------------------------------*
+	PAGE
+*------------------------------------*/
+.page .image-hero-background.absolute {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-position: center;
+  background-size: cover;
+}
+.page .image-hero-background.absolute::before {
+  content: "";
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/*------------------------------------*
 	FRONT PAGE
 *------------------------------------*/
 .hero-section.front-page {
@@ -3156,8 +3188,5 @@ section.testimonials {
     width: 100%;
   }
 }
-/*------------------------------------*
-	NEWS & INSIGHTS
-*------------------------------------*/
 
 /*# sourceMappingURL=index.css.map*/

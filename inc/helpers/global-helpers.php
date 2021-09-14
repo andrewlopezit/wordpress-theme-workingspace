@@ -166,11 +166,9 @@ if(!function_exists('get_country_rooms')) {
 
 
 if(!function_exists('get_hero_background_src')){
-    function get_hero_background_src() {
+    function get_hero_background_src($size = 'hero_background') {
         $fieldBackground = get_field('hero_background');
         $featuredImage = get_post_thumbnail_id(get_the_ID());
-
-        $size = 'hero_background';
 
         if($fieldBackground) {
             return  esc_url(wp_get_attachment_image_src( $fieldBackground['ID'], $size )[0]);
