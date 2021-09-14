@@ -203,4 +203,13 @@
      object-position: center;
 }
 
+.workingspace.gutenberg--icon.center {
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+.workingspace.gutenberg--icon.right {
+  margin-left: 100%;
+  transform: translateX(-100%);
+}
+
 /*# sourceMappingURL=gutenberg.css.map*/

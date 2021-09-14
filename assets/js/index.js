@@ -7,6 +7,7 @@ import HamburgerMenu from './modules/frontend/HamburgerMenu';
 import TestimonialsSlider from './modules/frontend/TestimonialsSlider';
 import Main from './modules/frontend/Main';
 import Posts from './modules/frontend/Posts';
+
 import CustomRoomsMeta from '../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta';
 import CustomMapsMeta from '../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta';
 

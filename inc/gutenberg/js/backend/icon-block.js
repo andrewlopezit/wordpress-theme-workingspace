@@ -6,16 +6,20 @@ import {
     PanelBody,
     PanelRow,
     BaseControl,
-    RangeControl} from '@wordpress/components';
+    RangeControl } from '@wordpress/components';
 
 import {
     InspectorControls,
-    ColorPalette
-} from '@wordpress/block-editor';
+    ColorPalette,
+    BlockControls,
+    AlignmentToolbar } from '@wordpress/block-editor';
 
 import { registerBlockType } from '@wordpress/blocks';
 
-registerBlockType("workingspace/icons", {
+/**
+ * This blocks intendted for svg file tpye only
+ */
+registerBlockType("workingspaces/icons", {
     // built-in attributes
     title: "Icons",
     description: "",
@@ -25,38 +29,52 @@ registerBlockType("workingspace/icons", {
     attributes: {
         slug: {
             type: 'string',
-            default: 'mission'
         },
 
         size: {
             type: 'number',
-            default: 50
         },
 
         color: {
             type: 'string',
-            default: '#000'
+        },
+        
+        align: {
+            type: 'string'
         }
     },
 
     edit: editComponent,
     save: () => {
-      return null;
+        return null;
     },
 });
 
 function editComponent (props) {
-    const [icon, setIcon] = useState(props?.attributes);
-    
+    const [icon, setIcon] = useState(props?.attributes ?? '');
+
     const iconListProp = [
         { slug: 'mission' }
     ];
 
     useEffect(() =>{
-        props.setAttributes({...icon});
+        if(props?.attributes?.slug) return;
+
+        setIcon({slug: 'mission', color: '#000', size: 50, align: 'left'});
+    },[]);
+
+    useEffect(() =>{
+        props.setAttributes(icon);
     },[icon]);
 
+    if(!props?.attributes?.slug) return(<p>Loading...</p>);
+
     return [
+        <BlockControls>
+            <AlignmentToolbar
+            value={props?.attributes?.align}
+            onChange={ ( value ) => setIcon({...props?.attributes, align: value}) }/>
+        </BlockControls>,
         <InspectorControls>
             <PanelBody title="Icons" initialOpen={true}>
                 {
@@ -75,7 +93,7 @@ function editComponent (props) {
                 <PanelRow>
                     <BaseControl label="Icon color">
                         <ColorPalette
-                        value={icon.color}
+                        value={props?.attributes?.color}
                         onChange={ ( value ) => setIcon({...props?.attributes, color: value}) }
                         />
                     </BaseControl>
@@ -85,7 +103,7 @@ function editComponent (props) {
                 <PanelRow>
                     <RangeControl
                     label="Icon size in pixels"
-                    value={ icon.size }
+                    value={ props?.attributes?.size }
                     onChange={ ( value ) => setIcon({...props?.attributes, size: value}) }
                     min={ 50 }
                     max={ 300 }/>

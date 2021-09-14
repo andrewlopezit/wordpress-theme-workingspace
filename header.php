@@ -11,6 +11,4 @@
 </head>
 <body <?php body_class(); ?>>
 
-<div class="background-header">
-    <?php get_template_part('partials/header/main'); ?>
-</div>
+<?php get_template_part('partials/header/main'); ?>

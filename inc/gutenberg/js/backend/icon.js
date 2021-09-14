@@ -5,7 +5,8 @@ const Icon = (props) => {
             case 'mission': {
                 return (
                     <svg xmlns="http://www.w3.org/2000/svg" 
-                    viewBox='0 0 512 512' 
+                    viewBox='0 0 512 512'
+                    className={`workingspace gutenberg--icon ${props?.align}`} 
                     width={props?.size ?? 50} 
                     height={props?.size ?? 50}>
                         <g id="Out_line" data-name="Out line">

@@ -1,0 +1,13 @@
+.workingspace {
+    &.gutenberg--icon {
+        &.center {
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+
+        &.right {
+            margin-left: 100%;
+            transform: translateX(-100%);
+        }
+    }
+}

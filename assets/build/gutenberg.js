@@ -364,7 +364,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__["registerBlockType"])("workingspace/icons", {
+/**
+ * This blocks intendted for svg file tpye only
+ */
+
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__["registerBlockType"])("workingspaces/icons", {
   // built-in attributes
   title: "Icons",
   description: "",
@@ -373,16 +377,16 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__["registerBlockType"])("wor
   // custom attributes
   attributes: {
     slug: {
-      type: 'string',
-      default: 'mission'
+      type: 'string'
     },
     size: {
-      type: 'number',
-      default: 50
+      type: 'number'
     },
     color: {
-      type: 'string',
-      default: '#000'
+      type: 'string'
+    },
+    align: {
+      type: 'string'
     }
   },
   edit: editComponent,
@@ -392,15 +396,33 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__["registerBlockType"])("wor
 });
 
 function editComponent(props) {
-  const [icon, setIcon] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(props === null || props === void 0 ? void 0 : props.attributes);
+  var _props$attributes, _props$attributes3, _props$attributes4, _props$attributes5, _props$attributes6;
+
+  const [icon, setIcon] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])((_props$attributes = props === null || props === void 0 ? void 0 : props.attributes) !== null && _props$attributes !== void 0 ? _props$attributes : '');
   const iconListProp = [{
     slug: 'mission'
   }];
   Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
-    props.setAttributes({ ...icon
+    var _props$attributes2;
+
+    if (props !== null && props !== void 0 && (_props$attributes2 = props.attributes) !== null && _props$attributes2 !== void 0 && _props$attributes2.slug) return;
+    setIcon({
+      slug: 'mission',
+      color: '#000',
+      size: 50,
+      align: 'left'
     });
+  }, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
+    props.setAttributes(icon);
   }, [icon]);
-  return [Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+  if (!(props !== null && props !== void 0 && (_props$attributes3 = props.attributes) !== null && _props$attributes3 !== void 0 && _props$attributes3.slug)) return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Loading...");
+  return [Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["AlignmentToolbar"], {
+    value: props === null || props === void 0 ? void 0 : (_props$attributes4 = props.attributes) === null || _props$attributes4 === void 0 ? void 0 : _props$attributes4.align,
+    onChange: value => setIcon({ ...(props === null || props === void 0 ? void 0 : props.attributes),
+      align: value
+    })
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: "Icons",
     initialOpen: true
   }, iconListProp.map(prop => {
@@ -413,7 +435,7 @@ function editComponent(props) {
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], {
     label: "Icon color"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["ColorPalette"], {
-    value: icon.color,
+    value: props === null || props === void 0 ? void 0 : (_props$attributes5 = props.attributes) === null || _props$attributes5 === void 0 ? void 0 : _props$attributes5.color,
     onChange: value => setIcon({ ...(props === null || props === void 0 ? void 0 : props.attributes),
       color: value
     })
@@ -422,7 +444,7 @@ function editComponent(props) {
     initialOpen: false
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["RangeControl"], {
     label: "Icon size in pixels",
-    value: icon.size,
+    value: props === null || props === void 0 ? void 0 : (_props$attributes6 = props.attributes) === null || _props$attributes6 === void 0 ? void 0 : _props$attributes6.size,
     onChange: value => setIcon({ ...(props === null || props === void 0 ? void 0 : props.attributes),
       size: value
     }),
@@ -456,6 +478,7 @@ const Icon = props => {
           return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("svg", {
             xmlns: "http://www.w3.org/2000/svg",
             viewBox: "0 0 512 512",
+            className: `workingspace gutenberg--icon ${props === null || props === void 0 ? void 0 : props.align}`,
             width: (_props$size = props === null || props === void 0 ? void 0 : props.size) !== null && _props$size !== void 0 ? _props$size : 50,
             height: (_props$size2 = props === null || props === void 0 ? void 0 : props.size) !== null && _props$size2 !== void 0 ? _props$size2 : 50
           }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("g", {

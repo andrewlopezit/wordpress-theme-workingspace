@@ -86,6 +86,11 @@ class Gutenberg {
         register_block_type('workingspaces/latest-posts', array(
             'render_callback' => array($this, 'latest_posts_blocks_callback'),
         ));
+
+        // icon
+        register_block_type('workingspaces/icons', array(
+            'render_callback' => array($this, 'icon_blocks_callback'),
+        ));
     }
 
     public function workingspace_block_categories ($categories) {
@@ -109,6 +114,12 @@ class Gutenberg {
     public function latest_posts_blocks_callback($args) {
         $this->frontend = new FrontEndCallbacks();
         $this->frontend->latest_posts($args);
+        return ob_get_clean();
+    }
+
+    public function icon_blocks_callback($args) {
+        $this->frontend = new FrontEndCallbacks();
+        $this->frontend->icon($args);
         return ob_get_clean();
     }
 }
