@@ -54,7 +54,13 @@ function editComponent (props) {
     const [icon, setIcon] = useState(props?.attributes ?? '');
 
     const iconListProp = [
-        { slug: 'mission' }
+        { slug: 'mission' },
+        { slug: 'group' },
+        { slug: 'work-station' },
+        { slug: 'pin' },
+        { slug: 'flag' },
+        { slug: 'support' },
+        { slug: 'medal' },
     ];
 
     useEffect(() =>{
@@ -77,17 +83,19 @@ function editComponent (props) {
         </BlockControls>,
         <InspectorControls>
             <PanelBody title="Icons" initialOpen={true}>
-                {
-                    iconListProp.map(prop =>{
-                        return (
-                            <div className="icon-container">
-                                {
-                                    <Icon {...prop}/>
-                                }
-                            </div>
-                        );
-                    })
-                }
+                <PanelRow className="workingspace gutenberg--inspector-controls icons-list">
+                    {
+                        iconListProp.map(prop =>{
+                            return (
+                                <div className="icon-container">
+                                    {
+                                        <Icon onClick={value => setIcon({...props?.attributes, slug: value}) } data={prop}/>
+                                    }
+                                </div>
+                            );
+                        })
+                    }
+                </PanelRow>
             </PanelBody>
             <PanelBody title="Color" initialOpen={false}>
                 <PanelRow>
@@ -110,7 +118,7 @@ function editComponent (props) {
                 </PanelRow>
             </PanelBody>
         </InspectorControls>,
-        <Icon {...props?.attributes}/>
+        <Icon data={props?.attributes}/>
     ];
 }
 

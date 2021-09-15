@@ -206,6 +206,16 @@
      object-position: center;
 }
 
+.workingspace.gutenberg--inspector-controls.icons-list {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[5];
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 5px;
+}
+.workingspace.gutenberg--inspector-controls.icons-list .icon-container {
+  cursor: pointer;
+}
 .workingspace.gutenberg--icon.center {
   margin-left: 50%;
   transform: translateX(-50%);

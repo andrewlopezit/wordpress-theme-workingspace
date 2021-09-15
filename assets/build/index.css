@@ -1737,6 +1737,9 @@ hr {
 *------------------------------------*/
 .background-header {
   background-color: #fff;
+  position: fixed;
+  top: 0;
+  z-index: 200;
 }
 
 .header {
@@ -2969,7 +2972,7 @@ hr {
 	PAGE
 *------------------------------------*/
 .page .image-hero-background.absolute {
-  position: absolute;
+  position: fixed;
   width: 100vw;
   height: 100vh;
   z-index: -1;

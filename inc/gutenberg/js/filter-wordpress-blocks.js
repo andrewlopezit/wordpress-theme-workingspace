@@ -203,24 +203,21 @@ wp.hooks.addFilter(
       }
 
       if(attributes?.margin?.isAttachInlineStyle && attributes?.margin?.size) {
-        let style = '';
         if(attributes?.margin?.size?.top) {
-          style+=`margin-top: ${attributes.margin.size.top}${attributes?.margin?.units ?? 'px'}; `
+          props.style = {...props?.style, marginTop: `${attributes.margin.size.top}${attributes?.margin?.units ?? 'px'}`}
         }
 
         if(attributes?.margin?.size?.right) {
-          style+=`margin-right: ${attributes.margin.size.right}${attributes?.margin?.units ?? 'px'}; `
+          props.style = {...props?.style, marginRight: `${attributes.margin.size.right}${attributes?.margin?.units ?? 'px'}`}
         }
 
         if(attributes?.margin?.size?.bottom) {
-          style+=`margin-bottom: ${attributes.margin.size.bottom}${attributes?.margin?.units ?? 'px'}; `
+          props.style = {...props?.style, marginBottom: `${attributes.margin.size.bottom}${attributes?.margin?.units ?? 'px'}`}
         }
 
         if(attributes?.margin?.size?.left) {
-          style+=`margin-left: ${attributes.margin.size.left}${attributes?.margin?.units ?? 'px'}; `
+          props.style = {...props?.style, marginLeft: `${attributes.margin.size.left}${attributes?.margin?.units ?? 'px'}`}
         }
-
-        props.style = style;
       }
     }
     return props;
