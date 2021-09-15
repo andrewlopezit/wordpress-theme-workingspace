@@ -1307,6 +1307,15 @@ hr {
   padding-left: calc(var(--bs-gutter-x) * .5);
   margin-top: var(--bs-gutter-y);
 }
+.wp-block-columns.has-align-center-viewport {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  width: 100%;
+  bottom: -20vh;
+  margin: 0 10px;
+  transform: translateX(-50%);
+}
 
 /*------------------------------------*
 	SOCIAL MEDIA

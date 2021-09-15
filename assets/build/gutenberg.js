@@ -86,6 +86,92 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./inc/gutenberg/js/backend/components.js":
+/*!************************************************!*\
+  !*** ./inc/gutenberg/js/backend/components.js ***!
+  \************************************************/
+/*! exports provided: MarginControl */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarginControl", function() { return MarginControl; });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+
+const MarginControl = ({
+  value,
+  onChange
+}) => {
+  const [margin, setMargin] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(value !== null && value !== void 0 ? value : {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
+  });
+  Object(react__WEBPACK_IMPORTED_MODULE_2__["useEffect"])(() => {
+    onChange(margin);
+  }, [margin]);
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "workingspace gutenberg-components--margin-control"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "margin-container top"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "label"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["__experimentalNumberControl"], {
+    isShiftStepEnabled: true,
+    onChange: value => setMargin({ ...margin,
+      top: +value
+    }),
+    shiftStep: 1,
+    value: margin === null || margin === void 0 ? void 0 : margin.top
+  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "margin-container right"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "label"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["__experimentalNumberControl"], {
+    isShiftStepEnabled: true,
+    onChange: value => setMargin({ ...margin,
+      right: +value
+    }),
+    shiftStep: 1,
+    value: margin === null || margin === void 0 ? void 0 : margin.right
+  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "margin-container bottom"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "label"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["__experimentalNumberControl"], {
+    isShiftStepEnabled: true,
+    onChange: value => setMargin({ ...margin,
+      bottom: +value
+    }),
+    shiftStep: 1,
+    value: margin === null || margin === void 0 ? void 0 : margin.bottom
+  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "margin-container left"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "label"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["__experimentalNumberControl"], {
+    isShiftStepEnabled: true,
+    onChange: value => setMargin({ ...margin,
+      left: +value
+    }),
+    shiftStep: 1,
+    value: margin === null || margin === void 0 ? void 0 : margin.left
+  }))));
+};
+
+
+
+/***/ }),
+
 /***/ "./inc/gutenberg/js/backend/featured-posts-block.js":
 /*!**********************************************************!*\
   !*** ./inc/gutenberg/js/backend/featured-posts-block.js ***!
@@ -652,13 +738,9 @@ function editComponent(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _backend_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./backend/components */ "./inc/gutenberg/js/backend/components.js");
 
-const {
-  __
-} = wp.i18n;
-const {
-  registerBlockType
-} = wp.blocks;
+
 const {
   InspectorControls,
   InspectorAdvancedControls
@@ -667,9 +749,11 @@ const {
   PanelBody,
   PanelRow,
   BaseControl,
-  Button,
   TextHighlight,
-  ToggleControl
+  ToggleControl,
+  SelectControl,
+  Flex,
+  FlexItem
 } = wp.components;
 const {
   useState,
@@ -678,12 +762,6 @@ const {
 const {
   Fragment
 } = wp.element;
-const {
-  addFilter
-} = wp.hooks;
-const {
-  createHigherOrderComponent
-} = wp.compose;
 const BORDER_BOTTOM_TEXT_ALLOWED_BLOCKS = ['core/heading'];
 wp.domReady(() => {
   /**
@@ -709,6 +787,9 @@ wp.domReady(() => {
         isFullWidth: {
           type: "boolean",
           default: false
+        },
+        margin: {
+          default: null
         }
       };
     }
@@ -743,7 +824,7 @@ wp.domReady(() => {
         title: "Border",
         initialOpen: false
       }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(PanelRow, {
-        className: "workingspace gutenberg--inspector-controls heading-border"
+        className: "workingspace gutenberg--inspector-controls wordpress-heading-border"
       }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(BaseControl, {
         label: "Text Border Bottom",
         help: "highlight the text to add border"
@@ -770,17 +851,76 @@ wp.domReady(() => {
 
   wp.hooks.addFilter("editor.BlockEdit", "workingspace/columnsContainer", wp.compose.createHigherOrderComponent(BlockEdit => props => {
     if (props.name === 'core/columns') {
-      var _props$attributes6;
+      var _props$attributes6, _props$attributes7, _props$attributes7$ma, _props$attributes$mar, _props$attributes9, _props$attributes9$ma, _props$attributes11, _props$attributes11$m;
 
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(Fragment, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(BlockEdit, props), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(InspectorAdvancedControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(PanelRow, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(ToggleControl, {
         label: "Full width",
         checked: props === null || props === void 0 ? void 0 : (_props$attributes6 = props.attributes) === null || _props$attributes6 === void 0 ? void 0 : _props$attributes6.isFullWidth,
         onChange: () => {
-          props.setAttributes({
+          props.setAttributes({ ...props.attributes,
             isFullWidth: !props.attributes.isFullWidth
           });
         }
-      }))));
+      }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(InspectorControls, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(PanelBody, {
+        title: "Margin",
+        initialOpen: false
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(PanelRow, {
+        className: "workingspace gutenberg--inspector-controls wordpress-column-container"
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_backend_components__WEBPACK_IMPORTED_MODULE_1__["MarginControl"], {
+        value: props === null || props === void 0 ? void 0 : (_props$attributes7 = props.attributes) === null || _props$attributes7 === void 0 ? void 0 : (_props$attributes7$ma = _props$attributes7.margin) === null || _props$attributes7$ma === void 0 ? void 0 : _props$attributes7$ma.size,
+        onChange: value => {
+          var _props$attributes8;
+
+          return props.setAttributes({ ...props.attributes,
+            margin: { ...(props === null || props === void 0 ? void 0 : (_props$attributes8 = props.attributes) === null || _props$attributes8 === void 0 ? void 0 : _props$attributes8.margin),
+              size: value
+            }
+          });
+        }
+      })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(Flex, {
+        justify: true
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(FlexItem, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(SelectControl, {
+        value: (_props$attributes$mar = props === null || props === void 0 ? void 0 : (_props$attributes9 = props.attributes) === null || _props$attributes9 === void 0 ? void 0 : (_props$attributes9$ma = _props$attributes9.margin) === null || _props$attributes9$ma === void 0 ? void 0 : _props$attributes9$ma.units) !== null && _props$attributes$mar !== void 0 ? _props$attributes$mar : 'px',
+        label: "Units",
+        options: [{
+          label: 'px',
+          value: 'px'
+        }, {
+          label: 'em',
+          value: 'em'
+        }, {
+          label: 'rem',
+          value: 'rem'
+        }, {
+          label: 'vw',
+          value: 'vw'
+        }, {
+          label: 'vh',
+          value: 'vh'
+        }],
+        onChange: units => {
+          var _props$attributes10;
+
+          return props.setAttributes({ ...props.attributes,
+            margin: { ...(props === null || props === void 0 ? void 0 : (_props$attributes10 = props.attributes) === null || _props$attributes10 === void 0 ? void 0 : _props$attributes10.margin),
+              units: units
+            }
+          });
+        }
+      })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(FlexItem, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(ToggleControl, {
+        className: "workingspace gutenberg--inspector-controls wordpress-column-container toggle-settings",
+        label: "Attach inline margin",
+        checked: props === null || props === void 0 ? void 0 : (_props$attributes11 = props.attributes) === null || _props$attributes11 === void 0 ? void 0 : (_props$attributes11$m = _props$attributes11.margin) === null || _props$attributes11$m === void 0 ? void 0 : _props$attributes11$m.isAttachInlineStyle,
+        onChange: () => {
+          var _props$attributes12, _props$attributes13, _props$attributes13$m;
+
+          return props.setAttributes({ ...props.attributes,
+            margin: { ...(props === null || props === void 0 ? void 0 : (_props$attributes12 = props.attributes) === null || _props$attributes12 === void 0 ? void 0 : _props$attributes12.margin),
+              isAttachInlineStyle: !(props !== null && props !== void 0 && (_props$attributes13 = props.attributes) !== null && _props$attributes13 !== void 0 && (_props$attributes13$m = _props$attributes13.margin) !== null && _props$attributes13$m !== void 0 && _props$attributes13$m.isAttachInlineStyle)
+            }
+          });
+        }
+      }))))));
     }
 
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(BlockEdit, props);
@@ -793,8 +933,42 @@ wp.domReady(() => {
 
   wp.hooks.addFilter("blocks.getSaveContent.extraProps", "workingspace/columnsContainerSave", (props, block, attributes) => {
     if (block.name === 'core/columns') {
+      var _attributes$margin, _attributes$margin2;
+
       if (attributes.isFullWidth) {
         props.className = props.className + ' full-width';
+      }
+
+      if (attributes !== null && attributes !== void 0 && (_attributes$margin = attributes.margin) !== null && _attributes$margin !== void 0 && _attributes$margin.isAttachInlineStyle && attributes !== null && attributes !== void 0 && (_attributes$margin2 = attributes.margin) !== null && _attributes$margin2 !== void 0 && _attributes$margin2.size) {
+        var _attributes$margin3, _attributes$margin3$s, _attributes$margin5, _attributes$margin5$s, _attributes$margin7, _attributes$margin7$s, _attributes$margin9, _attributes$margin9$s;
+
+        let style = '';
+
+        if (attributes !== null && attributes !== void 0 && (_attributes$margin3 = attributes.margin) !== null && _attributes$margin3 !== void 0 && (_attributes$margin3$s = _attributes$margin3.size) !== null && _attributes$margin3$s !== void 0 && _attributes$margin3$s.top) {
+          var _attributes$margin$un, _attributes$margin4;
+
+          style += `margin-top: ${attributes.margin.size.top}${(_attributes$margin$un = attributes === null || attributes === void 0 ? void 0 : (_attributes$margin4 = attributes.margin) === null || _attributes$margin4 === void 0 ? void 0 : _attributes$margin4.units) !== null && _attributes$margin$un !== void 0 ? _attributes$margin$un : 'px'}; `;
+        }
+
+        if (attributes !== null && attributes !== void 0 && (_attributes$margin5 = attributes.margin) !== null && _attributes$margin5 !== void 0 && (_attributes$margin5$s = _attributes$margin5.size) !== null && _attributes$margin5$s !== void 0 && _attributes$margin5$s.right) {
+          var _attributes$margin$un2, _attributes$margin6;
+
+          style += `margin-right: ${attributes.margin.size.right}${(_attributes$margin$un2 = attributes === null || attributes === void 0 ? void 0 : (_attributes$margin6 = attributes.margin) === null || _attributes$margin6 === void 0 ? void 0 : _attributes$margin6.units) !== null && _attributes$margin$un2 !== void 0 ? _attributes$margin$un2 : 'px'}; `;
+        }
+
+        if (attributes !== null && attributes !== void 0 && (_attributes$margin7 = attributes.margin) !== null && _attributes$margin7 !== void 0 && (_attributes$margin7$s = _attributes$margin7.size) !== null && _attributes$margin7$s !== void 0 && _attributes$margin7$s.bottom) {
+          var _attributes$margin$un3, _attributes$margin8;
+
+          style += `margin-bottom: ${attributes.margin.size.bottom}${(_attributes$margin$un3 = attributes === null || attributes === void 0 ? void 0 : (_attributes$margin8 = attributes.margin) === null || _attributes$margin8 === void 0 ? void 0 : _attributes$margin8.units) !== null && _attributes$margin$un3 !== void 0 ? _attributes$margin$un3 : 'px'}; `;
+        }
+
+        if (attributes !== null && attributes !== void 0 && (_attributes$margin9 = attributes.margin) !== null && _attributes$margin9 !== void 0 && (_attributes$margin9$s = _attributes$margin9.size) !== null && _attributes$margin9$s !== void 0 && _attributes$margin9$s.left) {
+          var _attributes$margin$un4, _attributes$margin10;
+
+          style += `margin-left: ${attributes.margin.size.left}${(_attributes$margin$un4 = attributes === null || attributes === void 0 ? void 0 : (_attributes$margin10 = attributes.margin) === null || _attributes$margin10 === void 0 ? void 0 : _attributes$margin10.units) !== null && _attributes$margin$un4 !== void 0 ? _attributes$margin$un4 : 'px'}; `;
+        }
+
+        props.style = style;
       }
     }
 

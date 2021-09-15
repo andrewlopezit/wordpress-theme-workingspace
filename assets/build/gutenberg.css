@@ -1,11 +1,14 @@
-.workingspace.gutenberg--inspector-controls.heading-border .container {
+.workingspace.gutenberg--inspector-controls.wordpress-heading-border .container {
   margin-left: 2px;
   display: flex;
   align-items: center;
   margin-top: 10px;
 }
-.workingspace.gutenberg--inspector-controls.heading-border .container h2 {
+.workingspace.gutenberg--inspector-controls.wordpress-heading-border .container h2 {
   margin: 0;
+}
+.workingspace.gutenberg--inspector-controls.wordpress-column-container.toggle-settings {
+  margin-top: 20px;
 }
 
 .workingspace.gutenberg--featured-posts {
@@ -210,6 +213,46 @@
 .workingspace.gutenberg--icon.right {
   margin-left: 100%;
   transform: translateX(-100%);
+}
+
+.workingspace.gutenberg-components--margin-control {
+  display: flex;
+  margin: auto;
+  margin-bottom: 8px;
+}
+.workingspace.gutenberg-components--margin-control .margin-container {
+  display: flex;
+  align-items: center;
+}
+.workingspace.gutenberg-components--margin-control .margin-container:not(:last-child) {
+  margin-right: 10px;
+}
+.workingspace.gutenberg-components--margin-control .margin-container .label {
+  width: 50px;
+  height: 50px;
+  padding: 5px;
+  border: 2px solid #e0e0e0;
+  border-style: dashed;
+  margin-right: 5px;
+}
+.workingspace.gutenberg-components--margin-control .margin-container input {
+  width: 55px;
+}
+.workingspace.gutenberg-components--margin-control .margin-container.top .label {
+  border-top: 2px solid #007cba;
+  border-top-style: solid;
+}
+.workingspace.gutenberg-components--margin-control .margin-container.right .label {
+  border-right: 2px solid #007cba;
+  border-right-style: solid;
+}
+.workingspace.gutenberg-components--margin-control .margin-container.bottom .label {
+  border-bottom: 2px solid #007cba;
+  border-bottom-style: solid;
+}
+.workingspace.gutenberg-components--margin-control .margin-container.left .label {
+  border-left: 2px solid #007cba;
+  border-left-style: solid;
 }
 
 /*# sourceMappingURL=gutenberg.css.map*/

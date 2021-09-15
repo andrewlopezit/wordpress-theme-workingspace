@@ -1,5 +1,5 @@
 .workingspace{
-    &.gutenberg--inspector-controls.heading-border {
+    &.gutenberg--inspector-controls.wordpress-heading-border {
         .container {
             margin-left: 2px;
             display: flex;
@@ -10,5 +10,9 @@
                 margin: 0;
             }
         }
+    }
+
+    &.gutenberg--inspector-controls.wordpress-column-container.toggle-settings{
+        margin-top: 20px;
     }
 }
