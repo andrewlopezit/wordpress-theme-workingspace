@@ -1,0 +1,72 @@
+form.request-form#request-form {
+    width: 100%;
+    padding: 2em;
+    background: #fff;
+    --border-color: var(--primary-color, $primary-color);
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+
+    .form-group {
+        position: relative;
+
+        .iti__flag-container {
+            z-index: 10;
+        }
+
+        .form-control {
+            border-radius: 0;
+            border: 0;
+            z-index: 1;
+            font-size: 12px;
+            position: relative;
+            background: none;
+        
+            border-left: 2px solid var(--border-color);
+
+            @include transition($transition);
+            
+            &:focus {
+                outline: none;
+                box-shadow: none;
+          }
+
+            &:focus ~ label,
+            &:valid ~ label,
+            &:-webkit-autofill ~ label {
+                top: -4px;
+                left: 6px;
+                font-size: 10px;
+            }
+
+        }
+
+        label {
+            color:#999; 
+            font-weight:normal;
+            position:absolute;
+            pointer-events:none;
+            left: 12px;
+            top: 8px;
+            font-size: 12px;
+
+            &.form-group.label {
+                @include transition($transition);
+            }
+
+            &.has-tel-label {
+                top: 6px;
+                left: 55px;
+                @include transition($transition);
+
+                &.is-active {
+                    top: -10px;
+                    left: 8px;  
+                    font-size: 10px;
+                }
+            }
+
+        }
+    }
+}

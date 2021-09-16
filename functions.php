@@ -295,6 +295,7 @@ if(!class_exists('WorkingspaceTheme')) {
                         'variable_name' => 'translation_array',
                         'value' => array(
                             'site_url' => esc_url(site_url()),
+                            'assets_dir' => WORKINGSPACE_ASSETS_DIR,
                             'mapbox_public_key' => MAPBOX_PUBLIC_KEY,
                             'mapbox_secret_key' => MAPBOX_SECRET_KEY
                         )

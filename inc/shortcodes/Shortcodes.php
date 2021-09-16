@@ -16,6 +16,7 @@ class Shortcodes {
         add_shortcode('template_posts', array( $this, 'get_posts_template_parts_callback' ));
         add_shortcode('testimonials', array( $this, 'get_testimonials_template_parts_callback' ));
         add_shortcode('workingspaces_map', array( $this, 'get_workingspaces_map_template_parts_callback' ));
+        add_shortcode('request_form', array( $this, 'get_request_form_component_template_parts_callback' ));
     }
 
     public function get_posts_template_parts_callback($args){
@@ -33,6 +34,12 @@ class Shortcodes {
     public function get_workingspaces_map_template_parts_callback($args){
         ob_start();
         get_template_part('partials/content/content','workingspaces-maps', $args);
+        return ob_get_clean();
+    }
+
+    public function get_request_form_component_template_parts_callback(){
+        ob_start();
+        get_template_part('partials/components/request-form');
         return ob_get_clean();
     }
 }
