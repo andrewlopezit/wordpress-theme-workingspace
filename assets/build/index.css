@@ -2395,7 +2395,6 @@ form.request-form#request-form .form-group .form-control:focus {
 }
 form.request-form#request-form .form-group .form-control:focus ~ label, form.request-form#request-form .form-group .form-control:valid ~ label, form.request-form#request-form .form-group .form-control:-webkit-autofill ~ label {
   top: -4px;
-  left: 6px;
   font-size: 10px;
 }
 form.request-form#request-form .form-group label {
@@ -2417,7 +2416,7 @@ form.request-form#request-form .form-group label.has-tel-label {
 }
 form.request-form#request-form .form-group label.has-tel-label.is-active {
   top: -10px;
-  left: 8px;
+  left: 9px;
   font-size: 10px;
 }
 

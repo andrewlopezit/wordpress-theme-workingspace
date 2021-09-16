@@ -36,7 +36,6 @@ form.request-form#request-form {
             &:valid ~ label,
             &:-webkit-autofill ~ label {
                 top: -4px;
-                left: 6px;
                 font-size: 10px;
             }
 
@@ -62,7 +61,7 @@ form.request-form#request-form {
 
                 &.is-active {
                     top: -10px;
-                    left: 8px;  
+                    left: 9px;
                     font-size: 10px;
                 }
             }
