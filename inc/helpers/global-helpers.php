@@ -180,5 +180,14 @@ if(!function_exists('get_hero_background_src')){
     }
 }
 
+if(!function_exists('get_user_profile_src_by_id')){
+    function get_user_profile_src_by_id($id) {
+        if(!isset($id)) return;
+
+        return  esc_url(wp_get_attachment_image_src( $id, 'testimonial_profile' )[0]);
+    }
+}
+
+
 
 

@@ -22,4 +22,8 @@ final class FrontEndCallbacks {
     public function icon($args) {
         return require WORKINGSPACE_INC_DIR.'gutenberg/callbacks/views/icon.php';
     }
+
+    public function headshot($args) {
+        return require WORKINGSPACE_INC_DIR.'gutenberg/callbacks/views/headshot.php';
+    }
 }

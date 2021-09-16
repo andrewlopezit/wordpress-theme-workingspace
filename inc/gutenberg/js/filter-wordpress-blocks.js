@@ -17,7 +17,7 @@ const { useState, useEffect } = React;
 const { Fragment } = wp.element;
 
 const BORDER_BOTTOM_TEXT_ALLOWED_BLOCKS = [
-    'core/heading'
+    'core/heading',
 ]
 
 wp.domReady(() => {

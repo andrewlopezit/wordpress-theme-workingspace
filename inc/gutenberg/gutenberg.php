@@ -100,6 +100,11 @@ class Gutenberg {
         register_block_type('workingspaces/icons', array(
             'render_callback' => array($this, 'icon_blocks_callback'),
         ));
+
+        // headshot
+        register_block_type('workingspaces/headshot', array(
+            'render_callback' => array($this, 'headshot_blocks_callback'),
+        ));
     }
 
     public function workingspace_block_categories ($categories) {
@@ -129,6 +134,12 @@ class Gutenberg {
     public function icon_blocks_callback($args) {
         $this->frontend = new FrontEndCallbacks();
         $this->frontend->icon($args);
+        return ob_get_clean();
+    }
+
+    public function headshot_blocks_callback($args) {
+        $this->frontend = new FrontEndCallbacks();
+        $this->frontend->headshot($args);
         return ob_get_clean();
     }
 }

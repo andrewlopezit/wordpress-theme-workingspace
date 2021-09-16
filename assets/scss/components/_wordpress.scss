@@ -32,6 +32,10 @@
         background-color: #F9F9F9;
     }
 
+    &.has-opacity-background-color {
+        background-color: rgba(#000, 0.2);
+    }
+
     .wp-block-column {
         width: 100%;
         max-width: 100%;
