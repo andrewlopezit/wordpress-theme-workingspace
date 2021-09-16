@@ -1343,8 +1343,11 @@ class WorkingspacesMaps {
     });
     $(document).on('scroll', e => {
       this.changePostionMobileBtnMap();
-      this.changeFiltersPosition();
-      this.changeMapPosition();
+
+      if (this.$workspaceContainer.data('type') !== 'normal') {
+        this.changeFiltersPosition();
+        this.changeMapPosition();
+      }
 
       if (this.$btnMapView.hasClass('is-active')) {
         this.btnMapviewAnimation.reverse();
