@@ -424,6 +424,106 @@ function editComponent(props) {
 
 /***/ }),
 
+/***/ "./inc/gutenberg/js/backend/headshot-block.js":
+/*!****************************************************!*\
+  !*** ./inc/gutenberg/js/backend/headshot-block.js ***!
+  \****************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+
+
+const ALLOWED_MEDIA_TYPES = ["image"];
+const {
+  assets_dir
+} = translation_array;
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_4__["registerBlockType"])("workingspaces/headshot", {
+  // built-in attributes
+  title: "Headshots",
+  description: "",
+  icon: "format-image",
+  category: "workingspace-blocks",
+  // custom attributes
+  attributes: {
+    id: {
+      type: 'number'
+    },
+    src: {
+      type: 'string',
+      default: `${assets_dir}/icons/user.svg`
+    },
+    name: {
+      type: 'string',
+      default: ''
+    },
+    position: {
+      type: 'string',
+      default: ''
+    }
+  },
+  edit: editComponent,
+  save: () => {
+    return null;
+  }
+});
+
+function editComponent(props) {
+  var _props$attributes2, _props$attributes3;
+
+  return [Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["Flex"], {
+    className: "workingspace gutenberg--headshots"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["FlexBlock"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["MediaUploadCheck"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["MediaUpload"], {
+    allowedTypes: ALLOWED_MEDIA_TYPES,
+    onSelect: value => props.setAttributes({ ...(props === null || props === void 0 ? void 0 : props.attributes),
+      id: value.id,
+      src: value === null || value === void 0 ? void 0 : value.sizes.medium.url
+    }),
+    type: "image",
+    render: ({
+      open
+    }) => {
+      var _props$attributes;
+
+      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+        className: "headshot-container",
+        style: {
+          backgroundImage: `url(${props === null || props === void 0 ? void 0 : (_props$attributes = props.attributes) === null || _props$attributes === void 0 ? void 0 : _props$attributes.src})`
+        },
+        onClick: open
+      });
+    }
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["TextControl"], {
+    placeholder: "John Doe",
+    value: props === null || props === void 0 ? void 0 : (_props$attributes2 = props.attributes) === null || _props$attributes2 === void 0 ? void 0 : _props$attributes2.name,
+    onChange: value => props.setAttributes({ ...(props === null || props === void 0 ? void 0 : props.attributes),
+      name: value
+    })
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["TextControl"], {
+    value: props === null || props === void 0 ? void 0 : (_props$attributes3 = props.attributes) === null || _props$attributes3 === void 0 ? void 0 : _props$attributes3.position,
+    onChange: value => props.setAttributes({ ...(props === null || props === void 0 ? void 0 : props.attributes),
+      position: value
+    }),
+    placeholder: "Position"
+  })))];
+}
+
+/***/ }),
+
 /***/ "./inc/gutenberg/js/backend/icon-block.js":
 /*!************************************************!*\
   !*** ./inc/gutenberg/js/backend/icon-block.js ***!
@@ -1164,6 +1264,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _backend_featured_posts_block__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./backend/featured-posts-block */ "./inc/gutenberg/js/backend/featured-posts-block.js");
 /* harmony import */ var _backend_latest_posts_block__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./backend/latest-posts-block */ "./inc/gutenberg/js/backend/latest-posts-block.js");
 /* harmony import */ var _backend_icon_block__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./backend/icon-block */ "./inc/gutenberg/js/backend/icon-block.js");
+/* harmony import */ var _backend_headshot_block__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./backend/headshot-block */ "./inc/gutenberg/js/backend/headshot-block.js");
+
 
 
 

@@ -70,6 +70,15 @@ class Gutenberg {
             'editor_script' => 'custom-gutenberg-js',
             'editor_style' => 'custom-gutenberg-css'
         ));
+
+        // Localize the script with new data
+        $translation_array = array(
+            'site_url' => esc_url(site_url()),
+            'assets_dir' => WORKINGSPACE_ASSETS_DIR,
+        );
+
+        wp_localize_script('custom-gutenberg-js', 'translation_array', $translation_array);
+        wp_enqueue_script('custom-gutenberg-js');
     }
 
     public function register_front_end_blocks() {

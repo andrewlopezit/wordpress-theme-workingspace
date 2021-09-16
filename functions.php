@@ -78,8 +78,8 @@ if(!class_exists('WorkingspaceTheme')) {
             define( 'WORKINGSPACE_CLASSES_DIR', WORKINGSPACEWP_THEME_DIR . '/classes/' );
             define( 'WORKINGSPACE_CLASSES_DIR_URI', WORKINGSPACEWP_THEME_URI . '/classes/' );
 
-            // Assets URI
-            define( 'WORKINGSPACE_ASSETS_URI', WORKINGSPACEWP_THEME_URI . '/assets/' );
+            // Assets DIR
+            define( 'WORKINGSPACE_ASSETS_DIR', WORKINGSPACEWP_THEME_URI . '/assets/' );
     
             /** Admin Panel */
             if(is_admin()) { 

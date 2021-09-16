@@ -1,0 +1,15 @@
+.workingspace {
+    &.gutenberg--headshots{
+        .headshot-container {
+            height: 150px;
+            width: 150px;
+            
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+}
