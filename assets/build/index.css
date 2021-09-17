@@ -1048,7 +1048,6 @@ body {
 */
 .ui-datepicker {
   background: #fff;
-  padding: 1em;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
 }
 .ui-datepicker .ui-datepicker-header {
@@ -1057,6 +1056,7 @@ body {
   -ms-grid-columns: auto 5px 1fr 5px auto;
   grid-template-columns: auto 1fr auto;
   grid-gap: 5px;
+  padding: 0.5em;
       grid-template-areas: "prev title next";
 }
 .ui-datepicker .ui-datepicker-header .ui-datepicker-prev,
@@ -1081,7 +1081,8 @@ body {
   grid-area: title;
 }
 .ui-datepicker .ui-datepicker-calendar {
-  width: 100%;
+  width: 200px;
+  margin: auto;
 }
 .ui-datepicker .ui-datepicker-calendar thead tr th span {
   position: relative;
@@ -3357,6 +3358,13 @@ form.request-form#request-form .form-group label.has-tel-label.is-active {
 /*------------------------------------*
 	  G U T E N B E R G
 *------------------------------------*/
+.gutenberg--featured-post {
+  width: auto;
+  max-width: 1110px;
+}
+.gutenberg--featured-post.has-no-padding {
+  padding: 0;
+}
 .gutenberg--featured-post .featured-posts {
   display: -ms-grid;
   display: grid;
@@ -3373,8 +3381,8 @@ form.request-form#request-form .form-group label.has-tel-label.is-active {
   -ms-grid-row: 1;
   -ms-grid-row-span: 3;
   -ms-grid-column: 1;
-  width: 600px;
-  height: 455px;
+  width: 100%;
+  height: auto;
   grid-area: featured-1;
 }
 .gutenberg--featured-post .featured-posts .item.featured:nth-child(1) .overlay {
@@ -3537,7 +3545,7 @@ form.request-form#request-form .form-group label.has-tel-label.is-active {
     position: relative;
   }
   .gutenberg--featured-post .featured-posts .item.featured:nth-child(1) {
-    width: 600px;
+    width: 100%;
   }
   .gutenberg--featured-post .featured-posts .item.featured:nth-child(2) {
     height: 250px;

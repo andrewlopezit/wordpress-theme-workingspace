@@ -23,13 +23,13 @@ body {
 */
 .ui-datepicker {
   background: #fff ;
-  padding: 1em;
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 
   .ui-datepicker-header{
     display: grid;
     grid-template-columns: auto 1fr auto;
     grid-gap: 5px;
+    padding: 0.5em;
     grid-template-areas: 
     "prev title next";
 
@@ -55,7 +55,9 @@ body {
   }
   
   .ui-datepicker-calendar {
-    width: 100%;
+    width: 200px;
+    margin: auto;
+    
     thead {
       tr {
         th {

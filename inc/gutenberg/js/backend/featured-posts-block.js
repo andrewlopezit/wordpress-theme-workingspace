@@ -83,7 +83,6 @@ function editComponent(props) {
         }
 
         props.setAttributes({featuredPosts: postsClone});
-        props.setAttributes({searchPostName: null});
         setSelectedReplaceIndex(undefined);
     }
 
