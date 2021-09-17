@@ -950,12 +950,51 @@ __webpack_require__.r(__webpack_exports__);
 class RequestForm {
   constructor() {
     // initialize elements variables
-    // init local variable
-    this.assetsDir = translation_array.assets_dir; // init gsap animation
+    this.$requestForm = $('.request-form#request-form');
+    if (!this.$requestForm.length) return;
+    this.$formGroup = this.$requestForm.find('.form-group');
+    this.$inputDatePicker = this.$formGroup.find('.date-picker'); // init local variable
+
+    this.assetsDir = translation_array.assets_dir;
+    this.primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color'); //init input datepicker
+
+    this.initDatePicker(); // init gsap animation
     // initialize events function
-    // init international country code input
+
+    this.events(); // init international country code input
 
     this.initIntlTelCountryCodeInput();
+  }
+
+  events() {
+    this.$formGroup.on('keyup change', 'input, select', e => {
+      const $el = $(e.currentTarget);
+      if ($el.hasClass('intl-tel-country-code')) return;
+
+      const addClassIsFIllInInput = () => {
+        if ($el.hasClass('is-fill')) return;
+        $el.addClass('is-fill');
+      };
+
+      const removeClassIsFillInInput = () => {
+        if (!$el.hasClass('is-fill')) return;
+        $el.removeClass('is-fill');
+      };
+
+      if ($el.val().length) {
+        addClassIsFIllInInput();
+      } else {
+        removeClassIsFillInInput();
+      }
+    });
+  }
+
+  initDatePicker() {
+    if (!this.$inputDatePicker.length) return;
+    const dateToday = new Date();
+    this.$inputDatePicker.datepicker({
+      minDate: dateToday
+    });
   }
 
   initIntlTelCountryCodeInput() {
@@ -997,11 +1036,11 @@ class RequestForm {
 
     const validatedTelNumber = el => {
       if (!iti.isValidNumber()) {
-        $(el).css('border-color', '#dc3545');
+        $(el).removeAttr('style');
       }
 
       if (iti.isValidNumber()) {
-        $(el).removeAttr('style');
+        $(el).css('border-color', this.primaryColor);
       }
     };
   }

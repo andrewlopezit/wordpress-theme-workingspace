@@ -1020,6 +1020,97 @@ hr {
   }
 }
 /*------------------------------------*
+	NORMALIZE
+*------------------------------------*/
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS and IE text size adjust after device orientation change,
+ *    without disabling user zoom.
+ */
+html {
+  font-family: sans-serif;
+  /* 1 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+}
+
+/**
+* Remove default margin.
+*/
+body {
+  margin: 0;
+}
+
+/**
+* UI Datepicker custom
+*/
+.ui-datepicker {
+  background: #fff;
+  padding: 1em;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+.ui-datepicker .ui-datepicker-header {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto 5px 1fr 5px auto;
+  grid-template-columns: auto 1fr auto;
+  grid-gap: 5px;
+      grid-template-areas: "prev title next";
+}
+.ui-datepicker .ui-datepicker-header .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-header .ui-datepicker-next,
+.ui-datepicker .ui-datepicker-header .ui-datepicker-title {
+  padding: 2px;
+  text-align: center;
+}
+.ui-datepicker .ui-datepicker-header .ui-datepicker-prev {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: prev;
+}
+.ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+  -ms-grid-row: 1;
+  -ms-grid-column: 5;
+  grid-area: next;
+}
+.ui-datepicker .ui-datepicker-header .ui-datepicker-title {
+  -ms-grid-row: 1;
+  -ms-grid-column: 3;
+  grid-area: title;
+}
+.ui-datepicker .ui-datepicker-calendar {
+  width: 100%;
+}
+.ui-datepicker .ui-datepicker-calendar thead tr th span {
+  position: relative;
+}
+.ui-datepicker .ui-datepicker-calendar thead tr th span::after {
+  position: absolute;
+  content: "";
+  bottom: 3px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  z-index: -1;
+  background-color: var(--primary-color, #FDD500);
+}
+.ui-datepicker .ui-datepicker-calendar tbody tr td a.ui-state-highlight {
+  position: relative;
+}
+.ui-datepicker .ui-datepicker-calendar tbody tr td a.ui-state-highlight::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  left: 0;
+  z-index: -1;
+  background-color: var(--primary-color, #FDD500);
+  transform: translate(5px, 8px);
+}
+
+/*------------------------------------*
 	TYPOGRAPHY
 *------------------------------------*/
 /**
@@ -2366,7 +2457,7 @@ form.request-form#request-form {
   width: 100%;
   padding: 2em;
   background: #fff;
-  --border-color: var(--primary-color, $primary-color);
+  --border-color: #dc3545;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (1fr)[2];
@@ -2375,6 +2466,11 @@ form.request-form#request-form {
 }
 form.request-form#request-form .form-group {
   position: relative;
+}
+form.request-form#request-form .form-group.full-width {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-column: 1/3;
 }
 form.request-form#request-form .form-group .iti__flag-container {
   z-index: 10;
@@ -2393,9 +2489,38 @@ form.request-form#request-form .form-group .form-control:focus {
   outline: none;
   box-shadow: none;
 }
-form.request-form#request-form .form-group .form-control:focus ~ label, form.request-form#request-form .form-group .form-control:valid ~ label, form.request-form#request-form .form-group .form-control:-webkit-autofill ~ label {
+form.request-form#request-form .form-group .form-control.is-fill ~ label {
   top: -4px;
   font-size: 10px;
+}
+form.request-form#request-form .form-group .custom-select {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-clip: padding-box;
+  border-radius: 0;
+  border: 0;
+  z-index: 1;
+  font-size: 12px;
+  position: relative;
+  background: none;
+  border-left: 2px solid var(--border-color);
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+form.request-form#request-form .form-group .custom-select.is-fill ~ label {
+  top: -4px;
+  font-size: 10px;
+}
+form.request-form#request-form .form-group .custom-select:focus {
+  outline: 0;
+  box-shadow: 0;
 }
 form.request-form#request-form .form-group label {
   color: #999;
@@ -2403,7 +2528,7 @@ form.request-form#request-form .form-group label {
   position: absolute;
   pointer-events: none;
   left: 12px;
-  top: 8px;
+  top: 6px;
   font-size: 12px;
 }
 form.request-form#request-form .form-group label.form-group.label {
