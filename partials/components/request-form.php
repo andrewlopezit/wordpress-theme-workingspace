@@ -1,4 +1,6 @@
 <form class="request-form" id="request-form">
+  <h4 class="full-width">Share <span>your requirements</span></h4>
+  <p class="full-width">We'll get back to you with the guaranteed best pricing and availability.</p>
   <div class="form-group">
     <input type="text" class="form-control" id="firstname" name="firstname" required/>
     <label class="form-group label" for="firstname">First name</label>
@@ -47,11 +49,32 @@
       <?php endfor; ?>
       <option value="5+">5+</option>
     </select>
-    <label class="form-group label" for="tel">Capacity</label>
+    <label class="form-group label" for="duration">Capacity</label>
   </div>
   
   <div class="form-group">
-    <input type="text" class="form-control date-picker" name="lastname" required/>
-    <label class="form-group label" for="lastname">Last name</label>
+    <input type="text" class="form-control date-picker" id="start-date" name="start_date" required/>
+    <label class="form-group label" for="start-date">Estimated Start Date</label>
   </div>
+
+  <div class="form-group">
+    <select class="custom-select" id="duration" name="duration">
+      <option selected style="display:none"></option>
+      <option value="Hours">Hours</option>
+      <option value="Days">Days</option>
+      <option value="Weeks">Weeks</option>
+      <option value="Months">Months</option>
+      <option value="Years">Years</option>
+    </select>
+    <label class="form-group label" for="duration">Duration</label>
+  </div>
+
+  <div class="form-group full-width">
+    <textarea class="form-control" id="additional-message" name="additional_message" rows="3"></textarea>
+    <label class="form-group label" for="additional-message">Additional requirements including budget location etc.</label>
+  </div>
+
+  <button class="btn">Send Enquiry</button>
+
+  <small class="text-muted full-width">By completing, you accept the Coworker <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a></small>
 </form>

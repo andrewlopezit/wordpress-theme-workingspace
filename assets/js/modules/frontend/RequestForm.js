@@ -30,7 +30,7 @@ class RequestForm {
     }
 
     events() {
-        this.$formGroup.on('keyup change', 'input, select', e => {
+        this.$formGroup.on('keyup change', 'input, select, textarea', e => {
             const $el = $(e.currentTarget);
             
             if($el.hasClass('intl-tel-country-code')) return;

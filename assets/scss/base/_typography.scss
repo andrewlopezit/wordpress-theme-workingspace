@@ -10,7 +10,7 @@
      font-style: $heading-font-style;
      font-family: $heading-font-family;
 
-     margin: 0 0 20px;
+     margin: 0;
      line-height: 1.4;
 
      span, mark {
@@ -76,6 +76,12 @@
  h4 {
      line-height: 1.2em;
      font-weight: 400;
+
+    span { 
+        &::after {
+            bottom: 4px;
+        }
+    }
 
      mark {
         &::after {
