@@ -1,9 +1,16 @@
 .page {
-    .image-hero-background.absolute {
-        position: fixed;
+    .image-hero-background {
         width: 100vw;
         height: 100vh;
         z-index: -1;
+
+        &.has-fixed-background {
+            position: fixed;
+        }
+
+        &.has-blur-background {
+            @include blur(2px);
+        }
 
         background-position: center;
         background-size: cover;

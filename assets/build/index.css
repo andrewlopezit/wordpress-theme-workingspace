@@ -4159,15 +4159,21 @@ form.request-form#request-form .btn {
 /*------------------------------------*
 	PAGE
 *------------------------------------*/
-.page .image-hero-background.absolute {
-  position: fixed;
+.page .image-hero-background {
   width: 100vw;
   height: 100vh;
   z-index: -1;
   background-position: center;
   background-size: cover;
 }
-.page .image-hero-background.absolute::before {
+.page .image-hero-background.has-fixed-background {
+  position: fixed;
+}
+.page .image-hero-background.has-blur-background {
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
+}
+.page .image-hero-background::before {
   content: "";
   position: absolute;
   width: 100vw;
