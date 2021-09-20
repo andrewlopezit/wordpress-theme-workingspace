@@ -5,16 +5,17 @@ if ( have_posts() ) :
     while ( have_posts() ) : the_post();
 
     $is_fixed_background = get_field('has_fixed_background');
-    $is_blur_background = get_field('has_blur_background');
+    $image_hero_blur_background_position  = get_field('has_blur_background');
 
     $imageSrc = get_hero_background_src($is_fixed_background ? 'default' : 'hero_background');
 ?>   
 
     <?php if($imageSrc && $is_fixed_background):?>
         <div class="image-hero-background
-        <?php echo isset($is_fixed_background) ? ' has-fixed-background ' : ''; ?>
-        <?php echo isset($is_blur_background) ? ' has-blur-background ' : ''; ?>" 
-            style="background-image: url(<?php echo $imageSrc; ?>);"></div>
+        <?php echo $is_fixed_background ? ' has-fixed-background ' : ''; ?>
+        <?php echo $image_hero_blur_background_position === 'header' ? ' has-blur-background ' : ''; ?>" 
+            style="background-image: url(<?php echo $imageSrc; ?>);"
+            <?php echo isset($image_hero_blur_background_position) ? 'data-blur-position = "'.$image_hero_blur_background_position.'"' : '' ?>></div>
     <?php endif;?>
     <section class="hero-section 
         <?php echo ($imageSrc && !$is_fixed_background) ? 'has-image': '' ?>" 
