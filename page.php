@@ -9,7 +9,6 @@ if ( have_posts() ) :
 
     $imageSrc = get_hero_background_src($is_fixed_background ? 'default' : 'hero_background');
 ?>   
-
     <?php if($imageSrc && $is_fixed_background):?>
         <div class="image-hero-background
         <?php echo $is_fixed_background ? ' has-fixed-background ' : ''; ?>
