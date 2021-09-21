@@ -32,6 +32,10 @@ form.request-form#request-form {
             border-left: 2px solid var(--border-color);
 
             @include transition($transition);
+
+            &.optional {
+                --border-color: var(--primary-color, $primary-color);
+            }
             
             &:focus {
                 outline: none;
@@ -40,6 +44,10 @@ form.request-form#request-form {
 
             &.intl-tel-country-code{
                 padding-left: 50px;
+
+                &.is-valid {
+                    --border-color: var(--primary-color, $primary-color);
+                }
             }
 
             &.is-fill ~ label {

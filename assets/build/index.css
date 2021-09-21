@@ -2503,12 +2503,18 @@ form.request-form#request-form .form-group .form-control {
   border-left: 2px solid var(--border-color);
   transition: all 400ms ease;
 }
+form.request-form#request-form .form-group .form-control.optional {
+  --border-color: var(--primary-color, $primary-color);
+}
 form.request-form#request-form .form-group .form-control:focus {
   outline: none;
   box-shadow: none;
 }
 form.request-form#request-form .form-group .form-control.intl-tel-country-code {
   padding-left: 50px;
+}
+form.request-form#request-form .form-group .form-control.intl-tel-country-code.is-valid {
+  --border-color: var(--primary-color, $primary-color);
 }
 form.request-form#request-form .form-group .form-control.is-fill ~ label {
   top: -4px;
