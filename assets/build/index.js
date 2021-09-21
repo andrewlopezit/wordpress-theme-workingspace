@@ -1060,6 +1060,7 @@ class RequestForm {
 
 
       const isValid = this.isInputValid($el);
+      this.checkRequestForm();
 
       if (!isValid) {
         $el.css('--border-color', '#dc3545');
@@ -1067,7 +1068,6 @@ class RequestForm {
       }
 
       $el.css('--border-color', this.primaryColor);
-      this.checkRequestForm();
     });
   }
 

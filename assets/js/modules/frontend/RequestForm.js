@@ -71,13 +71,14 @@ class RequestForm {
 
             // validate form
             const isValid = this.isInputValid($el);
+            this.checkRequestForm();
+
             if(!isValid) {
                 $el.css('--border-color', '#dc3545');
                 return;
             }
 
             $el.css('--border-color', this.primaryColor);
-            this.checkRequestForm();
         });
     }
 
