@@ -69,27 +69,6 @@ class RequestForm {
         this.$formGroup.on('keyup change', 'input, select, textarea', e => {
             const $el = $(e.currentTarget);
             
-            if($el.hasClass('intl-tel-country-code')) return;
-
-            const addClassIsFIllInInput = () => {
-                if($el.hasClass('is-fill')) return;
-
-                $el.addClass('is-fill');
-            }
-
-            const removeClassIsFillInInput = () => {
-                if(!$el.hasClass('is-fill')) return;
-
-                $el.removeClass('is-fill');
-            }
-
-            // change label position
-            if($el.val().length) {
-                addClassIsFIllInInput();
-            }else {
-                removeClassIsFillInInput();
-            }
-
             // validate form
             const isValid = this.isInputValid($el);
             this.checkRequestForm();

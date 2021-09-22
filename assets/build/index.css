@@ -981,6 +981,7 @@
 * - PAGE
 * - FRONT PAGE
 * - SINGLE WORKINGSPACES
+* - SEARCH PAGE
 */
 /*------------------------------------*
 	FONTS
@@ -1747,6 +1748,93 @@ hr {
   padding-top: 1em;
 }
 
+.form-group {
+  position: relative;
+  --border-color: #dc3545;
+}
+.form-group .iti__flag-container {
+  z-index: 10;
+}
+.form-group .form-control {
+  border-radius: 0;
+  border: 0;
+  z-index: 1;
+  font-size: 12px;
+  position: relative;
+  background: none;
+  padding: 0.8rem 0.75rem;
+  border-left: 2px solid var(--border-color);
+  transition: all 300ms ease;
+}
+.form-group .form-control.optional {
+  --border-color: var(--primary-color, $primary-color);
+}
+.form-group .form-control:focus {
+  outline: none;
+  box-shadow: none;
+}
+.form-group .form-control.intl-tel-country-code {
+  padding-left: 50px;
+}
+.form-group .form-control.intl-tel-country-code.is-valid {
+  --border-color: var(--primary-color, $primary-color);
+}
+.form-group .form-control.is-fill ~ label {
+  top: -4px;
+  font-size: 10px;
+}
+.form-group .custom-select {
+  display: block;
+  width: 100%;
+  padding: 0.8rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-clip: padding-box;
+  border-radius: 0;
+  border: 0;
+  z-index: 1;
+  font-size: 12px;
+  position: relative;
+  background: none;
+  border-left: 2px solid var(--border-color);
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.form-group .custom-select.is-fill ~ label {
+  top: -4px;
+  font-size: 10px;
+}
+.form-group .custom-select:focus {
+  outline: 0;
+  box-shadow: 0;
+}
+.form-group label {
+  color: #999;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 12px;
+  top: 14px;
+  font-size: 12px;
+}
+.form-group label.form-group.label {
+  transition: all 300ms ease;
+}
+.form-group label.has-tel-label {
+  top: 12px;
+  left: 55px;
+  transition: all 300ms ease;
+}
+.form-group label.has-tel-label.is-active {
+  top: -4px;
+  left: 9px;
+  font-size: 10px;
+}
+
 @media (max-width: 575.98px) {
   .hero-section .container p {
     width: 100%;
@@ -2502,7 +2590,6 @@ form.request-form#request-form {
   width: 100%;
   padding: 2em;
   background: #fff;
-  --border-color: #dc3545;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (1fr)[2];
@@ -2531,91 +2618,6 @@ form.request-form#request-form .full-width {
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-column: 1/3;
-}
-form.request-form#request-form .form-group {
-  position: relative;
-}
-form.request-form#request-form .form-group .iti__flag-container {
-  z-index: 10;
-}
-form.request-form#request-form .form-group .form-control {
-  border-radius: 0;
-  border: 0;
-  z-index: 1;
-  font-size: 12px;
-  position: relative;
-  background: none;
-  padding: 0.8rem 0.75rem;
-  border-left: 2px solid var(--border-color);
-  transition: all 400ms ease;
-}
-form.request-form#request-form .form-group .form-control.optional {
-  --border-color: var(--primary-color, $primary-color);
-}
-form.request-form#request-form .form-group .form-control:focus {
-  outline: none;
-  box-shadow: none;
-}
-form.request-form#request-form .form-group .form-control.intl-tel-country-code {
-  padding-left: 50px;
-}
-form.request-form#request-form .form-group .form-control.intl-tel-country-code.is-valid {
-  --border-color: var(--primary-color, $primary-color);
-}
-form.request-form#request-form .form-group .form-control.is-fill ~ label {
-  top: -4px;
-  font-size: 10px;
-}
-form.request-form#request-form .form-group .custom-select {
-  display: block;
-  width: 100%;
-  padding: 0.8rem 0.75rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
-  background-clip: padding-box;
-  border-radius: 0;
-  border: 0;
-  z-index: 1;
-  font-size: 12px;
-  position: relative;
-  background: none;
-  border-left: 2px solid var(--border-color);
-  cursor: pointer;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-form.request-form#request-form .form-group .custom-select.is-fill ~ label {
-  top: -4px;
-  font-size: 10px;
-}
-form.request-form#request-form .form-group .custom-select:focus {
-  outline: 0;
-  box-shadow: 0;
-}
-form.request-form#request-form .form-group label {
-  color: #999;
-  font-weight: normal;
-  position: absolute;
-  pointer-events: none;
-  left: 12px;
-  top: 14px;
-  font-size: 12px;
-}
-form.request-form#request-form .form-group label.form-group.label {
-  transition: all 400ms ease;
-}
-form.request-form#request-form .form-group label.has-tel-label {
-  top: 12px;
-  left: 55px;
-  transition: all 400ms ease;
-}
-form.request-form#request-form .form-group label.has-tel-label.is-active {
-  top: -4px;
-  left: 9px;
-  font-size: 10px;
 }
 
 @media (max-width: 575.98px) {
@@ -4491,6 +4493,18 @@ section.testimonials {
   .single-workingspaces.page .workingspaces h1 {
     width: 100%;
   }
+}
+/*------------------------------------*
+	SEARCH PAGE
+*------------------------------------*/
+.search-page {
+  margin-top: 90px;
+}
+.search-page h2 {
+  margin-top: 50px;
+}
+.search-page .heading--sub-paragraph {
+  width: 400px;
 }
 
 /*# sourceMappingURL=index.css.map*/

@@ -535,6 +535,111 @@ hr {
 	}
 }
 
+.form-group {
+	position: relative;
+    --border-color: #dc3545;
+
+	.iti__flag-container {
+		z-index: 10;
+	}
+
+	.form-control {
+		border-radius: 0;
+		border: 0;
+		z-index: 1;
+		font-size: 12px;
+		position: relative;
+		background: none;
+		padding: .8rem .75rem;
+	
+		border-left: 2px solid var(--border-color);
+
+		@include transition($transition);
+
+		&.optional {
+			--border-color: var(--primary-color, $primary-color);
+		}
+		
+		&:focus {
+			outline: none;
+			box-shadow: none;
+		}
+
+		&.intl-tel-country-code{
+			padding-left: 50px;
+
+			&.is-valid {
+				--border-color: var(--primary-color, $primary-color);
+			}
+		}
+
+		&.is-fill ~ label {
+			top: -4px;
+			font-size: 10px;
+		}
+
+	}
+
+	.custom-select {
+		display: block;
+		width: 100%;
+		padding: .8rem .75rem;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #212529;
+		background-clip: padding-box;
+
+		border-radius: 0;
+		border: 0;
+		z-index: 1;
+		font-size: 12px;
+		position: relative;
+		background: none;
+		border-left: 2px solid var(--border-color);
+		cursor: pointer;
+
+		@include appearance();
+
+		&.is-fill ~ label {
+			top: -4px;
+			font-size: 10px;
+		}
+
+		&:focus {
+			outline: 0;
+			box-shadow: 0;
+		}
+	}
+
+	label {
+		color:#999; 
+		font-weight:normal;
+		position:absolute;
+		pointer-events:none;
+		left: 12px;
+		top: 14px;
+		font-size: 12px;
+
+		&.form-group.label {
+			@include transition($transition);
+		}
+
+		&.has-tel-label {
+			top: 12px;
+			left: 55px;
+			@include transition($transition);
+
+			&.is-active {
+				top: -4px;
+				left: 9px;
+				font-size: 10px;
+			}
+		}
+
+	}
+}
+
 // Extra small devices (portrait phones, less than 576px)
 @media (max-width: 575.98px) { 
 	.hero-section {
