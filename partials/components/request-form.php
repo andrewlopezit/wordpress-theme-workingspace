@@ -1,4 +1,8 @@
 <form class="request-form" id="request-form">
+  <div class="loading-bar"></div>
+  <div class="alert alert-box" role="alert">
+      
+  </div>
   <h4 class="full-width">Share <span>your requirements</span></h4>
   <p class="full-width">We'll get back to you with the guaranteed best pricing and availability.</p>
   <div class="form-group">
@@ -74,7 +78,7 @@
     <label class="form-group label" for="additional-message">Additional requirements including budget location etc.</label>
   </div>
 
-  <button class="btn form-btn" disabled="true">Send Enquiry</button>
+  <button class="btn form-btn" disabled="true">Send Inquiry</button>
 
   <small class="text-muted full-width">By completing, you accept the Coworker <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a></small>
 </form>

@@ -2480,6 +2480,23 @@ form.request-form#request-form {
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 10px;
   grid-row-gap: 15px;
+  position: relative;
+}
+form.request-form#request-form .loading-bar {
+  position: absolute;
+  width: 0;
+  height: 4px;
+  background-color: var(--primary-color, #FDD500);
+}
+form.request-form#request-form > .alert.alert-box {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  border-radius: 0;
+  display: none;
+  opacity: 0;
+  z-index: 5;
+  transform: translateX(60px);
 }
 form.request-form#request-form .full-width {
   -ms-grid-column: 1;
@@ -3408,6 +3425,7 @@ form.request-form#request-form .btn {
   -ms-grid-row-span: 3;
   -ms-grid-column: 1;
   width: 100%;
+  min-width: 180px;
   height: auto;
   grid-area: featured-1;
 }

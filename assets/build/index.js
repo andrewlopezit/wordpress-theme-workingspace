@@ -1002,6 +1002,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(intl_tel_input__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _intl_tel_input_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./intl-tel-input/utils.js */ "./assets/js/modules/frontend/intl-tel-input/utils.js");
 /* harmony import */ var _intl_tel_input_utils_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_intl_tel_input_utils_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 
@@ -1012,14 +1015,18 @@ class RequestForm {
     if (!this.$requestForm.length) return;
     this.$formGroup = this.$requestForm.find('.form-group');
     this.$inputDatePicker = this.$formGroup.find('.date-picker');
-    this.$formButton = this.$requestForm.find('.form-btn'); // init local variable
+    this.$formButton = this.$requestForm.find('.form-btn');
+    this.$loadingBar = this.$requestForm.find('.loading-bar');
+    this.$alertBox = this.$requestForm.find('.alert-box'); // init local variable
 
     this.assetsDir = translation_array.assets_dir;
+    this.siteUrl = translation_array.site_url;
     this.primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
     this.requestForm; //init input datepicker
 
     this.initDatePicker(); // init gsap animation
-    // initialize events function
+
+    this.initAnimation(); // initialize events function
 
     this.events();
     this.initRequestForm(); // init international country code input
@@ -1034,6 +1041,31 @@ class RequestForm {
       inputValidations: []
     };
     this.$formButton.attr('disabled', true);
+  }
+
+  initAnimation() {
+    this.loadingBarAnimation = gsap.timeline({
+      paused: true
+    });
+    this.alertBoxAnimation = gsap.timeline({
+      paused: true,
+      onComplete: () => gsap.delayedCall(20, () => {
+        this.alertBoxAnimation.reverse();
+        this.$alertBox.removeClass('alert-success alert-danger');
+      })
+    });
+    this.loadingBarAnimation.to(this.$loadingBar, {
+      width: '99%',
+      duration: 2
+    });
+    this.alertBoxAnimation.to(this.$alertBox, {
+      display: 'initial'
+    }).to(this.$alertBox, {
+      x: 0,
+      opacity: 1,
+      duration: 1,
+      ease: 'back'
+    });
   }
 
   events() {
@@ -1068,6 +1100,27 @@ class RequestForm {
       }
 
       $el.css('--border-color', this.primaryColor);
+    });
+    this.$formButton.on('click', e => {
+      e.preventDefault();
+      if (!this.requestForm.isValid) return;
+      const requestFormData = this.getRequestFormData();
+      this.$formButton.html('submitting');
+      this.loadingBarAnimation.play();
+      this.$formButton.attr('disabled', true);
+      this.submitForm(requestFormData).then(result => {
+        this.clearInputs();
+        this.loadingBarAnimation.to(this.$loadingBar, {
+          width: '100%'
+        }).play();
+        this.$alertBox.addClass('alert-success').html(`<strong>Well done!</strong> Successfully sent.`);
+        this.$formButton.html('Send inquiry');
+        this.alertBoxAnimation.play();
+      }).catch(() => {
+        this.$formButton.attr('disabled', false);
+        this.$alertBox.addClass('alert-danger').html(`<strong>Well done!</strong> Oh snap! Change a few things up and try submitting again.`);
+        this.alertBoxAnimation.play();
+      });
     });
   }
 
@@ -1146,6 +1199,29 @@ class RequestForm {
         $(el).addClass('is-valid');
       }
     };
+  }
+
+  clearInputs() {
+    this.requestForm.inputs.each((i, el) => {
+      $(el).val(undefined);
+    });
+    this.requestForm.inputValidations = [];
+    this.requestForm.isValid = false;
+    this.$formButton.attr('disabled', true);
+  }
+
+  getRequestFormData() {
+    let obj = {};
+    this.requestForm.inputs.each((i, el) => {
+      obj[$(el).attr('name')] = $(el).val();
+    });
+    return obj;
+  }
+
+  submitForm(data) {
+    if (!data) return;
+    const url = `${this.siteUrl}/wp-json/wp/v2/inquiries`;
+    return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(url, data);
   }
 
 }
