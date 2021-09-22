@@ -146,7 +146,7 @@ class WorkingspacesMaps {
             }
         });
 
-        this.btnMapviewAnimation.to(this.$btnMapView, {top: 20, left: -10, padding: 5, right: 'auto'})
+        this.btnMapviewAnimation.to(this.$btnMapView, {top: 90, left: -10, padding: 5, right: 'auto'})
                                 .to(this.$btnMapView.find('.btn.maps'), {width: 35, height: 35, marginRight: 0}, '<')
                                 .to(this.$btnMapView.find('.btn.maps > i'), {fontSize: 18}, '<');
     }
@@ -295,9 +295,9 @@ class WorkingspacesMaps {
         const btnPostionTop = parseInt(getComputedStyle(this.$btnMapView.get()[0]).getPropertyValue('--position-top'));
 
         if(window.scrollY <= btnPostionTop) {
-            this.$btnMapView.css('top', (btnPostionTop + 20) - window.scrollY);
+            this.$btnMapView.css('top', (btnPostionTop + 90) - window.scrollY);
         }else {
-            this.$btnMapView.css('top', 20);
+            this.$btnMapView.css('top', 90);
         }
     }
 
