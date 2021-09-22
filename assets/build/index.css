@@ -2947,7 +2947,6 @@ form.request-form#request-form .btn {
 .header {
   margin-top: 20px;
   margin-bottom: 20px;
-  padding-bottom: 15px;
   position: relative;
 }
 
@@ -3941,7 +3940,7 @@ form.request-form#request-form .btn {
   background-color: var(--secondary-color, #00CEB5);
   color: #fff;
   position: fixed;
-  top: 20px;
+  top: 90px;
 }
 #workspaces-map .content-container > .item-container > .action-container > .action.is-fixed i {
   color: #fff;
@@ -3984,7 +3983,7 @@ form.request-form#request-form .btn {
 }
 #workspaces-map .content-container > .item-container .filter-container.is-fixed {
   position: fixed;
-  top: 20px;
+  top: 90px;
   width: 40%;
 }
 #workspaces-map .content-container > .item-container .filter-container .filter:nth-last-child(2) {
@@ -4088,7 +4087,7 @@ form.request-form#request-form .btn {
 }
 #workspaces-map .content-container .map-container.is-fixed {
   position: fixed;
-  top: 20px;
+  top: 90px;
   right: 0;
   width: 60%;
 }
@@ -4143,7 +4142,7 @@ form.request-form#request-form .btn {
   }
   #workspaces-map .content-container .map-container {
     position: fixed;
-    top: 0;
+    top: 90px;
     bottom: 0;
     right: 0;
     z-index: 10;
@@ -4178,7 +4177,7 @@ form.request-form#request-form .btn {
   }
   #workspaces-map .content-container .map-container.is-fixed {
     position: fixed;
-    top: 20px;
+    top: 90px;
     right: 0;
     width: 58%;
     z-index: 5;
@@ -4212,6 +4211,9 @@ form.request-form#request-form .btn {
 /*------------------------------------*
 	PAGE
 *------------------------------------*/
+.page {
+  margin-top: 95px;
+}
 .page .image-hero-background {
   width: 100vw;
   height: 100vh;

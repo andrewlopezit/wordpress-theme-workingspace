@@ -75,7 +75,7 @@
                         background-color: var(--secondary-color, $secondary-color);
                         color: #fff;
                         position: fixed;
-                        top: 20px;
+                        top: 90px;
 
                         i {
                             color: #fff;
@@ -130,7 +130,7 @@
 
                 &.is-fixed{
                     position: fixed;
-                    top: 20px;
+                    top: 90px;
                     width: 40%;
                 }
                 
@@ -251,7 +251,7 @@
 
             &.is-fixed{
                 position: fixed;
-                top: 20px;
+                top: 90px;
                 right: 0;
 
                 width: 60%;
@@ -323,7 +323,7 @@
 
             .map-container {
                 position: fixed;
-                top: 0;
+                top: 90px;
                 bottom: 0;
                 right: 0;
                 z-index: 10;
@@ -374,7 +374,7 @@
             .map-container {
                 &.is-fixed{
                     position: fixed;
-                    top: 20px;
+                    top: 90px;
                     right: 0;
     
                     width: 58%;
