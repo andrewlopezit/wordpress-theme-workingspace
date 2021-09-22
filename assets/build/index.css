@@ -1186,7 +1186,7 @@ h1 {
   line-height: 1.2em;
 }
 h1 span::after {
-  bottom: 10px;
+  bottom: 6px;
 }
 h1.--border-left {
   border-left: 6px solid var(--primary-color, #FDD500);
