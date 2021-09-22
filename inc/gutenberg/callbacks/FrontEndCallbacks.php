@@ -18,4 +18,12 @@ final class FrontEndCallbacks {
     public function latest_posts($args) {
         return require WORKINGSPACE_INC_DIR.'gutenberg/callbacks/views/latest-posts.php';
     }
+
+    public function icon($args) {
+        return require WORKINGSPACE_INC_DIR.'gutenberg/callbacks/views/icon.php';
+    }
+
+    public function headshot($args) {
+        return require WORKINGSPACE_INC_DIR.'gutenberg/callbacks/views/headshot.php';
+    }
 }

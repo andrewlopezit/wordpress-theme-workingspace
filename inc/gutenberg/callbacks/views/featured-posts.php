@@ -1,5 +1,5 @@
 <?php ob_start();?>
-<div class="container gutenberg--featured-post">
+<div class="container gutenberg--featured-post <?php echo isset($args['className']) ? $args['className'] : ''; ?>">
     <div class="row">
         <div class="col">
             <div class="featured-posts">

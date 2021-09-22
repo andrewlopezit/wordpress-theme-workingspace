@@ -98,6 +98,22 @@
             <?php  endif;?>
         </div>
     </section>
+
+    <div class="modal" id="request-form" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <?php get_template_part('partials/components/request-form'); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
  <?php endwhile; else : ?>

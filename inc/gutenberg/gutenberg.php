@@ -70,6 +70,15 @@ class Gutenberg {
             'editor_script' => 'custom-gutenberg-js',
             'editor_style' => 'custom-gutenberg-css'
         ));
+
+        // Localize the script with new data
+        $translation_array = array(
+            'site_url' => esc_url(site_url()),
+            'assets_dir' => WORKINGSPACE_ASSETS_DIR,
+        );
+
+        wp_localize_script('custom-gutenberg-js', 'translation_array', $translation_array);
+        wp_enqueue_script('custom-gutenberg-js');
     }
 
     public function register_front_end_blocks() {
@@ -85,6 +94,16 @@ class Gutenberg {
         // Custom latest posts
         register_block_type('workingspaces/latest-posts', array(
             'render_callback' => array($this, 'latest_posts_blocks_callback'),
+        ));
+
+        // icon
+        register_block_type('workingspaces/icons', array(
+            'render_callback' => array($this, 'icon_blocks_callback'),
+        ));
+
+        // headshot
+        register_block_type('workingspaces/headshot', array(
+            'render_callback' => array($this, 'headshot_blocks_callback'),
         ));
     }
 
@@ -109,6 +128,18 @@ class Gutenberg {
     public function latest_posts_blocks_callback($args) {
         $this->frontend = new FrontEndCallbacks();
         $this->frontend->latest_posts($args);
+        return ob_get_clean();
+    }
+
+    public function icon_blocks_callback($args) {
+        $this->frontend = new FrontEndCallbacks();
+        $this->frontend->icon($args);
+        return ob_get_clean();
+    }
+
+    public function headshot_blocks_callback($args) {
+        $this->frontend = new FrontEndCallbacks();
+        $this->frontend->headshot($args);
         return ob_get_clean();
     }
 }

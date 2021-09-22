@@ -1,4 +1,5 @@
 <?php 
+$type = $args['type'] ?? null;
 
 $country = $args['country'] ?? null;
 $max_posts = get_option( 'posts_per_page' );
@@ -26,7 +27,7 @@ if(isset($country['id'])) {
 
 $workingspaces = new WP_Query( $query ); 
 ?>
-<div id="workspaces-map">
+<div id="workspaces-map" <?php echo $type === 'normal' ? 'data-type="normal"' : ''; ?>>
 
     <div class="content-container">
         <div class="action-container shadow-sm d-flex d-sm-block d-md-none" id="mobile-maps">

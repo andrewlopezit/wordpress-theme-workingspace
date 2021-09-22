@@ -139,3 +139,15 @@
     letter-spacing: normal;
     text-rendering: auto;
 }
+
+@mixin appearance($appearance: none) {
+    -webkit-appearance: $appearance;
+    -moz-appearance: $appearance;
+    appearance: $appearance;
+}
+
+// blur
+@mixin blur($value: 8px) {
+    filter: blur($value);
+  -webkit-filter: blur($value);
+}

@@ -29,6 +29,7 @@
 * - WORDPRESS
 * - SOCIAL MEDIA
 * - MAPS
+* - REQUEST FORM
 * - HERO IMAGE SLIDER
 * - CATEGORIES
 * - BRAND
@@ -64,6 +65,11 @@
 	MAIN
 *------------------------------------*/
 @import 'base/main.scss';
+
+/*------------------------------------*
+	NORMALIZE
+*------------------------------------*/
+@import 'base/normalize';
 
 /*------------------------------------*
 	TYPOGRAPHY
@@ -111,9 +117,14 @@
 @import 'components/social-media';
 
 /*------------------------------------*
-	SOCIAL MEDIA
+	MAPS
 *------------------------------------*/
 @import 'components/maps';
+
+/*------------------------------------*
+	REQUEST FORM
+*------------------------------------*/
+@import 'components/request-form.scss';
 
 /*------------------------------------*
 	HERO IMAGE SLIDER

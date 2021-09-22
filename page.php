@@ -4,15 +4,21 @@ get_header();
 if ( have_posts() ) : 
     while ( have_posts() ) : the_post();
 
-    $is_absolute_background = get_field('is_absolute_background');
+    $is_fixed_background = get_field('has_fixed_background');
+    $image_hero_blur_background_position  = get_field('has_blur_background');
 
-    $imageSrc = get_hero_background_src($is_absolute_background ? 'default' : 'hero_background');
+    $imageSrc = get_hero_background_src($is_fixed_background ? 'default' : 'hero_background');
 ?>   
-
-    <?php if($imageSrc && $is_absolute_background):?>
-        <div class="image-hero-background absolute" style="background-image: url(<?php echo $imageSrc; ?>)"></div>
+    <?php if($imageSrc && $is_fixed_background):?>
+        <div class="image-hero-background
+        <?php echo $is_fixed_background ? ' has-fixed-background ' : ''; ?>
+        <?php echo $image_hero_blur_background_position === 'header' ? ' has-blur-background ' : ''; ?>" 
+            style="background-image: url(<?php echo $imageSrc; ?>);"
+            <?php echo isset($image_hero_blur_background_position) ? 'data-blur-position = "'.$image_hero_blur_background_position.'"' : '' ?>></div>
     <?php endif;?>
-    <section class="hero-section <?php echo ($imageSrc && !$is_absolute_background) ? 'has-image': '' ?>" <?php echo isset($imageSrc) && !$is_absolute_background ? 'style= "background-image: url('.$imageSrc.')";' : '';?>>
+    <section class="hero-section 
+        <?php echo ($imageSrc && !$is_fixed_background) ? 'has-image': '' ?>" 
+        <?php echo isset($imageSrc) && !$is_fixed_background ? 'style= "background-image: url('.$imageSrc.')";' : '';?>>
     <?php 
         $hero_title = get_field('hero_title');
         $hero_sub_title = get_field('hero_subtitle');
