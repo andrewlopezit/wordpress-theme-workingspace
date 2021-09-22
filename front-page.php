@@ -52,7 +52,7 @@
         <div class="col">
             <h1 class="--border-left">We offer creative working environments that suit your business</h1>
             <p>Coworking spaces have disrupted the traditional office experience by providing flexible work options. With corporates tapping into shared spaces to boost their productivity and efficiency, co workingspace is one of the best to work with.</p>
-            <a class="btn" href="">Learn More</a>
+            <a class="btn" href="<?php echo esc_url(site_url('about-us')) ?>">Learn More</a>
         </div>
         <div class="col d-none d-sm-flex d-flex img-service--background"></div>
     </div>
