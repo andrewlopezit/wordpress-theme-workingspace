@@ -1,4 +1,3 @@
-
 import api from '../Api';
 import {loading} from '../../../../../assets/js/modules/frontend/index';
 class CustomRoomsMeta {
@@ -9,6 +8,7 @@ class CustomRoomsMeta {
         
         this.$contentContainer = this.$floorplanContainer.find('.content');
         this.$progressbar = this.$contentContainer.find('.floorplan-progressbar');
+        this.$requestFormModal = $('#request-form');
 
         this.$activeShapes;
         this.$activeItem;
@@ -23,10 +23,10 @@ class CustomRoomsMeta {
         this.activeId;
 
         this.primaryColor = getComputedStyle(document.documentElement)
-                         .getPropertyValue('--primary-color');
+                        .getPropertyValue('--primary-color');
 
         this.secondaryColor = getComputedStyle(document.documentElement)
-                         .getPropertyValue('--secondary-color');
+                        .getPropertyValue('--secondary-color');
 
         this.init();
 
@@ -111,6 +111,28 @@ class CustomRoomsMeta {
 
             this.gotoItem(activeId);
         });
+
+        this.$contentContainer.on('click', '.item > a', e => {
+            e.preventDefault();
+            const $el = $(e.currentTarget);
+            const target = $el.data('toggle');
+
+            this.$requestFormModal.show();
+        });
+
+        this.$requestFormModal.find('.request-form#request-form .form-control.date-picker.hasDatepicker')
+            .on('click', e => {
+                const $el = $(e.currentTarget);
+                
+                if(!$el.length) return;
+
+                const positionTop = $el.parent().position().top;
+
+                $('#ui-datepicker-div').css({
+                    zIndex: 9999999,
+                    top: positionTop - 40
+                });
+            });
     }
 
     getFloorPlanShapes() {
@@ -182,7 +204,7 @@ class CustomRoomsMeta {
                                 ${value?.categories?.length > 0 ? this.categoriesTemplate(value.categories) : ''}
                                 <p>${value?.post_excerpt ? value?.post_excerpt : value?.post_content ? value?.post_content_trim: ''}</p>
                             </div>
-                            <a class="btn visit-request" href="">Request a visit</a>
+                            <a class="btn visit-request" href="" data-toggle="request-form" data-target="#request-form">Request a visit</a>
                         </div>`;
         });
        return template;

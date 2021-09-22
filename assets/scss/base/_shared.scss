@@ -500,6 +500,41 @@ hr {
 	}
 }
 
+.modal#request-form {
+	background: rgba(0,0,0, 0.7);
+	display: none;
+    align-items: center;
+    justify-content: center;
+
+	.modal-content {
+		border-radius: 0;
+
+		.modal-header {
+			justify-content: flex-end;
+			height: 50px;
+
+			button {
+				background: none;
+				color: #dc3545;
+				border: 0;
+				padding: 10px;
+				font-size: 2em;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+
+		.modal-body {
+			form.request-form#request-form {
+				padding: 0;
+				padding-top: 1em;
+			}
+		}
+	}
+}
+
 // Extra small devices (portrait phones, less than 576px)
 @media (max-width: 575.98px) { 
 	.hero-section {

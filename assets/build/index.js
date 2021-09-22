@@ -104,10 +104,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_frontend_Posts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/frontend/Posts */ "./assets/js/modules/frontend/Posts.js");
 /* harmony import */ var _modules_frontend_RequestForm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/frontend/RequestForm */ "./assets/js/modules/frontend/RequestForm.js");
 /* harmony import */ var _modules_frontend_Page__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/frontend/Page */ "./assets/js/modules/frontend/Page.js");
-/* harmony import */ var _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta */ "./inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta.js");
-/* harmony import */ var _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta */ "./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js");
+/* harmony import */ var _modules_frontend_Modal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/frontend/Modal */ "./assets/js/modules/frontend/Modal.js");
+/* harmony import */ var _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta */ "./inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta.js");
+/* harmony import */ var _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta */ "./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js");
 
  // import modules
+
 
 
 
@@ -128,6 +130,7 @@ let customMapsMeta;
 let posts;
 let requestForm;
 let page;
+let modal;
 const hompage = document.querySelector(".home");
 
 if (hompage) {
@@ -139,10 +142,11 @@ main = new _modules_frontend_Main__WEBPACK_IMPORTED_MODULE_5__["default"]();
 testimonialsSlider = new _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_MODULE_4__["default"]();
 posts = new _modules_frontend_Posts__WEBPACK_IMPORTED_MODULE_6__["default"]();
 requestForm = new _modules_frontend_RequestForm__WEBPACK_IMPORTED_MODULE_7__["default"]();
-page = new _modules_frontend_Page__WEBPACK_IMPORTED_MODULE_8__["default"](); // include front-end init
+page = new _modules_frontend_Page__WEBPACK_IMPORTED_MODULE_8__["default"]();
+modal = new _modules_frontend_Modal__WEBPACK_IMPORTED_MODULE_9__["default"](); // include front-end init
 
-customRoomsMeta = new _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_9__["default"]();
-customMapsMeta = new _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_10__["default"]();
+customRoomsMeta = new _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_10__["default"]();
+customMapsMeta = new _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_11__["default"]();
 
 /***/ }),
 
@@ -651,6 +655,54 @@ const Maps = args => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Maps);
+
+/***/ }),
+
+/***/ "./assets/js/modules/frontend/Modal.js":
+/*!*********************************************!*\
+  !*** ./assets/js/modules/frontend/Modal.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class Modal {
+  constructor() {
+    this.$modal = $('.modal');
+    if (!this.$modal.length) return; // initialize elements variables
+    // init local variable
+    // init gsap animation
+    // initialize events function
+
+    this.events(); // init international country code input
+  }
+
+  events() {
+    this.$modal.on('click', '.modal-dialog .modal-header button', () => {
+      this.$modal.hide();
+    });
+    this.$modal.on('click', e => {
+      const $el = $(e.target);
+      if (!$el.hasClass('modal') && $el.attr('role') !== 'dialog') return;
+      this.$modal.hide();
+    });
+    $(window).on('keyup', e => {
+      if (!e.key) return;
+
+      switch (e.key.toLowerCase()) {
+        case 'escape':
+          {
+            this.$modal.hide();
+            break;
+          }
+      }
+    });
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Modal);
 
 /***/ }),
 
@@ -3778,6 +3830,7 @@ class CustomRoomsMeta {
     if (!this.$floorplanContainer.length) return;
     this.$contentContainer = this.$floorplanContainer.find('.content');
     this.$progressbar = this.$contentContainer.find('.floorplan-progressbar');
+    this.$requestFormModal = $('#request-form');
     this.$activeShapes;
     this.$activeItem; // local variable
 
@@ -3891,6 +3944,21 @@ class CustomRoomsMeta {
       const activeId = this.floorplanShapes.findIndex(el => $(el).data('id') === id);
       this.gotoItem(activeId);
     });
+    this.$contentContainer.on('click', '.item > a', e => {
+      e.preventDefault();
+      const $el = $(e.currentTarget);
+      const target = $el.data('toggle');
+      this.$requestFormModal.show();
+    });
+    this.$requestFormModal.find('.request-form#request-form .form-control.date-picker.hasDatepicker').on('click', e => {
+      const $el = $(e.currentTarget);
+      if (!$el.length) return;
+      const positionTop = $el.parent().position().top;
+      $('#ui-datepicker-div').css({
+        zIndex: 9999999,
+        top: positionTop - 40
+      });
+    });
   }
 
   getFloorPlanShapes() {
@@ -3954,7 +4022,7 @@ class CustomRoomsMeta {
                                 ${(value === null || value === void 0 ? void 0 : (_value$categories = value.categories) === null || _value$categories === void 0 ? void 0 : _value$categories.length) > 0 ? this.categoriesTemplate(value.categories) : ''}
                                 <p>${value !== null && value !== void 0 && value.post_excerpt ? value === null || value === void 0 ? void 0 : value.post_excerpt : value !== null && value !== void 0 && value.post_content ? value === null || value === void 0 ? void 0 : value.post_content_trim : ''}</p>
                             </div>
-                            <a class="btn visit-request" href="">Request a visit</a>
+                            <a class="btn visit-request" href="" data-toggle="request-form" data-target="#request-form">Request a visit</a>
                         </div>`;
     });
     return template;

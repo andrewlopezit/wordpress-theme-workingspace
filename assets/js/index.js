@@ -11,6 +11,7 @@ import Main from './modules/frontend/Main';
 import Posts from './modules/frontend/Posts';
 import RequestForm from './modules/frontend/RequestForm';
 import Page from './modules/frontend/Page';
+import Modal from './modules/frontend/Modal';
 
 import CustomRoomsMeta from '../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta';
 import CustomMapsMeta from '../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta';
@@ -25,6 +26,7 @@ let customMapsMeta;
 let posts;
 let requestForm;
 let page;
+let modal;
 
 const hompage = document.querySelector(".home");
 
@@ -38,7 +40,7 @@ testimonialsSlider = new TestimonialsSlider();
 posts = new Posts();
 requestForm = new RequestForm();
 page = new Page();
-
+modal = new Modal();
 
 // include front-end init
 customRoomsMeta = new CustomRoomsMeta();
