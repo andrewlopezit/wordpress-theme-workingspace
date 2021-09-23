@@ -4,7 +4,7 @@
     );
 ?>
 
-<div class="container search-page">
+<div class="container search-page" id="search-page">
     <div class="row">
         <div class="col">
             <h2 class="text-center center">

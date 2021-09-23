@@ -105,10 +105,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_frontend_RequestForm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/frontend/RequestForm */ "./assets/js/modules/frontend/RequestForm.js");
 /* harmony import */ var _modules_frontend_Page__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/frontend/Page */ "./assets/js/modules/frontend/Page.js");
 /* harmony import */ var _modules_frontend_Modal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/frontend/Modal */ "./assets/js/modules/frontend/Modal.js");
-/* harmony import */ var _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta */ "./inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta.js");
-/* harmony import */ var _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta */ "./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js");
+/* harmony import */ var _modules_frontend_SearchPage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/frontend/SearchPage */ "./assets/js/modules/frontend/SearchPage.js");
+/* harmony import */ var _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta */ "./inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta.js");
+/* harmony import */ var _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta */ "./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js");
 
  // import modules
+
 
 
 
@@ -131,6 +133,7 @@ let posts;
 let requestForm;
 let page;
 let modal;
+let searchPage;
 const hompage = document.querySelector(".home");
 
 if (hompage) {
@@ -143,10 +146,11 @@ testimonialsSlider = new _modules_frontend_TestimonialsSlider__WEBPACK_IMPORTED_
 posts = new _modules_frontend_Posts__WEBPACK_IMPORTED_MODULE_6__["default"]();
 requestForm = new _modules_frontend_RequestForm__WEBPACK_IMPORTED_MODULE_7__["default"]();
 page = new _modules_frontend_Page__WEBPACK_IMPORTED_MODULE_8__["default"]();
-modal = new _modules_frontend_Modal__WEBPACK_IMPORTED_MODULE_9__["default"](); // include front-end init
+modal = new _modules_frontend_Modal__WEBPACK_IMPORTED_MODULE_9__["default"]();
+searchPage = new _modules_frontend_SearchPage__WEBPACK_IMPORTED_MODULE_10__["default"](); // include front-end init
 
-customRoomsMeta = new _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_10__["default"]();
-customMapsMeta = new _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_11__["default"]();
+customRoomsMeta = new _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_11__["default"]();
+customMapsMeta = new _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_12__["default"]();
 
 /***/ }),
 
@@ -1295,6 +1299,33 @@ class RequestForm {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (RequestForm);
+
+/***/ }),
+
+/***/ "./assets/js/modules/frontend/SearchPage.js":
+/*!**************************************************!*\
+  !*** ./assets/js/modules/frontend/SearchPage.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class SearchPage {
+  constructor() {
+    // initialize elements variables
+    this.searchPage = $('#search-page');
+    if (!this.searchPage.length) return;
+    console.log('test'); // init local variable
+    // init gsap animation
+    // initialize events function
+    // init international country code input
+    // init label formgroup
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (SearchPage);
 
 /***/ }),
 

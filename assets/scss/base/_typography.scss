@@ -112,6 +112,12 @@
     &.title {
         line-height: .8em;
         font-weight: 400;
+
+        span { 
+            &::after {
+                bottom: 10px;
+            }
+        }
     }
 
     &.large{

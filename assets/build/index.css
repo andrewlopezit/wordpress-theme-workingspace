@@ -1235,6 +1235,9 @@ h6 {
   line-height: 0.8em;
   font-weight: 400;
 }
+.headline.title span::after {
+  bottom: 10px;
+}
 .headline.large {
   font-size: 4em;
 }
