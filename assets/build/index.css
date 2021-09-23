@@ -1197,6 +1197,9 @@ h1.--border-left {
 h2 {
   font-size: 2em;
 }
+h2 span::after {
+  bottom: 5px;
+}
 h2 mark::after {
   bottom: 8px;
 }
@@ -4500,11 +4503,58 @@ section.testimonials {
 .search-page {
   margin-top: 90px;
 }
-.search-page h2 {
+.search-page > h2 {
   margin-top: 50px;
 }
-.search-page .heading--sub-paragraph {
+.search-page > .heading--sub-paragraph {
   width: 400px;
+}
+.search-page > .search-results-container, .search-page > .search-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  margin-top: 50px;
+}
+.search-page > .search-container {
+  padding: 1em;
+}
+.search-page > .search-container .action-container {
+  margin-bottom: 5px;
+}
+.search-page > .search-container .action-container .btn {
+  padding: 0.5em 1em;
+  font-size: 10px;
+}
+.search-page > .search-container .action-container .btn.is-active {
+  background-color: #FDD500;
+  color: #fff;
+}
+.search-page > .search-container .action-container .btn.is-active::after, .search-page > .search-container .action-container .btn.is-active::before {
+  background-color: #FDD500;
+}
+.search-page > .search-container .form-group {
+  --border-color: var(--primary-color, $primary-color);
+}
+.search-page > .search-container .location {
+  margin-top: 32px;
+  display: none;
+}
+.search-page > .search-container .location.is-active {
+  display: initial;
+}
+.search-page > .search-results-container .header {
+  padding: 1em;
+  background-color: #E6EBE9;
+}
+.search-page > .search-results-container .workingspaces-container .workspace-list#workingspaces {
+  grid-column-gap: 1em;
+  grid-row-gap: 2em;
+}
+.search-page > .search-results-container .posts-container .post-list .inner-container.posts .item.post .card-body {
+  padding: 1rem 0;
+}
+.search-page > .search-results-container .posts-container .post-list .inner-container.posts .item.post .card-body .btn {
+  width: 100%;
 }
 
 /*# sourceMappingURL=index.css.map*/

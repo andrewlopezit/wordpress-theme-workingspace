@@ -1,7 +1,7 @@
 <div class="workspace-list" id="workingspaces">
 <?php
     $query_args = array(
-        'post_type' => 'workingspaces',
+        'post_type' => 'rooms',
         'posts_per_page' => '6'
     );
 
@@ -32,27 +32,20 @@
                 </div>
             <?php endif; ?>
             <?php
-                $rooms = get_field('related_rooms'); 
+                $capacity = get_field('capacity');
 
-                if($rooms):?>
+                if($capacity):?>
                 <div class="detail-icontainer">
                     <i class="fas fa-user text-muted"></i>
-                    <p class="text-muted">Capacity: <?php echo get_minimum_seat_rooms($rooms).' - '.get_maximmum_seat_rooms($rooms); ?></p>
+                    <p class="text-muted">Capacity: <?php echo $capacity; ?></p>
                 </div>
             <?php endif; ?>
-            <div class="detail-icontainer">
-            <?php
-                $numberOfRooms =  $rooms != null ? count($rooms) : 0 ?>
-                <i class="fas fa-chair text-muted"></i>
-                <p class="text-muted">No. of rooms: <?php echo $numberOfRooms; ?></p>
-            </div>
-            
             <hr/>
-            <?php $price_range = get_rooms_price_range($rooms); 
-                if($price_range):?>
-            <small>Starting from</small>
+            <?php $room_rate = get_field('room_rate'); 
+                if($room_rate):?>
+            <small>Room rate</small>
             <div class="price-container">
-                <div class="price"><?php echo count($price_range) > 1 ? '$'.implode(' - $', $price_range).'/month': '$'.$price_range[0].'/month'; ?></div>
+                <div class="price"><?php echo "$$room_rate/month"; ?></div>
                 <a href="<?php the_permalink(); ?>">Explore now</a>
             </div>
             <?php endif;?>
@@ -66,7 +59,7 @@
 </div>
 
 <?php 
-$totalPublishPosts = (int) wp_count_posts('workingspaces')->publish;
+$totalPublishPosts = (int) wp_count_posts('rooms')->publish;
 $totalPosts = get_option( 'posts_per_page' );
 $totalWorkingspaces = count($query->posts);
 

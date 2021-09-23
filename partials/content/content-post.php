@@ -16,6 +16,10 @@
         $sql_query['category_name'] = $cat;
     }
 
+    if(isset($args['search'])) {
+        $sql_query['s'] = $args['search'];
+    }
+
     $query = new WP_Query( $sql_query );
 
 ?>

@@ -21,9 +21,7 @@ class Main {
     formGroupLabel() {
         if(!this.$formGroup.length) return;
 
-
-        this.$formGroup.on('keyup change', 'input, select, textarea', e => {
-            const $el = $(e.currentTarget);
+        const addRemoveLabelClassFill = ($el) => {
             
             if($el.hasClass('intl-tel-country-code')) return;
 
@@ -45,6 +43,14 @@ class Main {
             }else {
                 removeClassIsFillInInput();
             }
+        }
+
+        addRemoveLabelClassFill(this.$formGroup.find('input, select, textarea'));
+
+        this.$formGroup.on('keyup change', 'input, select, textarea', e => {
+            const $el = $(e.currentTarget);
+
+            addRemoveLabelClassFill($el);
         });
     }
 }
