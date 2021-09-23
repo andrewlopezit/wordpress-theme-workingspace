@@ -1,5 +1,5 @@
+import  moment from 'moment/moment';
 import {api} from './index';
-
 class SearchPage {
     constructor() {
         // initialize elements variables
@@ -218,40 +218,39 @@ class SearchPage {
 
     postsTemplate(data) {
         let template = '';
-    
-        if (!data || data.length < 1) {
-          return `<p>No items match your criteria.</p>`;
+
+        if(!data || data.length < 1) {
+            return `<p>No items match your criteria.</p>`;
         }
-    
+
         data.forEach(val => {
-          var _val$post_content_tri;
-    
-          template += `<div class="item post card border-top-left border--post">
-                                <img class="card-img-top" src="${val === null || val === void 0 ? void 0 : val.featured_image}" alt="">
-                                <div class="card-body">
-                                    <div class="author-container">
-                                        <i class="fas fa-book-reader"></i>
-                                        <div class="author-details">
-                                            <span>
-                                                <a href="http://localhost:8888/wordpress-development" title="Visit admin’s website" rel="author external">admin</a>                            </span>,
-                                            <span>
-                                                <small>September 09 2021</small>
-                                            </span>
-                                        </div>
+            template+=`<div class="item post card border-top-left border--post">
+                            <img class="card-img-top" src="${val?.featured_image}" alt="">
+                            <div class="card-body">
+                                <div class="author-container">
+                                    <i class="fas fa-book-reader"></i>
+                                    <div class="author-details">
+                                        <span>
+                                            <a href="${val?.author?.user_url}" title="Visit admin’s website" rel="author external">${val?.author?.display_name}</a>
+                                        <span>
+                                            <small>${moment(val?.post_date_gmt).format('MMMM DD YYYY')}</small>
+                                        </span>
                                     </div>
-    
-                                    <h5>
-                                        <a href="${val === null || val === void 0 ? void 0 : val.permalink}">${val === null || val === void 0 ? void 0 : val.post_title}</a>
-                                    </h5>
-    
-                                    <p>${(_val$post_content_tri = val === null || val === void 0 ? void 0 : val.post_content_trim) !== null && _val$post_content_tri !== void 0 ? _val$post_content_tri : val === null || val === void 0 ? void 0 : val.post_excerpt}</p>
-    
-                                    <a class="btn text-center" href="${val === null || val === void 0 ? void 0 : val.permalink}">Read more</a>
                                 </div>
-                            </div>`;
+
+                                <h5>
+                                    <a href="${val?.permalink}">${val?.post_title}</a>
+                                </h5>
+
+                                <p>${val?.post_content_trim ?? val?.post_excerpt}</p>
+
+                                <a class="btn text-center" href="${val?.permalink}">Read more</a>
+                            </div>
+                        </div>`;
         });
+
         return template;
-      }
+    }
 }
 
 export default SearchPage;

@@ -46,11 +46,20 @@ public function add_rooms_additional_details($posts) {
       
       if($imageSrc)
       $post->featured_image = esc_url($imageSrc[0]);
+
+      $author = get_user_by('ID',$post->post_author);
+      $author = $author->data;
+
+      unset($author->user_login);
+      unset($author->user_pass);
+      unset($author->user_email);
+      unset($author->user_activation_key);
       
       $post->categories =  get_the_category($post->ID);
       $post->post_content_trim = wp_trim_words(strip_tags($post->post_content), 50);
       $post->post_excerpt = wp_trim_words($post->post_excerpt, 50);
       $post->permalink = get_the_permalink($post);
+      $post->author = $author;
 
       array_push($newPosts, $post);
     }
