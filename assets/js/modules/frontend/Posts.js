@@ -1,4 +1,5 @@
 import { api, loading } from './index';
+import  moment from 'moment/moment';
 
 class Posts {
     constructor() {
@@ -104,9 +105,9 @@ class Posts {
                                     <i class="fas fa-book-reader"></i>
                                     <div class="author-details">
                                         <span>
-                                            <a href="http://localhost:8888/wordpress-development" title="Visit admin’s website" rel="author external">admin</a>                            </span>,
+                                            <a href="${val?.author?.user_url}" title="Visit admin’s website" rel="author external">${val?.author?.display_name}</a>
                                         <span>
-                                            <small>September 09 2021</small>
+                                            <small>${moment(val?.post_date_gmt).format('MMMM DD YYYY')}</small>
                                         </span>
                                     </div>
                                 </div>

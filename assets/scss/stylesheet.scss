@@ -54,6 +54,7 @@
 * - PAGE
 * - FRONT PAGE
 * - SINGLE WORKINGSPACES
+* - SEARCH PAGE
 */
 
 /*------------------------------------*
@@ -220,3 +221,9 @@
 	SINGLE WORKINGSPACES
 *------------------------------------*/
 @import 'pages/single-workingspaces.scss';
+
+/*------------------------------------*
+	SEARCH PAGE
+*------------------------------------*/
+@import 'pages/search-page.scss';
+
