@@ -10,20 +10,21 @@
             <h2 class="text-center center">
                 <span>Find your needs without any difficulties.</span>
             </h2>
-            <p class="text-center heading--sub-paragraph">Explore top related workingspaces and more - Exactly matching requirement</p>
+            <p class="text-center heading--sub-paragraph">Explore top related workingspaces and more - Exactly matching requirement.</p>
         </div>
     </div>
 
     <div class="row search-container shadow-sm">
         <div class="col-10">
             <div class="action-container">
-                <button class="btn is-active">All</button>
-                <button class="btn">Posts</button>
-                <button class="btn">Co-workingspaces</button>
+                <button class="btn is-active all">All</button>
+                <button class="btn workingspaces">Co-workingspaces</button>
+                <button class="btn rooms">Rooms</button>
+                <button class="btn posts">Posts</button>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" id="search" name="s" value="<?php echo $_GET['s']; ?>" required/>
-                <label class="form-group label" for="search">Posts</label>
+                <input type="text" class="form-control search" id="search" name="s" value="<?php echo $_GET['s']; ?>" required/>
+                <label class="form-group label search" for="search">Co-workingspaces, rooms and posts</label>
             </div>
         </div>
 

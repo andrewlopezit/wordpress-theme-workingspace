@@ -18,6 +18,12 @@ const Api = (url) => {
             return axios(url);
         }
 
+        getAllPostTypesByFilter(filter) {
+            let url =`${this.endpoint}/wp-json/wp/v2/search?${this.getStringFilterUrl(filter)}`;
+
+            return axios(url);
+        }
+
         getStringFilterUrl(filter) {
             let url = '';
 

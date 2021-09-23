@@ -14,6 +14,7 @@ use Inc\Classes\CustomAPI\Endpoints\Workingspaces;
 use Inc\Classes\CustomAPI\Endpoints\Rooms;
 use Inc\Classes\CustomAPI\Endpoints\Posts;
 use Inc\Classes\CustomAPI\Endpoints\Inquiries;
+use Inc\Classes\CustomAPI\Endpoints\Search;
 use WP_REST_SERVER;
 
 
@@ -88,6 +89,15 @@ class Routes {
             register_rest_route('wp/v2', 'inquiries', array(
               'methods' => WP_REST_SERVER::CREATABLE,
               'callback' => array(new Inquiries(), 'create_inquiries'),
+              'permission_callback' => array($this, 'get_post_permission_callback')
+            ));
+
+            //----------------------------------------
+            //   S E A R C H
+            //----------------------------------------
+            register_rest_route('wp/v2', 'search', array(
+              'methods' => WP_REST_SERVER::READABLE,
+              'callback' => array(new Search(), 'search_all'),
               'permission_callback' => array($this, 'get_post_permission_callback')
             ));
         });
