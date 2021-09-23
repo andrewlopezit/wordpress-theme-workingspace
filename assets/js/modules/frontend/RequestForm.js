@@ -19,6 +19,7 @@ class RequestForm {
         // init local variable
         this.assetsDir = translation_array.assets_dir;
         this.siteUrl = translation_array.site_url;
+        axios.defaults.headers.common["X-WP-Nonce"] = translation_array.workingspaces_nonce
 
         this.primaryColor = getComputedStyle(document.documentElement)
         .getPropertyValue('--primary-color');

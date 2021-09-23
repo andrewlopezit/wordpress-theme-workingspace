@@ -109,7 +109,11 @@ class Routes {
         return true;
     }
 
-    public function get_post_permission_callback($args) {
+    public function get_post_permission_callback($request) {
+      $headers = $request->get_headers();
+      
+      if(!wp_verify_nonce($headers['x_wp_nonce'][0], 'wp_rest')) return false;
+
       return true;
   }
 }
