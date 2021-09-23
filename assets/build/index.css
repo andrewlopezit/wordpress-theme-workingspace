@@ -3246,6 +3246,10 @@ form.request-form#request-form .btn {
 }
 
 @media (max-width: 575.98px) {
+  .post-list#posts .inner-container {
+    -ms-grid-columns: (1fr)[1] !important;
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
   .post-list#posts.post-list--secondary .inner-container {
     -ms-grid-columns: (1fr)[1];
     grid-template-columns: repeat(1, 1fr);
@@ -3262,6 +3266,10 @@ form.request-form#request-form .btn {
 }
 @media (max-width: 991.98px) {
   .post-list#posts {
+    -ms-grid-columns: (1fr)[2];
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .post-list#posts .inner-container {
     -ms-grid-columns: (1fr)[2];
     grid-template-columns: repeat(2, 1fr);
   }
