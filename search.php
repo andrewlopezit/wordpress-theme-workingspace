@@ -15,7 +15,7 @@
     </div>
 
     <div class="row search-container shadow-sm">
-        <div class="col-10">
+        <div class="col-sm-8 col-md-10">
             <div class="action-container">
                 <button class="btn is-active all">All</button>
                 <button class="btn workingspaces">Co-workingspaces</button>
@@ -28,7 +28,7 @@
             </div>
         </div>
 
-        <div class="col-2 location">
+        <div class="col-sm-4 col-md-10 location">
             <?php
                 $country_args = array(
                     'post_type' => 'countries',
