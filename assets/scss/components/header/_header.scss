@@ -20,11 +20,16 @@
             font-size: 12px;
 
             &.login {
-                margin-right: 10px;
+                margin-right: 20px;
+                background-color: #65E1D2;
+
+                &::after {
+                    background-color: #65E1D2;
+                }
             }
 
             &.sign-up {
-                margin-right: 20px;
+                margin-right: 10px;
             }
         }
     }

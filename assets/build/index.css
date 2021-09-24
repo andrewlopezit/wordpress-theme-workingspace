@@ -2966,10 +2966,14 @@ form.request-form#request-form .btn {
   font-size: 12px;
 }
 .header .action-header-container .btn.login {
-  margin-right: 10px;
+  margin-right: 20px;
+  background-color: #65E1D2;
+}
+.header .action-header-container .btn.login::after {
+  background-color: #65E1D2;
 }
 .header .action-header-container .btn.sign-up {
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
 /*------------------------------------*
