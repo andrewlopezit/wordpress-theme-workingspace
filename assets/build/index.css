@@ -1737,6 +1737,7 @@ hr {
 .modal#request-form .modal-content .modal-header {
   justify-content: flex-end;
   height: 50px;
+  padding: 0;
 }
 .modal#request-form .modal-content .modal-header button {
   background: none;
