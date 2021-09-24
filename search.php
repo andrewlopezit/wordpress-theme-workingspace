@@ -28,7 +28,7 @@
             </div>
         </div>
 
-        <div class="col-sm-4 col-md-10 location">
+        <div class="col-sm-4 col-md-2 location">
             <?php
                 $country_args = array(
                     'post_type' => 'countries',
