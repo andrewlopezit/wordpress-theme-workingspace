@@ -971,7 +971,7 @@
 * - WORKSPACES
 * - POSTS
 * - TESTIMONIALS
-*
+* - AUTH
 * - GUTENBERG
 *
 *
@@ -1725,21 +1725,21 @@ hr {
   margin: 0;
 }
 
-.modal#request-form {
+.modal {
   background: rgba(0, 0, 0, 0.7);
   display: none;
   align-items: center;
   justify-content: center;
 }
-.modal#request-form .modal-content {
+.modal .modal-content {
   border-radius: 0;
 }
-.modal#request-form .modal-content .modal-header {
+.modal .modal-content .modal-header {
   justify-content: flex-end;
   height: 50px;
   padding: 0;
 }
-.modal#request-form .modal-content .modal-header button {
+.modal .modal-content .modal-header button {
   background: none;
   color: #dc3545;
   border: 0;
@@ -1749,10 +1749,6 @@ hr {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.modal#request-form .modal-content .modal-body form.request-form#request-form {
-  padding: 0;
-  padding-top: 1em;
 }
 
 .form-group {
@@ -1840,6 +1836,16 @@ hr {
   top: -4px;
   left: 9px;
   font-size: 10px;
+}
+.form-group i {
+  position: absolute;
+  padding: 16px;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+  z-index: 1;
+  background-color: #fff;
+  color: var(--secondary-color, #00CEB5);
 }
 
 @media (max-width: 575.98px) {
@@ -2627,6 +2633,10 @@ form.request-form#request-form .full-width {
   grid-column: 1/3;
 }
 
+.modal .modal-dialog .modal-content .modal-body form.request-form#request-form {
+  padding: 0;
+}
+
 @media (max-width: 575.98px) {
   form.request-form#request-form .form-group,
 form.request-form#request-form .btn {
@@ -2968,10 +2978,6 @@ form.request-form#request-form .btn {
 }
 .header .action-header-container .btn.login {
   margin-right: 20px;
-  background-color: #65E1D2;
-}
-.header .action-header-container .btn.login::after {
-  background-color: #65E1D2;
 }
 .header .action-header-container .btn.sign-up {
   margin-right: 10px;
@@ -3461,6 +3467,83 @@ form.request-form#request-form .btn {
     transform: scale(0);
   }
 }
+/*------------------------------------*
+	  A U T H
+*------------------------------------*/
+.modal#auth-modal.is-display {
+  display: flex;
+}
+.modal#auth-modal .modal-dialog {
+  width: 100%;
+}
+.modal#auth-modal .modal-dialog .modal-content {
+  padding: 1.5em 2em;
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[1];
+  grid-template-columns: repeat(1, 1fr);
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body .btn.google {
+  background-color: #4387f4;
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body .btn.google i {
+  margin-right: 5px;
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body .btn.google::before {
+  background-color: #1268f3;
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body .btn.google::after {
+  background-color: #4387f4;
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body p.separator {
+  margin: 20px 0;
+  position: relative;
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body p.separator::before {
+  content: "";
+  position: absolute;
+  width: 45%;
+  top: 10px;
+  left: 0;
+  height: 1px;
+  background-color: #ccc;
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body p.separator::after {
+  content: "";
+  position: absolute;
+  width: 45%;
+  top: 10px;
+  right: 0;
+  height: 1px;
+  background-color: #ccc;
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body form {
+  margin-top: 20px;
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body form .form-group {
+  margin-bottom: 20px;
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body form .button-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body form .button-container > .btn {
+  width: 49%;
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body form .button-container > .btn.create-account {
+  background-color: #ffc107;
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body form .button-container > .btn.create-account::after, .modal#auth-modal .modal-dialog .modal-content .modal-body form .button-container > .btn.create-account::before {
+  background-color: #ffc107;
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body .btn {
+  width: 100%;
+}
+
 /*------------------------------------*
 	  G U T E N B E R G
 *------------------------------------*/

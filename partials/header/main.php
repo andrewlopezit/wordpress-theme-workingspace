@@ -8,8 +8,8 @@
                     </a>
                     
                     <div class="action-header-container">
-                        <a href="#sign-up" class="btn sign-up">Sign-up</a href="#">
-                        <a href="#login" class="btn login">Login</a href="#">
+                        <a data-toggle="auth-modal" class="btn sign-up">Sign-up</a href="#">
+                        <a data-toggle="auth-modal" class="btn login">Login</a href="#">
                         <div class="hamburger" id="hamburger">
                             <span <?php workingspace_the_color_hamburgermenu_style(); ?>></span>
                             <span <?php workingspace_the_color_hamburgermenu_style(); ?>></span>

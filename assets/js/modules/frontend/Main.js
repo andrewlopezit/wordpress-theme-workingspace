@@ -16,6 +16,9 @@ class Main {
 
         // init label formgroup
         this.formGroupLabel();
+
+        // password
+        this.viewUnviewPassword();
     }
 
     formGroupLabel() {
@@ -51,6 +54,20 @@ class Main {
             const $el = $(e.currentTarget);
 
             addRemoveLabelClassFill($el);
+        });
+    }
+    
+    viewUnviewPassword() {
+        this.$formGroup.on('click', 'i.password' , e => {
+            const $el = $(e.currentTarget);
+
+            if($el.hasClass('fa-eye')) {
+                $el.removeClass('fa-eye').addClass('fa-eye-slash');
+                $el.siblings('input').attr('type', 'text');
+            }else {
+                $el.addClass('fa-eye').removeClass('fa-eye-slash');
+                $el.siblings('input').attr('type', 'password');
+            }
         });
     }
 }

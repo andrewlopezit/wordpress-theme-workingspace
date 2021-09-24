@@ -23,8 +23,8 @@
                 <button class="btn posts">Posts</button>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control search" id="search" name="s" value="<?php echo $_GET['s']; ?>" required/>
-                <label class="form-group label search" for="search">Co-workingspaces, rooms and posts</label>
+                <input type="text" class="form-control search" id="search-post-types" name="s" value="<?php echo $_GET['s']; ?>" required/>
+                <label class="form-group label search" for="search-post-types">Co-workingspaces, rooms and posts</label>
             </div>
         </div>
 

@@ -500,7 +500,7 @@ hr {
 	}
 }
 
-.modal#request-form {
+.modal {
 	background: rgba(0,0,0, 0.7);
 	display: none;
     align-items: center;
@@ -524,13 +524,6 @@ hr {
 				display: flex;
 				align-items: center;
 				justify-content: center;
-			}
-		}
-
-		.modal-body {
-			form.request-form#request-form {
-				padding: 0;
-				padding-top: 1em;
 			}
 		}
 	}
@@ -638,6 +631,17 @@ hr {
 			}
 		}
 
+	}
+
+	i {
+		position: absolute;
+		padding: 16px;
+		right: 0;
+		bottom: 0;
+		cursor: pointer;
+		z-index: 1;
+		background-color: #fff;
+		color: var(--secondary-color, $secondary-color);
 	}
 }
 

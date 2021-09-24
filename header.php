@@ -12,3 +12,4 @@
 <body <?php body_class(); ?>>
 
 <?php get_template_part('partials/header/main'); ?>
+<?php get_template_part('partials/content/content','auth'); ?>

@@ -44,7 +44,7 @@
 * - WORKSPACES
 * - POSTS
 * - TESTIMONIALS
-*
+* - AUTH
 * - GUTENBERG
 *
 *
@@ -187,6 +187,11 @@
 	  T E S T I M O N I A L S
 *------------------------------------*/
 @import 'partials/testimonials.scss';
+
+/*------------------------------------*
+	  A U T H
+*------------------------------------*/
+@import 'partials/auth.scss';
 
 /*------------------------------------*
 	  G U T E N B E R G

@@ -106,10 +106,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_frontend_Page__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/frontend/Page */ "./assets/js/modules/frontend/Page.js");
 /* harmony import */ var _modules_frontend_Modal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/frontend/Modal */ "./assets/js/modules/frontend/Modal.js");
 /* harmony import */ var _modules_frontend_SearchPage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/frontend/SearchPage */ "./assets/js/modules/frontend/SearchPage.js");
-/* harmony import */ var _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta */ "./inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta.js");
-/* harmony import */ var _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta */ "./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js");
+/* harmony import */ var _modules_frontend_Auth__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/frontend/Auth */ "./assets/js/modules/frontend/Auth.js");
+/* harmony import */ var _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta */ "./inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta.js");
+/* harmony import */ var _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta */ "./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js");
 
  // import modules
+
 
 
 
@@ -134,6 +136,7 @@ let requestForm;
 let page;
 let modal;
 let searchPage;
+let auth;
 const hompage = document.querySelector(".home");
 
 if (hompage) {
@@ -147,10 +150,11 @@ posts = new _modules_frontend_Posts__WEBPACK_IMPORTED_MODULE_6__["default"]();
 requestForm = new _modules_frontend_RequestForm__WEBPACK_IMPORTED_MODULE_7__["default"]();
 page = new _modules_frontend_Page__WEBPACK_IMPORTED_MODULE_8__["default"]();
 modal = new _modules_frontend_Modal__WEBPACK_IMPORTED_MODULE_9__["default"]();
-searchPage = new _modules_frontend_SearchPage__WEBPACK_IMPORTED_MODULE_10__["default"](); // include front-end init
+searchPage = new _modules_frontend_SearchPage__WEBPACK_IMPORTED_MODULE_10__["default"]();
+auth = new _modules_frontend_Auth__WEBPACK_IMPORTED_MODULE_11__["default"](); // include front-end init
 
-customRoomsMeta = new _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_11__["default"]();
-customMapsMeta = new _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_12__["default"]();
+customRoomsMeta = new _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_12__["default"]();
+customMapsMeta = new _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_13__["default"]();
 
 /***/ }),
 
@@ -206,6 +210,40 @@ const Api = url => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Api);
+
+/***/ }),
+
+/***/ "./assets/js/modules/frontend/Auth.js":
+/*!********************************************!*\
+  !*** ./assets/js/modules/frontend/Auth.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class Auth {
+  constructor() {
+    // initialize elements variables
+    this.$headerActionContainer = $('.action-header-container');
+    if (!this.$headerActionContainer.length) return; // init local variable
+    // init gsap animation
+    // initialize events function
+
+    this.events(); // init international country code input
+    // init label formgroup
+  }
+
+  events() {
+    this.$headerActionContainer.on('click', 'a', e => {
+      e.preventDefault();
+      const $el = $(e.currentTarget);
+    });
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Auth);
 
 /***/ }),
 
@@ -565,7 +603,9 @@ class Main {
     // init international country code input
     // init label formgroup
 
-    this.formGroupLabel();
+    this.formGroupLabel(); // password
+
+    this.viewUnviewPassword();
   }
 
   formGroupLabel() {
@@ -596,6 +636,20 @@ class Main {
     this.$formGroup.on('keyup change', 'input, select, textarea', e => {
       const $el = $(e.currentTarget);
       addRemoveLabelClassFill($el);
+    });
+  }
+
+  viewUnviewPassword() {
+    this.$formGroup.on('click', 'i.password', e => {
+      const $el = $(e.currentTarget);
+
+      if ($el.hasClass('fa-eye')) {
+        $el.removeClass('fa-eye').addClass('fa-eye-slash');
+        $el.siblings('input').attr('type', 'text');
+      } else {
+        $el.addClass('fa-eye').removeClass('fa-eye-slash');
+        $el.siblings('input').attr('type', 'password');
+      }
     });
   }
 

@@ -1,0 +1,93 @@
+.modal#auth-modal {
+
+    &.is-display {
+        display: flex;
+    }
+
+    .modal-dialog {
+        width: 100%;
+
+        .modal-content {
+            padding: 1.5em 2em;
+
+            .modal-body {
+                display: grid;
+                grid-template-columns: repeat(1, 1fr);
+
+                .btn.google {
+                    background-color: hsl(217, 89%, 61%);
+
+                    i {
+                        margin-right: 5px;
+                    }
+
+                    &::before {
+                        background-color: hsl(217, 90%, 51%);
+                    }
+
+                    &::after {
+                        background-color: hsl(217, 89%, 61%);
+                    }
+                }
+
+                p.separator {
+                    margin: 20px 0;
+                    position: relative;
+
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        width: 45%;
+                        top: 10px;
+                        left: 0;
+                        height: 1px;
+                        background-color: #ccc;;
+                    }
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        width: 45%;
+                        top: 10px;
+                        right: 0;
+                        height: 1px;
+                        background-color: #ccc;;
+                    }
+                }
+                
+                form {
+                    margin-top: 20px;
+
+                    .form-group {
+                        margin-bottom: 20px;
+                    }
+
+                    .button-container {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        margin-bottom: 15px;
+
+                        & > .btn {
+                            width: 49%;
+
+                            &.create-account {
+                                background-color: #ffc107;
+
+                                &::after,
+                                &::before{
+                                    background-color: #ffc107
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+
+                .btn {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

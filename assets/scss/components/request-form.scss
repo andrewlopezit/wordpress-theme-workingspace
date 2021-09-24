@@ -33,6 +33,18 @@ form.request-form#request-form {
     }
 }
 
+.modal {
+    .modal-dialog {
+        .modal-content {
+            .modal-body{
+                form.request-form#request-form {
+                    padding: 0;
+                }
+            }
+        }
+    }
+}
+
 // Extra small devices (portrait phones, less than 576px)
 @media (max-width: 575.98px) { 
     form.request-form#request-form {
