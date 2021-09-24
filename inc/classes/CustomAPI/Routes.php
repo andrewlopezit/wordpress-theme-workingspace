@@ -98,7 +98,7 @@ class Routes {
             register_rest_route('wp/v2', 'search', array(
               'methods' => WP_REST_SERVER::READABLE,
               'callback' => array(new Search(), 'search_all'),
-              'permission_callback' => array($this, 'get_post_permission_callback')
+              'permission_callback' => array($this, 'get_permission_callback')
             ));
         });
         
