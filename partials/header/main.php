@@ -6,10 +6,15 @@
                     <a href="<?php echo get_bloginfo('url');?>">
                         <div class="brand" <?php workingspace_the_brand_style(); ?>></div>
                     </a>
-                    <div class="hamburger" id="hamburger">
-                        <span <?php workingspace_the_color_hamburgermenu_style(); ?>></span>
-                        <span <?php workingspace_the_color_hamburgermenu_style(); ?>></span>
-                        <span <?php workingspace_the_color_hamburgermenu_style(); ?>></span>
+                    
+                    <div class="action-header-container">
+                        <button class="btn login">Login</button>
+                        <button class="btn sign-up">Sign-up</button>
+                        <div class="hamburger" id="hamburger">
+                            <span <?php workingspace_the_color_hamburgermenu_style(); ?>></span>
+                            <span <?php workingspace_the_color_hamburgermenu_style(); ?>></span>
+                            <span <?php workingspace_the_color_hamburgermenu_style(); ?>></span>
+                        </div>
                     </div>
 
                     <?php get_template_part('partials/header/navigation','navigation'); ?>

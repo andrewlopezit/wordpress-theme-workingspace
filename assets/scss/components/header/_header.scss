@@ -10,4 +10,22 @@
     margin-bottom: $navigation-margin;
 
     position: relative;
+
+    .action-header-container {
+        display: flex;
+        align-items: center;
+
+        .btn {
+            padding: 5px 15px;
+            font-size: 12px;
+
+            &.login {
+                margin-right: 10px;
+            }
+
+            &.sign-up {
+                margin-right: 20px;
+            }
+        }
+    }
 } 

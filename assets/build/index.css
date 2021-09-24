@@ -2957,6 +2957,20 @@ form.request-form#request-form .btn {
   margin-bottom: 20px;
   position: relative;
 }
+.header .action-header-container {
+  display: flex;
+  align-items: center;
+}
+.header .action-header-container .btn {
+  padding: 5px 15px;
+  font-size: 12px;
+}
+.header .action-header-container .btn.login {
+  margin-right: 10px;
+}
+.header .action-header-container .btn.sign-up {
+  margin-right: 20px;
+}
 
 /*------------------------------------*
 	FOOTER NAVIGATION
@@ -3450,6 +3464,9 @@ form.request-form#request-form .btn {
   max-width: 1110px;
 }
 .gutenberg--featured-post.has-no-padding {
+  padding: 0;
+}
+.gutenberg--featured-post .col {
   padding: 0;
 }
 .gutenberg--featured-post .featured-posts {
