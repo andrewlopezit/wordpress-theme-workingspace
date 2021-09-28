@@ -49,11 +49,7 @@ public function add_rooms_additional_details($posts) {
 
       $author = get_user_by('ID',$post->post_author);
       $author = $author->data;
-
-      unset($author->user_login);
-      unset($author->user_pass);
-      unset($author->user_email);
-      unset($author->user_activation_key);
+      $author = $this->unset_user_prop($author->data);
       
       $post->categories =  get_the_category($post->ID);
       $post->post_content_trim = wp_trim_words(strip_tags($post->post_content), 50);
@@ -109,5 +105,14 @@ public function add_rooms_additional_details($posts) {
       }
 
       return $workingspaces;
+  }
+
+  public function unset_user_prop($user) {
+    unset($user->user_login);
+    unset($user->user_pass);
+    unset($user->user_email);
+    unset($user->user_activation_key);
+
+    return $user;
   }
 }

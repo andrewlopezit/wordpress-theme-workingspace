@@ -1,4 +1,4 @@
-<div class="modal is-display" id="auth-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal" id="auth-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -7,9 +7,9 @@
                     <span>Sign in with google</span>
                 </button>
                 <p class="text-center text-muted separator">Or</p>
-                <form class="autho-form" id="login-auth-form">
+                <form class="auth-form" id="login-auth-form" method="post">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="user_username" name="user_username"  required />
+                        <input type="text" class="form-control" id="user_username" name="user_username"  required minlength="5" />
                         <label class="form-group label" for="user_username">Username or email</label>
                     </div>
                     <div class="form-group">
@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="button-container">
-                        <button class="btn login">Login</button>
+                        <button class="btn login" disabled>Login</button>
                         <button class="btn create-account">Create Account</button>
                     </div>
                 </form>

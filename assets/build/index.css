@@ -3470,9 +3470,6 @@ form.request-form#request-form .btn {
 /*------------------------------------*
 	  A U T H
 *------------------------------------*/
-.modal#auth-modal.is-display {
-  display: flex;
-}
 .modal#auth-modal .modal-dialog {
   width: 100%;
 }

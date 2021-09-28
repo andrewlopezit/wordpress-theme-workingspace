@@ -5,8 +5,6 @@ class Main {
         this.$heroTitle = this.$heroSectionContainer.find('.row > .col > .headline');
         this.$heroSubTitle = this.$heroSectionContainer.find('.row > .col > p');
         this.$formGroup = $('.form-group');
-
-        // init local variable
         
         // init gsap animation
 
@@ -50,7 +48,7 @@ class Main {
 
         addRemoveLabelClassFill(this.$formGroup.find('input, select, textarea'));
 
-        this.$formGroup.on('keyup change', 'input, select, textarea', e => {
+        this.$formGroup.on('keyup', 'input, select, textarea', e => {
             const $el = $(e.currentTarget);
 
             addRemoveLabelClassFill($el);

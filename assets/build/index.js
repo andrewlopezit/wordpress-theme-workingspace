@@ -222,28 +222,120 @@ const Api = url => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
+
+
 class Auth {
   constructor() {
     // initialize elements variables
     this.$headerActionContainer = $('.action-header-container');
-    if (!this.$headerActionContainer.length) return; // init local variable
-    // init gsap animation
-    // initialize events function
+    if (!this.$headerActionContainer.length) return;
+    this.$modalAuthContainer = $('#auth-modal');
+    this.$loginFormContainer = this.$modalAuthContainer.find('form#login-auth-form');
+    this.$btnLogin = this.$loginFormContainer.find('.button-container > .btn.login'); // init local variable
 
-    this.events(); // init international country code input
-    // init label formgroup
+    this.loginForm; // init gsap animation
+    // init login form
+
+    this.initLoginForm(); // initialize events function
+
+    this.events();
+  }
+
+  initLoginForm() {
+    if (!this.$loginFormContainer.length) return;
+    this.loginForm = {
+      isValid: false,
+      inputs: this.$loginFormContainer.find('input, textarea, select')
+    };
   }
 
   events() {
     this.$headerActionContainer.on('click', 'a', e => {
       e.preventDefault();
-      const $el = $(e.currentTarget);
+      this.$modalAuthContainer.show();
+    }); // login
+
+    this.$btnLogin.on('click', e => {
+      e.preventDefault();
+      console.log(e);
+    }); // create account
+
+    this.$loginFormContainer.on('click', '.button-container > .create-account', e => {
+      e.preventDefault();
+      console.log(e);
+    });
+    this.loginForm.inputs.on('keyup', e => {
+      const isFormValid = Object(_index__WEBPACK_IMPORTED_MODULE_0__["formValidation"])(this.loginForm.inputs).validate();
+      console.log(isFormValid);
+
+      if (!isFormValid) {
+        this.$btnLogin.attr('disabled', true);
+        return;
+      }
+
+      this.$btnLogin.attr('disabled', false);
     });
   }
 
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Auth);
+
+/***/ }),
+
+/***/ "./assets/js/modules/frontend/FormValidation.js":
+/*!******************************************************!*\
+  !*** ./assets/js/modules/frontend/FormValidation.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const FormValidation = $inputs => {
+  if (!$inputs) return;
+
+  class FormValidation {
+    constructor() {
+      // init local variable
+      this.primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+    }
+
+    validate() {
+      const isInputValid = $input => {
+        const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if ($input.attr('required') && !$input.val().length || $input.attr('minlength') && $input.val().length < +$input.attr('minlength') || $input.attr('maxlength') && $input.val().length > +$input.attr('maxlength') || $input.attr('type') === 'email' && !emailPattern.test($input.val()) || $input.attr('type') === 'tel' && !$input.hasClass('is-valid')) {
+          return false;
+        }
+
+        return true;
+      };
+
+      const formValidations = [];
+      $inputs.each((i, e) => {
+        const $el = $(e);
+        const isValid = isInputValid($el);
+        console.log($el.attr('required'));
+
+        if (!isValid) {
+          $el.css('--border-color', '#dc3545');
+          formValidations.push(false);
+        } else {
+          $el.css('--border-color', this.primaryColor);
+          formValidations.push(true);
+        }
+      });
+      return formValidations.every(input => input === true);
+    }
+
+  }
+
+  return new FormValidation($inputs);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (FormValidation);
 
 /***/ }),
 
@@ -597,8 +689,7 @@ class Main {
     this.$heroSectionContainer = $(document).find('.hero-section > .container');
     this.$heroTitle = this.$heroSectionContainer.find('.row > .col > .headline');
     this.$heroSubTitle = this.$heroSectionContainer.find('.row > .col > p');
-    this.$formGroup = $('.form-group'); // init local variable
-    // init gsap animation
+    this.$formGroup = $('.form-group'); // init gsap animation
     // initialize events function
     // init international country code input
     // init label formgroup
@@ -633,7 +724,7 @@ class Main {
     };
 
     addRemoveLabelClassFill(this.$formGroup.find('input, select, textarea'));
-    this.$formGroup.on('keyup change', 'input, select, textarea', e => {
+    this.$formGroup.on('keyup', 'input, select, textarea', e => {
       const $el = $(e.currentTarget);
       addRemoveLabelClassFill($el);
     });
@@ -1792,7 +1883,7 @@ class TestimonialsSlider {
 /*!*********************************************!*\
   !*** ./assets/js/modules/frontend/index.js ***!
   \*********************************************/
-/*! exports provided: rangeSlider, api, loading, maps */
+/*! exports provided: rangeSlider, api, loading, maps, formValidation */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1801,10 +1892,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "api", function() { return api; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loading", function() { return loading; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "maps", function() { return maps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formValidation", function() { return formValidation; });
 /* harmony import */ var _RangeSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RangeSlider */ "./assets/js/modules/frontend/RangeSlider.js");
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Api */ "./assets/js/modules/frontend/Api.js");
 /* harmony import */ var _Loading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Loading */ "./assets/js/modules/frontend/Loading.js");
 /* harmony import */ var _Maps__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Maps */ "./assets/js/modules/frontend/Maps.js");
+/* harmony import */ var _FormValidation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FormValidation */ "./assets/js/modules/frontend/FormValidation.js");
+
 
 
 
@@ -1813,6 +1907,7 @@ const rangeSlider = _RangeSlider__WEBPACK_IMPORTED_MODULE_0__["default"];
 const api = _Api__WEBPACK_IMPORTED_MODULE_1__["default"];
 const loading = _Loading__WEBPACK_IMPORTED_MODULE_2__["default"];
 const maps = _Maps__WEBPACK_IMPORTED_MODULE_3__["default"];
+const formValidation = _FormValidation__WEBPACK_IMPORTED_MODULE_4__["default"];
 
 /***/ }),
 
