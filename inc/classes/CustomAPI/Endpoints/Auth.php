@@ -26,7 +26,7 @@ class Auth extends BaseClass {
 
         $check = wp_authenticate( $inquiry_obj->username, $inquiry_obj->password );
 
-        if(!isset($check->data)) return wp_send_json(array('error' => 'Unauthorized'), 401);
+        if(!isset($check->data)) return wp_send_json(array('error' => 'Bad Request'), 400);
 
         $user = $this->unset_user_prop($check->data);
         $user->x_wp_nonce = wp_create_nonce( 'auth_wp_rest' );

@@ -3482,6 +3482,12 @@ form.request-form#request-form .btn {
   -ms-grid-columns: (1fr)[1];
   grid-template-columns: repeat(1, 1fr);
 }
+.modal#auth-modal .modal-dialog .modal-content .modal-body .error-message {
+  border-left: 2px solid #dc3545;
+  padding: 10px;
+  font-size: 12px;
+  display: none;
+}
 .modal#auth-modal .modal-dialog .modal-content .modal-body .btn.google {
   background-color: #4387f4;
 }

@@ -30,7 +30,6 @@ const FormValidation = ($inputs) => {
                 const $el = $(e);
 
                 const isValid = isInputValid($el);
-                console.log($el.attr('required'));
 
                 if(!isValid) {
                     $el.css('--border-color', '#dc3545');
@@ -42,6 +41,16 @@ const FormValidation = ($inputs) => {
             });
 
             return formValidations.every(input => input === true);
+        }
+
+        getFormData() {
+            let obj = {};
+    
+            $inputs.each((i, el) => {
+                obj[$(el).attr('name')] = $(el).val();
+            });
+    
+            return obj;
         }
     }
 

@@ -223,6 +223,9 @@ const Api = url => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
 
 
 class Auth {
@@ -231,10 +234,12 @@ class Auth {
     this.$headerActionContainer = $('.action-header-container');
     if (!this.$headerActionContainer.length) return;
     this.$modalAuthContainer = $('#auth-modal');
+    this.$errorMessage = this.$modalAuthContainer.find('.error-message#auth-error-message');
     this.$loginFormContainer = this.$modalAuthContainer.find('form#login-auth-form');
     this.$btnLogin = this.$loginFormContainer.find('.button-container > .btn.login'); // init local variable
 
-    this.loginForm; // init gsap animation
+    this.loginForm;
+    this.siteUrl = translation_array.site_url; // init gsap animation
     // init login form
 
     this.initLoginForm(); // initialize events function
@@ -258,7 +263,24 @@ class Auth {
 
     this.$btnLogin.on('click', e => {
       e.preventDefault();
-      console.log(e);
+      if (!this.loginForm.isValid) return;
+      const loginFormData = Object(_index__WEBPACK_IMPORTED_MODULE_0__["formValidation"])(this.loginForm.inputs).getFormData();
+      this.$btnLogin.attr('disabled', true);
+      this.$btnLogin.html('Logging in...');
+      this.$errorMessage.hide();
+      this.login(loginFormData).then(results => {
+        console.log(results);
+        this.$btnLogin.html('Login');
+        this.clearLoginInputs();
+        this.$modalAuthContainer.hide();
+      }).catch(() => {
+        this.$errorMessage.show().html(`
+                    <strong>Error</strong>: The username <strong>${loginFormData.username}</strong> is not registered on this site.
+                    If you are unsure of your username, try your email address instead.
+                `);
+        this.$btnLogin.html('Login');
+        this.$btnLogin.attr('disabled', false);
+      });
     }); // create account
 
     this.$loginFormContainer.on('click', '.button-container > .create-account', e => {
@@ -267,7 +289,7 @@ class Auth {
     });
     this.loginForm.inputs.on('keyup', e => {
       const isFormValid = Object(_index__WEBPACK_IMPORTED_MODULE_0__["formValidation"])(this.loginForm.inputs).validate();
-      console.log(isFormValid);
+      this.loginForm.isValid = isFormValid;
 
       if (!isFormValid) {
         this.$btnLogin.attr('disabled', true);
@@ -276,6 +298,23 @@ class Auth {
 
       this.$btnLogin.attr('disabled', false);
     });
+  }
+
+  login(data) {
+    if (!data) return;
+    const url = `${this.siteUrl}/wp-json/wp/v2/auth/login`;
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(url, data);
+  }
+
+  clearLoginInputs() {
+    this.loginForm.inputs.each((i, el) => {
+      $(el).val(undefined);
+      $(el).removeClass('is-fill');
+    });
+    Object(_index__WEBPACK_IMPORTED_MODULE_0__["formValidation"])(this.loginForm.inputs).validate();
+    this.loginForm.inputValidations = [];
+    this.loginForm.isValid = false;
+    this.$btnLogin.attr('disabled', true);
   }
 
 }
@@ -317,7 +356,6 @@ const FormValidation = $inputs => {
       $inputs.each((i, e) => {
         const $el = $(e);
         const isValid = isInputValid($el);
-        console.log($el.attr('required'));
 
         if (!isValid) {
           $el.css('--border-color', '#dc3545');
@@ -328,6 +366,14 @@ const FormValidation = $inputs => {
         }
       });
       return formValidations.every(input => input === true);
+    }
+
+    getFormData() {
+      let obj = {};
+      $inputs.each((i, el) => {
+        obj[$(el).attr('name')] = $(el).val();
+      });
+      return obj;
     }
 
   }

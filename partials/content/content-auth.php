@@ -7,13 +7,17 @@
                     <span>Sign in with google</span>
                 </button>
                 <p class="text-center text-muted separator">Or</p>
+
+                <div class="error-message" id="auth-error-message">
+                </div>
+
                 <form class="auth-form" id="login-auth-form" method="post">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="user_username" name="user_username"  required minlength="5" />
+                        <input type="text" class="form-control" id="user_username" name="username"  required minlength="5" />
                         <label class="form-group label" for="user_username">Username or email</label>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" id="user_password" name="user_password"  required />
+                        <input type="password" class="form-control" id="user_password" name="password"  required />
                         <label class="form-group label" for="user_password">Password</label>
                         <i class="far fa-eye password"></i>
                     </div>

@@ -9,6 +9,13 @@
                 display: grid;
                 grid-template-columns: repeat(1, 1fr);
 
+                .error-message {
+                    border-left: 2px solid #dc3545;
+                    padding: 10px;
+                    font-size: 12px;
+                    display: none;
+                }
+
                 .btn.google {
                     background-color: hsl(217, 89%, 61%);
 
