@@ -236,7 +236,8 @@ class Auth {
     this.$modalAuthContainer = $('#auth-modal');
     this.$errorMessage = this.$modalAuthContainer.find('.error-message#auth-error-message');
     this.$loginFormContainer = this.$modalAuthContainer.find('form#login-auth-form');
-    this.$btnLogin = this.$loginFormContainer.find('.button-container > .btn.login'); // init local variable
+    this.$btnLogin = this.$loginFormContainer.find('.button-container > .btn.login');
+    this.$signInGoogle = this.$modalAuthContainer.find('.btn.google'); // init local variable
 
     this.loginForm;
     this.siteUrl = translation_array.site_url; // init gsap animation
@@ -244,7 +245,7 @@ class Auth {
 
     this.initLoginForm(); // initialize events function
 
-    this.events();
+    this.events(); // change label google btn
   }
 
   initLoginForm() {
@@ -289,7 +290,8 @@ class Auth {
     this.$loginFormContainer.on('click', '.button-container > .create-account', e => {
       e.preventDefault();
       console.log(e);
-    });
+    }); // sign-in as google
+
     this.loginForm.inputs.on('keyup', e => {
       const isFormValid = Object(_index__WEBPACK_IMPORTED_MODULE_0__["formValidation"])(this.loginForm.inputs).validate();
       this.loginForm.isValid = isFormValid;

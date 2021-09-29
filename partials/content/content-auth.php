@@ -2,10 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <button class="btn google">
-                    <i class="fab fa-google"></i>
-                    <span>Sign in with google</span>
-                </button>
+                <div class="g-signin2" id="googleSigninAuth" data-onsuccess="onGoogleSignIn"></div>
                 <p class="text-center text-muted separator">Or</p>
 
                 <div class="error-message" id="auth-error-message">

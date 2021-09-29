@@ -11,6 +11,7 @@ class Auth {
         this.$errorMessage = this.$modalAuthContainer.find('.error-message#auth-error-message');
         this.$loginFormContainer = this.$modalAuthContainer.find('form#login-auth-form');
         this.$btnLogin = this.$loginFormContainer.find('.button-container > .btn.login');
+        this.$signInGoogle = this.$modalAuthContainer.find('.btn.google');
 
         // init local variable
         this.loginForm;
@@ -24,6 +25,9 @@ class Auth {
 
         // initialize events function
         this.events();
+
+        // change label google btn
+      
     }
 
     initLoginForm() {
@@ -78,6 +82,8 @@ class Auth {
             
             console.log(e);
         });
+
+        // sign-in as google
 
         this.loginForm.inputs.on('keyup', e => {
             const isFormValid = formValidation(this.loginForm.inputs).validate();

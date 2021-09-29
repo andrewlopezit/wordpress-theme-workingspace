@@ -69,9 +69,8 @@
                     list-style-type: none;
                     width: 160px;
                     display: none;
-                    opacity: 0;
 
-                    @include transform(translateY(2em));
+                    @include transform(traslateY(-2em));
 
                     li {
                         padding: 5px;

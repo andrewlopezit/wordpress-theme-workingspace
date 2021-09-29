@@ -238,6 +238,18 @@ if(!class_exists('WorkingspaceTheme')) {
             )
             ->script(
                 array(
+                    'handle' => 'googleOAuth',
+                    'src' => '//apis.google.com/js/platform.js'
+                )
+            )
+             ->script(
+                array(
+                    'handle' => 'googleOAuth',
+                    'src' => '//apis.google.com/js/platform.js'
+                )
+            )
+            ->script(
+                array(
                     'handle'=> 'JqueryExtendFunction',
                     'deps' => array('jQuery@3.6'),
                     'src' => WORKINGSPACEWP_THEME_URI.'/assets/js/JqueryExtendFunction.js',
@@ -254,6 +266,7 @@ if(!class_exists('WorkingspaceTheme')) {
                     'jQueryUI@1.12',
                     'jQueryUITouch@0.2.3',
                     'mapbox@2.3.1',
+                    'googleOAuth',
                     'JqueryExtendFunction'
                 )
             );
@@ -303,10 +316,18 @@ if(!class_exists('WorkingspaceTheme')) {
                     )
                 )
             )
+            ->script(
+                array(
+                    'handle' => 'googleAuth',
+                    'src' => WORKINGSPACEWP_THEME_URI.'/assets/js/modules/frontend/googleAuth.js',
+                    'ver' => $theme_version,
+                )
+            )
             // add the handle for defer script
             ->enqueue(
                 array(
-                    'main'
+                    'main',
+                    'googleAuth'
                 )
             );
         }

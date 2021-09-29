@@ -3017,8 +3017,7 @@ form.request-form#request-form .btn {
   list-style-type: none;
   width: 160px;
   display: none;
-  opacity: 0;
-  transform: translateY(2em);
+  transform: traslateY(-2em);
 }
 .header .action-header-container .user-settings-container .user-container .settings li {
   padding: 5px;
@@ -3546,17 +3545,11 @@ form.request-form#request-form .btn {
   font-size: 12px;
   display: none;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body .btn.google {
-  background-color: #4387f4;
-}
-.modal#auth-modal .modal-dialog .modal-content .modal-body .btn.google i {
-  margin-right: 5px;
-}
-.modal#auth-modal .modal-dialog .modal-content .modal-body .btn.google::before {
-  background-color: #1268f3;
-}
-.modal#auth-modal .modal-dialog .modal-content .modal-body .btn.google::after {
-  background-color: #4387f4;
+.modal#auth-modal .modal-dialog .modal-content .modal-body .g-signin2 .abcRioButtonLightBlue {
+  height: 50px !important;
+  width: 100% !important;
+  text-transform: uppercase;
+  padding: 0.5em;
 }
 .modal#auth-modal .modal-dialog .modal-content .modal-body p.separator {
   margin: 20px 0;
