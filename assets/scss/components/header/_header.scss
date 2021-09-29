@@ -15,16 +15,61 @@
         display: flex;
         align-items: center;
 
-        .btn {
-            padding: 5px 15px;
-            font-size: 12px;
+        .user-settings-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-            &.login {
-                margin-right: 20px;
+            display: none;
+
+            i {
+                font-size: 16px;
             }
 
-            &.sign-up {
-                margin-right: 10px;
+            .user-heart-badge-container {
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                margin-right: 20px;
+
+                color: var(--secondary-color, $secondary-color);
+                cursor: pointer;
+
+                .badge.badge-danger {
+                    top: -8px;
+                    left: 8px;
+                    position: absolute;
+                    background-color: #dc3545;
+                }
+            }
+
+            .user-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                width: 100px;
+                
+                color: var(--secondary-color, $secondary-color);
+                cursor: pointer;
+
+                .fas {
+                    font-size: 10px;
+                }
+            }
+        }
+
+        .auth-container {
+            .btn {
+                padding: 5px 15px;
+                font-size: 12px;
+    
+                &.login {
+                    margin-right: 20px;
+                }
+    
+                &.sign-up {
+                    margin-right: 10px;
+                }
             }
         }
     }

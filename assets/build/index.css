@@ -2972,14 +2972,48 @@ form.request-form#request-form .btn {
   display: flex;
   align-items: center;
 }
-.header .action-header-container .btn {
+.header .action-header-container .user-settings-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  display: none;
+}
+.header .action-header-container .user-settings-container i {
+  font-size: 16px;
+}
+.header .action-header-container .user-settings-container .user-heart-badge-container {
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-right: 20px;
+  color: var(--secondary-color, #00CEB5);
+  cursor: pointer;
+}
+.header .action-header-container .user-settings-container .user-heart-badge-container .badge.badge-danger {
+  top: -8px;
+  left: 8px;
+  position: absolute;
+  background-color: #dc3545;
+}
+.header .action-header-container .user-settings-container .user-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100px;
+  color: var(--secondary-color, #00CEB5);
+  cursor: pointer;
+}
+.header .action-header-container .user-settings-container .user-container .fas {
+  font-size: 10px;
+}
+.header .action-header-container .auth-container .btn {
   padding: 5px 15px;
   font-size: 12px;
 }
-.header .action-header-container .btn.login {
+.header .action-header-container .auth-container .btn.login {
   margin-right: 20px;
 }
-.header .action-header-container .btn.sign-up {
+.header .action-header-container .auth-container .btn.sign-up {
   margin-right: 10px;
 }
 
