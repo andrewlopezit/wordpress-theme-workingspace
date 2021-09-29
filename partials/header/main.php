@@ -11,11 +11,11 @@
                         <div class="user-settings-container">
                             <div class="user-heart-badge-container">
                                 <i class="far fa-heart"></i>
-                                <span class="badge badge-danger">99+</span>
+                                <span class="badge badge-danger"></span>
                             </div>                            
                             <div class="user-container">
                                 <i class="far fa-user"></i>
-                                <span class="user-name">admin</span>
+                                <span class="user-name"></span>
                                 <i class="fas fa-chevron-down"></i>
                             </div>
                         </div>

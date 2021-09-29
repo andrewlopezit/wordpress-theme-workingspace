@@ -31,6 +31,14 @@ class Auth extends BaseClass {
         $user = $this->unset_user_prop($check->data);
         $user->x_wp_nonce = wp_create_nonce( 'auth_wp_rest' );
 
-        return $user;
+        return wp_send_json($user, 200);
+    }
+
+    public function check_nonce($args) {
+        if(!isset($args['nonce'])) return wp_send_json(array('error' => 'Bad Request'), 400);
+
+        $nonce = sanitize_text_field($args['nonce']);
+
+    return wp_send_json(!!wp_verify_nonce($nonce, 'auth_wp_rest'), 200);
     }
 }

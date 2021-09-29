@@ -2985,11 +2985,12 @@ form.request-form#request-form .btn {
   align-items: center;
   justify-content: center;
   position: relative;
-  margin-right: 20px;
+  margin-right: 5px;
   color: var(--secondary-color, #00CEB5);
   cursor: pointer;
 }
 .header .action-header-container .user-settings-container .user-heart-badge-container .badge.badge-danger {
+  display: none;
   top: -8px;
   left: 8px;
   position: absolute;

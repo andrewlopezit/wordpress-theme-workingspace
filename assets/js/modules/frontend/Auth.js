@@ -1,4 +1,4 @@
-import { formValidation } from './index';
+import { formValidation, userHeader } from './index';
 import axios from 'axios';
 class Auth {
     constructor() {
@@ -54,8 +54,9 @@ class Auth {
             this.$errorMessage.hide();
 
             this.login(loginFormData).then(results => {
-                console.log(results);
+                const {data : user} = results;
 
+                userHeader(user).init();
                 this.$btnLogin.html('Login');
                 this.clearLoginInputs();
                 this.$modalAuthContainer.hide();

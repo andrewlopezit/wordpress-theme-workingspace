@@ -30,12 +30,14 @@
                 align-items: center;
                 justify-content: center;
                 position: relative;
-                margin-right: 20px;
+                margin-right: 5px;
 
                 color: var(--secondary-color, $secondary-color);
                 cursor: pointer;
 
                 .badge.badge-danger {
+                    display: none;
+                    
                     top: -8px;
                     left: 8px;
                     position: absolute;

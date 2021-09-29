@@ -1,3 +1,4 @@
+import { userHeader } from './index';
 class Main {
     constructor() {
         // initialize elements variables
@@ -17,6 +18,9 @@ class Main {
 
         // password
         this.viewUnviewPassword();
+
+        // init user header
+        userHeader().init();
     }
 
     formGroupLabel() {

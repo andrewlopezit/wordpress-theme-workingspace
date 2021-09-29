@@ -269,7 +269,10 @@ class Auth {
       this.$btnLogin.html('Logging in...');
       this.$errorMessage.hide();
       this.login(loginFormData).then(results => {
-        console.log(results);
+        const {
+          data: user
+        } = results;
+        Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])(user).init();
         this.$btnLogin.html('Login');
         this.clearLoginInputs();
         this.$modalAuthContainer.hide();
@@ -729,6 +732,9 @@ const Loading = ($loadingContainer, duration = 30) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
+
+
 class Main {
   constructor() {
     // initialize elements variables
@@ -742,7 +748,9 @@ class Main {
 
     this.formGroupLabel(); // password
 
-    this.viewUnviewPassword();
+    this.viewUnviewPassword(); // init user header
+
+    Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])().init();
   }
 
   formGroupLabel() {
@@ -1925,11 +1933,87 @@ class TestimonialsSlider {
 
 /***/ }),
 
+/***/ "./assets/js/modules/frontend/UserHeader.js":
+/*!**************************************************!*\
+  !*** ./assets/js/modules/frontend/UserHeader.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const UserHeader = (user = null) => {
+  class UserHeader {
+    constructor() {
+      this.$headerContainer = $('#header-container');
+      if (!this.$headerContainer.length) return;
+      this.$actionHeaderContainer = this.$headerContainer.find('.action-header-container');
+      this.$userSettingsContainer = this.$actionHeaderContainer.find('.user-settings-container');
+      this.$authContainer = this.$actionHeaderContainer.find('.auth-container');
+      this.$displayName = this.$userSettingsContainer.find('.user-container > .user-name'); // local variable
+
+      this.localstorageName = 'workingspaces_user';
+      this.siteUrl = translation_array.site_url;
+    }
+
+    init() {
+      const setUserLocalStorage = user => {
+        localStorage.setItem(this.localstorageName, JSON.stringify(user));
+      };
+
+      const getUserLocalStorage = () => {
+        return JSON.parse(localStorage.getItem(this.localstorageName));
+      };
+
+      const displayUser = displayName => {
+        this.$authContainer.hide();
+        this.$displayName.html(displayName);
+        this.$userSettingsContainer.css('display', 'flex');
+      };
+
+      if (user) {
+        setUserLocalStorage(user);
+        displayUser(user.display_name);
+        return;
+      }
+
+      const userLocalStorage = getUserLocalStorage();
+      if (!userLocalStorage) return;
+      const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/checknonce?nonce=${userLocalStorage.x_wp_nonce}`;
+      axios__WEBPACK_IMPORTED_MODULE_0___default()(endpoint).then(results => {
+        const {
+          data: isNonceValid
+        } = results;
+
+        if (isNonceValid) {
+          displayUser(userLocalStorage === null || userLocalStorage === void 0 ? void 0 : userLocalStorage.display_name);
+          return;
+        }
+
+        return;
+      }).then(() => {
+        return;
+      });
+    }
+
+  }
+
+  return new UserHeader();
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (UserHeader);
+
+/***/ }),
+
 /***/ "./assets/js/modules/frontend/index.js":
 /*!*********************************************!*\
   !*** ./assets/js/modules/frontend/index.js ***!
   \*********************************************/
-/*! exports provided: rangeSlider, api, loading, maps, formValidation */
+/*! exports provided: rangeSlider, api, loading, maps, formValidation, userHeader */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1939,11 +2023,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loading", function() { return loading; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "maps", function() { return maps; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formValidation", function() { return formValidation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userHeader", function() { return userHeader; });
 /* harmony import */ var _RangeSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RangeSlider */ "./assets/js/modules/frontend/RangeSlider.js");
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Api */ "./assets/js/modules/frontend/Api.js");
 /* harmony import */ var _Loading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Loading */ "./assets/js/modules/frontend/Loading.js");
 /* harmony import */ var _Maps__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Maps */ "./assets/js/modules/frontend/Maps.js");
 /* harmony import */ var _FormValidation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FormValidation */ "./assets/js/modules/frontend/FormValidation.js");
+/* harmony import */ var _UserHeader__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UserHeader */ "./assets/js/modules/frontend/UserHeader.js");
+
 
 
 
@@ -1954,6 +2041,7 @@ const api = _Api__WEBPACK_IMPORTED_MODULE_1__["default"];
 const loading = _Loading__WEBPACK_IMPORTED_MODULE_2__["default"];
 const maps = _Maps__WEBPACK_IMPORTED_MODULE_3__["default"];
 const formValidation = _FormValidation__WEBPACK_IMPORTED_MODULE_4__["default"];
+const userHeader = _UserHeader__WEBPACK_IMPORTED_MODULE_5__["default"];
 
 /***/ }),
 
