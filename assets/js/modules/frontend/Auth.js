@@ -36,7 +36,7 @@ class Auth {
     }
 
     events() {
-        this.$headerActionContainer.on('click', 'a', e => {
+        this.$headerActionContainer.on('click', '.login', e => {
             e.preventDefault();
 
             this.$modalAuthContainer.show();

@@ -16,7 +16,19 @@
                             <div class="user-container">
                                 <i class="far fa-user"></i>
                                 <span class="user-name"></span>
-                                <i class="fas fa-chevron-down"></i>
+                                <i class="fas fa-chevron-down settings-chevron"></i>
+
+                                <ul class="settings shadow-sm">
+                                    <li>
+                                        <a href="#"><i class="far fa-building"></i><span>Workingspaces</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fas fa-user-cog"></i><span>Settings</span></a>
+                                    </li>
+                                    <li>
+                                        <a class="logout" href="#"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <div class="auth-container">

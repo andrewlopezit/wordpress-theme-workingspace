@@ -54,8 +54,35 @@
                 color: var(--secondary-color, $secondary-color);
                 cursor: pointer;
 
+                position: relative;
+
                 .fas {
                     font-size: 10px;
+                }
+
+                .settings {
+                    position: absolute;
+                    top: 25px;
+                    right: 0;
+                    background-color: #fff;
+                    padding: 1em;
+                    list-style-type: none;
+                    width: 160px;
+                    display: none;
+                    opacity: 0;
+
+                    @include transform(translateY(2em));
+
+                    li {
+                        padding: 5px;
+                        a {
+                            font-size: 12px;
+                            i {
+                                font-size: 12px;
+                                margin-right: 10px;
+                            }
+                        }
+                    }
                 }
             }
         }

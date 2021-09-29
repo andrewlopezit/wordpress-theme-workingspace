@@ -256,7 +256,7 @@ class Auth {
   }
 
   events() {
-    this.$headerActionContainer.on('click', 'a', e => {
+    this.$headerActionContainer.on('click', '.login', e => {
       e.preventDefault();
       this.$modalAuthContainer.show();
     }); // login
@@ -1954,7 +1954,8 @@ const UserHeader = (user = null) => {
       this.$actionHeaderContainer = this.$headerContainer.find('.action-header-container');
       this.$userSettingsContainer = this.$actionHeaderContainer.find('.user-settings-container');
       this.$authContainer = this.$actionHeaderContainer.find('.auth-container');
-      this.$displayName = this.$userSettingsContainer.find('.user-container > .user-name'); // local variable
+      this.$displayName = this.$userSettingsContainer.find('.user-container > .user-name');
+      this.$userContainer = this.$userSettingsContainer.find('.user-container'); // local variable
 
       this.localstorageName = 'workingspaces_user';
       this.siteUrl = translation_array.site_url;
@@ -1969,15 +1970,57 @@ const UserHeader = (user = null) => {
         return JSON.parse(localStorage.getItem(this.localstorageName));
       };
 
+      const deleteUserLocalStorage = () => {
+        localStorage.removeItem(this.localstorageName);
+      };
+
       const displayUser = displayName => {
         this.$authContainer.hide();
         this.$displayName.html(displayName);
         this.$userSettingsContainer.css('display', 'flex');
       };
 
+      const events = () => {
+        this.$userContainer.on('click', e => {
+          const $el = $(e.currentTarget);
+          const $iconChevronSettings = $el.find('.settings-chevron');
+
+          if ($iconChevronSettings.hasClass('fa-chevron-down')) {
+            $iconChevronSettings.attr('class', 'fas fa-chevron-up settings-chevron');
+            this.userSettingsAnim.play();
+          } else {
+            $iconChevronSettings.attr('class', 'fas fa-chevron-down settings-chevron');
+            this.userSettingsAnim.reverse();
+          }
+        });
+        this.$userContainer.on('click', '.settings > li > .logout', e => {
+          e.preventDefault();
+          deleteUserLocalStorage();
+          this.$userSettingsContainer.hide();
+          this.$authContainer.show();
+        });
+      };
+
+      const animation = () => {
+        const settings = this.$userContainer.find('.settings');
+        this.userSettingsAnim = gsap.timeline({
+          paused: true
+        });
+        this.userSettingsAnim.to(settings, {
+          display: 'initial',
+          duration: 0.2
+        }).to(settings, {
+          opacity: 1,
+          y: 0,
+          duration: 0.2
+        });
+      };
+
       if (user) {
         setUserLocalStorage(user);
         displayUser(user.display_name);
+        events();
+        animation();
         return;
       }
 
@@ -1991,6 +2034,8 @@ const UserHeader = (user = null) => {
 
         if (isNonceValid) {
           displayUser(userLocalStorage === null || userLocalStorage === void 0 ? void 0 : userLocalStorage.display_name);
+          events();
+          animation();
           return;
         }
 

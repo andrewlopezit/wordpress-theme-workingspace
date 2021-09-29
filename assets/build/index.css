@@ -3003,9 +3003,32 @@ form.request-form#request-form .btn {
   width: 100px;
   color: var(--secondary-color, #00CEB5);
   cursor: pointer;
+  position: relative;
 }
 .header .action-header-container .user-settings-container .user-container .fas {
   font-size: 10px;
+}
+.header .action-header-container .user-settings-container .user-container .settings {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  background-color: #fff;
+  padding: 1em;
+  list-style-type: none;
+  width: 160px;
+  display: none;
+  opacity: 0;
+  transform: translateY(2em);
+}
+.header .action-header-container .user-settings-container .user-container .settings li {
+  padding: 5px;
+}
+.header .action-header-container .user-settings-container .user-container .settings li a {
+  font-size: 12px;
+}
+.header .action-header-container .user-settings-container .user-container .settings li a i {
+  font-size: 12px;
+  margin-right: 10px;
 }
 .header .action-header-container .auth-container .btn {
   padding: 5px 15px;
