@@ -112,12 +112,16 @@ class Routes {
               'permission_callback' => array($this, 'get_permission_callback')
             ));
 
-            //----------------------------------------
-            //   A U T H
-            //----------------------------------------
+           
             register_rest_route('wp/v2', 'auth/checknonce', array(
               'methods' => WP_REST_SERVER::READABLE,
               'callback' => array(new Auth(), 'check_nonce'),
+              'permission_callback' => array($this, 'get_permission_callback')
+            ));
+
+            register_rest_route('wp/v2', 'auth/google', array(
+              'methods' => WP_REST_SERVER::READABLE,
+              'callback' => array(new Auth(), 'login_google'),
               'permission_callback' => array($this, 'get_permission_callback')
             ));
         });

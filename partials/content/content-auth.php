@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="g-signin2" id="googleSigninAuth" data-onsuccess="onGoogleSignIn"></div>
+                <div class="g-signin2" id="google-signin" data-onsuccess="onGoogleSignIn"></div>
                 <p class="text-center text-muted separator">Or</p>
 
                 <div class="error-message" id="auth-error-message">

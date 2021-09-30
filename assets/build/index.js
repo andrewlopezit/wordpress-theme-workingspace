@@ -237,15 +237,18 @@ class Auth {
     this.$errorMessage = this.$modalAuthContainer.find('.error-message#auth-error-message');
     this.$loginFormContainer = this.$modalAuthContainer.find('form#login-auth-form');
     this.$btnLogin = this.$loginFormContainer.find('.button-container > .btn.login');
-    this.$signInGoogle = this.$modalAuthContainer.find('.btn.google'); // init local variable
+    this.$btnSignInGoogle = $('#google-signin'); // init local variable
 
     this.loginForm;
-    this.siteUrl = translation_array.site_url; // init gsap animation
+    this.siteUrl = translation_array.site_url;
+    this.googleClientId = translation_array.google_client_id; // init gsap animation
     // init login form
 
     this.initLoginForm(); // initialize events function
 
-    this.events(); // change label google btn
+    this.events(); // init google auth
+
+    this.googleAuth();
   }
 
   initLoginForm() {
@@ -320,6 +323,47 @@ class Auth {
     this.loginForm.inputValidations = [];
     this.loginForm.isValid = false;
     this.$btnLogin.attr('disabled', true);
+  }
+
+  googleAuth() {
+    const googleApi = gapi.load('auth2', () => {
+      // Retrieve the singleton for the GoogleAuth library and set up the client.
+      const auth2 = gapi.auth2.init({
+        client_id: this.googleClientId,
+        cookiepolicy: 'single_host_origin' // Request scopes in addition to 'profile' and 'email'
+        //scope: 'additional_scope'
+
+      });
+
+      const attachSignin = $element => {
+        $element.find('.abcRioButtonContents').children().eq(0).html('Sign in with google');
+        $element.find('.abcRioButtonContents').children().eq(1).html('Sign in with google');
+      };
+
+      const onAuthSuccess = googleUser => {
+        if (!googleUser) return;
+        const token = googleUser.getAuthResponse().id_token;
+        const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/google?token=${token}`;
+        axios__WEBPACK_IMPORTED_MODULE_1___default()(endpoint).then(results => {
+          const {
+            data: user
+          } = results;
+          if (!user) return;
+          Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])(user).init();
+          this.$modalAuthContainer.hide();
+        }).catch(() => {});
+      };
+
+      gapi.signin2.render('google-signin', {
+        'scope': 'profile email',
+        'theme': 'dark',
+        'onsuccess': googleUser => onAuthSuccess(googleUser),
+        'onfailure': googleUser => {
+          console.log(googleUser);
+        }
+      });
+      attachSignin(this.$btnSignInGoogle);
+    });
   }
 
 }
@@ -2000,6 +2044,8 @@ const UserHeader = (user = null) => {
           deleteUserLocalStorage();
           this.$userSettingsContainer.hide();
           this.$authContainer.show();
+          const auth2 = gapi.auth2.getAuthInstance();
+          auth2.signOut().then(() => {});
         });
       };
 

@@ -3545,7 +3545,7 @@ form.request-form#request-form .btn {
   font-size: 12px;
   display: none;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body .g-signin2 .abcRioButtonLightBlue {
+.modal#auth-modal .modal-dialog .modal-content .modal-body .g-signin2 .abcRioButtonBlue {
   height: 50px !important;
   width: 100% !important;
   text-transform: uppercase;
