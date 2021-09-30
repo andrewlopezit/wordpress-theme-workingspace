@@ -6,16 +6,25 @@
             padding: 1.5em 2em;
 
             .modal-body {
-                display: grid;
+                display: none;
                 grid-template-columns: repeat(1, 1fr);
 
+                &.is-display {
+                    display: grid;
+                }
                 .error-message {
                     border-left: 2px solid #dc3545;
                     padding: 10px;
                     font-size: 12px;
                     display: none;
                 }
+            }
 
+            .login-container {
+                h4 {
+                    margin-bottom: 30px;
+                }
+                
                 .g-signin2 {
                     .abcRioButtonBlue{
                         height: 50px !important;
@@ -81,6 +90,23 @@
 
                 .btn {
                     width: 100%;
+                }
+            }
+
+            .register-container {
+                form {
+                        h4 {
+                            margin-bottom: 30px;
+                        }
+
+                        .form-group {
+                            margin-bottom: 20px;
+                        }
+
+                        .create-account {
+                            width: 100%;
+                            margin-bottom: 10px;
+                        }
                 }
             }
         }

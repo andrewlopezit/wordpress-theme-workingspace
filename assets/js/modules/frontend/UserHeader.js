@@ -66,11 +66,13 @@ const UserHeader = (user = null) => {
             }
 
             const animation = () => {
-                const settings = this.$userContainer.find('.settings');
+                const $settings = this.$userContainer.find('.settings');
+
+                $settings.removeAttr('style');
 
                 this.userSettingsAnim = gsap.timeline({paused: true});
-                this.userSettingsAnim.to(settings, { display: 'initial', duration: 0.2})
-                                     .to(settings, { opacity: 1, y: 0, duration: 0.2});
+                this.userSettingsAnim.to($settings, { display: 'initial', duration: 0.2})
+                                     .to($settings, { opacity: 1, y: 0, duration: 0.2});
             }
 
             if(user) {

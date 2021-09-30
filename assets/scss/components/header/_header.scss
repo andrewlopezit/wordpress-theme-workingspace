@@ -49,12 +49,17 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-around;
-                width: 100px;
                 
                 color: var(--secondary-color, $secondary-color);
                 cursor: pointer;
 
                 position: relative;
+
+                @include fit-content;
+
+                .user-name {
+                    margin: 0 10px;
+                }
 
                 .fas {
                     font-size: 10px;

@@ -8,6 +8,8 @@ class Auth {
         if(!this.$headerActionContainer.length) return;
 
         this.$modalAuthContainer = $('#auth-modal');
+        this.$registerContainer = this.$modalAuthContainer.find('.register-container');
+        this.$loginContainer = this.$modalAuthContainer.find('.login-container');
         this.$errorMessage = this.$modalAuthContainer.find('.error-message#auth-error-message');
         this.$loginFormContainer = this.$modalAuthContainer.find('form#login-auth-form');
         this.$btnLogin = this.$loginFormContainer.find('.button-container > .btn.login');
@@ -44,6 +46,16 @@ class Auth {
             e.preventDefault();
 
             this.$modalAuthContainer.show();
+            this.$registerContainer.hide();
+            this.$loginContainer.show();
+        });
+
+        this.$headerActionContainer.on('click', '.sign-up', e => {
+            e.preventDefault();
+
+            this.$modalAuthContainer.show();
+            this.$loginContainer.hide();
+            this.$registerContainer.show();
         });
 
         // login
@@ -83,8 +95,7 @@ class Auth {
             console.log(e);
         });
 
-        // sign-in as google
-
+        // input login form
         this.loginForm.inputs.on('keyup', e => {
             const isFormValid = formValidation(this.loginForm.inputs).validate();
             this.loginForm.isValid = isFormValid;
@@ -136,15 +147,15 @@ class Auth {
                 if(!googleUser) return;
 
                 const token = googleUser.getAuthResponse().id_token;
-                const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/google?token=${token}`;
+                const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/google`;
+                this.$modalAuthContainer.hide();
 
-                axios(endpoint).then( results => {
+                axios.post(endpoint, {token:token}).then( results => {
                     const {data: user} = results;
                     
                     if(!user) return;
 
                     userHeader(user).init();
-                    this.$modalAuthContainer.hide();
                 }).catch(() => {})
             }
 

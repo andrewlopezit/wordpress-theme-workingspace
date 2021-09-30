@@ -120,8 +120,14 @@ class Routes {
             ));
 
             register_rest_route('wp/v2', 'auth/google', array(
-              'methods' => WP_REST_SERVER::READABLE,
+              'methods' => WP_REST_SERVER::CREATABLE,
               'callback' => array(new Auth(), 'login_google'),
+              'permission_callback' => array($this, 'get_permission_callback')
+            ));
+
+            register_rest_route('wp/v2', 'auth/register', array(
+              'methods' => WP_REST_SERVER::CREATABLE,
+              'callback' => array(new Auth(), 'register_account'),
               'permission_callback' => array($this, 'get_permission_callback')
             ));
         });

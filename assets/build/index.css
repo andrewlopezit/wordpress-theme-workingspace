@@ -3000,10 +3000,15 @@ form.request-form#request-form .btn {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 100px;
   color: var(--secondary-color, #00CEB5);
   cursor: pointer;
   position: relative;
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
+}
+.header .action-header-container .user-settings-container .user-container .user-name {
+  margin: 0 10px;
 }
 .header .action-header-container .user-settings-container .user-container .fas {
   font-size: 10px;
@@ -3534,10 +3539,13 @@ form.request-form#request-form .btn {
   padding: 1.5em 2em;
 }
 .modal#auth-modal .modal-dialog .modal-content .modal-body {
-  display: -ms-grid;
-  display: grid;
+  display: none;
   -ms-grid-columns: (1fr)[1];
   grid-template-columns: repeat(1, 1fr);
+}
+.modal#auth-modal .modal-dialog .modal-content .modal-body.is-display {
+  display: -ms-grid;
+  display: grid;
 }
 .modal#auth-modal .modal-dialog .modal-content .modal-body .error-message {
   border-left: 2px solid #dc3545;
@@ -3545,17 +3553,20 @@ form.request-form#request-form .btn {
   font-size: 12px;
   display: none;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body .g-signin2 .abcRioButtonBlue {
+.modal#auth-modal .modal-dialog .modal-content .login-container h4 {
+  margin-bottom: 30px;
+}
+.modal#auth-modal .modal-dialog .modal-content .login-container .g-signin2 .abcRioButtonBlue {
   height: 50px !important;
   width: 100% !important;
   text-transform: uppercase;
   padding: 0.5em;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body p.separator {
+.modal#auth-modal .modal-dialog .modal-content .login-container p.separator {
   margin: 20px 0;
   position: relative;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body p.separator::before {
+.modal#auth-modal .modal-dialog .modal-content .login-container p.separator::before {
   content: "";
   position: absolute;
   width: 45%;
@@ -3564,7 +3575,7 @@ form.request-form#request-form .btn {
   height: 1px;
   background-color: #ccc;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body p.separator::after {
+.modal#auth-modal .modal-dialog .modal-content .login-container p.separator::after {
   content: "";
   position: absolute;
   width: 45%;
@@ -3573,29 +3584,39 @@ form.request-form#request-form .btn {
   height: 1px;
   background-color: #ccc;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body form {
+.modal#auth-modal .modal-dialog .modal-content .login-container form {
   margin-top: 20px;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body form .form-group {
+.modal#auth-modal .modal-dialog .modal-content .login-container form .form-group {
   margin-bottom: 20px;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body form .button-container {
+.modal#auth-modal .modal-dialog .modal-content .login-container form .button-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body form .button-container > .btn {
+.modal#auth-modal .modal-dialog .modal-content .login-container form .button-container > .btn {
   width: 49%;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body form .button-container > .btn.create-account {
+.modal#auth-modal .modal-dialog .modal-content .login-container form .button-container > .btn.create-account {
   background-color: #ffc107;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body form .button-container > .btn.create-account::after, .modal#auth-modal .modal-dialog .modal-content .modal-body form .button-container > .btn.create-account::before {
+.modal#auth-modal .modal-dialog .modal-content .login-container form .button-container > .btn.create-account::after, .modal#auth-modal .modal-dialog .modal-content .login-container form .button-container > .btn.create-account::before {
   background-color: #ffc107;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body .btn {
+.modal#auth-modal .modal-dialog .modal-content .login-container .btn {
   width: 100%;
+}
+.modal#auth-modal .modal-dialog .modal-content .register-container form h4 {
+  margin-bottom: 30px;
+}
+.modal#auth-modal .modal-dialog .modal-content .register-container form .form-group {
+  margin-bottom: 20px;
+}
+.modal#auth-modal .modal-dialog .modal-content .register-container form .create-account {
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 /*------------------------------------*
