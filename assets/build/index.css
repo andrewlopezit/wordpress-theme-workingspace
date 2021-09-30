@@ -3020,12 +3020,18 @@ form.request-form#request-form .btn {
   background-color: #fff;
   padding: 1em;
   list-style-type: none;
-  width: 160px;
   display: none;
+  min-width: 160px;
   transform: traslateY(-2em);
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
 }
 .header .action-header-container .user-settings-container .user-container .settings li {
   padding: 5px;
+}
+.header .action-header-container .user-settings-container .user-container .settings li.setting-user-name {
+  display: none;
 }
 .header .action-header-container .user-settings-container .user-container .settings li a {
   font-size: 12px;
@@ -3045,6 +3051,24 @@ form.request-form#request-form .btn {
   margin-right: 10px;
 }
 
+@media (max-width: 575.98px) {
+  .header .action-header-container .auth-container .btn {
+    padding: 5px 10px;
+    font-size: 10px;
+  }
+  .header .action-header-container .auth-container .btn.sign-up {
+    display: none;
+  }
+  .header .action-header-container .auth-container .btn.login {
+    margin-right: 0;
+  }
+  .header .user-settings-container .user-container .user-name {
+    display: none;
+  }
+  .header .user-settings-container .user-container .settings li.setting-user-name {
+    display: initial !important;
+  }
+}
 /*------------------------------------*
 	FOOTER NAVIGATION
 *------------------------------------*/
@@ -3622,6 +3646,15 @@ form.request-form#request-form .btn {
   margin-bottom: 10px;
 }
 
+@media (max-width: 575.98px) {
+  .modal#auth-modal .modal-dialog {
+    padding: 1em;
+    margin: 0;
+  }
+  .modal#auth-modal .modal-dialog .modal-content {
+    padding: 1.5em 0;
+  }
+}
 /*------------------------------------*
 	  G U T E N B E R G
 *------------------------------------*/

@@ -19,6 +19,7 @@
                                 <i class="fas fa-chevron-down settings-chevron"></i>
 
                                 <ul class="settings shadow-sm">
+                                    <li class="setting-user-name"></li>
                                     <li>
                                         <a href="#"><i class="far fa-building"></i><span>Workingspaces</span></a>
                                     </li>

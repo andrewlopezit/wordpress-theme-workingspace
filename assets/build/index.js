@@ -2100,6 +2100,7 @@ const UserHeader = (user = null) => {
       this.$userSettingsContainer = this.$actionHeaderContainer.find('.user-settings-container');
       this.$authContainer = this.$actionHeaderContainer.find('.auth-container');
       this.$displayName = this.$userSettingsContainer.find('.user-container > .user-name');
+      this.$settingDisplayName = this.$userSettingsContainer.find('.user-container > .settings > .setting-user-name');
       this.$userContainer = this.$userSettingsContainer.find('.user-container'); // local variable
 
       this.localstorageName = 'workingspaces_user';
@@ -2122,6 +2123,7 @@ const UserHeader = (user = null) => {
       const displayUser = displayName => {
         this.$authContainer.hide();
         this.$displayName.html(displayName);
+        this.$settingDisplayName.html(`Hi, ${displayName}`);
         this.$userSettingsContainer.css('display', 'flex');
       };
 
