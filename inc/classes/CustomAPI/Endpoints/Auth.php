@@ -76,6 +76,12 @@ class Auth extends BaseClass {
     public function register_account($args) {
         $user = $args->get_json_params();
 
+        if(!isset($user['email'])) return wp_send_json(array('error' => 'Bad Request'), 400);
+
+        $result = get_user_by( 'email', sanitize_text_field($user['email']));
+
+        if(isset($result->data)) return wp_send_json(array('error' => 'Conflict User'), 409);
+
         $user = $this->create_account($user);
 
         if(!isset($user)) return wp_send_json(array('error' => 'Bad Request'), 400);
@@ -90,7 +96,7 @@ class Auth extends BaseClass {
            !isset($user->last_name) ||
            !isset($user->email) ||
            !isset($user->password)) {
-            return null;
+            return;
         }
 
         $user_login = esc_sql($user->email);

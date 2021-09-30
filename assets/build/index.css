@@ -3553,6 +3553,9 @@ form.request-form#request-form .btn {
   font-size: 12px;
   display: none;
 }
+.modal#auth-modal .modal-dialog .modal-content .modal-body .error-message#register-error-message {
+  margin-bottom: 20px;
+}
 .modal#auth-modal .modal-dialog .modal-content .login-container h4 {
   margin-bottom: 30px;
 }

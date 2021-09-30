@@ -7,8 +7,7 @@
                 <div class="g-signin2" id="google-signin" data-onsuccess="onGoogleSignIn"></div>
                 <p class="text-center text-muted separator">Or</p>
 
-                <div class="error-message" id="auth-error-message">
-                </div>
+                <div class="error-message" id="auth-error-message"></div>
 
                 <form class="auth-form" id="login-auth-form" method="post">
                     <div class="form-group">
@@ -31,18 +30,16 @@
             </div>
 
             <div class="modal-body register-container">
-                <div class="error-message" id="auth-error-message">
-                </div>
-
                 <form class="auth-form" id="register-auth-form" method="post">
                     <h4 class="text-center">Join the <span>Coworking</span> Community</h4>
+                    <div class="error-message" id="register-error-message"></div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="user_firstname" name="firstname"  required minlength="3" />
+                        <input type="text" class="form-control" id="user_firstname" name="first_name"  required minlength="3" />
                         <label class="form-group label" for="user_firstname">First name</label>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="user_lastname" name="lastname"  required minlength="3" />
+                        <input type="text" class="form-control" id="user_lastname" name="last_name"  required minlength="3" />
                         <label class="form-group label" for="user_lastname">Last name</label>
                     </div>
 
@@ -52,12 +49,12 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="password" class="form-control" id="user_password" name="password"  required />
+                        <input type="password" class="form-control" id="user_password" name="password"  required minlength="5" />
                         <label class="form-group label" for="user_password">Password</label>
                         <i class="far fa-eye password"></i>
                     </div>
 
-                    <button class="btn create-account">Sign Up</button>
+                    <button class="btn create-account" disabled>Sign Up</button>
                 </form>
                 
                 <small class="text-muted full-width">By completing, you accept the Coworker <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a></small>

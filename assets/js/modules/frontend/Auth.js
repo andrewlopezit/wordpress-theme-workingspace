@@ -10,13 +10,18 @@ class Auth {
         this.$modalAuthContainer = $('#auth-modal');
         this.$registerContainer = this.$modalAuthContainer.find('.register-container');
         this.$loginContainer = this.$modalAuthContainer.find('.login-container');
-        this.$errorMessage = this.$modalAuthContainer.find('.error-message#auth-error-message');
-        this.$loginFormContainer = this.$modalAuthContainer.find('form#login-auth-form');
+        this.$loginErrorMessage = this.$modalAuthContainer.find('#auth-error-message');
+        this.$registerErrorMessage = this.$modalAuthContainer.find('#register-error-message');
+        this.$loginFormContainer = this.$loginContainer.find('form#login-auth-form');
+        this.$registerFormContainer = this.$registerContainer.find('form#register-auth-form');
+
         this.$btnLogin = this.$loginFormContainer.find('.button-container > .btn.login');
+        this.$btnRegister = this.$registerFormContainer.find('.btn.create-account');
         this.$btnSignInGoogle = $('#google-signin');
 
         // init local variable
         this.loginForm;
+        this.registerForm;
         this.siteUrl = translation_array.site_url;
         this.googleClientId = translation_array.google_client_id;
          
@@ -24,6 +29,9 @@ class Auth {
 
         // init login form
         this.initLoginForm();
+
+        // init register form
+        this.initRegisterForm();
 
         // initialize events function
         this.events();
@@ -38,6 +46,15 @@ class Auth {
         this.loginForm = {
             isValid: false,
             inputs: this.$loginFormContainer.find('input, textarea, select'),
+        }
+    }
+
+    initRegisterForm() {
+        if(!this.$registerFormContainer.length) return;
+
+        this.registerForm = {
+            isValid: false,
+            inputs: this.$registerFormContainer.find('input, textarea, select'),
         }
     }
 
@@ -67,7 +84,7 @@ class Auth {
             const loginFormData = formValidation(this.loginForm.inputs).getFormData();
             this.$btnLogin.attr('disabled', true);
             this.$btnLogin.html('Logging in...');
-            this.$errorMessage.hide();
+            this.$loginErrorMessage.hide();
 
             this.login(loginFormData).then(results => {
                 const {data : user} = results;
@@ -78,7 +95,7 @@ class Auth {
                 this.$modalAuthContainer.hide();
 
             }).catch(() => {
-                this.$errorMessage.show().html(`
+                this.$loginErrorMessage.show().html(`
                     <strong>Error</strong>: The username <strong>${loginFormData.username}</strong> is not registered on this site.
                     If you are unsure of your username, try your email address instead.
                 `)
@@ -86,6 +103,48 @@ class Auth {
                 this.$btnLogin.attr('disabled', false);
             });
 
+        });
+
+        // register 
+        this.$btnRegister.on('click', e => {
+            e.preventDefault();
+
+            if(!this.registerForm.isValid) return;
+
+            const registerFormData = formValidation(this.registerForm.inputs).getFormData();
+            this.$btnRegister.attr('disabled', true);
+            this.$btnRegister.html('Signing up...');
+            this.$registerErrorMessage.hide();
+
+            this.register(registerFormData).then(results => {
+                const {data : user} = results;
+
+                userHeader(user).init();
+                this.$modalAuthContainer.hide();
+                this.clearLoginInputs();
+                this.$btnRegister.html('Sign up');
+
+            }).catch( e => {
+                const {response: {status}} = e;
+
+                let message;
+
+                switch(status) {
+                    case 409: {
+                        message = `<strong>Error</strong>: <strong>${registerFormData.email}</strong> is already exist, find other email.`
+                        break
+                    }
+
+                    default: {
+                        message = `<strong>Error</strong>: Some fields are not match of our end.`;
+                        break;
+                    }
+                }
+
+                this.$registerErrorMessage.show().html(message)
+                this.$btnRegister.html('Sign up');
+                this.$btnRegister.attr('disabled', false); 
+            });
         });
 
         // create account
@@ -107,12 +166,32 @@ class Auth {
 
             this.$btnLogin.attr('disabled', false);
         });
+
+        // input register form
+        this.registerForm.inputs.on('keyup', e => {
+            const isFormValid = formValidation(this.registerForm.inputs).validate();
+            this.registerForm.isValid = isFormValid;
+
+            if(!isFormValid) {
+                this.$btnRegister.attr('disabled', true);
+                return;
+            }
+
+            this.$btnRegister.attr('disabled', false);
+        });
     }
 
     login(data) {
         if(!data) return;
 
         const url = `${this.siteUrl}/wp-json/wp/v2/auth/login`;
+        return axios.post(url, data);
+    }
+
+    register(data) {
+        if(!data) return;
+
+        const url = `${this.siteUrl}/wp-json/wp/v2/auth/register`;
         return axios.post(url, data);
     }
 
@@ -126,6 +205,18 @@ class Auth {
         this.loginForm.inputValidations = [];
         this.loginForm.isValid = false;
         this.$btnLogin.attr('disabled', true);
+    }
+
+    clearRegisterInputs() {
+        this.registerForm.inputs.each((i, el) => {
+            $(el).val(undefined);
+            $(el).removeClass('is-fill');
+        });
+
+        formValidation(this.registerForm.inputs).validate();
+        this.registerForm.inputValidations = [];
+        this.registerForm.isValid = false;
+        this.$btnRegister.attr('disabled', true);
     }
 
     googleAuth() {
