@@ -15,6 +15,8 @@ use Inc\Classes\CustomAPI\Endpoints\Rooms;
 use Inc\Classes\CustomAPI\Endpoints\Posts;
 use Inc\Classes\CustomAPI\Endpoints\Inquiries;
 use Inc\Classes\CustomAPI\Endpoints\Search;
+use Inc\Classes\CustomAPI\Endpoints\Auth;
+
 use WP_REST_SERVER;
 
 
@@ -98,6 +100,34 @@ class Routes {
             register_rest_route('wp/v2', 'search', array(
               'methods' => WP_REST_SERVER::READABLE,
               'callback' => array(new Search(), 'search_all'),
+              'permission_callback' => array($this, 'get_permission_callback')
+            ));
+
+            //----------------------------------------
+            //   A U T H
+            //----------------------------------------
+            register_rest_route('wp/v2', 'auth/login', array(
+              'methods' => WP_REST_SERVER::CREATABLE,
+              'callback' => array(new Auth(), 'login'),
+              'permission_callback' => array($this, 'get_permission_callback')
+            ));
+
+           
+            register_rest_route('wp/v2', 'auth/checknonce', array(
+              'methods' => WP_REST_SERVER::READABLE,
+              'callback' => array(new Auth(), 'check_nonce'),
+              'permission_callback' => array($this, 'get_permission_callback')
+            ));
+
+            register_rest_route('wp/v2', 'auth/google', array(
+              'methods' => WP_REST_SERVER::CREATABLE,
+              'callback' => array(new Auth(), 'login_google'),
+              'permission_callback' => array($this, 'get_permission_callback')
+            ));
+
+            register_rest_route('wp/v2', 'auth/register', array(
+              'methods' => WP_REST_SERVER::CREATABLE,
+              'callback' => array(new Auth(), 'register_account'),
               'permission_callback' => array($this, 'get_permission_callback')
             ));
         });

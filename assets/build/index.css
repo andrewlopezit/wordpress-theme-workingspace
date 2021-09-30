@@ -2972,17 +2972,103 @@ form.request-form#request-form .btn {
   display: flex;
   align-items: center;
 }
-.header .action-header-container .btn {
+.header .action-header-container .user-settings-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  display: none;
+}
+.header .action-header-container .user-settings-container i {
+  font-size: 16px;
+}
+.header .action-header-container .user-settings-container .user-heart-badge-container {
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-right: 5px;
+  color: var(--secondary-color, #00CEB5);
+  cursor: pointer;
+}
+.header .action-header-container .user-settings-container .user-heart-badge-container .badge.badge-danger {
+  display: none;
+  top: -8px;
+  left: 8px;
+  position: absolute;
+  background-color: #dc3545;
+}
+.header .action-header-container .user-settings-container .user-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: var(--secondary-color, #00CEB5);
+  cursor: pointer;
+  position: relative;
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
+}
+.header .action-header-container .user-settings-container .user-container .user-name {
+  margin: 0 10px;
+}
+.header .action-header-container .user-settings-container .user-container .fas {
+  font-size: 10px;
+}
+.header .action-header-container .user-settings-container .user-container .settings {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  background-color: #fff;
+  padding: 1em;
+  list-style-type: none;
+  display: none;
+  min-width: 160px;
+  transform: traslateY(-2em);
+  width: -moz-fit-content !important;
+  width: -webkit-fit-content !important;
+  width: fit-content !important;
+}
+.header .action-header-container .user-settings-container .user-container .settings li {
+  padding: 5px;
+}
+.header .action-header-container .user-settings-container .user-container .settings li.setting-user-name {
+  display: none;
+}
+.header .action-header-container .user-settings-container .user-container .settings li a {
+  font-size: 12px;
+}
+.header .action-header-container .user-settings-container .user-container .settings li a i {
+  font-size: 12px;
+  margin-right: 10px;
+}
+.header .action-header-container .auth-container .btn {
   padding: 5px 15px;
   font-size: 12px;
 }
-.header .action-header-container .btn.login {
+.header .action-header-container .auth-container .btn.login {
   margin-right: 20px;
 }
-.header .action-header-container .btn.sign-up {
+.header .action-header-container .auth-container .btn.sign-up {
   margin-right: 10px;
 }
 
+@media (max-width: 575.98px) {
+  .header .action-header-container .auth-container .btn {
+    padding: 5px 10px;
+    font-size: 10px;
+  }
+  .header .action-header-container .auth-container .btn.sign-up {
+    display: none;
+  }
+  .header .action-header-container .auth-container .btn.login {
+    margin-right: 0;
+  }
+  .header .user-settings-container .user-container .user-name {
+    display: none;
+  }
+  .header .user-settings-container .user-container .settings li.setting-user-name {
+    display: initial !important;
+  }
+}
 /*------------------------------------*
 	FOOTER NAVIGATION
 *------------------------------------*/
@@ -3470,9 +3556,6 @@ form.request-form#request-form .btn {
 /*------------------------------------*
 	  A U T H
 *------------------------------------*/
-.modal#auth-modal.is-display {
-  display: flex;
-}
 .modal#auth-modal .modal-dialog {
   width: 100%;
 }
@@ -3480,28 +3563,37 @@ form.request-form#request-form .btn {
   padding: 1.5em 2em;
 }
 .modal#auth-modal .modal-dialog .modal-content .modal-body {
-  display: -ms-grid;
-  display: grid;
+  display: none;
   -ms-grid-columns: (1fr)[1];
   grid-template-columns: repeat(1, 1fr);
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body .btn.google {
-  background-color: #4387f4;
+.modal#auth-modal .modal-dialog .modal-content .modal-body.is-display {
+  display: -ms-grid;
+  display: grid;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body .btn.google i {
-  margin-right: 5px;
+.modal#auth-modal .modal-dialog .modal-content .modal-body .error-message {
+  border-left: 2px solid #dc3545;
+  padding: 10px;
+  font-size: 12px;
+  display: none;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body .btn.google::before {
-  background-color: #1268f3;
+.modal#auth-modal .modal-dialog .modal-content .modal-body .error-message#register-error-message {
+  margin-bottom: 20px;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body .btn.google::after {
-  background-color: #4387f4;
+.modal#auth-modal .modal-dialog .modal-content .login-container h4 {
+  margin-bottom: 30px;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body p.separator {
+.modal#auth-modal .modal-dialog .modal-content .login-container .g-signin2 .abcRioButtonBlue {
+  height: 50px !important;
+  width: 100% !important;
+  text-transform: uppercase;
+  padding: 0.5em;
+}
+.modal#auth-modal .modal-dialog .modal-content .login-container p.separator {
   margin: 20px 0;
   position: relative;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body p.separator::before {
+.modal#auth-modal .modal-dialog .modal-content .login-container p.separator::before {
   content: "";
   position: absolute;
   width: 45%;
@@ -3510,7 +3602,7 @@ form.request-form#request-form .btn {
   height: 1px;
   background-color: #ccc;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body p.separator::after {
+.modal#auth-modal .modal-dialog .modal-content .login-container p.separator::after {
   content: "";
   position: absolute;
   width: 45%;
@@ -3519,31 +3611,50 @@ form.request-form#request-form .btn {
   height: 1px;
   background-color: #ccc;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body form {
+.modal#auth-modal .modal-dialog .modal-content .login-container form {
   margin-top: 20px;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body form .form-group {
+.modal#auth-modal .modal-dialog .modal-content .login-container form .form-group {
   margin-bottom: 20px;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body form .button-container {
+.modal#auth-modal .modal-dialog .modal-content .login-container form .button-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body form .button-container > .btn {
+.modal#auth-modal .modal-dialog .modal-content .login-container form .button-container > .btn {
   width: 49%;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body form .button-container > .btn.create-account {
+.modal#auth-modal .modal-dialog .modal-content .login-container form .button-container > .btn.create-account {
   background-color: #ffc107;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body form .button-container > .btn.create-account::after, .modal#auth-modal .modal-dialog .modal-content .modal-body form .button-container > .btn.create-account::before {
+.modal#auth-modal .modal-dialog .modal-content .login-container form .button-container > .btn.create-account::after, .modal#auth-modal .modal-dialog .modal-content .login-container form .button-container > .btn.create-account::before {
   background-color: #ffc107;
 }
-.modal#auth-modal .modal-dialog .modal-content .modal-body .btn {
+.modal#auth-modal .modal-dialog .modal-content .login-container .btn {
   width: 100%;
 }
+.modal#auth-modal .modal-dialog .modal-content .register-container form h4 {
+  margin-bottom: 30px;
+}
+.modal#auth-modal .modal-dialog .modal-content .register-container form .form-group {
+  margin-bottom: 20px;
+}
+.modal#auth-modal .modal-dialog .modal-content .register-container form .create-account {
+  width: 100%;
+  margin-bottom: 10px;
+}
 
+@media (max-width: 575.98px) {
+  .modal#auth-modal .modal-dialog {
+    padding: 1em;
+    margin: 0;
+  }
+  .modal#auth-modal .modal-dialog .modal-content {
+    padding: 1.5em 0;
+  }
+}
 /*------------------------------------*
 	  G U T E N B E R G
 *------------------------------------*/

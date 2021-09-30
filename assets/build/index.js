@@ -222,28 +222,314 @@ const Api = url => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
 class Auth {
   constructor() {
     // initialize elements variables
     this.$headerActionContainer = $('.action-header-container');
-    if (!this.$headerActionContainer.length) return; // init local variable
-    // init gsap animation
-    // initialize events function
+    if (!this.$headerActionContainer.length) return;
+    this.$modalAuthContainer = $('#auth-modal');
+    this.$registerContainer = this.$modalAuthContainer.find('.register-container');
+    this.$loginContainer = this.$modalAuthContainer.find('.login-container');
+    this.$loginErrorMessage = this.$modalAuthContainer.find('#auth-error-message');
+    this.$registerErrorMessage = this.$modalAuthContainer.find('#register-error-message');
+    this.$loginFormContainer = this.$loginContainer.find('form#login-auth-form');
+    this.$registerFormContainer = this.$registerContainer.find('form#register-auth-form');
+    this.$btnLogin = this.$loginFormContainer.find('.button-container > .btn.login');
+    this.$btnRegister = this.$registerFormContainer.find('.btn.create-account');
+    this.$btnSignInGoogle = $('#google-signin'); // init local variable
 
-    this.events(); // init international country code input
-    // init label formgroup
+    this.loginForm;
+    this.registerForm;
+    this.siteUrl = translation_array.site_url;
+    this.googleClientId = translation_array.google_client_id; // init gsap animation
+    // init login form
+
+    this.initLoginForm(); // init register form
+
+    this.initRegisterForm(); // initialize events function
+
+    this.events(); // init google auth
+
+    this.googleAuth();
+  }
+
+  initLoginForm() {
+    if (!this.$loginFormContainer.length) return;
+    this.loginForm = {
+      isValid: false,
+      inputs: this.$loginFormContainer.find('input, textarea, select')
+    };
+  }
+
+  initRegisterForm() {
+    if (!this.$registerFormContainer.length) return;
+    this.registerForm = {
+      isValid: false,
+      inputs: this.$registerFormContainer.find('input, textarea, select')
+    };
   }
 
   events() {
-    this.$headerActionContainer.on('click', 'a', e => {
+    this.$headerActionContainer.on('click', '.login', e => {
       e.preventDefault();
-      const $el = $(e.currentTarget);
+      this.$modalAuthContainer.show();
+      this.$registerContainer.hide();
+      this.$loginContainer.show();
+    });
+    this.$headerActionContainer.on('click', '.sign-up', e => {
+      e.preventDefault();
+      this.$modalAuthContainer.show();
+      this.$loginContainer.hide();
+      this.$registerContainer.show();
+    }); // login
+
+    this.$btnLogin.on('click', e => {
+      e.preventDefault();
+      if (!this.loginForm.isValid) return;
+      const loginFormData = Object(_index__WEBPACK_IMPORTED_MODULE_0__["formValidation"])(this.loginForm.inputs).getFormData();
+      this.$btnLogin.attr('disabled', true);
+      this.$btnLogin.html('Logging in...');
+      this.$loginErrorMessage.hide();
+      this.login(loginFormData).then(results => {
+        const {
+          data: user
+        } = results;
+        Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])(user).init();
+        this.$btnLogin.html('Login');
+        this.clearLoginInputs();
+        this.$modalAuthContainer.hide();
+      }).catch(() => {
+        this.$loginErrorMessage.show().html(`
+                    <strong>Error</strong>: The username <strong>${loginFormData.username}</strong> is not registered on this site.
+                    If you are unsure of your username, try your email address instead.
+                `);
+        this.$btnLogin.html('Login');
+        this.$btnLogin.attr('disabled', false);
+      });
+    }); // register 
+
+    this.$btnRegister.on('click', e => {
+      e.preventDefault();
+      if (!this.registerForm.isValid) return;
+      const registerFormData = Object(_index__WEBPACK_IMPORTED_MODULE_0__["formValidation"])(this.registerForm.inputs).getFormData();
+      this.$btnRegister.attr('disabled', true);
+      this.$btnRegister.html('Signing up...');
+      this.$registerErrorMessage.hide();
+      this.register(registerFormData).then(results => {
+        const {
+          data: user
+        } = results;
+        Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])(user).init();
+        this.$modalAuthContainer.hide();
+        this.clearRegisterInputs();
+        this.$btnRegister.html('Sign up');
+      }).catch(e => {
+        const {
+          response: {
+            status
+          }
+        } = e;
+        let message;
+
+        switch (status) {
+          case 409:
+            {
+              message = `<strong>Error</strong>: <strong>${registerFormData.email}</strong> is already exist, find other email.`;
+              break;
+            }
+
+          default:
+            {
+              message = `<strong>Error</strong>: Some fields are not match of our end.`;
+              break;
+            }
+        }
+
+        this.$registerErrorMessage.show().html(message);
+        this.$btnRegister.html('Sign up');
+        this.$btnRegister.attr('disabled', false);
+      });
+    }); // create account
+
+    this.$loginFormContainer.on('click', '.button-container > .create-account', e => {
+      e.preventDefault();
+      this.$loginContainer.hide();
+      this.$registerContainer.show();
+    }); // input login form
+
+    this.loginForm.inputs.on('keyup', e => {
+      const isFormValid = Object(_index__WEBPACK_IMPORTED_MODULE_0__["formValidation"])(this.loginForm.inputs).validate();
+      this.loginForm.isValid = isFormValid;
+
+      if (!isFormValid) {
+        this.$btnLogin.attr('disabled', true);
+        return;
+      }
+
+      this.$btnLogin.attr('disabled', false);
+    }); // input register form
+
+    this.registerForm.inputs.on('keyup', e => {
+      const isFormValid = Object(_index__WEBPACK_IMPORTED_MODULE_0__["formValidation"])(this.registerForm.inputs).validate();
+      this.registerForm.isValid = isFormValid;
+
+      if (!isFormValid) {
+        this.$btnRegister.attr('disabled', true);
+        return;
+      }
+
+      this.$btnRegister.attr('disabled', false);
+    });
+  }
+
+  login(data) {
+    if (!data) return;
+    const url = `${this.siteUrl}/wp-json/wp/v2/auth/login`;
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(url, data);
+  }
+
+  register(data) {
+    if (!data) return;
+    const url = `${this.siteUrl}/wp-json/wp/v2/auth/register`;
+    return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(url, data);
+  }
+
+  clearLoginInputs() {
+    this.loginForm.inputs.each((i, el) => {
+      $(el).val(undefined);
+      $(el).removeClass('is-fill');
+    });
+    Object(_index__WEBPACK_IMPORTED_MODULE_0__["formValidation"])(this.loginForm.inputs).validate();
+    this.loginForm.inputValidations = [];
+    this.loginForm.isValid = false;
+    this.$btnLogin.attr('disabled', true);
+  }
+
+  clearRegisterInputs() {
+    this.registerForm.inputs.each((i, el) => {
+      $(el).val(undefined);
+      $(el).removeClass('is-fill');
+    });
+    Object(_index__WEBPACK_IMPORTED_MODULE_0__["formValidation"])(this.registerForm.inputs).validate();
+    this.registerForm.inputValidations = [];
+    this.registerForm.isValid = false;
+    this.$btnRegister.attr('disabled', true);
+  }
+
+  googleAuth() {
+    const googleApi = gapi.load('auth2', () => {
+      // Retrieve the singleton for the GoogleAuth library and set up the client.
+      const auth2 = gapi.auth2.init({
+        client_id: this.googleClientId,
+        cookiepolicy: 'single_host_origin' // Request scopes in addition to 'profile' and 'email'
+        //scope: 'additional_scope'
+
+      });
+
+      const attachSignin = $element => {
+        $element.find('.abcRioButtonContents').children().eq(0).html('Sign in with google');
+        $element.find('.abcRioButtonContents').children().eq(1).html('Sign in with google');
+      };
+
+      const onAuthSuccess = googleUser => {
+        if (!googleUser) return;
+        const token = googleUser.getAuthResponse().id_token;
+        const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/google`;
+        this.$modalAuthContainer.hide();
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(endpoint, {
+          token: token
+        }).then(results => {
+          const {
+            data: user
+          } = results;
+          if (!user) return;
+          Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])(user).init();
+        }).catch(() => {});
+      };
+
+      gapi.signin2.render('google-signin', {
+        'scope': 'profile email',
+        'theme': 'dark',
+        'onsuccess': googleUser => onAuthSuccess(googleUser),
+        'onfailure': googleUser => {
+          console.log(googleUser);
+        }
+      });
+      attachSignin(this.$btnSignInGoogle);
     });
   }
 
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Auth);
+
+/***/ }),
+
+/***/ "./assets/js/modules/frontend/FormValidation.js":
+/*!******************************************************!*\
+  !*** ./assets/js/modules/frontend/FormValidation.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const FormValidation = $inputs => {
+  if (!$inputs) return;
+
+  class FormValidation {
+    constructor() {
+      // init local variable
+      this.primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+    }
+
+    validate() {
+      const isInputValid = $input => {
+        const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if ($input.attr('required') && !$input.val().length || $input.attr('minlength') && $input.val().length < +$input.attr('minlength') || $input.attr('maxlength') && $input.val().length > +$input.attr('maxlength') || $input.attr('type') === 'email' && !emailPattern.test($input.val()) || $input.attr('type') === 'tel' && !$input.hasClass('is-valid')) {
+          return false;
+        }
+
+        return true;
+      };
+
+      const formValidations = [];
+      $inputs.each((i, e) => {
+        const $el = $(e);
+        const isValid = isInputValid($el);
+
+        if (!isValid) {
+          $el.css('--border-color', '#dc3545');
+          formValidations.push(false);
+        } else {
+          $el.css('--border-color', this.primaryColor);
+          formValidations.push(true);
+        }
+      });
+      return formValidations.every(input => input === true);
+    }
+
+    getFormData() {
+      let obj = {};
+      $inputs.each((i, el) => {
+        obj[$(el).attr('name')] = $(el).val();
+      });
+      return obj;
+    }
+
+  }
+
+  return new FormValidation($inputs);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (FormValidation);
 
 /***/ }),
 
@@ -591,21 +877,25 @@ const Loading = ($loadingContainer, duration = 30) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
+
+
 class Main {
   constructor() {
     // initialize elements variables
     this.$heroSectionContainer = $(document).find('.hero-section > .container');
     this.$heroTitle = this.$heroSectionContainer.find('.row > .col > .headline');
     this.$heroSubTitle = this.$heroSectionContainer.find('.row > .col > p');
-    this.$formGroup = $('.form-group'); // init local variable
-    // init gsap animation
+    this.$formGroup = $('.form-group'); // init gsap animation
     // initialize events function
     // init international country code input
     // init label formgroup
 
     this.formGroupLabel(); // password
 
-    this.viewUnviewPassword();
+    this.viewUnviewPassword(); // init user header
+
+    Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])().init();
   }
 
   formGroupLabel() {
@@ -633,7 +923,7 @@ class Main {
     };
 
     addRemoveLabelClassFill(this.$formGroup.find('input, select, textarea'));
-    this.$formGroup.on('keyup change', 'input, select, textarea', e => {
+    this.$formGroup.on('keyup', 'input, select, textarea', e => {
       const $el = $(e.currentTarget);
       addRemoveLabelClassFill($el);
     });
@@ -1788,11 +2078,137 @@ class TestimonialsSlider {
 
 /***/ }),
 
+/***/ "./assets/js/modules/frontend/UserHeader.js":
+/*!**************************************************!*\
+  !*** ./assets/js/modules/frontend/UserHeader.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const UserHeader = (user = null) => {
+  class UserHeader {
+    constructor() {
+      this.$headerContainer = $('#header-container');
+      if (!this.$headerContainer.length) return;
+      this.$actionHeaderContainer = this.$headerContainer.find('.action-header-container');
+      this.$userSettingsContainer = this.$actionHeaderContainer.find('.user-settings-container');
+      this.$authContainer = this.$actionHeaderContainer.find('.auth-container');
+      this.$displayName = this.$userSettingsContainer.find('.user-container > .user-name');
+      this.$settingDisplayName = this.$userSettingsContainer.find('.user-container > .settings > .setting-user-name');
+      this.$userContainer = this.$userSettingsContainer.find('.user-container'); // local variable
+
+      this.localstorageName = 'workingspaces_user';
+      this.siteUrl = translation_array.site_url;
+    }
+
+    init() {
+      const setUserLocalStorage = user => {
+        localStorage.setItem(this.localstorageName, JSON.stringify(user));
+      };
+
+      const getUserLocalStorage = () => {
+        return JSON.parse(localStorage.getItem(this.localstorageName));
+      };
+
+      const deleteUserLocalStorage = () => {
+        localStorage.removeItem(this.localstorageName);
+      };
+
+      const displayUser = displayName => {
+        this.$authContainer.hide();
+        this.$displayName.html(displayName);
+        this.$settingDisplayName.html(`Hi, ${displayName}`);
+        this.$userSettingsContainer.css('display', 'flex');
+      };
+
+      const events = () => {
+        this.$userContainer.on('click', e => {
+          const $el = $(e.currentTarget);
+          const $iconChevronSettings = $el.find('.settings-chevron');
+
+          if ($iconChevronSettings.hasClass('fa-chevron-down')) {
+            $iconChevronSettings.attr('class', 'fas fa-chevron-up settings-chevron');
+            this.userSettingsAnim.play();
+          } else {
+            $iconChevronSettings.attr('class', 'fas fa-chevron-down settings-chevron');
+            this.userSettingsAnim.reverse();
+          }
+        });
+        this.$userContainer.on('click', '.settings > li > .logout', e => {
+          e.preventDefault();
+          deleteUserLocalStorage();
+          this.$userSettingsContainer.hide();
+          this.$authContainer.show();
+          const auth2 = gapi.auth2.getAuthInstance();
+          auth2.signOut().then(() => {});
+        });
+      };
+
+      const animation = () => {
+        const $settings = this.$userContainer.find('.settings');
+        $settings.removeAttr('style');
+        this.userSettingsAnim = gsap.timeline({
+          paused: true
+        });
+        this.userSettingsAnim.to($settings, {
+          display: 'initial',
+          duration: 0.2
+        }).to($settings, {
+          opacity: 1,
+          y: 0,
+          duration: 0.2
+        });
+      };
+
+      if (user) {
+        setUserLocalStorage(user);
+        displayUser(user.display_name);
+        events();
+        animation();
+        return;
+      }
+
+      const userLocalStorage = getUserLocalStorage();
+      if (!userLocalStorage) return;
+      const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/checknonce?nonce=${userLocalStorage.x_wp_nonce}`;
+      axios__WEBPACK_IMPORTED_MODULE_0___default()(endpoint).then(results => {
+        const {
+          data: isNonceValid
+        } = results;
+
+        if (isNonceValid) {
+          displayUser(userLocalStorage === null || userLocalStorage === void 0 ? void 0 : userLocalStorage.display_name);
+          events();
+          animation();
+          return;
+        }
+
+        return;
+      }).then(() => {
+        return;
+      });
+    }
+
+  }
+
+  return new UserHeader();
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (UserHeader);
+
+/***/ }),
+
 /***/ "./assets/js/modules/frontend/index.js":
 /*!*********************************************!*\
   !*** ./assets/js/modules/frontend/index.js ***!
   \*********************************************/
-/*! exports provided: rangeSlider, api, loading, maps */
+/*! exports provided: rangeSlider, api, loading, maps, formValidation, userHeader */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1801,10 +2217,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "api", function() { return api; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loading", function() { return loading; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "maps", function() { return maps; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formValidation", function() { return formValidation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userHeader", function() { return userHeader; });
 /* harmony import */ var _RangeSlider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RangeSlider */ "./assets/js/modules/frontend/RangeSlider.js");
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Api */ "./assets/js/modules/frontend/Api.js");
 /* harmony import */ var _Loading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Loading */ "./assets/js/modules/frontend/Loading.js");
 /* harmony import */ var _Maps__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Maps */ "./assets/js/modules/frontend/Maps.js");
+/* harmony import */ var _FormValidation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FormValidation */ "./assets/js/modules/frontend/FormValidation.js");
+/* harmony import */ var _UserHeader__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UserHeader */ "./assets/js/modules/frontend/UserHeader.js");
+
+
 
 
 
@@ -1813,6 +2235,8 @@ const rangeSlider = _RangeSlider__WEBPACK_IMPORTED_MODULE_0__["default"];
 const api = _Api__WEBPACK_IMPORTED_MODULE_1__["default"];
 const loading = _Loading__WEBPACK_IMPORTED_MODULE_2__["default"];
 const maps = _Maps__WEBPACK_IMPORTED_MODULE_3__["default"];
+const formValidation = _FormValidation__WEBPACK_IMPORTED_MODULE_4__["default"];
+const userHeader = _UserHeader__WEBPACK_IMPORTED_MODULE_5__["default"];
 
 /***/ }),
 

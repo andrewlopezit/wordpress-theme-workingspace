@@ -59,7 +59,10 @@ if(!class_exists('WorkingspaceTheme')) {
             //MAP BOX KEY
             defined('MAPBOX_PUBLIC_KEY') or define('MAPBOX_PUBLIC_KEY', $_ENV['MAPBOX_PUBLIC_KEY']);
             defined('MAPBOX_SECRET_KEY') or define('MAPBOX_SECRET_KEY', $_ENV['MAPBOX_SECRET_KEY']);
-    
+
+             //GOOGLE KEY
+             defined('GOOGLE_CLIENT_ID') or define('GOOGLE_CLIENT_ID', $_ENV['GOOGLE_CLIENT_ID']);
+
             // Theme version.
             define( 'WORKINGSPACE_THEME_VERSION', $version );
 
@@ -238,6 +241,18 @@ if(!class_exists('WorkingspaceTheme')) {
             )
             ->script(
                 array(
+                    'handle' => 'googleOAuth',
+                    'src' => '//apis.google.com/js/platform.js'
+                )
+            )
+             ->script(
+                array(
+                    'handle' => 'googleOAuth',
+                    'src' => '//apis.google.com/js/platform.js'
+                )
+            )
+            ->script(
+                array(
                     'handle'=> 'JqueryExtendFunction',
                     'deps' => array('jQuery@3.6'),
                     'src' => WORKINGSPACEWP_THEME_URI.'/assets/js/JqueryExtendFunction.js',
@@ -254,6 +269,7 @@ if(!class_exists('WorkingspaceTheme')) {
                     'jQueryUI@1.12',
                     'jQueryUITouch@0.2.3',
                     'mapbox@2.3.1',
+                    'googleOAuth',
                     'JqueryExtendFunction'
                 )
             );
@@ -298,7 +314,8 @@ if(!class_exists('WorkingspaceTheme')) {
                             'workingspaces_nonce' => wp_create_nonce( 'wp_rest' ),
                             'assets_dir' => WORKINGSPACE_ASSETS_DIR,
                             'mapbox_public_key' => MAPBOX_PUBLIC_KEY,
-                            'mapbox_secret_key' => MAPBOX_SECRET_KEY
+                            'mapbox_secret_key' => MAPBOX_SECRET_KEY,
+                            'google_api_key' => GOOGLE_CLIENT_ID
                         )
                     )
                 )

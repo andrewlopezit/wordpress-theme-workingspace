@@ -15,17 +15,150 @@
         display: flex;
         align-items: center;
 
-        .btn {
-            padding: 5px 15px;
-            font-size: 12px;
+        .user-settings-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-            &.login {
-                margin-right: 20px;
+            display: none;
+
+            i {
+                font-size: 16px;
             }
 
-            &.sign-up {
-                margin-right: 10px;
+            .user-heart-badge-container {
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                margin-right: 5px;
+
+                color: var(--secondary-color, $secondary-color);
+                cursor: pointer;
+
+                .badge.badge-danger {
+                    display: none;
+                    
+                    top: -8px;
+                    left: 8px;
+                    position: absolute;
+                    background-color: #dc3545;
+                }
+            }
+
+            .user-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                
+                color: var(--secondary-color, $secondary-color);
+                cursor: pointer;
+
+                position: relative;
+
+                @include fit-content;
+
+                .user-name {
+                    margin: 0 10px;
+                }
+
+                .fas {
+                    font-size: 10px;
+                }
+
+                .settings {
+                    position: absolute;
+                    top: 25px;
+                    right: 0;
+                    background-color: #fff;
+                    padding: 1em;
+                    list-style-type: none;
+                    display: none;
+                    min-width: 160px;
+
+                    @include transform(traslateY(-2em));
+                    @include fit-content;
+
+                    li {
+                        padding: 5px;
+
+                        &.setting-user-name {
+                            display: none;
+                        }
+
+                        a {
+                            font-size: 12px;
+                            i {
+                                font-size: 12px;
+                                margin-right: 10px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .auth-container {
+            .btn {
+                padding: 5px 15px;
+                font-size: 12px;
+    
+                &.login {
+                    margin-right: 20px;
+                }
+    
+                &.sign-up {
+                    margin-right: 10px;
+                }
             }
         }
     }
-} 
+}
+
+// X-Small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) {
+    
+    .header {
+        .action-header-container {
+            .auth-container {
+                .btn {
+                    padding: 5px 10px;
+                    font-size: 10px;
+            
+                    &.sign-up {
+                        display: none;
+                    }
+            
+                    &.login {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+
+        .user-settings-container {
+            .user-container {
+                .user-name {
+                    display: none;
+                }
+
+                .settings {
+                    li.setting-user-name {
+                        display: initial !important;
+                    }
+                }
+            }
+        }
+    }
+ }
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) { }
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {  }
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {  }
+
+// X-Large devices (large desktops, less than 1400px)
+@media (max-width: 1399.98px) {  }
