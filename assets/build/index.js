@@ -327,7 +327,7 @@ class Auth {
         } = results;
         Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])(user).init();
         this.$modalAuthContainer.hide();
-        this.clearLoginInputs();
+        this.clearRegisterInputs();
         this.$btnRegister.html('Sign up');
       }).catch(e => {
         const {
@@ -359,7 +359,8 @@ class Auth {
 
     this.$loginFormContainer.on('click', '.button-container > .create-account', e => {
       e.preventDefault();
-      console.log(e);
+      this.$loginContainer.hide();
+      this.$registerContainer.show();
     }); // input login form
 
     this.loginForm.inputs.on('keyup', e => {

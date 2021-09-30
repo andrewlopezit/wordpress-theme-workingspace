@@ -121,7 +121,7 @@ class Auth {
 
                 userHeader(user).init();
                 this.$modalAuthContainer.hide();
-                this.clearLoginInputs();
+                this.clearRegisterInputs();
                 this.$btnRegister.html('Sign up');
 
             }).catch( e => {
@@ -150,8 +150,9 @@ class Auth {
         // create account
         this.$loginFormContainer.on('click', '.button-container > .create-account', e => {
             e.preventDefault();
-            
-            console.log(e);
+
+            this.$loginContainer.hide();
+            this.$registerContainer.show();
         });
 
         // input login form
@@ -256,8 +257,6 @@ class Auth {
                 'onsuccess': (googleUser) => onAuthSuccess(googleUser),
                 'onfailure': (googleUser) => { console.log(googleUser)}
             });
-
-           
 
             attachSignin(this.$btnSignInGoogle);
         });
