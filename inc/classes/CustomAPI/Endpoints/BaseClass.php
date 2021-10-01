@@ -115,4 +115,14 @@ public function add_rooms_additional_details($posts) {
 
     return $user;
   }
+
+  public function logged_in($user) {
+    if(!$user);
+    
+    clean_user_cache($user->ID);
+    wp_clear_auth_cookie();
+    wp_set_current_user($user->ID);
+    wp_set_auth_cookie($user->ID, true, false);
+    update_user_caches($user);
+  }
 }

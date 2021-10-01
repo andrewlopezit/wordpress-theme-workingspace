@@ -53,6 +53,7 @@
         return in_array($category->term_id, array_map(function($categories) {return $categories->term_id;}, $categories));
     }
  }
+
  if(!function_exists('get_location')) {
     function get_location($id = null) {
         $data = get_post_meta( $id ? $id : get_the_ID(), 'custom_maps_mapbox_form_key', true );
@@ -187,6 +188,15 @@ if(!function_exists('get_user_profile_src_by_id')){
         return  esc_url(wp_get_attachment_image_src( $id, 'testimonial_profile' )[0]);
     }
 }
+
+
+if(!function_exists('is_user_authenticate')){
+    function is_user_authenticate() {
+        // echo $_POST['user'];
+    }
+}
+
+
 
 
 

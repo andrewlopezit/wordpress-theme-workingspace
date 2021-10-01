@@ -24,6 +24,7 @@ class Auth {
         this.registerForm;
         this.siteUrl = translation_array.site_url;
         this.googleClientId = translation_array.google_client_id;
+        this.isGoogleSignIn = false;
          
         // init gsap animation
 
@@ -147,6 +148,11 @@ class Auth {
             });
         });
 
+        // google sign in
+        this.$btnSignInGoogle.on('click', e => {
+            this.isGoogleSignIn = true;
+        });
+
         // create account
         this.$loginFormContainer.on('click', '.button-container > .create-account', e => {
             e.preventDefault();
@@ -236,7 +242,7 @@ class Auth {
             }
 
             const onAuthSuccess = (googleUser) => {
-                if(!googleUser) return;
+                if(!googleUser || !this.isGoogleSignIn) return;
 
                 const token = googleUser.getAuthResponse().id_token;
                 const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/google`;
@@ -248,6 +254,7 @@ class Auth {
                     if(!user) return;
 
                     userHeader(user).init();
+                    this.isGoogleSignIn = false;
                 }).catch(() => {})
             }
 

@@ -31,6 +31,8 @@ class Auth extends BaseClass {
         $user = $this->unset_user_prop($result->data);
         $user->x_wp_nonce = wp_create_nonce( 'auth_wp_rest' );
 
+        $this->logged_in($user);
+
         return wp_send_json($user, 200);
     }
 
@@ -61,6 +63,7 @@ class Auth extends BaseClass {
 
         $user = $this->unset_user_prop($user);
         $user->x_wp_nonce = wp_create_nonce( 'auth_wp_rest' );
+        $this->logged_in($user);
 
         return wp_send_json($user, 200);
     }

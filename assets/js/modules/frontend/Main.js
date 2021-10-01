@@ -1,4 +1,5 @@
-import { userHeader } from './index';
+import axios from "axios";
+
 class Main {
     constructor() {
         // initialize elements variables
@@ -19,8 +20,8 @@ class Main {
         // password
         this.viewUnviewPassword();
 
-        // init user header
-        userHeader().init();
+        // local storage to php
+        this.localStorageToPhp();
     }
 
     formGroupLabel() {
@@ -71,6 +72,10 @@ class Main {
                 $el.siblings('input').attr('type', 'password');
             }
         });
+    }
+
+    localStorageToPhp() {
+        axios.post(window.location.href,{user: 'Hello worold'});
     }
 }
 

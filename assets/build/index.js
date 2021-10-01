@@ -247,7 +247,8 @@ class Auth {
     this.loginForm;
     this.registerForm;
     this.siteUrl = translation_array.site_url;
-    this.googleClientId = translation_array.google_client_id; // init gsap animation
+    this.googleClientId = translation_array.google_client_id;
+    this.isGoogleSignIn = false; // init gsap animation
     // init login form
 
     this.initLoginForm(); // init register form
@@ -355,6 +356,10 @@ class Auth {
         this.$btnRegister.html('Sign up');
         this.$btnRegister.attr('disabled', false);
       });
+    }); // google sign in
+
+    this.$btnSignInGoogle.on('click', e => {
+      this.isGoogleSignIn = true;
     }); // create account
 
     this.$loginFormContainer.on('click', '.button-container > .create-account', e => {
@@ -438,7 +443,7 @@ class Auth {
       };
 
       const onAuthSuccess = googleUser => {
-        if (!googleUser) return;
+        if (!googleUser || !this.isGoogleSignIn) return;
         const token = googleUser.getAuthResponse().id_token;
         const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/google`;
         this.$modalAuthContainer.hide();
@@ -450,6 +455,7 @@ class Auth {
           } = results;
           if (!user) return;
           Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])(user).init();
+          this.isGoogleSignIn = false;
         }).catch(() => {});
       };
 
@@ -877,7 +883,8 @@ const Loading = ($loadingContainer, duration = 30) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 
 class Main {
@@ -893,9 +900,9 @@ class Main {
 
     this.formGroupLabel(); // password
 
-    this.viewUnviewPassword(); // init user header
+    this.viewUnviewPassword(); // local storage to php
 
-    Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])().init();
+    this.localStorageToPhp();
   }
 
   formGroupLabel() {
@@ -940,6 +947,12 @@ class Main {
         $el.addClass('fa-eye').removeClass('fa-eye-slash');
         $el.siblings('input').attr('type', 'password');
       }
+    });
+  }
+
+  localStorageToPhp() {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(window.location.href, {
+      user: 'Hello worold'
     });
   }
 

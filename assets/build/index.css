@@ -3052,10 +3052,6 @@ form.request-form#request-form .btn {
 }
 
 @media (max-width: 575.98px) {
-  .header .action-header-container .auth-container .btn {
-    padding: 5px 10px;
-    font-size: 10px;
-  }
   .header .action-header-container .auth-container .btn.sign-up {
     display: none;
   }
@@ -4523,6 +4519,7 @@ form.request-form#request-form .btn {
 }
 .workspace-section--background .workspaces-section h1 {
   width: 210px;
+  margin-bottom: 50px;
 }
 
 section.about-our-service {

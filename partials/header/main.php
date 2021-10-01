@@ -52,3 +52,7 @@
         </div>
     </div>
 </div>
+
+<?php
+is_user_authenticate();
+?>
