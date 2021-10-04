@@ -2973,10 +2973,12 @@ form.request-form#request-form .btn {
   align-items: center;
 }
 .header .action-header-container .user-settings-container {
-  display: flex;
   align-items: center;
   justify-content: space-between;
   display: none;
+}
+.header .action-header-container .user-settings-container.is-display {
+  display: flex;
 }
 .header .action-header-container .user-settings-container i {
   font-size: 16px;
@@ -3039,6 +3041,12 @@ form.request-form#request-form .btn {
 .header .action-header-container .user-settings-container .user-container .settings li a i {
   font-size: 12px;
   margin-right: 10px;
+}
+.header .action-header-container .auth-container {
+  display: none;
+}
+.header .action-header-container .auth-container.is-display {
+  display: initial;
 }
 .header .action-header-container .auth-container .btn {
   padding: 5px 15px;

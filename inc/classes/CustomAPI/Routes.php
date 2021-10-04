@@ -130,12 +130,17 @@ class Routes {
               'callback' => array(new Auth(), 'register_account'),
               'permission_callback' => array($this, 'get_permission_callback')
             ));
+
+            register_rest_route('wp/v2', 'auth/logout', array(
+              'methods' => WP_REST_SERVER::READABLE,
+              'callback' => array(new Auth(), 'logout_account'),
+              'permission_callback' => array($this, 'get_permission_callback')
+            ));
         });
         
     }
 
     public function get_permission_callback() {
-        // return get_http_origin() ? true : false;
         return true;
     }
 

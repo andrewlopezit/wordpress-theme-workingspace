@@ -14,10 +14,12 @@ const UserHeader = (user = null) => {
             this.$displayName = this.$userSettingsContainer.find('.user-container > .user-name');
             this.$settingDisplayName = this.$userSettingsContainer.find('.user-container > .settings > .setting-user-name');
             this.$userContainer = this.$userSettingsContainer.find('.user-container');
+            this.$settings = this.$userContainer.find('.settings');
 
             // local variable
             this.localstorageName = 'workingspaces_user';
             this.siteUrl = translation_array.site_url;
+
         }
 
         init() {
@@ -40,23 +42,9 @@ const UserHeader = (user = null) => {
                 this.$userSettingsContainer.css('display', 'flex');
             }
 
-            const events = () => {
-                
-                this.$userContainer.on('click', e => {
-                    const $el = $(e.currentTarget);
-                    const $iconChevronSettings = $el.find('.settings-chevron');
-
-                    if($iconChevronSettings.hasClass('fa-chevron-down')) {
-                        $iconChevronSettings.attr('class','fas fa-chevron-up settings-chevron');
-                        this.userSettingsAnim.play();
-                    } else {
-                        $iconChevronSettings.attr('class','fas fa-chevron-down settings-chevron');
-                        this.userSettingsAnim.reverse();
-                    }
-                });
-
-                this.$userContainer.on('click', '.settings > li > .logout', e => {
-                    e.preventDefault();
+            const logoutUser = (id) => {
+                const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/logout?user_id=${id}`;
+                axios(endpoint).then(results => {
                     deleteUserLocalStorage();
 
                     this.$userSettingsContainer.hide();
@@ -64,51 +52,40 @@ const UserHeader = (user = null) => {
 
                     const auth2 = gapi.auth2.getAuthInstance();
                     auth2.signOut().then( () => {});
-                });
+                    this.$userContainer.find('.settings > li').eq(3).removeAttr('data-user-id');
+
+                }).catch(() =>{});
             }
 
-            const animation = () => {
-                const $settings = this.$userContainer.find('.settings');
+            const events = () => {
+                this.$userContainer.on('click', e => {
+                    const $el = $(e.currentTarget);
+                    const $iconChevronSettings = $el.find('.settings-chevron');
 
-                $settings.removeAttr('style');
+                    if($iconChevronSettings.hasClass('fa-chevron-down')) {
+                        $iconChevronSettings.attr('class','fas fa-chevron-up settings-chevron');
+                        this.$settings.show();
+                    } else {
+                        $iconChevronSettings.attr('class','fas fa-chevron-down settings-chevron');
+                        this.$settings.hide();
+                    }
+                });
 
-                this.userSettingsAnim = gsap.timeline({paused: true});
-                this.userSettingsAnim.to($settings, { display: 'initial', duration: 0.2})
-                                     .to($settings, { opacity: 1, y: 0, duration: 0.2});
+                this.$userContainer.on('click', '.settings > li > .logout', e => {
+                    e.preventDefault();
+                    const userId = $(e.currentTarget).parent().data('user-id');
+                    logoutUser(userId);
+                });
             }
 
             if(user) {
                 setUserLocalStorage(user);
+                this.$userContainer.find('.settings > li').eq(3).attr('data-user-id', user.ID);
                 displayUser(user.display_name);
-
-                events();
-                animation();
                 return;
             }
 
-            const userLocalStorage = getUserLocalStorage();
-
-            if(!userLocalStorage) return;
-
-            const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/checknonce?nonce=${userLocalStorage.x_wp_nonce}`;
-
-            axios(endpoint).then(results => {
-                const {data: isNonceValid} = results;
-
-                if(isNonceValid) {
-                    displayUser(userLocalStorage?.display_name);
-
-                    events();
-                    animation();
-
-                    return;
-                }
-
-                return;
-
-            }).then(() => {
-                return;
-            })
+            events();
         }
     }
 

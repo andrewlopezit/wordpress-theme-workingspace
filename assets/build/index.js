@@ -883,8 +883,7 @@ const Loading = ($loadingContainer, duration = 30) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
 
 
 class Main {
@@ -900,9 +899,9 @@ class Main {
 
     this.formGroupLabel(); // password
 
-    this.viewUnviewPassword(); // local storage to php
+    this.viewUnviewPassword(); // init user header
 
-    this.localStorageToPhp();
+    Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])().init();
   }
 
   formGroupLabel() {
@@ -947,12 +946,6 @@ class Main {
         $el.addClass('fa-eye').removeClass('fa-eye-slash');
         $el.siblings('input').attr('type', 'password');
       }
-    });
-  }
-
-  localStorageToPhp() {
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(window.location.href, {
-      user: 'Hello worold'
     });
   }
 
@@ -2114,7 +2107,8 @@ const UserHeader = (user = null) => {
       this.$authContainer = this.$actionHeaderContainer.find('.auth-container');
       this.$displayName = this.$userSettingsContainer.find('.user-container > .user-name');
       this.$settingDisplayName = this.$userSettingsContainer.find('.user-container > .settings > .setting-user-name');
-      this.$userContainer = this.$userSettingsContainer.find('.user-container'); // local variable
+      this.$userContainer = this.$userSettingsContainer.find('.user-container');
+      this.$settings = this.$userContainer.find('.settings'); // local variable
 
       this.localstorageName = 'workingspaces_user';
       this.siteUrl = translation_array.site_url;
@@ -2140,6 +2134,18 @@ const UserHeader = (user = null) => {
         this.$userSettingsContainer.css('display', 'flex');
       };
 
+      const logoutUser = id => {
+        const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/logout?user_id=${id}`;
+        axios__WEBPACK_IMPORTED_MODULE_0___default()(endpoint).then(results => {
+          deleteUserLocalStorage();
+          this.$userSettingsContainer.hide();
+          this.$authContainer.show();
+          const auth2 = gapi.auth2.getAuthInstance();
+          auth2.signOut().then(() => {});
+          this.$userContainer.find('.settings > li').eq(3).removeAttr('data-user-id');
+        }).catch(() => {});
+      };
+
       const events = () => {
         this.$userContainer.on('click', e => {
           const $el = $(e.currentTarget);
@@ -2147,65 +2153,27 @@ const UserHeader = (user = null) => {
 
           if ($iconChevronSettings.hasClass('fa-chevron-down')) {
             $iconChevronSettings.attr('class', 'fas fa-chevron-up settings-chevron');
-            this.userSettingsAnim.play();
+            this.$settings.show();
           } else {
             $iconChevronSettings.attr('class', 'fas fa-chevron-down settings-chevron');
-            this.userSettingsAnim.reverse();
+            this.$settings.hide();
           }
         });
         this.$userContainer.on('click', '.settings > li > .logout', e => {
           e.preventDefault();
-          deleteUserLocalStorage();
-          this.$userSettingsContainer.hide();
-          this.$authContainer.show();
-          const auth2 = gapi.auth2.getAuthInstance();
-          auth2.signOut().then(() => {});
-        });
-      };
-
-      const animation = () => {
-        const $settings = this.$userContainer.find('.settings');
-        $settings.removeAttr('style');
-        this.userSettingsAnim = gsap.timeline({
-          paused: true
-        });
-        this.userSettingsAnim.to($settings, {
-          display: 'initial',
-          duration: 0.2
-        }).to($settings, {
-          opacity: 1,
-          y: 0,
-          duration: 0.2
+          const userId = $(e.currentTarget).parent().data('user-id');
+          logoutUser(userId);
         });
       };
 
       if (user) {
         setUserLocalStorage(user);
+        this.$userContainer.find('.settings > li').eq(3).attr('data-user-id', user.ID);
         displayUser(user.display_name);
-        events();
-        animation();
         return;
       }
 
-      const userLocalStorage = getUserLocalStorage();
-      if (!userLocalStorage) return;
-      const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/checknonce?nonce=${userLocalStorage.x_wp_nonce}`;
-      axios__WEBPACK_IMPORTED_MODULE_0___default()(endpoint).then(results => {
-        const {
-          data: isNonceValid
-        } = results;
-
-        if (isNonceValid) {
-          displayUser(userLocalStorage === null || userLocalStorage === void 0 ? void 0 : userLocalStorage.display_name);
-          events();
-          animation();
-          return;
-        }
-
-        return;
-      }).then(() => {
-        return;
-      });
+      events();
     }
 
   }

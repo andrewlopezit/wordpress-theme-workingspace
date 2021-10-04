@@ -8,14 +8,17 @@
                     </a>
                     
                     <div class="action-header-container">
-                        <div class="user-settings-container">
+                        <?php 
+                            $current_user = wp_get_current_user();
+                        ?>
+                        <div class="user-settings-container <?php if(is_user_logged_in()) echo 'is-display'; ?>">
                             <div class="user-heart-badge-container">
                                 <i class="far fa-heart"></i>
                                 <span class="badge badge-danger"></span>
                             </div>                            
                             <div class="user-container">
                                 <i class="far fa-user"></i>
-                                <span class="user-name"></span>
+                                <span class="user-name"><?php if(is_user_logged_in()) echo $current_user->display_name; ?></span>
                                 <i class="fas fa-chevron-down settings-chevron"></i>
 
                                 <ul class="settings shadow-sm">
@@ -26,13 +29,13 @@
                                     <li>
                                         <a href="#"><i class="fas fa-user-cog"></i><span>Settings</span></a>
                                     </li>
-                                    <li>
+                                    <li <?php if(is_user_logged_in()) echo ' data-user-id="'.$current_user->ID.'"';?>>
                                         <a class="logout" href="#"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="auth-container">
+                        <div class="auth-container <?php if(!is_user_logged_in()) echo 'is-display'; ?>">
                             <a data-toggle="auth-modal" class="btn sign-up">Sign-up</a href="#">
                             <a data-toggle="auth-modal" class="btn login">Login</a href="#">
                         </div>

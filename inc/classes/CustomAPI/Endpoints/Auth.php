@@ -73,7 +73,7 @@ class Auth extends BaseClass {
 
         $nonce = sanitize_text_field($args['nonce']);
 
-        return wp_send_json(!!wp_verify_nonce($nonce, 'auth_wp_rest'), 200);
+        return wp_send_json(!!wp_verify_nonce($nonce, 'wp_rest'), 200);
     }
 
     public function register_account($args) {
@@ -90,6 +90,16 @@ class Auth extends BaseClass {
         if(!isset($user)) return wp_send_json(array('error' => 'Bad Request'), 400);
 
         return wp_send_json($user, 200);
+    }
+
+    public function logout_account($args) {
+        if(!isset($args['user_id'])) return wp_send_json(array('error' => 'Bad Request'), 400);
+
+        $user_id = sanitize_text_field($args['user_id']);
+
+        clean_user_cache($user_id);
+        wp_clear_auth_cookie();
+        return wp_send_json(true, 200);
     }
 
     private function create_account($user) {

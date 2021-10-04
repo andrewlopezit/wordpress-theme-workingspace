@@ -137,6 +137,9 @@ if(!class_exists('WorkingspaceTheme')) {
             //init shortcodes
             $shorcodes = new Shortcodes();
             $shorcodes->init();
+
+            // remove admin bar
+            $this->remove_admin_bar('subscriber');
         }
 
 //------------------------------------ F U N C T I O N S ----------------------------------------
@@ -489,6 +492,15 @@ if(!class_exists('WorkingspaceTheme')) {
                 )
             )
            ->set();
+        }
+
+        public function remove_admin_bar($user_type) {
+            $current_user = wp_get_current_user();
+
+            if(in_array($user_type, $current_user->roles)) {
+                show_admin_bar(false);
+                return;
+            }
         }
     }
 }
