@@ -2274,8 +2274,6 @@ const UserHeader = (user = null) => {
     }
 
     setUserWorkingSpacesCount(count) {
-      console.log(count);
-
       if (count > 0) {
         this.$userBadgeContainer.children().eq(0).attr('class', 'fas fa-heart');
         this.$countUserWorkingspace.addClass('is-display').html(count);
