@@ -35,12 +35,11 @@ $workingspaces = new WP_Query( $query );
     <div class="row">
         <div class="col">
             <div id="workspaces-map">
-
             <div class="content-container">
                 <div class="action-container shadow-sm d-flex d-sm-block d-md-none" id="mobile-maps">
                     <div class="loading --icon"></div>
                 </div>
-                <div class="item-container">
+                <div class="item-container" id="workingspaces">
                     
                     <div class="action-container">
                         <div class="action filter">

@@ -709,24 +709,23 @@ class HamburgerMenu {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! . */ "./assets/js/modules/frontend/index.js");
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
 
 
 
 class Heart {
   constructor() {
-    this.$itemWorkspaceContainer = $('.item.workspace');
+    this.$itemWorkspaceContainer = $('#workingspaces');
     if (!this.$itemWorkspaceContainer.length) return;
-    this.$itemContent = this.$itemWorkspaceContainer.find('.card-body');
     this.$selectedHeartContainer; // local variable
 
     this.siteUrl = translation_array.site_url; // events
 
-    this.events(); // animation
+    this.events();
   }
 
   events() {
-    this.$itemContent.on('click', '.action-container > .action-like', e => {
+    this.$itemWorkspaceContainer.on('click', '.item.workspace > .card-body > .action-container > .action-like', e => {
       const $el = $(e.currentTarget);
       const workingspaceId = $el.parent().parent().parent().data('id');
       this.$selectedHeartContainer = $el;
@@ -739,7 +738,7 @@ class Heart {
           } = result;
           this.heartAnimation.repeat(0);
           this.initLikeAnimation();
-          Object(___WEBPACK_IMPORTED_MODULE_1__["userHeader"])().setUserWorkingSpacesCount(workingspaces.length);
+          Object(_index__WEBPACK_IMPORTED_MODULE_1__["userHeader"])().setUserWorkingSpacesCount(workingspaces.length);
         }).catch(() => {});
       } else {
         this.like(workingspaceId).then(result => {
@@ -748,7 +747,7 @@ class Heart {
           } = result;
           this.heartAnimation.repeat(0);
           this.initLikeAnimation();
-          Object(___WEBPACK_IMPORTED_MODULE_1__["userHeader"])().setUserWorkingSpacesCount(workingspaces.length);
+          Object(_index__WEBPACK_IMPORTED_MODULE_1__["userHeader"])().setUserWorkingSpacesCount(workingspaces.length);
         }).catch(() => {});
       }
     });

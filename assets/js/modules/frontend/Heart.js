@@ -1,14 +1,13 @@
 import axios from "axios";
-import { userHeader } from ".";
+import { userHeader } from "./index";
 
 class Heart {
     constructor() {
-        this.$itemWorkspaceContainer = $('.item.workspace');
+        this.$itemWorkspaceContainer = $('#workingspaces');
 
      
         if(!this.$itemWorkspaceContainer.length) return;
 
-        this.$itemContent = this.$itemWorkspaceContainer.find('.card-body');
         this.$selectedHeartContainer;
 
         // local variable
@@ -16,12 +15,10 @@ class Heart {
 
         // events
         this.events();
-
-        // animation
     }
 
     events() {
-        this.$itemContent.on('click', '.action-container > .action-like', e => {
+        this.$itemWorkspaceContainer.on('click', '.item.workspace > .card-body > .action-container > .action-like', e => {
             const $el = $(e.currentTarget);
             const workingspaceId = $el.parent().parent().parent().data('id');
             this.$selectedHeartContainer = $el;
