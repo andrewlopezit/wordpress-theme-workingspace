@@ -190,9 +190,21 @@ if(!function_exists('get_user_profile_src_by_id')){
 }
 
 
-if(!function_exists('is_user_authenticate')){
-    function is_user_authenticate() {
-        // echo $_POST['user'];
+if(!function_exists('get_user_workingspaces')){
+    function get_user_workingspaces() {
+        $cookie = wp_parse_auth_cookie('', 'logged_in');
+        if(!isset($cookie['username'])) return [];
+
+        $username = $cookie['username'];
+        $user = get_user_by('login', $username);
+        $user = $user->data;
+
+        $user_workingspace_meta_key = 'workingspace_like_ids';
+        $workingspace_ids = get_user_meta( $user->ID, $user_workingspace_meta_key, true);
+
+        if(!$workingspace_ids) return [];
+
+        return $workingspace_ids;
     }
 }
 

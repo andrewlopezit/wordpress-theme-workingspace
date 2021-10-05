@@ -1,5 +1,5 @@
 import {rangeSlider, api, loading, maps} from '../../../../../assets/js/modules/frontend/index';
-
+import axios from 'axios';
 class WorkingspacesMaps {
     constructor() {
         this.$workspaceContainer = $('#workspaces-map');
@@ -28,6 +28,7 @@ class WorkingspacesMaps {
 
         //local variable
         this.siteUrl = translation_array.site_url;
+        this.isUserLoggedIn = translation_array.is_user_logged_in;
         this.mapZoom = 15;
         this.isMapLoaded = false;
         this.btnFilterPositionTop = this.$btnFilter.offset().top + 500;
@@ -265,18 +266,25 @@ class WorkingspacesMaps {
 
             this.$btnLoadMore.hide();
 
-            api(this.siteUrl).getWorkingspacesByFilter(filter).then(res =>{
+            let request = [
+                api(this.siteUrl).getWorkingspacesByFilter(filter),
+            ];
+
+            if(this.isUserLoggedIn) request.push(api(this.siteUrl).getUserWorkingspaces());
+
+            axios.all(request).then(axios.spread((...responses) => {
                 this.$btnLoadMore.show();
                 load.end();
 
-                const {data: {posts, pagination}} = res;
+                const {data: {posts, pagination}} = responses[0];
+                const {data: userWorkingspaces} = this.isUserLoggedIn ? responses[1] : {data: []};
 
                 if(!posts) {
                     this.$btnLoadMore.attr('disabled', true);
                     return;
                 }
 
-                const template = this.workingspacesTemplate(posts);
+                const template = this.workingspacesTemplate(posts, userWorkingspaces);
 
                 $(template).insertBefore(this.$btnLoadMore.parent());
                 this.setWorkingspaces(posts, true);
@@ -284,8 +292,7 @@ class WorkingspacesMaps {
                 const locations = this.workingspaces.map(workingspace => { return workingspace?.geolocation});
 
                 this.setMapMarkers(locations);
-
-            }).catch((e) => {
+            })).catch((e) => {
                 load.displayError();
             });
         });
@@ -334,9 +341,10 @@ class WorkingspacesMaps {
         }
     }
 
-    workingspacesTemplate(data) {
+    workingspacesTemplate(data, userWorkingspaces) {
         let template = '';
-        
+        const userWorkingspaceIds = userWorkingspaces.length > 0  ?userWorkingspaces.map(workingspace => workingspace.ID) : [];
+
         if(!data ||data.length < 1) {
             return `<p>No items match your criteria.</p>`;
         }
@@ -367,12 +375,12 @@ class WorkingspacesMaps {
             const minimumCapacity = val.capacity_list ? Math.min.apply(Math, val.capacity_list) : null;
             const maximumCapacity = val.capacity_list ? Math.max.apply(Math, val.capacity_list) : null;
 
-            template+= `<div class="item workspace card border-top-left border--post border--hover" data-geolocation="${val?.location?.location}">
+            template+= `<div class="item workspace card border-top-left border--post border--hover" data-id="${val?.ID}" data-geolocation="${val?.location?.location}">
                             <img class="card-img-top" src="${val.featured_image}" alt="">
                             <div class="card-body">
                                 <div class="action-container">
                                     <div class="action-like shadow-sm">
-                                        <i class="far fa-heart"></i>
+                                        <i class="${userWorkingspaceIds.includes(val?.ID) ? 'fas fa-heart is-added' : 'far fa-heart'}"></i>
                                     </div>
                                 </div>
 
@@ -406,33 +414,41 @@ class WorkingspacesMaps {
         const load =  loading(this.$itemContainer).start();
         this.$btnLoadMore.hide();
 
-        api(this.siteUrl).getWorkingspacesByFilter(filter).then(res =>{
+        let request = [
+            api(this.siteUrl).getWorkingspacesByFilter(filter),
+        ];
+
+        if(this.isUserLoggedIn) request.push(api(this.siteUrl).getUserWorkingspaces());
+
+        axios.all(request).then(axios.spread((...responses) => {
+
             this.$btnLoadMore.show();
 
-            const {data: {posts}} = res;
+            const {data: {posts: filteredWorkingspaces}} = responses[0];
+            const {data: userWorkingspaces} = this.isUserLoggedIn ? responses[1] : {data: []};
 
             if(this.$btnFindAllposts.length > 0){
-                const template = this.workingspacesTemplate(posts);
+                const template = this.workingspacesTemplate(filteredWorkingspaces,userWorkingspaces);
 
                 $(template).insertBefore(this.$btnFindAllposts);
             }else if(this.$btnLoadMore.length > 0){
-                const template = this.workingspacesTemplate(posts);
+                const template = this.workingspacesTemplate(filteredWorkingspaces,userWorkingspaces);
 
                 $(template).insertBefore(this.$btnLoadMore.parent());
             }else{
-                this.$itemContainer.append(this.workingspacesTemplate(posts));
+                this.$itemContainer.append(this.workingspacesTemplate(filteredWorkingspaces,userWorkingspaces));
             }
 
-            this.setWorkingspaces(posts);
+            this.setWorkingspaces(filteredWorkingspaces);
 
             const locations = this.workingspaces.map(workingspace => { return workingspace?.geolocation});
             this.setMapMarkers(locations);
 
             load.end();
-        }).catch((e) => {
+        })).catch(e => {
             console.log(e);
             load.displayError();
-        });
+        })
     }
 
     getWorkingspacesInHtml() {

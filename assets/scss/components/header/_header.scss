@@ -39,12 +39,16 @@
                 cursor: pointer;
 
                 .badge.badge-danger {
-                    display: none;
-                    
                     top: -8px;
                     left: 8px;
+                    padding: .3em;
                     position: absolute;
                     background-color: #dc3545;
+                    display: none;
+
+                    &.is-display {
+                        display: initial;
+                    }
                 }
             }
 

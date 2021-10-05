@@ -93,12 +93,9 @@ class Auth extends BaseClass {
     }
 
     public function logout_account($args) {
-        $cookie = wp_parse_auth_cookie('', 'logged_in');
-        if(!isset($cookie['username'])) return wp_send_json(array('error' => 'Bad Request'), 400);
+        $user = $this->get_user_logged_in();
 
-        $username = $cookie['username'];
-        $user = get_user_by('login', $username);
-        $user = $user->data;
+        if(!$user) return wp_send_json(array('error' => 'Bad Request'), 400);
 
         clean_user_cache($user->ID);
         wp_clear_auth_cookie();

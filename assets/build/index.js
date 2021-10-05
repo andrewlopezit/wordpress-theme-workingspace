@@ -196,6 +196,11 @@ const Api = url => {
       return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
     }
 
+    getUserWorkingspaces() {
+      let url = `${this.endpoint}/wp-json/wp/v2/users/workingspaces`;
+      return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
+    }
+
     getStringFilterUrl(filter) {
       let url = '';
 
@@ -309,6 +314,7 @@ class Auth {
         this.$btnLogin.html('Login');
         this.clearLoginInputs();
         this.$modalAuthContainer.hide();
+        location.reload();
       }).catch(() => {
         this.$loginErrorMessage.show().html(`
                     <strong>Error</strong>: The username <strong>${loginFormData.username}</strong> is not registered on this site.
@@ -460,6 +466,7 @@ class Auth {
           if (!user) return;
           Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])(user).init();
           this.isGoogleSignIn = false;
+          location.reload();
         }).catch(() => {});
       };
 
@@ -705,37 +712,100 @@ class HamburgerMenu {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
 
 
 
 class Heart {
   constructor() {
-    this.$itemWorkspaceContainer = $('.item.workspace');
+    this.$itemWorkspaceContainer = $('#workingspaces');
     if (!this.$itemWorkspaceContainer.length) return;
-    this.$itemContent = this.$itemWorkspaceContainer.find('.card-body'); // local variable
+    this.$modalAuthContainer = $('#auth-modal');
+    this.$loginContainer = this.$modalAuthContainer.find('.login-container');
+    this.$selectedHeartContainer; // local variable
 
-    this.siteUrl = translation_array.site_url; // events
+    this.siteUrl = translation_array.site_url;
+    this.isUserLoggedIn = translation_array.is_user_logged_in; // events
 
     this.events();
   }
 
   events() {
-    this.$itemContent.on('click', '.action-container > .action-like', async e => {
-      const user = await Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])().getUser();
-      console.log(user);
-      if (!user) return;
-      this.like(user).then(result => {
-        console.log(result);
-      });
+    this.$itemWorkspaceContainer.on('click', '.item.workspace > .card-body > .action-container > .action-like', e => {
+      if (!this.isUserLoggedIn) {
+        this.$modalAuthContainer.show();
+        this.$loginContainer.show();
+        return;
+      }
+
+      const $el = $(e.currentTarget);
+      const workingspaceId = $el.parent().parent().parent().data('id');
+      this.$selectedHeartContainer = $el;
+      this.initLoadingAnimHeartContainer();
+
+      if ($el.find('i').hasClass('is-added')) {
+        this.disLike(workingspaceId).then(result => {
+          const {
+            data: workingspaces
+          } = result;
+          this.heartAnimation.repeat(0);
+          this.initLikeAnimation();
+          Object(_index__WEBPACK_IMPORTED_MODULE_1__["userHeader"])().setUserWorkingSpacesCount(workingspaces.length);
+        }).catch(() => {});
+      } else {
+        this.like(workingspaceId).then(result => {
+          const {
+            data: workingspaces
+          } = result;
+          this.heartAnimation.repeat(0);
+          this.initLikeAnimation();
+          Object(_index__WEBPACK_IMPORTED_MODULE_1__["userHeader"])().setUserWorkingSpacesCount(workingspaces.length);
+        }).catch(() => {});
+      }
     });
   }
 
-  like(user) {
-    const endpoint = `${this.siteUrl}/wp-json/wp/v2/workingspaces/281/like/2`;
-    return axios__WEBPACK_IMPORTED_MODULE_1___default()(endpoint);
+  initLoadingAnimHeartContainer() {
+    const $heart = this.$selectedHeartContainer.find('i');
+    $heart.removeAttr('style');
+    this.heartAnimation = gsap.timeline({
+      repeat: -1
+    });
+    this.heartAnimation.to($heart, {
+      scale: 1.5
+    });
+  }
+
+  initLikeAnimation() {
+    const $heart = this.$selectedHeartContainer.find('i');
+    $heart.removeAttr('style');
+    this.heartAnimation = gsap.timeline({
+      onComplete: () => {
+        if ($heart.hasClass('is-added')) {
+          $heart.attr('class', 'far fa-heart');
+        } else {
+          $heart.attr('class', 'fas fa-heart is-added');
+        }
+      }
+    });
+    this.heartAnimation.to($heart, {
+      scale: 2
+    }).to($heart, {
+      scale: 1,
+      ease: 'bounce'
+    });
+  }
+
+  like(workingspaceId) {
+    const endpoint = `${this.siteUrl}/wp-json/wp/v2/users/add/workingspace/${workingspaceId}`;
+    return axios__WEBPACK_IMPORTED_MODULE_0___default()(endpoint);
+  }
+
+  disLike(workingspaceId) {
+    const endpoint = `${this.siteUrl}/wp-json/wp/v2/users/remove/workingspace/${workingspaceId}`;
+    return axios__WEBPACK_IMPORTED_MODULE_0___default()(endpoint);
   }
 
 }
@@ -2156,25 +2226,18 @@ const UserHeader = (user = null) => {
       if (!this.$headerContainer.length) return;
       this.$actionHeaderContainer = this.$headerContainer.find('.action-header-container');
       this.$userSettingsContainer = this.$actionHeaderContainer.find('.user-settings-container');
+      this.$userBadgeContainer = this.$userSettingsContainer.find('.user-heart-badge-container');
+      this.$countUserWorkingspace = this.$userBadgeContainer.find('.badge.badge-danger');
       this.$authContainer = this.$actionHeaderContainer.find('.auth-container');
       this.$displayName = this.$userSettingsContainer.find('.user-container > .user-name');
       this.$settingDisplayName = this.$userSettingsContainer.find('.user-container > .settings > .setting-user-name');
       this.$userContainer = this.$userSettingsContainer.find('.user-container');
       this.$settings = this.$userContainer.find('.settings'); // local variable
 
-      this.localstorageName = 'workingspaces_user';
       this.siteUrl = translation_array.site_url;
     }
 
     init() {
-      const setUserLocalStorage = user => {
-        localStorage.setItem(this.localstorageName, JSON.stringify(user));
-      };
-
-      const deleteUserLocalStorage = () => {
-        localStorage.removeItem(this.localstorageName);
-      };
-
       const displayUser = displayName => {
         this.$authContainer.hide();
         this.$displayName.html(displayName);
@@ -2183,14 +2246,14 @@ const UserHeader = (user = null) => {
       };
 
       const logoutUser = id => {
-        const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/logout?user_id=${id}`;
+        const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/logout`;
         axios__WEBPACK_IMPORTED_MODULE_0___default()(endpoint).then(results => {
-          deleteUserLocalStorage();
           this.$userSettingsContainer.hide();
           this.$authContainer.show();
           const auth2 = gapi.auth2.getAuthInstance();
           auth2.signOut().then(() => {});
           this.$userContainer.find('.settings > li').eq(3).removeAttr('data-user-id');
+          location.reload();
         }).catch(() => {});
       };
 
@@ -2215,7 +2278,6 @@ const UserHeader = (user = null) => {
       };
 
       if (user) {
-        setUserLocalStorage(user);
         this.$userContainer.find('.settings > li').eq(3).attr('data-user-id', user.ID);
         displayUser(user.display_name);
         return;
@@ -2224,25 +2286,14 @@ const UserHeader = (user = null) => {
       events();
     }
 
-    getUser() {
-      const user = JSON.parse(localStorage.getItem(this.localstorageName));
-      if (!user) return null;
-      const {
-        x_wp_nonce
-      } = user;
-      const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/checknonce?nonce=${x_wp_nonce}`;
-      axios__WEBPACK_IMPORTED_MODULE_0___default()(endpoint).then(results => {
-        const {
-          data: isNonceValid
-        } = results;
-
-        if (!isNonceValid) {
-          return Promise.reject(null);
-        }
-
-        return Promise.resolve(user);
-      }).catch(() => {});
-      return user;
+    setUserWorkingSpacesCount(count) {
+      if (count > 0) {
+        this.$userBadgeContainer.children().eq(0).attr('class', 'fas fa-heart');
+        this.$countUserWorkingspace.addClass('is-display').html(count);
+      } else {
+        this.$userBadgeContainer.children().eq(0).attr('class', 'far fa-heart');
+        this.$countUserWorkingspace.removeClass('is-display').html('');
+      }
     }
 
   }
@@ -4097,6 +4148,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../assets/js/modules/frontend/index */ "./assets/js/modules/frontend/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
 
 
 class WorkingspacesMaps {
@@ -4123,6 +4177,7 @@ class WorkingspacesMaps {
     this.$btnFindAllposts = this.$itemContainer.find('.find-all.posts'); //local variable
 
     this.siteUrl = translation_array.site_url;
+    this.isUserLoggedIn = translation_array.is_user_logged_in;
     this.mapZoom = 15;
     this.isMapLoaded = false;
     this.btnFilterPositionTop = this.$btnFilter.offset().top + 500;
@@ -4337,7 +4392,9 @@ class WorkingspacesMaps {
       const filter = this.getWorkingspaceFilter;
       filter.offset = this.workingspaces.length;
       this.$btnLoadMore.hide();
-      Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
+      let request = [Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter)];
+      if (this.isUserLoggedIn) request.push(Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getUserWorkingspaces());
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.all(request).then(axios__WEBPACK_IMPORTED_MODULE_1___default.a.spread((...responses) => {
         this.$btnLoadMore.show();
         load.end();
         const {
@@ -4345,21 +4402,26 @@ class WorkingspacesMaps {
             posts,
             pagination
           }
-        } = res;
+        } = responses[0];
+        const {
+          data: userWorkingspaces
+        } = this.isUserLoggedIn ? responses[1] : {
+          data: []
+        };
 
         if (!posts) {
           this.$btnLoadMore.attr('disabled', true);
           return;
         }
 
-        const template = this.workingspacesTemplate(posts);
+        const template = this.workingspacesTemplate(posts, userWorkingspaces);
         $(template).insertBefore(this.$btnLoadMore.parent());
         this.setWorkingspaces(posts, true);
         const locations = this.workingspaces.map(workingspace => {
           return workingspace === null || workingspace === void 0 ? void 0 : workingspace.geolocation;
         });
         this.setMapMarkers(locations);
-      }).catch(e => {
+      })).catch(e => {
         load.displayError();
       });
     });
@@ -4404,8 +4466,9 @@ class WorkingspacesMaps {
     }
   }
 
-  workingspacesTemplate(data) {
+  workingspacesTemplate(data, userWorkingspaces) {
     let template = '';
+    const userWorkingspaceIds = userWorkingspaces.length > 0 ? userWorkingspaces.map(workingspace => workingspace.ID) : [];
 
     if (!data || data.length < 1) {
       return `<p>No items match your criteria.</p>`;
@@ -4438,12 +4501,12 @@ class WorkingspacesMaps {
 
       const minimumCapacity = val.capacity_list ? Math.min.apply(Math, val.capacity_list) : null;
       const maximumCapacity = val.capacity_list ? Math.max.apply(Math, val.capacity_list) : null;
-      template += `<div class="item workspace card border-top-left border--post border--hover" data-geolocation="${val === null || val === void 0 ? void 0 : (_val$location = val.location) === null || _val$location === void 0 ? void 0 : _val$location.location}">
+      template += `<div class="item workspace card border-top-left border--post border--hover" data-id="${val === null || val === void 0 ? void 0 : val.ID}" data-geolocation="${val === null || val === void 0 ? void 0 : (_val$location = val.location) === null || _val$location === void 0 ? void 0 : _val$location.location}">
                             <img class="card-img-top" src="${val.featured_image}" alt="">
                             <div class="card-body">
                                 <div class="action-container">
                                     <div class="action-like shadow-sm">
-                                        <i class="far fa-heart"></i>
+                                        <i class="${userWorkingspaceIds.includes(val === null || val === void 0 ? void 0 : val.ID) ? 'fas fa-heart is-added' : 'far fa-heart'}"></i>
                                     </div>
                                 </div>
 
@@ -4474,31 +4537,38 @@ class WorkingspacesMaps {
     this.$itemContainer.find('.item,p').remove();
     const load = Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$itemContainer).start();
     this.$btnLoadMore.hide();
-    Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
+    let request = [Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter)];
+    if (this.isUserLoggedIn) request.push(Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getUserWorkingspaces());
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.all(request).then(axios__WEBPACK_IMPORTED_MODULE_1___default.a.spread((...responses) => {
       this.$btnLoadMore.show();
       const {
         data: {
-          posts
+          posts: filteredWorkingspaces
         }
-      } = res;
+      } = responses[0];
+      const {
+        data: userWorkingspaces
+      } = this.isUserLoggedIn ? responses[1] : {
+        data: []
+      };
 
       if (this.$btnFindAllposts.length > 0) {
-        const template = this.workingspacesTemplate(posts);
+        const template = this.workingspacesTemplate(filteredWorkingspaces, userWorkingspaces);
         $(template).insertBefore(this.$btnFindAllposts);
       } else if (this.$btnLoadMore.length > 0) {
-        const template = this.workingspacesTemplate(posts);
+        const template = this.workingspacesTemplate(filteredWorkingspaces, userWorkingspaces);
         $(template).insertBefore(this.$btnLoadMore.parent());
       } else {
-        this.$itemContainer.append(this.workingspacesTemplate(posts));
+        this.$itemContainer.append(this.workingspacesTemplate(filteredWorkingspaces, userWorkingspaces));
       }
 
-      this.setWorkingspaces(posts);
+      this.setWorkingspaces(filteredWorkingspaces);
       const locations = this.workingspaces.map(workingspace => {
         return workingspace === null || workingspace === void 0 ? void 0 : workingspace.geolocation;
       });
       this.setMapMarkers(locations);
       load.end();
-    }).catch(e => {
+    })).catch(e => {
       console.log(e);
       load.displayError();
     });

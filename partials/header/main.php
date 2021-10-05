@@ -11,9 +11,10 @@
                             $current_user = wp_get_current_user();
                         ?>
                         <div class="user-settings-container <?php if(is_user_logged_in()) echo 'is-display'; ?>">
+                        <?php $totalWorkingspaces =  count(get_user_workingspaces()); ?>
                             <div class="user-heart-badge-container">
-                                <i class="far fa-heart"></i>
-                                <span class="badge badge-danger"></span>
+                                <i class="<?php echo $totalWorkingspaces > 0 ? 'fas fa-heart' : 'far fa-heart'; ?>"></i>
+                                <span class="badge badge-danger <?php if($totalWorkingspaces > 0)  echo 'is-display'; ?>"><?php echo $totalWorkingspaces; ?></span>
                             </div>                            
                             <div class="user-container">
                                 <i class="far fa-user"></i>
@@ -54,7 +55,3 @@
         </div>
     </div>
 </div>
-
-<?php
-is_user_authenticate();
-?>

@@ -16,6 +16,7 @@ use Inc\Classes\CustomAPI\Endpoints\Posts;
 use Inc\Classes\CustomAPI\Endpoints\Inquiries;
 use Inc\Classes\CustomAPI\Endpoints\Search;
 use Inc\Classes\CustomAPI\Endpoints\Auth;
+use Inc\Classes\CustomAPI\Endpoints\Users;
 
 use WP_REST_SERVER;
 
@@ -65,42 +66,6 @@ class Routes {
               'args' => array(
               ),
               'permission_callback' => array($this, 'get_permission_callback')
-            ));
-
-            register_rest_route('wp/v2', 'workingspaces/(?P<workingspace_id>\d+)/like/(?P<user_id>\d+)', array(
-              'methods' => WP_REST_SERVER::READABLE,
-              'callback' => array(new Workingspaces(), 'like_workingspace_by_user_id'),
-              'args' => array(
-                'user_i' =>array(
-                    'validate_callback' => function($param, $request, $key) {
-                      return is_numeric( $param );
-                    }
-                ),
-                'workingspace_id' =>array(
-                  'validate_callback' => function($param, $request, $key) {
-                    return is_numeric( $param );
-                  }
-              ),
-              ),
-              'permission_callback' => array($this, 'get_cookie_authenticate_permission_callback')
-            ));
-
-            register_rest_route('wp/v2', 'workingspaces/(?P<workingspace_id>\d+)/dislike/(?P<user_id>\d+)', array(
-              'methods' => WP_REST_SERVER::READABLE,
-              'callback' => array(new Workingspaces(), 'dislike_workingspace_by_user_id'),
-              'args' => array(
-                'user_i' =>array(
-                    'validate_callback' => function($param, $request, $key) {
-                      return is_numeric( $param );
-                    }
-                ),
-                'workingspace_id' =>array(
-                  'validate_callback' => function($param, $request, $key) {
-                    return is_numeric( $param );
-                  }
-              ),
-              ),
-              'permission_callback' => array($this, 'get_cookie_authenticate_permission_callback')
             ));
 
             //----------------------------------------
@@ -171,6 +136,48 @@ class Routes {
               'methods' => WP_REST_SERVER::READABLE,
               'callback' => array(new Auth(), 'logout_account'),
               'permission_callback' => array($this, 'get_permission_callback')
+            ));
+
+            //----------------------------------------
+            //   U S E R
+            //----------------------------------------
+            register_rest_route('wp/v2', 'users/add/workingspace/(?P<workingspace_id>\d+)', array(
+              'methods' => WP_REST_SERVER::READABLE,
+              'callback' => array(new Users(), 'add_workingspace'),
+              'args' => array(
+                'workingspace_id' =>array(
+                  'validate_callback' => function($param, $request, $key) {
+                    return is_numeric( $param );
+                  }
+              ),
+              ),
+              'permission_callback' => array($this, 'get_cookie_authenticate_permission_callback')
+            ));
+
+            register_rest_route('wp/v2', 'users/remove/workingspace/(?P<workingspace_id>\d+)', array(
+              'methods' => WP_REST_SERVER::READABLE,
+              'callback' => array(new Users(), 'remove_workingspace'),
+              'args' => array(
+                'workingspace_id' =>array(
+                  'validate_callback' => function($param, $request, $key) {
+                    return is_numeric( $param );
+                  }
+              ),
+              ),
+              'permission_callback' => array($this, 'get_cookie_authenticate_permission_callback')
+            ));
+
+            register_rest_route('wp/v2', 'users/workingspaces', array(
+              'methods' => WP_REST_SERVER::READABLE,
+              'callback' => array(new Users(), 'get_user_workingspaces'),
+              'args' => array(
+                'workingspace_id' =>array(
+                  'validate_callback' => function($param, $request, $key) {
+                    return is_numeric( $param );
+                  }
+              ),
+              ),
+              'permission_callback' => array($this, 'get_cookie_authenticate_permission_callback')
             ));
         });
         

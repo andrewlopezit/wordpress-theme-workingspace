@@ -9,15 +9,17 @@
         $query_args['s'] = $args['search'];
     }
 
-    $query = new WP_Query( $query_args ); 
+    $query = new WP_Query( $query_args );
+    
+    $user_workingspaces = get_user_workingspaces();
 ?>
     <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
-    <div class="item workspace card border-top-left border--post border--hover workspace--default">
+    <div data-id="<?php the_ID(); ?>" class="item workspace card border-top-left border--post border--hover workspace--default">
         <img class="card-img-top"  src="<?php echo esc_url(wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID()), 'posts' )[0]);?>" alt="">
         <div class="card-body">
             <div class="action-container">
                 <div class="action-like shadow-sm">
-                    <i class="far fa-heart"></i>
+                    <i class="<?php echo in_array(get_the_ID(), $user_workingspaces) ? 'fas fa-heart is-added' : 'far fa-heart' ?>"></i>
                 </div>
             </div>
 

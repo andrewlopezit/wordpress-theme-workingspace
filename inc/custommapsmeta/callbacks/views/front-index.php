@@ -1,7 +1,6 @@
 <?php
 ob_start();
 
-if(is_admin()) return;
 $country = $args['country'] ?? null;
 $max_posts = get_option( 'posts_per_page' );
 
@@ -13,6 +12,8 @@ $query = array(
 
 $min_room_rate = get_min_room_rate();
 $max_room_rate =  get_max_room_rate();
+
+$user_workingspaces = get_user_workingspaces();
 
 if(isset($country['id'])) {
     $query['meta_query'] = array(
@@ -28,17 +29,15 @@ if(isset($country['id'])) {
 
 $workingspaces = new WP_Query( $query ); 
 ?>
-
 <div class="container">
     <div class="row">
         <div class="col">
             <div id="workspaces-map">
-
             <div class="content-container">
                 <div class="action-container shadow-sm d-flex d-sm-block d-md-none" id="mobile-maps">
                     <div class="loading --icon"></div>
                 </div>
-                <div class="item-container">
+                <div class="item-container" id="workingspaces">
                     
                     <div class="action-container">
                         <div class="action filter">
@@ -143,12 +142,12 @@ $workingspaces = new WP_Query( $query );
                     <?php if ( $workingspaces->have_posts() ) : while ( $workingspaces->have_posts() ) : $workingspaces->the_post(); ?>
                     <?php $location = get_location(); ?>
 
-                    <div class="item workspace card border-top-left border--post border--hover" <?php echo isset($location['location']) && $location['location'] ? 'data-geolocation='.$location['location'] : ''; ?>>
+                    <div class="item workspace card border-top-left border--post border--hover" data-id="<?php the_ID(); ?>" <?php echo isset($location['location']) && $location['location'] ? 'data-geolocation='.$location['location'] : ''; ?>>
                     <img class="card-img-top"  src="<?php echo esc_url(wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID()), 'posts' )[0]);?>" alt="">
                     <div class="card-body">
                         <div class="action-container">
                             <div class="action-like shadow-sm">
-                                <i class="far fa-heart"></i>
+                                <i class="<?php echo in_array(get_the_ID(), $user_workingspaces) ? 'fas fa-heart is-added' : 'far fa-heart' ?>"></i>
                             </div>
                         </div>
                         
