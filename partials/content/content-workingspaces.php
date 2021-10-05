@@ -9,7 +9,9 @@
         $query_args['s'] = $args['search'];
     }
 
-    $query = new WP_Query( $query_args ); 
+    $query = new WP_Query( $query_args );
+    
+    $user_workingspaces = get_user_workingspaces();
 ?>
     <?php if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>
     <div data-id="<?php the_ID(); ?>" class="item workspace card border-top-left border--post border--hover workspace--default">
@@ -17,7 +19,7 @@
         <div class="card-body">
             <div class="action-container">
                 <div class="action-like shadow-sm">
-                    <i class="far fa-heart"></i>
+                    <i class="<?php echo in_array(get_the_ID(), get_user_workingspaces()) ? 'fas fa-heart' : 'far fa-heart' ?>"></i>
                 </div>
             </div>
 
