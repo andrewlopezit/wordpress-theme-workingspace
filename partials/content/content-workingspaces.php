@@ -72,8 +72,8 @@ $totalPublishPosts = (int) wp_count_posts('workingspaces')->publish;
 $totalPosts = get_option( 'posts_per_page' );
 $totalWorkingspaces = count($query->posts);
 
-if($totalPublishPosts > $totalPosts ||
-   $totalWorkingspaces > $totalPosts  ): ?>
+
+if($totalPublishPosts > $totalWorkingspaces): ?>
     <div class="action-container center workspace">
         <a class="btn text-center" href="<?php echo esc_url(site_url('workingspaces'))?>">View more</a>
     </div>

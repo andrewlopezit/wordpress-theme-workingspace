@@ -84,8 +84,7 @@ $totalPublishPosts = (int) wp_count_posts('post')->publish;
 $totalPosts = get_option( 'posts_per_page' );
 $totalQueryPosts = count($query->posts);
 
-if($totalPublishPosts > $totalPosts ||
-   $totalQueryPosts > $totalPosts  ): ?>
+if($totalPublishPosts > $totalQueryPosts ): ?>
     <div class="action-container center post view-more">
         <a class="btn text-center" href="<?php echo esc_url(site_url('news-insights'))?>">View more</a>
     </div>
