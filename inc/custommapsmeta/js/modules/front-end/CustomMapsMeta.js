@@ -28,6 +28,7 @@ class WorkingspacesMaps {
 
         //local variable
         this.siteUrl = translation_array.site_url;
+        this.isUserLoggedIn = translation_array.is_user_logged_in;
         this.mapZoom = 15;
         this.isMapLoaded = false;
         this.btnFilterPositionTop = this.$btnFilter.offset().top + 500;
@@ -265,15 +266,18 @@ class WorkingspacesMaps {
 
             this.$btnLoadMore.hide();
 
-            axios.all([
+            let request = [
                 api(this.siteUrl).getWorkingspacesByFilter(filter),
-                api(this.siteUrl).getUserWorkingspaces()
-            ]).then(axios.spread((...responses) => {
+            ];
+
+            if(this.isUserLoggedIn) request.push(api(this.siteUrl).getUserWorkingspaces());
+
+            axios.all(request).then(axios.spread((...responses) => {
                 this.$btnLoadMore.show();
                 load.end();
 
                 const {data: {posts, pagination}} = responses[0];
-                const {data: userWorkingspaces} = responses[0];
+                const {data: userWorkingspaces} = this.isUserLoggedIn ? responses[1] : {data: []};
 
                 if(!posts) {
                     this.$btnLoadMore.attr('disabled', true);
@@ -410,15 +414,18 @@ class WorkingspacesMaps {
         const load =  loading(this.$itemContainer).start();
         this.$btnLoadMore.hide();
 
-        axios.all([
+        let request = [
             api(this.siteUrl).getWorkingspacesByFilter(filter),
-            api(this.siteUrl).getUserWorkingspaces()
-        ]).then(axios.spread((...responses) => {
+        ];
+
+        if(this.isUserLoggedIn) request.push(api(this.siteUrl).getUserWorkingspaces());
+
+        axios.all(request).then(axios.spread((...responses) => {
 
             this.$btnLoadMore.show();
 
             const {data: {posts: filteredWorkingspaces}} = responses[0];
-            const {data: userWorkingspaces} = responses[1];
+            const {data: userWorkingspaces} = this.isUserLoggedIn ? responses[1] : {data: []};
 
             if(this.$btnFindAllposts.length > 0){
                 const template = this.workingspacesTemplate(filteredWorkingspaces,userWorkingspaces);

@@ -4177,6 +4177,7 @@ class WorkingspacesMaps {
     this.$btnFindAllposts = this.$itemContainer.find('.find-all.posts'); //local variable
 
     this.siteUrl = translation_array.site_url;
+    this.isUserLoggedIn = translation_array.is_user_logged_in;
     this.mapZoom = 15;
     this.isMapLoaded = false;
     this.btnFilterPositionTop = this.$btnFilter.offset().top + 500;
@@ -4391,7 +4392,9 @@ class WorkingspacesMaps {
       const filter = this.getWorkingspaceFilter;
       filter.offset = this.workingspaces.length;
       this.$btnLoadMore.hide();
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.all([Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter), Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getUserWorkingspaces()]).then(axios__WEBPACK_IMPORTED_MODULE_1___default.a.spread((...responses) => {
+      let request = [Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter)];
+      if (this.isUserLoggedIn) request.push(Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getUserWorkingspaces());
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.all(request).then(axios__WEBPACK_IMPORTED_MODULE_1___default.a.spread((...responses) => {
         this.$btnLoadMore.show();
         load.end();
         const {
@@ -4402,7 +4405,9 @@ class WorkingspacesMaps {
         } = responses[0];
         const {
           data: userWorkingspaces
-        } = responses[0];
+        } = this.isUserLoggedIn ? responses[1] : {
+          data: []
+        };
 
         if (!posts) {
           this.$btnLoadMore.attr('disabled', true);
@@ -4532,7 +4537,9 @@ class WorkingspacesMaps {
     this.$itemContainer.find('.item,p').remove();
     const load = Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$itemContainer).start();
     this.$btnLoadMore.hide();
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.all([Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter), Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getUserWorkingspaces()]).then(axios__WEBPACK_IMPORTED_MODULE_1___default.a.spread((...responses) => {
+    let request = [Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter)];
+    if (this.isUserLoggedIn) request.push(Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getUserWorkingspaces());
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.all(request).then(axios__WEBPACK_IMPORTED_MODULE_1___default.a.spread((...responses) => {
       this.$btnLoadMore.show();
       const {
         data: {
@@ -4541,7 +4548,9 @@ class WorkingspacesMaps {
       } = responses[0];
       const {
         data: userWorkingspaces
-      } = responses[1];
+      } = this.isUserLoggedIn ? responses[1] : {
+        data: []
+      };
 
       if (this.$btnFindAllposts.length > 0) {
         const template = this.workingspacesTemplate(filteredWorkingspaces, userWorkingspaces);
