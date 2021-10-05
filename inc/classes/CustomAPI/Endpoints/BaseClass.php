@@ -125,4 +125,15 @@ public function add_rooms_additional_details($posts) {
     wp_set_auth_cookie($user->ID, true, false);
     update_user_caches($user);
   }
+
+  public function get_user_logged_in() {
+    $cookie = wp_parse_auth_cookie('', 'logged_in');
+    if(!isset($cookie['username'])) return null;
+
+    $username = $cookie['username'];
+    $user = get_user_by('login', $username);
+    $user = $user->data;
+
+    return $this->unset_user_prop($user);
+  }
 }
