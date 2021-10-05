@@ -14,6 +14,7 @@ import Page from './modules/frontend/Page';
 import Modal from './modules/frontend/Modal';
 import SearchPage from './modules/frontend/SearchPage';
 import Auth from './modules/frontend/Auth';
+import Heart from './modules/frontend/Heart';
 
 import CustomRoomsMeta from '../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta';
 import CustomMapsMeta from '../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta';
@@ -31,6 +32,7 @@ let page;
 let modal;
 let searchPage;
 let auth;
+let heart;
 
 const hompage = document.querySelector(".home");
 
@@ -47,6 +49,7 @@ page = new Page();
 modal = new Modal();
 searchPage = new SearchPage();
 auth = new Auth();
+heart = new Heart();
 
 // include front-end init
 customRoomsMeta = new CustomRoomsMeta();

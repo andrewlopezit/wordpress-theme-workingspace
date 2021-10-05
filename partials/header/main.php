@@ -6,7 +6,6 @@
                     <a href="<?php echo get_bloginfo('url');?>">
                         <div class="brand" <?php workingspace_the_brand_style(); ?>></div>
                     </a>
-                    
                     <div class="action-header-container">
                         <?php 
                             $current_user = wp_get_current_user();

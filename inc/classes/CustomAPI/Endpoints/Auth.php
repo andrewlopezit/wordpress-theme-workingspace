@@ -73,7 +73,7 @@ class Auth extends BaseClass {
 
         $nonce = sanitize_text_field($args['nonce']);
 
-        return wp_send_json(!!wp_verify_nonce($nonce, 'wp_rest'), 200);
+        return wp_send_json(!!wp_verify_nonce($nonce, 'auth_wp_rest'), 200);
     }
 
     public function register_account($args) {
@@ -93,12 +93,16 @@ class Auth extends BaseClass {
     }
 
     public function logout_account($args) {
-        if(!isset($args['user_id'])) return wp_send_json(array('error' => 'Bad Request'), 400);
+        $cookie = wp_parse_auth_cookie('', 'logged_in');
+        if(!isset($cookie['username'])) return wp_send_json(array('error' => 'Bad Request'), 400);
 
-        $user_id = sanitize_text_field($args['user_id']);
+        $username = $cookie['username'];
+        $user = get_user_by('login', $username);
+        $user = $user->data;
 
-        clean_user_cache($user_id);
+        clean_user_cache($user->ID);
         wp_clear_auth_cookie();
+        
         return wp_send_json(true, 200);
     }
 

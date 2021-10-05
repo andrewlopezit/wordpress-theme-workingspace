@@ -27,10 +27,6 @@ const UserHeader = (user = null) => {
                 localStorage.setItem(this.localstorageName, JSON.stringify(user));
             }
 
-            const getUserLocalStorage = () => {
-                return JSON.parse(localStorage.getItem(this.localstorageName));
-            }
-
             const deleteUserLocalStorage = () => {
                 localStorage.removeItem(this.localstorageName);
             }
@@ -82,10 +78,35 @@ const UserHeader = (user = null) => {
                 setUserLocalStorage(user);
                 this.$userContainer.find('.settings > li').eq(3).attr('data-user-id', user.ID);
                 displayUser(user.display_name);
+
                 return;
             }
 
             events();
+        }
+
+        getUser() {
+            const user = JSON.parse(localStorage.getItem(this.localstorageName));
+
+            if(!user) return null;
+
+            const { x_wp_nonce } = user;
+
+            const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/checknonce?nonce=${x_wp_nonce}`;
+            
+            axios(endpoint).then(results => {
+                const {data: isNonceValid} = results;
+
+                if(!isNonceValid) {
+                    return Promise.reject(null);
+                }
+
+                return Promise.resolve(user);
+
+
+            }).catch(() => {});
+
+            return user;
         }
     }
 

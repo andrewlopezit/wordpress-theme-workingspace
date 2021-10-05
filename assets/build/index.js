@@ -107,10 +107,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_frontend_Modal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/frontend/Modal */ "./assets/js/modules/frontend/Modal.js");
 /* harmony import */ var _modules_frontend_SearchPage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/frontend/SearchPage */ "./assets/js/modules/frontend/SearchPage.js");
 /* harmony import */ var _modules_frontend_Auth__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/frontend/Auth */ "./assets/js/modules/frontend/Auth.js");
-/* harmony import */ var _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta */ "./inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta.js");
-/* harmony import */ var _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta */ "./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js");
+/* harmony import */ var _modules_frontend_Heart__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/frontend/Heart */ "./assets/js/modules/frontend/Heart.js");
+/* harmony import */ var _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta */ "./inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta.js");
+/* harmony import */ var _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta */ "./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js");
 
  // import modules
+
 
 
 
@@ -137,6 +139,7 @@ let page;
 let modal;
 let searchPage;
 let auth;
+let heart;
 const hompage = document.querySelector(".home");
 
 if (hompage) {
@@ -151,10 +154,11 @@ requestForm = new _modules_frontend_RequestForm__WEBPACK_IMPORTED_MODULE_7__["de
 page = new _modules_frontend_Page__WEBPACK_IMPORTED_MODULE_8__["default"]();
 modal = new _modules_frontend_Modal__WEBPACK_IMPORTED_MODULE_9__["default"]();
 searchPage = new _modules_frontend_SearchPage__WEBPACK_IMPORTED_MODULE_10__["default"]();
-auth = new _modules_frontend_Auth__WEBPACK_IMPORTED_MODULE_11__["default"](); // include front-end init
+auth = new _modules_frontend_Auth__WEBPACK_IMPORTED_MODULE_11__["default"]();
+heart = new _modules_frontend_Heart__WEBPACK_IMPORTED_MODULE_12__["default"](); // include front-end init
 
-customRoomsMeta = new _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_12__["default"]();
-customMapsMeta = new _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_13__["default"]();
+customRoomsMeta = new _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_13__["default"]();
+customMapsMeta = new _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_14__["default"]();
 
 /***/ }),
 
@@ -689,6 +693,54 @@ class HamburgerMenu {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (HamburgerMenu);
+
+/***/ }),
+
+/***/ "./assets/js/modules/frontend/Heart.js":
+/*!*********************************************!*\
+  !*** ./assets/js/modules/frontend/Heart.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+class Heart {
+  constructor() {
+    this.$itemWorkspaceContainer = $('.item.workspace');
+    if (!this.$itemWorkspaceContainer.length) return;
+    this.$itemContent = this.$itemWorkspaceContainer.find('.card-body'); // local variable
+
+    this.siteUrl = translation_array.site_url; // events
+
+    this.events();
+  }
+
+  events() {
+    this.$itemContent.on('click', '.action-container > .action-like', async e => {
+      const user = await Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])().getUser();
+      console.log(user);
+      if (!user) return;
+      this.like(user).then(result => {
+        console.log(result);
+      });
+    });
+  }
+
+  like(user) {
+    const endpoint = `${this.siteUrl}/wp-json/wp/v2/workingspaces/281/like/2`;
+    return axios__WEBPACK_IMPORTED_MODULE_1___default()(endpoint);
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Heart);
 
 /***/ }),
 
@@ -2119,10 +2171,6 @@ const UserHeader = (user = null) => {
         localStorage.setItem(this.localstorageName, JSON.stringify(user));
       };
 
-      const getUserLocalStorage = () => {
-        return JSON.parse(localStorage.getItem(this.localstorageName));
-      };
-
       const deleteUserLocalStorage = () => {
         localStorage.removeItem(this.localstorageName);
       };
@@ -2174,6 +2222,27 @@ const UserHeader = (user = null) => {
       }
 
       events();
+    }
+
+    getUser() {
+      const user = JSON.parse(localStorage.getItem(this.localstorageName));
+      if (!user) return null;
+      const {
+        x_wp_nonce
+      } = user;
+      const endpoint = `${this.siteUrl}/wp-json/wp/v2/auth/checknonce?nonce=${x_wp_nonce}`;
+      axios__WEBPACK_IMPORTED_MODULE_0___default()(endpoint).then(results => {
+        const {
+          data: isNonceValid
+        } = results;
+
+        if (!isNonceValid) {
+          return Promise.reject(null);
+        }
+
+        return Promise.resolve(user);
+      }).catch(() => {});
+      return user;
     }
 
   }

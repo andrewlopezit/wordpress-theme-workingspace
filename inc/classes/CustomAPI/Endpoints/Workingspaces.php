@@ -22,7 +22,6 @@ class Workingspaces extends BaseClass {
   private $_paginated_posts = [];
 
   public function get_workingspaces($request) {
-
     $query =  Filters::workingspaces_filters($request);
 
     if(!$query) wp_send_json([], 200);
@@ -105,5 +104,54 @@ class Workingspaces extends BaseClass {
     $results = $this->add_rooms_additional_details([$result], $request_id);
     
     return wp_send_json($results[0], 200);
+  }
+
+  public function like_workingspace_by_user_id($request) {
+    $user = get_user_by('ID', sanitize_text_field($request['user_id']));
+    $workingspaces = get_post(sanitize_text_field($request['workingspace_id']));
+
+    $user = $user->data ?? null;
+
+    if(!$user || !$workingspaces) return wp_send_json_error('Bad request', 400);
+    $user_workingspace_meta_key = 'workingspace_like_ids';
+
+    $workingspace_ids = get_user_meta( $user->ID, $user_workingspace_meta_key, true);
+
+    if(!is_array($workingspace_ids)) {
+      add_user_meta( $user->ID, $user_workingspace_meta_key, array($workingspaces->ID), true);
+
+      return wp_send_json([$workingspaces->ID], 200);
+    }
+
+    if(in_array($workingspaces->ID, $workingspace_ids)) wp_send_json($workingspace_ids, 200);
+
+
+    array_push($workingspace_ids, $workingspaces->ID);
+
+    update_user_meta( $user->ID, $user_workingspace_meta_key, $workingspace_ids );
+
+    return wp_send_json($workingspace_ids, 200);
+  }
+
+  public function dislike_workingspace_by_user_id($request) {
+    $user = get_user_by('ID', sanitize_text_field($request['user_id']));
+    $workingspace_id = intval(sanitize_text_field($request['workingspace_id']));
+
+    $user = $user->data ?? null;
+
+    if(!$user) return wp_send_json_error('Bad request', 400);
+
+    $user_workingspace_meta_key = 'workingspace_like_ids';
+
+    $workingspace_ids = get_user_meta( $user->ID, $user_workingspace_meta_key, true);
+
+    if(!is_array($workingspace_ids)) return wp_send_json_error('Bad request', 400);
+
+    if (($index = array_search($workingspace_id, $workingspace_ids)) !== false) {
+      array_splice($workingspace_ids, $index, $index+1);
+      update_user_meta( $user->ID, $user_workingspace_meta_key, $workingspace_ids );
+    }
+
+    return wp_send_json($workingspace_ids, 200);
   }
 }

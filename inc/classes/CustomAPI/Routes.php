@@ -67,6 +67,42 @@ class Routes {
               'permission_callback' => array($this, 'get_permission_callback')
             ));
 
+            register_rest_route('wp/v2', 'workingspaces/(?P<workingspace_id>\d+)/like/(?P<user_id>\d+)', array(
+              'methods' => WP_REST_SERVER::READABLE,
+              'callback' => array(new Workingspaces(), 'like_workingspace_by_user_id'),
+              'args' => array(
+                'user_i' =>array(
+                    'validate_callback' => function($param, $request, $key) {
+                      return is_numeric( $param );
+                    }
+                ),
+                'workingspace_id' =>array(
+                  'validate_callback' => function($param, $request, $key) {
+                    return is_numeric( $param );
+                  }
+              ),
+              ),
+              'permission_callback' => array($this, 'get_cookie_authenticate_permission_callback')
+            ));
+
+            register_rest_route('wp/v2', 'workingspaces/(?P<workingspace_id>\d+)/dislike/(?P<user_id>\d+)', array(
+              'methods' => WP_REST_SERVER::READABLE,
+              'callback' => array(new Workingspaces(), 'dislike_workingspace_by_user_id'),
+              'args' => array(
+                'user_i' =>array(
+                    'validate_callback' => function($param, $request, $key) {
+                      return is_numeric( $param );
+                    }
+                ),
+                'workingspace_id' =>array(
+                  'validate_callback' => function($param, $request, $key) {
+                    return is_numeric( $param );
+                  }
+              ),
+              ),
+              'permission_callback' => array($this, 'get_cookie_authenticate_permission_callback')
+            ));
+
             //----------------------------------------
             //   R O O M S
             //----------------------------------------
@@ -91,7 +127,7 @@ class Routes {
             register_rest_route('wp/v2', 'inquiries', array(
               'methods' => WP_REST_SERVER::CREATABLE,
               'callback' => array(new Inquiries(), 'create_inquiries'),
-              'permission_callback' => array($this, 'get_post_permission_callback')
+              'permission_callback' => array($this, 'get_rest_post_permission_callback')
             ));
 
             //----------------------------------------
@@ -144,11 +180,17 @@ class Routes {
         return true;
     }
 
-    public function get_post_permission_callback($request) {
+    public function get_rest_post_permission_callback($request) {
       $headers = $request->get_headers();
+
+      if(!isset($headers['x_wp_nonce'][0])) return;
       
       if(!wp_verify_nonce($headers['x_wp_nonce'][0], 'wp_rest')) return false;
 
       return true;
-  }
+    }
+
+    public function get_cookie_authenticate_permission_callback($request) {
+      return !!wp_validate_auth_cookie('', 'logged_in');
+    }
 }
