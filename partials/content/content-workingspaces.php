@@ -19,7 +19,7 @@
         <div class="card-body">
             <div class="action-container">
                 <div class="action-like shadow-sm">
-                    <i class="<?php echo in_array(get_the_ID(), get_user_workingspaces()) ? 'fas fa-heart' : 'far fa-heart' ?>"></i>
+                    <i class="<?php echo in_array(get_the_ID(), get_user_workingspaces()) ? 'fas fa-heart is-added' : 'far fa-heart' ?>"></i>
                 </div>
             </div>
 

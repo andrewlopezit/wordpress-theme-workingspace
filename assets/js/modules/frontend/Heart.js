@@ -26,21 +26,32 @@ class Heart {
             this.$selectedHeartContainer = $el;
             this.initLoadingAnimHeartContainer();
 
-            this.like(workingspaceId).then(result => {
-                const {data: workingspaces} = result;
+            if($el.find('i').hasClass('is-added')) {
+                this.disLike(workingspaceId).then(result => {
+                    const {data: workingspaces} = result;
+    
+                    this.heartAnimation.repeat(0);
+                    this.initLikeAnimation();
+                    console.log(workingspaces);
+                    
+                }).catch(() => {
+    
+                });
 
-                this.heartAnimation.repeat(0);
-                this.initLikeAnimation();
-                console.log(workingspaces);
-                
-            }).catch(() => {
-
-            });
+            }else {
+                this.like(workingspaceId).then(result => {
+                    const {data: workingspaces} = result;
+    
+                    this.heartAnimation.repeat(0);
+                    this.initLikeAnimation();
+                    console.log(workingspaces);
+                    
+                }).catch(() => {
+    
+                });
+            }
 
         });
-    }
-
-    animation() {
     }
 
     initLoadingAnimHeartContainer() {
@@ -57,7 +68,13 @@ class Heart {
         $heart.removeAttr('style');
 
         this.heartAnimation = gsap.timeline({
-            onComplete: () => {$heart.attr('class', 'fas fa-heart');}
+            onComplete: () => {
+                if($heart.hasClass('is-added')) {
+                    $heart.attr('class','far fa-heart');
+                }else {
+                    $heart.attr('class', 'fas fa-heart is-added');
+                }
+            }
         });
         
         this.heartAnimation.to($heart, {scale: 2})
