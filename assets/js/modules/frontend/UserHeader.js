@@ -39,6 +39,7 @@ const UserHeader = (user = null) => {
                     const auth2 = gapi.auth2.getAuthInstance();
                     auth2.signOut().then( () => {});
                     this.$userContainer.find('.settings > li').eq(3).removeAttr('data-user-id');
+                    location.reload();
 
                 }).catch(() =>{});
             }

@@ -1,4 +1,3 @@
-import { userHeader } from "./index";
 import axios from "axios";
 
 class Heart {
@@ -9,31 +8,69 @@ class Heart {
         if(!this.$itemWorkspaceContainer.length) return;
 
         this.$itemContent = this.$itemWorkspaceContainer.find('.card-body');
+        this.$selectedHeartContainer;
 
         // local variable
         this.siteUrl = translation_array.site_url;
 
         // events
         this.events();
+
+        // animation
     }
 
     events() {
-        this.$itemContent.on('click', '.action-container > .action-like', async (e) => {
-            const user = await userHeader().getUser();
+        this.$itemContent.on('click', '.action-container > .action-like', e => {
+            const $el = $(e.currentTarget);
+            const workingspaceId = $el.parent().parent().parent().data('id');
+            this.$selectedHeartContainer = $el;
+            this.initLoadingAnimHeartContainer();
 
-            console.log(user);
+            this.like(workingspaceId).then(result => {
+                const {data: workingspaces} = result;
 
-            if(!user) return;
+                this.heartAnimation.repeat(0);
+                this.initLikeAnimation();
+                console.log(workingspaces);
+                
+            }).catch(() => {
 
-            this.like(user).then(result => {
-                console.log(result);
-            })
+            });
 
         });
     }
 
-    like(user) {
-        const endpoint = `${this.siteUrl}/wp-json/wp/v2/workingspaces/281/like/2`;
+    animation() {
+    }
+
+    initLoadingAnimHeartContainer() {
+        const $heart = this.$selectedHeartContainer.find('i');
+        $heart.removeAttr('style');
+
+        this.heartAnimation = gsap.timeline({repeat: -1 });
+        
+        this.heartAnimation.to($heart, {scale: 1.5});
+    }
+
+    initLikeAnimation() {
+        const $heart = this.$selectedHeartContainer.find('i');
+        $heart.removeAttr('style');
+
+        this.heartAnimation = gsap.timeline({
+            onComplete: () => {$heart.attr('class', 'fas fa-heart');}
+        });
+        
+        this.heartAnimation.to($heart, {scale: 2})
+                             .to($heart, {scale: 1, ease: 'bounce'});
+    }
+
+    like(workingspaceId) {
+        const endpoint = `${this.siteUrl}/wp-json/wp/v2/users/add/workingspace/${workingspaceId}`;
+        return axios(endpoint);
+    }
+
+    disLike(workingspaceId) {
+        const endpoint = `${this.siteUrl}/wp-json/wp/v2/users/remove/workingspace/${workingspaceId}`;
         return axios(endpoint);
     }
 }

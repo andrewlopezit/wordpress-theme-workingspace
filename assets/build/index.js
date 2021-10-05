@@ -309,6 +309,7 @@ class Auth {
         this.$btnLogin.html('Login');
         this.clearLoginInputs();
         this.$modalAuthContainer.hide();
+        location.reload();
       }).catch(() => {
         this.$loginErrorMessage.show().html(`
                     <strong>Error</strong>: The username <strong>${loginFormData.username}</strong> is not registered on this site.
@@ -460,6 +461,7 @@ class Auth {
           if (!user) return;
           Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])(user).init();
           this.isGoogleSignIn = false;
+          location.reload();
         }).catch(() => {});
       };
 
@@ -705,37 +707,76 @@ class HamburgerMenu {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 
 class Heart {
   constructor() {
     this.$itemWorkspaceContainer = $('.item.workspace');
     if (!this.$itemWorkspaceContainer.length) return;
-    this.$itemContent = this.$itemWorkspaceContainer.find('.card-body'); // local variable
+    this.$itemContent = this.$itemWorkspaceContainer.find('.card-body');
+    this.$selectedHeartContainer; // local variable
 
     this.siteUrl = translation_array.site_url; // events
 
-    this.events();
+    this.events(); // animation
   }
 
   events() {
-    this.$itemContent.on('click', '.action-container > .action-like', async e => {
-      const user = await Object(_index__WEBPACK_IMPORTED_MODULE_0__["userHeader"])().getUser();
-      console.log(user);
-      if (!user) return;
-      this.like(user).then(result => {
-        console.log(result);
-      });
+    this.$itemContent.on('click', '.action-container > .action-like', e => {
+      const $el = $(e.currentTarget);
+      const workingspaceId = $el.parent().parent().parent().data('id');
+      this.$selectedHeartContainer = $el;
+      this.initLoadingAnimHeartContainer();
+      this.like(workingspaceId).then(result => {
+        const {
+          data: workingspaces
+        } = result;
+        this.heartAnimation.repeat(0);
+        this.initLikeAnimation();
+        console.log(workingspaces);
+      }).catch(() => {});
     });
   }
 
-  like(user) {
-    const endpoint = `${this.siteUrl}/wp-json/wp/v2/workingspaces/281/like/2`;
-    return axios__WEBPACK_IMPORTED_MODULE_1___default()(endpoint);
+  animation() {}
+
+  initLoadingAnimHeartContainer() {
+    const $heart = this.$selectedHeartContainer.find('i');
+    $heart.removeAttr('style');
+    this.heartAnimation = gsap.timeline({
+      repeat: -1
+    });
+    this.heartAnimation.to($heart, {
+      scale: 1.5
+    });
+  }
+
+  initLikeAnimation() {
+    const $heart = this.$selectedHeartContainer.find('i');
+    $heart.removeAttr('style');
+    this.heartAnimation = gsap.timeline({
+      onComplete: () => {
+        $heart.attr('class', 'fas fa-heart');
+      }
+    });
+    this.heartAnimation.to($heart, {
+      scale: 2
+    }).to($heart, {
+      scale: 1,
+      ease: 'bounce'
+    });
+  }
+
+  like(workingspaceId) {
+    const endpoint = `${this.siteUrl}/wp-json/wp/v2/users/add/workingspace/${workingspaceId}`;
+    return axios__WEBPACK_IMPORTED_MODULE_0___default()(endpoint);
+  }
+
+  disLike(workingspaceId) {
+    const endpoint = `${this.siteUrl}/wp-json/wp/v2/users/remove/workingspace/${workingspaceId}`;
+    return axios__WEBPACK_IMPORTED_MODULE_0___default()(endpoint);
   }
 
 }
@@ -2181,6 +2222,7 @@ const UserHeader = (user = null) => {
           const auth2 = gapi.auth2.getAuthInstance();
           auth2.signOut().then(() => {});
           this.$userContainer.find('.settings > li').eq(3).removeAttr('data-user-id');
+          location.reload();
         }).catch(() => {});
       };
 

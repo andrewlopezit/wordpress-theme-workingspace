@@ -94,6 +94,7 @@ class Auth {
                 this.$btnLogin.html('Login');
                 this.clearLoginInputs();
                 this.$modalAuthContainer.hide();
+                location.reload();
 
             }).catch(() => {
                 this.$loginErrorMessage.show().html(`
@@ -255,6 +256,8 @@ class Auth {
 
                     userHeader(user).init();
                     this.isGoogleSignIn = false;
+                    location.reload();
+                    
                 }).catch(() => {})
             }
 
