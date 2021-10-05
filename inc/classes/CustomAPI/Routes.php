@@ -166,6 +166,19 @@ class Routes {
               ),
               'permission_callback' => array($this, 'get_cookie_authenticate_permission_callback')
             ));
+
+            register_rest_route('wp/v2', 'users/workingspaces', array(
+              'methods' => WP_REST_SERVER::READABLE,
+              'callback' => array(new Users(), 'get_user_workingspaces'),
+              'args' => array(
+                'workingspace_id' =>array(
+                  'validate_callback' => function($param, $request, $key) {
+                    return is_numeric( $param );
+                  }
+              ),
+              ),
+              'permission_callback' => array($this, 'get_cookie_authenticate_permission_callback')
+            ));
         });
         
     }

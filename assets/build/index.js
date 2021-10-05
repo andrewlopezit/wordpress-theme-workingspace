@@ -196,6 +196,11 @@ const Api = url => {
       return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
     }
 
+    getUserWorkingspaces() {
+      let url = `${this.endpoint}/wp-json/wp/v2/users/workingspaces`;
+      return axios__WEBPACK_IMPORTED_MODULE_0___default()(url);
+    }
+
     getStringFilterUrl(filter) {
       let url = '';
 
@@ -4134,6 +4139,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../assets/js/modules/frontend/index */ "./assets/js/modules/frontend/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
 
 
 class WorkingspacesMaps {
@@ -4374,7 +4382,7 @@ class WorkingspacesMaps {
       const filter = this.getWorkingspaceFilter;
       filter.offset = this.workingspaces.length;
       this.$btnLoadMore.hide();
-      Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.all([Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter), Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getUserWorkingspaces()]).then(axios__WEBPACK_IMPORTED_MODULE_1___default.a.spread((...responses) => {
         this.$btnLoadMore.show();
         load.end();
         const {
@@ -4382,21 +4390,24 @@ class WorkingspacesMaps {
             posts,
             pagination
           }
-        } = res;
+        } = responses[0];
+        const {
+          data: userWorkingspaces
+        } = responses[0];
 
         if (!posts) {
           this.$btnLoadMore.attr('disabled', true);
           return;
         }
 
-        const template = this.workingspacesTemplate(posts);
+        const template = this.workingspacesTemplate(posts, userWorkingspaces);
         $(template).insertBefore(this.$btnLoadMore.parent());
         this.setWorkingspaces(posts, true);
         const locations = this.workingspaces.map(workingspace => {
           return workingspace === null || workingspace === void 0 ? void 0 : workingspace.geolocation;
         });
         this.setMapMarkers(locations);
-      }).catch(e => {
+      })).catch(e => {
         load.displayError();
       });
     });
@@ -4441,8 +4452,9 @@ class WorkingspacesMaps {
     }
   }
 
-  workingspacesTemplate(data) {
+  workingspacesTemplate(data, userWorkingspaces) {
     let template = '';
+    const userWorkingspaceIds = userWorkingspaces.length > 0 ? userWorkingspaces.map(workingspace => workingspace.ID) : [];
 
     if (!data || data.length < 1) {
       return `<p>No items match your criteria.</p>`;
@@ -4480,7 +4492,7 @@ class WorkingspacesMaps {
                             <div class="card-body">
                                 <div class="action-container">
                                     <div class="action-like shadow-sm">
-                                        <i class="far fa-heart"></i>
+                                        <i class="${userWorkingspaceIds.includes(val === null || val === void 0 ? void 0 : val.ID) ? 'fas fa-heart is-added' : 'far fa-heart'}"></i>
                                     </div>
                                 </div>
 
@@ -4511,31 +4523,34 @@ class WorkingspacesMaps {
     this.$itemContainer.find('.item,p').remove();
     const load = Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$itemContainer).start();
     this.$btnLoadMore.hide();
-    Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter).then(res => {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.all([Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter), Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getUserWorkingspaces()]).then(axios__WEBPACK_IMPORTED_MODULE_1___default.a.spread((...responses) => {
       this.$btnLoadMore.show();
       const {
         data: {
-          posts
+          posts: filteredWorkingspaces
         }
-      } = res;
+      } = responses[0];
+      const {
+        data: userWorkingspaces
+      } = responses[1];
 
       if (this.$btnFindAllposts.length > 0) {
-        const template = this.workingspacesTemplate(posts);
+        const template = this.workingspacesTemplate(filteredWorkingspaces, userWorkingspaces);
         $(template).insertBefore(this.$btnFindAllposts);
       } else if (this.$btnLoadMore.length > 0) {
-        const template = this.workingspacesTemplate(posts);
+        const template = this.workingspacesTemplate(filteredWorkingspaces, userWorkingspaces);
         $(template).insertBefore(this.$btnLoadMore.parent());
       } else {
-        this.$itemContainer.append(this.workingspacesTemplate(posts));
+        this.$itemContainer.append(this.workingspacesTemplate(filteredWorkingspaces, userWorkingspaces));
       }
 
-      this.setWorkingspaces(posts);
+      this.setWorkingspaces(filteredWorkingspaces);
       const locations = this.workingspaces.map(workingspace => {
         return workingspace === null || workingspace === void 0 ? void 0 : workingspace.geolocation;
       });
       this.setMapMarkers(locations);
       load.end();
-    }).catch(e => {
+    })).catch(e => {
       console.log(e);
       load.displayError();
     });

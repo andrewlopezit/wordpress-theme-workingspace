@@ -1,5 +1,5 @@
 import {rangeSlider, api, loading, maps} from '../../../../../assets/js/modules/frontend/index';
-
+import axios from 'axios';
 class WorkingspacesMaps {
     constructor() {
         this.$workspaceContainer = $('#workspaces-map');
@@ -265,18 +265,22 @@ class WorkingspacesMaps {
 
             this.$btnLoadMore.hide();
 
-            api(this.siteUrl).getWorkingspacesByFilter(filter).then(res =>{
+            axios.all([
+                api(this.siteUrl).getWorkingspacesByFilter(filter),
+                api(this.siteUrl).getUserWorkingspaces()
+            ]).then(axios.spread((...responses) => {
                 this.$btnLoadMore.show();
                 load.end();
 
-                const {data: {posts, pagination}} = res;
+                const {data: {posts, pagination}} = responses[0];
+                const {data: userWorkingspaces} = responses[0];
 
                 if(!posts) {
                     this.$btnLoadMore.attr('disabled', true);
                     return;
                 }
 
-                const template = this.workingspacesTemplate(posts);
+                const template = this.workingspacesTemplate(posts, userWorkingspaces);
 
                 $(template).insertBefore(this.$btnLoadMore.parent());
                 this.setWorkingspaces(posts, true);
@@ -284,8 +288,7 @@ class WorkingspacesMaps {
                 const locations = this.workingspaces.map(workingspace => { return workingspace?.geolocation});
 
                 this.setMapMarkers(locations);
-
-            }).catch((e) => {
+            })).catch((e) => {
                 load.displayError();
             });
         });
@@ -334,9 +337,10 @@ class WorkingspacesMaps {
         }
     }
 
-    workingspacesTemplate(data) {
+    workingspacesTemplate(data, userWorkingspaces) {
         let template = '';
-        
+        const userWorkingspaceIds = userWorkingspaces.length > 0  ?userWorkingspaces.map(workingspace => workingspace.ID) : [];
+
         if(!data ||data.length < 1) {
             return `<p>No items match your criteria.</p>`;
         }
@@ -372,7 +376,7 @@ class WorkingspacesMaps {
                             <div class="card-body">
                                 <div class="action-container">
                                     <div class="action-like shadow-sm">
-                                        <i class="far fa-heart"></i>
+                                        <i class="${userWorkingspaceIds.includes(val?.ID) ? 'fas fa-heart is-added' : 'far fa-heart'}"></i>
                                     </div>
                                 </div>
 
@@ -406,33 +410,38 @@ class WorkingspacesMaps {
         const load =  loading(this.$itemContainer).start();
         this.$btnLoadMore.hide();
 
-        api(this.siteUrl).getWorkingspacesByFilter(filter).then(res =>{
+        axios.all([
+            api(this.siteUrl).getWorkingspacesByFilter(filter),
+            api(this.siteUrl).getUserWorkingspaces()
+        ]).then(axios.spread((...responses) => {
+
             this.$btnLoadMore.show();
 
-            const {data: {posts}} = res;
+            const {data: {posts: filteredWorkingspaces}} = responses[0];
+            const {data: userWorkingspaces} = responses[1];
 
             if(this.$btnFindAllposts.length > 0){
-                const template = this.workingspacesTemplate(posts);
+                const template = this.workingspacesTemplate(filteredWorkingspaces,userWorkingspaces);
 
                 $(template).insertBefore(this.$btnFindAllposts);
             }else if(this.$btnLoadMore.length > 0){
-                const template = this.workingspacesTemplate(posts);
+                const template = this.workingspacesTemplate(filteredWorkingspaces,userWorkingspaces);
 
                 $(template).insertBefore(this.$btnLoadMore.parent());
             }else{
-                this.$itemContainer.append(this.workingspacesTemplate(posts));
+                this.$itemContainer.append(this.workingspacesTemplate(filteredWorkingspaces,userWorkingspaces));
             }
 
-            this.setWorkingspaces(posts);
+            this.setWorkingspaces(filteredWorkingspaces);
 
             const locations = this.workingspaces.map(workingspace => { return workingspace?.geolocation});
             this.setMapMarkers(locations);
 
             load.end();
-        }).catch((e) => {
+        })).catch(e => {
             console.log(e);
             load.displayError();
-        });
+        })
     }
 
     getWorkingspacesInHtml() {

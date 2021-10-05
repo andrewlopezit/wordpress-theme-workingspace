@@ -24,6 +24,12 @@ const Api = (url) => {
             return axios(url);
         }
 
+        getUserWorkingspaces() {
+            let url =`${this.endpoint}/wp-json/wp/v2/users/workingspaces`;
+
+            return axios(url);
+        }
+
         getStringFilterUrl(filter) {
             let url = '';
 

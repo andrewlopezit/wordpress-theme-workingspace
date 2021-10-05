@@ -11,6 +11,7 @@
 namespace Inc\Classes\CustomAPI\Endpoints;
 
 use Inc\Classes\CustomAPI\Endpoints\BaseClass;
+
 use WP_Query;
 
 class Users extends BaseClass {
@@ -57,5 +58,32 @@ class Users extends BaseClass {
         }
     
         return wp_send_json($workingspace_ids, 200);
+      }
+
+      public function get_user_workingspaces() {
+        $user = $this->get_user_logged_in();
+
+        if(!$user) return wp_send_json_error('Bad request', 400);
+        $user_workingspace_meta_key = 'workingspace_like_ids';
+
+        $workingspace_ids = get_user_meta( $user->ID, $user_workingspace_meta_key, true);
+
+        if(!$workingspace_ids) return wp_send_json([], 200);
+
+        $args = array(
+          'post_type' => 'workingspaces',
+          'post__in' => $workingspace_ids,
+          'posts_per_page' => '-1'
+        );
+        
+        $results = new WP_Query($args);
+
+        $workingspaces = $results->posts;
+
+        if(!$workingspaces) wp_send_json([], 200);
+
+        $workingspaces = $this->add_workingspaces_additional_details($workingspaces);
+
+        return wp_send_json($workingspaces, 200);
       }
 }
