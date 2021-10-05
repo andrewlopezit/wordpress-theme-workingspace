@@ -4476,7 +4476,7 @@ class WorkingspacesMaps {
 
       const minimumCapacity = val.capacity_list ? Math.min.apply(Math, val.capacity_list) : null;
       const maximumCapacity = val.capacity_list ? Math.max.apply(Math, val.capacity_list) : null;
-      template += `<div class="item workspace card border-top-left border--post border--hover" data-geolocation="${val === null || val === void 0 ? void 0 : (_val$location = val.location) === null || _val$location === void 0 ? void 0 : _val$location.location}">
+      template += `<div class="item workspace card border-top-left border--post border--hover" data-id="${val === null || val === void 0 ? void 0 : val.ID}" data-geolocation="${val === null || val === void 0 ? void 0 : (_val$location = val.location) === null || _val$location === void 0 ? void 0 : _val$location.location}">
                             <img class="card-img-top" src="${val.featured_image}" alt="">
                             <div class="card-body">
                                 <div class="action-container">
