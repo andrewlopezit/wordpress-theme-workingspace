@@ -15,7 +15,6 @@ class Shortcodes {
     public function init() {
         add_shortcode('template_posts', array( $this, 'get_posts_template_parts_callback' ));
         add_shortcode('testimonials', array( $this, 'get_testimonials_template_parts_callback' ));
-        add_shortcode('workingspaces_map', array( $this, 'get_workingspaces_map_template_parts_callback' ));
         add_shortcode('request_form', array( $this, 'get_request_form_component_template_parts_callback' ));
     }
 
