@@ -1,4 +1,5 @@
 import axios from "axios";
+import { userHeader } from ".";
 
 class Heart {
     constructor() {
@@ -32,7 +33,7 @@ class Heart {
     
                     this.heartAnimation.repeat(0);
                     this.initLikeAnimation();
-                    console.log(workingspaces);
+                    userHeader().setUserWorkingSpacesCount(workingspaces.length);
                     
                 }).catch(() => {
     
@@ -44,7 +45,7 @@ class Heart {
     
                     this.heartAnimation.repeat(0);
                     this.initLikeAnimation();
-                    console.log(workingspaces);
+                    userHeader().setUserWorkingSpacesCount(workingspaces.length);
                     
                 }).catch(() => {
     

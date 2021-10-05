@@ -709,6 +709,8 @@ class HamburgerMenu {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! . */ "./assets/js/modules/frontend/index.js");
+
 
 
 class Heart {
@@ -737,7 +739,7 @@ class Heart {
           } = result;
           this.heartAnimation.repeat(0);
           this.initLikeAnimation();
-          console.log(workingspaces);
+          Object(___WEBPACK_IMPORTED_MODULE_1__["userHeader"])().setUserWorkingSpacesCount(workingspaces.length);
         }).catch(() => {});
       } else {
         this.like(workingspaceId).then(result => {
@@ -746,7 +748,7 @@ class Heart {
           } = result;
           this.heartAnimation.repeat(0);
           this.initLikeAnimation();
-          console.log(workingspaces);
+          Object(___WEBPACK_IMPORTED_MODULE_1__["userHeader"])().setUserWorkingSpacesCount(workingspaces.length);
         }).catch(() => {});
       }
     });
@@ -2211,6 +2213,8 @@ const UserHeader = (user = null) => {
       if (!this.$headerContainer.length) return;
       this.$actionHeaderContainer = this.$headerContainer.find('.action-header-container');
       this.$userSettingsContainer = this.$actionHeaderContainer.find('.user-settings-container');
+      this.$userBadgeContainer = this.$userSettingsContainer.find('.user-heart-badge-container');
+      this.$countUserWorkingspace = this.$userBadgeContainer.find('.badge.badge-danger');
       this.$authContainer = this.$actionHeaderContainer.find('.auth-container');
       this.$displayName = this.$userSettingsContainer.find('.user-container > .user-name');
       this.$settingDisplayName = this.$userSettingsContainer.find('.user-container > .settings > .setting-user-name');
@@ -2267,6 +2271,18 @@ const UserHeader = (user = null) => {
       }
 
       events();
+    }
+
+    setUserWorkingSpacesCount(count) {
+      console.log(count);
+
+      if (count > 0) {
+        this.$userBadgeContainer.children().eq(0).attr('class', 'fas fa-heart');
+        this.$countUserWorkingspace.addClass('is-display').html(count);
+      } else {
+        this.$userBadgeContainer.children().eq(0).attr('class', 'far fa-heart');
+        this.$countUserWorkingspace.removeClass('is-display').html('');
+      }
     }
 
   }

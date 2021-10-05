@@ -2997,6 +2997,10 @@ form.request-form#request-form .btn {
   padding: 0.3em;
   position: absolute;
   background-color: #dc3545;
+  display: none;
+}
+.header .action-header-container .user-settings-container .user-heart-badge-container .badge.badge-danger.is-display {
+  display: initial;
 }
 .header .action-header-container .user-settings-container .user-container {
   display: flex;

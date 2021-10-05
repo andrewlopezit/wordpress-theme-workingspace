@@ -14,9 +14,7 @@
                         <?php $totalWorkingspaces =  count(get_user_workingspaces()); ?>
                             <div class="user-heart-badge-container">
                                 <i class="<?php echo $totalWorkingspaces > 0 ? 'fas fa-heart' : 'far fa-heart'; ?>"></i>
-                                <?php if($totalWorkingspaces > 0):?>
-                                    <span class="badge badge-danger"><?php echo $totalWorkingspaces; ?></span>
-                                <?php endif;?>
+                                <span class="badge badge-danger <?php if($totalWorkingspaces > 0)  echo 'is-display'; ?>"><?php echo $totalWorkingspaces; ?></span>
                             </div>                            
                             <div class="user-container">
                                 <i class="far fa-user"></i>

@@ -10,6 +10,8 @@ const UserHeader = (user = null) => {
 
             this.$actionHeaderContainer = this.$headerContainer.find('.action-header-container');
             this.$userSettingsContainer = this.$actionHeaderContainer.find('.user-settings-container');
+            this.$userBadgeContainer = this.$userSettingsContainer.find('.user-heart-badge-container');
+            this.$countUserWorkingspace = this.$userBadgeContainer.find('.badge.badge-danger');
             this.$authContainer = this.$actionHeaderContainer.find('.auth-container');
             this.$displayName = this.$userSettingsContainer.find('.user-container > .user-name');
             this.$settingDisplayName = this.$userSettingsContainer.find('.user-container > .settings > .setting-user-name');
@@ -73,6 +75,18 @@ const UserHeader = (user = null) => {
             }
 
             events();
+        }
+
+        setUserWorkingSpacesCount(count) {
+            console.log(count);
+
+            if(count > 0) {
+                this.$userBadgeContainer.children().eq(0).attr('class', 'fas fa-heart');
+                this.$countUserWorkingspace.addClass('is-display').html(count);
+            }else {
+                this.$userBadgeContainer.children().eq(0).attr('class', 'far fa-heart');
+                this.$countUserWorkingspace.removeClass('is-display').html('');
+            }
         }
     }
 
