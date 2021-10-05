@@ -8,10 +8,14 @@ class Heart {
      
         if(!this.$itemWorkspaceContainer.length) return;
 
+        this.$modalAuthContainer = $('#auth-modal');
+        this.$loginContainer = this.$modalAuthContainer.find('.login-container');
+
         this.$selectedHeartContainer;
 
         // local variable
         this.siteUrl = translation_array.site_url;
+        this.isUserLoggedIn = translation_array.is_user_logged_in;
 
         // events
         this.events();
@@ -19,6 +23,13 @@ class Heart {
 
     events() {
         this.$itemWorkspaceContainer.on('click', '.item.workspace > .card-body > .action-container > .action-like', e => {
+
+            if(!this.isUserLoggedIn) {
+                this.$modalAuthContainer.show();
+                this.$loginContainer.show();
+                return;
+            }
+            
             const $el = $(e.currentTarget);
             const workingspaceId = $el.parent().parent().parent().data('id');
             this.$selectedHeartContainer = $el;

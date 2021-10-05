@@ -314,6 +314,7 @@ if(!class_exists('WorkingspaceTheme')) {
                         'variable_name' => 'translation_array',
                         'value' => array(
                             'site_url' => esc_url(site_url()),
+                            'is_user_logged_in' => is_user_logged_in(),
                             'workingspaces_nonce' => wp_create_nonce( 'wp_rest' ),
                             'assets_dir' => WORKINGSPACE_ASSETS_DIR,
                             'mapbox_public_key' => MAPBOX_PUBLIC_KEY,
