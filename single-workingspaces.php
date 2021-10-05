@@ -78,11 +78,11 @@
     </section>
 
     <section class="full-width workingspaces">
-        <div class="container">
-            <?php 
-            $country = get_field('related_country');
+     <?php 
+        $country = get_field('related_country');
 
-            if($country): ?>
+        if($country): ?>
+        <div class="container">
             <div class="row">
                 <div class="col">
                     <h1>
@@ -90,13 +90,9 @@
                     </h1>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <?php get_template_part('partials/content/content', 'workingspaces-maps', array('id' => get_the_ID(),'country' => array('id' => $country->ID, 'name' => $country->post_title))); ?>
-                </div>
-            </div>
-            <?php  endif;?>
         </div>
+        <?php get_template_part('partials/content/content', 'workingspaces-maps', array('id' => get_the_ID(),'country' => array('id' => $country->ID, 'name' => $country->post_title))); ?>
+        <?php  endif;?>
     </section>
 
     <div class="modal" id="request-form" tabindex="-1" role="dialog" aria-hidden="true">

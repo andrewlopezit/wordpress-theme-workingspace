@@ -1,6 +1,4 @@
 <?php
-ob_start();
-
 $country = $args['country'] ?? null;
 $max_posts = get_option( 'posts_per_page' );
 
