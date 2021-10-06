@@ -1,5 +1,6 @@
 import intlTelInput from 'intl-tel-input';
 import intlTelInputUtils from './intl-tel-input/utils.js';
+import { formValidation } from './index.js';
 import axios from 'axios';
 
 class RequestForm {
@@ -31,10 +32,11 @@ class RequestForm {
         // init gsap animation
         this.initAnimation();
 
+        this.initRequestForm();
+
         // initialize events function
         this.events();
 
-        this.initRequestForm();
 
         // init international country code input
         this.initIntlTelCountryCodeInput();
@@ -67,19 +69,8 @@ class RequestForm {
     }
 
     events() {
-        this.$formGroup.on('keyup change', 'input, select, textarea', e => {
-            const $el = $(e.currentTarget);
-            
-            // validate form
-            const isValid = this.isInputValid($el);
-            this.checkRequestForm();
-
-            if(!isValid) {
-                $el.css('--border-color', '#dc3545');
-                return;
-            }
-
-            $el.css('--border-color', this.primaryColor);
+        this.requestForm.inputs.on('keyup change', e => {
+            this.validateForm();
         });
 
         this.$formButton.on('click', e => {
@@ -87,7 +78,7 @@ class RequestForm {
             
             if(!this.requestForm.isValid) return;
 
-            const requestFormData = this.getRequestFormData();
+            const requestFormData = formValidation(this.requestForm.inputs).getFormData();
 
             this.$formButton.html('submitting');
             this.loadingBarAnimation.play();
@@ -108,32 +99,6 @@ class RequestForm {
                 this.alertBoxAnimation.play();
             });
         });
-    }
-
-    isInputValid ($input) {
-        const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        
-        if(($input.attr('required') && !$input.val().length) ||
-        ($input.attr('minlength') && $input.val().length < +$input.attr('minlength')) ||
-        ($input.attr('maxlength') && $input.val().length > +$input.attr('maxlength')) ||
-        ($input.attr('type') === 'email' && !emailPattern.test($input.val())) ||
-        ($input.attr('type') === 'tel' && !$input.hasClass('is-valid'))) {
-            return false;
-        }
-
-        return true;
-    }
-
-    checkRequestForm() {
-        this.requestForm.inputValidations = [];
-
-        this.requestForm.inputs.each((i, el) => {
-            this.requestForm.inputValidations.push(this.isInputValid($(el)));
-        });
-
-        const isFormValid = this.requestForm.inputValidations.every(input => input === true);
-        this.requestForm.isValid = isFormValid;
-        this.$formButton.attr('disabled', !isFormValid);
     }
 
     initDatePicker() {
@@ -179,10 +144,11 @@ class RequestForm {
             const countryData = iti.getSelectedCountryData();
 
             iti.setCountry(countryData.iso2);
-            validatedTelNumber(e.currentTarget);
-            this.checkRequestForm();
 
+            validatedTelNumber(e.currentTarget);
+            this.validateForm();
         });
+        
         $(input).on('keyup', e => {
 
             if(isNaN(e.currentTarget.value)){
@@ -195,9 +161,9 @@ class RequestForm {
 
             if($(e.currentTarget).val().length && !$label.hasClass('is-active')) $label.addClass('is-active');
             if(!$(e.currentTarget).val().length) $label.removeClass('is-active');
-            
+
             validatedTelNumber(e.currentTarget);
-            
+            this.validateForm();
         });
 
 
@@ -223,14 +189,16 @@ class RequestForm {
         this.$formButton.attr('disabled', true);
     }
 
-    getRequestFormData() {
-        let obj = {};
+    validateForm() {
+        const isFormValid = formValidation(this.requestForm.inputs).validate();
+        this.requestForm.isValid = isFormValid;
 
-        this.requestForm.inputs.each((i, el) => {
-            obj[$(el).attr('name')] = $(el).val();
-        });
+        if(!isFormValid) {
+            this.$formButton.attr('disabled', true);
+            return;
+        }
 
-        return obj;
+        this.$formButton.attr('disabled', false);
     }
 
     submitForm(data) {

@@ -1051,7 +1051,7 @@ class Main {
     };
 
     addRemoveLabelClassFill(this.$formGroup.find('input, select, textarea'));
-    this.$formGroup.on('keyup', 'input, select, textarea', e => {
+    this.$formGroup.on('keyup change', 'input, select, textarea', e => {
       const $el = $(e.currentTarget);
       addRemoveLabelClassFill($el);
     });
@@ -1573,8 +1573,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(intl_tel_input__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _intl_tel_input_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./intl-tel-input/utils.js */ "./assets/js/modules/frontend/intl-tel-input/utils.js");
 /* harmony import */ var _intl_tel_input_utils_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_intl_tel_input_utils_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index.js */ "./assets/js/modules/frontend/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
@@ -1592,16 +1594,16 @@ class RequestForm {
 
     this.assetsDir = translation_array.assets_dir;
     this.siteUrl = translation_array.site_url;
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common["X-WP-Nonce"] = translation_array.workingspaces_nonce;
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.defaults.headers.common["X-WP-Nonce"] = translation_array.workingspaces_nonce;
     this.primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
     this.requestForm; //init input datepicker
 
     this.initDatePicker(); // init gsap animation
 
-    this.initAnimation(); // initialize events function
+    this.initAnimation();
+    this.initRequestForm(); // initialize events function
 
-    this.events();
-    this.initRequestForm(); // init international country code input
+    this.events(); // init international country code input
 
     this.initIntlTelCountryCodeInput();
   }
@@ -1641,23 +1643,13 @@ class RequestForm {
   }
 
   events() {
-    this.$formGroup.on('keyup change', 'input, select, textarea', e => {
-      const $el = $(e.currentTarget); // validate form
-
-      const isValid = this.isInputValid($el);
-      this.checkRequestForm();
-
-      if (!isValid) {
-        $el.css('--border-color', '#dc3545');
-        return;
-      }
-
-      $el.css('--border-color', this.primaryColor);
+    this.requestForm.inputs.on('keyup change', e => {
+      this.validateForm();
     });
     this.$formButton.on('click', e => {
       e.preventDefault();
       if (!this.requestForm.isValid) return;
-      const requestFormData = this.getRequestFormData();
+      const requestFormData = Object(_index_js__WEBPACK_IMPORTED_MODULE_2__["formValidation"])(this.requestForm.inputs).getFormData();
       this.$formButton.html('submitting');
       this.loadingBarAnimation.play();
       this.$formButton.attr('disabled', true);
@@ -1675,26 +1667,6 @@ class RequestForm {
         this.alertBoxAnimation.play();
       });
     });
-  }
-
-  isInputValid($input) {
-    const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if ($input.attr('required') && !$input.val().length || $input.attr('minlength') && $input.val().length < +$input.attr('minlength') || $input.attr('maxlength') && $input.val().length > +$input.attr('maxlength') || $input.attr('type') === 'email' && !emailPattern.test($input.val()) || $input.attr('type') === 'tel' && !$input.hasClass('is-valid')) {
-      return false;
-    }
-
-    return true;
-  }
-
-  checkRequestForm() {
-    this.requestForm.inputValidations = [];
-    this.requestForm.inputs.each((i, el) => {
-      this.requestForm.inputValidations.push(this.isInputValid($(el)));
-    });
-    const isFormValid = this.requestForm.inputValidations.every(input => input === true);
-    this.requestForm.isValid = isFormValid;
-    this.$formButton.attr('disabled', !isFormValid);
   }
 
   initDatePicker() {
@@ -1730,7 +1702,7 @@ class RequestForm {
       const countryData = iti.getSelectedCountryData();
       iti.setCountry(countryData.iso2);
       validatedTelNumber(e.currentTarget);
-      this.checkRequestForm();
+      this.validateForm();
     });
     $(input).on('keyup', e => {
       if (isNaN(e.currentTarget.value)) {
@@ -1741,6 +1713,7 @@ class RequestForm {
       if ($(e.currentTarget).val().length && !$label.hasClass('is-active')) $label.addClass('is-active');
       if (!$(e.currentTarget).val().length) $label.removeClass('is-active');
       validatedTelNumber(e.currentTarget);
+      this.validateForm();
     });
 
     const validatedTelNumber = el => {
@@ -1763,18 +1736,22 @@ class RequestForm {
     this.$formButton.attr('disabled', true);
   }
 
-  getRequestFormData() {
-    let obj = {};
-    this.requestForm.inputs.each((i, el) => {
-      obj[$(el).attr('name')] = $(el).val();
-    });
-    return obj;
+  validateForm() {
+    const isFormValid = Object(_index_js__WEBPACK_IMPORTED_MODULE_2__["formValidation"])(this.requestForm.inputs).validate();
+    this.requestForm.isValid = isFormValid;
+
+    if (!isFormValid) {
+      this.$formButton.attr('disabled', true);
+      return;
+    }
+
+    this.$formButton.attr('disabled', false);
   }
 
   submitForm(data) {
     if (!data) return;
     const url = `${this.siteUrl}/wp-json/wp/v2/inquiries`;
-    return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(url, data);
+    return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(url, data);
   }
 
 }
