@@ -83,12 +83,12 @@ final class Init {
     }
 
     public function save_meta_custom_rooms_floorplan($post_id) {
-        if (! isset($_POST['custom_rooms_floorplan_nonce'])) {
+        if (!isset($_POST['custom_rooms_floorplan_nonce'])) {
 			return $post_id;
 		}
 
 		$nonce = $_POST['custom_rooms_floorplan_nonce'];
-		if (! wp_verify_nonce( $nonce, 'custom_rooms_floorplan_nonce_form' )) {
+		if (!wp_verify_nonce( $nonce, 'custom_rooms_floorplan_nonce_form' )) {
 			return $post_id;
 		}
 
@@ -96,7 +96,7 @@ final class Init {
 			return $post_id;
 		}
 
-		if (! current_user_can( 'edit_post', $post_id ) ) {
+		if (!current_user_can( 'edit_post', $post_id ) ) {
 			return $post_id;
 		}
 

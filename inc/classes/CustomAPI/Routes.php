@@ -57,7 +57,7 @@ class Routes {
                   }
               ),
               ),
-              'permission_callback' => array(new Workingspaces(), 'get_permission_callback')
+              'permission_callback' => array($this, 'get_permission_callback')
             ));
 
             register_rest_route('wp/v2', 'workingspaces', array(
