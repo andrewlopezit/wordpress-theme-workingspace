@@ -11,6 +11,7 @@
 namespace Inc\Gutenberg;
 
 use Inc\Gutenberg\Callbacks\FrontEndCallbacks;
+use Inc\Gutenberg\Pattern;
 
 class Gutenberg {
 
@@ -20,6 +21,9 @@ class Gutenberg {
             add_filter( 'block_categories_all', array($this, 'workingspace_block_categories'));
 
             $this->add_theme_color();
+
+            // include pattern
+            new Pattern();
 
         }else {
             $this->register_front_end_blocks();
