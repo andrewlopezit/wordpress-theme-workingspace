@@ -1201,11 +1201,14 @@ h2 span::after {
   bottom: 5px;
 }
 h2 mark::after {
-  bottom: 8px;
+  bottom: 4px;
 }
 
 h3 {
   font-size: 1.8em;
+}
+h3 mark::after {
+  bottom: 3px;
 }
 
 h4 {
@@ -1216,13 +1219,18 @@ h4 span::after {
   bottom: 4px;
 }
 h4 mark::after {
-  bottom: 3px;
+  height: 4px;
+  bottom: 4px;
 }
 
 h5 {
   font-size: 1.2em;
   font-weight: 400;
   line-height: 1.1em;
+}
+h5 mark::after {
+  height: 3px;
+  bottom: 3px;
 }
 
 h6 {
