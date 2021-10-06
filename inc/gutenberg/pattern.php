@@ -22,7 +22,12 @@ class Pattern {
             array(
                 'title'       => __( 'Content Pattern', THEME_NAME ),
                 'description' => __( 'Template Gutenberg blocs', 'Block pattern description', 'workingspaces' ),
-                'content'     => '<!-- wp:heading {"textAlign":"center","level":1,"className":"center","highlightedText":"Gutenberg Blocks"} -->
+                'content'     => '
+                <!-- wp:spacer -->
+                <div style="height:100px" aria-hidden="true" class="wp-block-spacer"></div>
+                <!-- /wp:spacer -->
+                
+                <!-- wp:heading {"textAlign":"center","level":1,"className":"center","highlightedText":"Gutenberg Blocks"} -->
                 <h1 class="has-text-align-center center"><mark>Gutenberg Blocks</mark></h1>
                 <!-- /wp:heading -->
                 
