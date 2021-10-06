@@ -70,17 +70,18 @@ class Workingspaces extends BaseClass {
   public function get_workingspace_rooms($request) {
 
     $workingspace_id = $request['id'];
-    $request_search = $request['search'];
-    $room_ids = isset($request['ids']) ? explode(',',$request['ids']) : null;
-    
-    if(!$room_ids) return wp_send_json_error('No results found', 404);
     
     $query = array(
       'post_type' => 'rooms',
-      's' => sanitize_text_field($request_search),
     );
+
+    if(isset($request['search'])) {
+      $request_search = $request['search'];
+      $query['s'] = sanitize_text_field($request_search);
+    }
     
-    if($room_ids) {
+    if(isset($request['ids'])) {
+      $room_ids = isset($request['ids']) ? explode(',',$request['ids']) : null;
       $query['post__in'] = $room_ids;
       $query['posts_per_page']  = -1;
     }
