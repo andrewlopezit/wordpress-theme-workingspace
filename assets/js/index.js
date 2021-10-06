@@ -15,9 +15,9 @@ import Modal from './modules/frontend/Modal';
 import SearchPage from './modules/frontend/SearchPage';
 import Auth from './modules/frontend/Auth';
 import Heart from './modules/frontend/Heart';
+import WorkingspacesMaps from './modules/frontend/WorkingspacesMaps';
 
 import CustomRoomsMeta from '../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta';
-import CustomMapsMeta from '../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta';
 
 // instantiate module classes
 let heroImageSlider;
@@ -25,7 +25,6 @@ let hamburgerMenu;
 let testimonialsSlider;
 let main;
 let customRoomsMeta;
-let customMapsMeta;
 let posts;
 let requestForm;
 let page;
@@ -33,6 +32,7 @@ let modal;
 let searchPage;
 let auth;
 let heart;
+let workingspacesMaps;
 
 const hompage = document.querySelector(".home");
 
@@ -50,7 +50,7 @@ modal = new Modal();
 searchPage = new SearchPage();
 auth = new Auth();
 heart = new Heart();
+workingspacesMaps = new WorkingspacesMaps();
 
 // include front-end init
 customRoomsMeta = new CustomRoomsMeta();
-customMapsMeta = new CustomMapsMeta();

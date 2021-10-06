@@ -1,4 +1,4 @@
-import {rangeSlider, api, loading, maps} from '../../../../../assets/js/modules/frontend/index';
+import {rangeSlider, api, loading, maps} from './index';
 import axios from 'axios';
 class WorkingspacesMaps {
     constructor() {
