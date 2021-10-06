@@ -6,8 +6,7 @@ $data = get_post_meta( $post->ID, 'custom_maps_mapbox_form_key', true );
 
 <div class="custom-meta-maps-container" id="custom-maps-meta">
     <div class="custom-maps--spinner is-loading maps"></div>
-    <form action="">
-        <input type="hidden" name="location" value="<?php echo isset($data['location']) ? $data['location'] : '' ?>">
+    <input type="hidden" name="location" value="<?php echo isset($data['location']) ? $data['location'] : '' ?>">
         <?php 
             wp_nonce_field('custom_maps_mapbox_nonce_form', 'custom_maps_mapbox_nonce');
         ?>
@@ -19,5 +18,4 @@ $data = get_post_meta( $post->ID, 'custom_maps_mapbox_form_key', true );
     </div>
     <div class="map-container">
     </div>
-    </form>
 </div>

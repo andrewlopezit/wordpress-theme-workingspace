@@ -109,5 +109,7 @@ final class Init {
     public function floor_plan_shortcode($args = null) {
         $this->frontend = new FrontEndCallbacks();
         $this->frontend->index($args);
+
+        return ob_get_clean();
     }
 }

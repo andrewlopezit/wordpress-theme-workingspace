@@ -1,8 +1,7 @@
 <?php 
 ob_start();
 
-$data = get_post_meta( $post->ID, 'custom_rooms_floorplan_form_key', true 
-);
+$data = get_post_meta( $post->ID, 'custom_rooms_floorplan_form_key', true);
 ?>
 
 <div class="custom-meta-rooms-container" id="custom-rooms-meta" data-id="<?php echo $post->ID ?>">
@@ -21,13 +20,11 @@ $data = get_post_meta( $post->ID, 'custom_rooms_floorplan_form_key', true
     <div class="content-container">
         <div class="floorplan-container">
             <div class="svg-clustering <?php echo !isset($data['floorplan']) ? 'is-display' : '' ?>">
-                <form action="">
-                    <textarea rows="15" name="custom_rooms_floorplan" placeholder="Paste svg code here">
-                    </textarea>
-                   <?php 
-                   wp_nonce_field('custom_rooms_floorplan_nonce_form', 'custom_rooms_floorplan_nonce');
-                   ?>
-                </form>
+                <textarea rows="15" name="custom_rooms_floorplan" placeholder="Paste svg code here">
+                </textarea>
+                <?php 
+                    wp_nonce_field('custom_rooms_floorplan_nonce_form', 'custom_rooms_floorplan_nonce');
+                ?>
             </div>
             <div class="output <?php echo isset($data['floorplan']) ? 'is-display' : '' ?>">
                 <?php 
