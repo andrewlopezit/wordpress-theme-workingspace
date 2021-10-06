@@ -1,0 +1,235 @@
+$background-color: #E6EBE9;
+
+.hero-section {
+    &.front-page {
+        margin-bottom: $margin-bottom-section;
+    }
+
+    .content {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+        .headline {
+            width: 350px;
+        }
+
+        .sub-paragraph {
+            margin: 30px 0;
+        }
+
+        .btn {
+            width: 200px
+        }
+    }
+    
+}
+
+.workspace-section--background {
+    position: relative;
+    margin-bottom: $margin-bottom-section;
+
+    &::after {
+        content: '';
+        position: absolute;
+        background-color: $background-color;
+        top: -15em;
+        right: 0;
+        bottom: -15em;
+        left: -5em;
+        z-index: -5;
+
+        @include clip-polygon((0 50%, 100% 100%, 100% 0));
+    }
+
+    .workspaces-section {
+        h1 {
+            width: 210px;
+            margin-bottom: 50px;
+        }
+    }   
+}
+
+section.about-our-service {
+    margin-bottom: $margin-bottom-section;
+    
+    p {
+        margin: 2em 0;
+    }
+
+    .img-service--background {
+        background-image: url('../background/our-service-img.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        position: relative;
+
+        &::after {
+            position: absolute;
+            content: '';
+            width: 40%;
+            height: 40%;
+            top: -2em;
+            right: 2em;
+            z-index: -1;
+
+            background-image: url('../background/geometry-dotted-circle.svg');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    }
+
+    .services {
+        margin-top: $margin-bottom-section;
+        .card {
+
+            @include transition($transition);
+            
+            &:hover{
+                background-color: var(--secondary-color, $secondary-color);
+                .card-body {
+                    .icon {
+                        background-color: #fff;
+                    }
+                    h4, p, a {
+                        color: #fff;
+                        &::after {
+                            background-color: #fff;
+                        }
+                    }
+                }
+            }
+            border: 0;
+            border-radius: 0;
+
+            .card-body{
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                padding: 4rem 3rem;
+
+                .icon {
+                    width: 50px;
+                    height: 50px;
+                    cursor: default;
+                }
+                
+                h4 {
+                    margin-top: 10px;
+                    position: relative;
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        width: 40px;
+                        height: 2px;
+                        background-color: #f2f2f2;
+                        bottom: -5px;
+
+                        left: 50%;
+                        transform: translateX(-50%);
+                    }
+                }
+
+                a {
+                    text-transform: uppercase;
+                    font-weight: 600;
+                }
+            }
+            
+        }
+    }
+}
+
+section.blog-post {
+    background-color: lighten($background-color, 5%);
+    padding: 2rem 0;
+
+    h1 {
+        position: relative;
+    }
+    
+    .heading--sub-paragraph {
+        margin-bottom: 50px;
+    }
+}
+
+section.testimonials {
+    margin-bottom: $margin-bottom-section;
+}
+
+
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+
+}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) { 
+    $margin-bottom-section: 50px;
+
+    .hero-section,
+    .workspace-section--background,
+    section.about-our-service,
+    section.blog-post,
+    section.testimonials {
+        margin-bottom: $margin-bottom-section !important;
+    }
+
+    .hero-section{
+       .row {
+           display: flex;
+           flex-direction: column;
+       }
+
+        .image-slider {
+            margin-bottom: $margin-bottom-section - 30 !important;
+        }
+
+        .content {
+            .headline {
+                width: 100%;
+            }
+        }
+    }
+
+    section.about-our-service {
+        .services {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+    $margin-bottom-section: 80px;
+
+    .hero-section,
+    .workspace-section--background,
+    section.about-our-service,
+    section.blog-post,
+    section.testimonials {
+        margin-bottom: $margin-bottom-section;
+    }
+
+    section.about-our-service {
+        .services {
+            .card {
+                .card-body {
+                    padding: 4rem 0;
+                }
+            }
+        }
+    }
+    
+}
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {
+
+}

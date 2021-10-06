@@ -1,0 +1,234 @@
+@charset "utf-8";
+
+// Configuration
+@import "config";
+
+// Mixins
+@import "mixins";
+
+/*------------------------------------*
+    TABLE OF CONTENTS
+*------------------------------------*/
+
+/**
+* BASE
+* - FONTS
+* - MAIN
+* - NORMALIZE
+* - TYPOGRAPHY
+* - LAYOUT
+* - COMPONENTS
+* - MAIN
+*
+* COMPONENTS
+* - ICONS
+* - SLIDER
+* - WIDGETS
+* - BUTTONS
+* - INPUTS
+* - WORDPRESS
+* - SOCIAL MEDIA
+* - MAPS
+* - REQUEST FORM
+* - HERO IMAGE SLIDER
+* - CATEGORIES
+* - BRAND
+* - HEADER/HAMBURGER
+* - HEADER/NAVIGATION
+* - HEADER
+* - FOOTER/NAVIGATION
+* - FOOTER/CONTACT INFO
+* - FOOTER
+*
+* PARTIALS
+* - WORKSPACES
+* - POSTS
+* - TESTIMONIALS
+* - AUTH
+* - GUTENBERG
+*
+*
+* PAGES
+* - CUSTOM META FLOORPLAN
+* - CUSTOM WORKINGSPACE MAPS
+* - PAGE
+* - FRONT PAGE
+* - SINGLE WORKINGSPACES
+* - SEARCH PAGE
+*/
+
+/*------------------------------------*
+	FONTS
+*------------------------------------*/
+@import 'base/fonts/fonts.scss';
+
+/*------------------------------------*
+	MAIN
+*------------------------------------*/
+@import 'base/main.scss';
+
+/*------------------------------------*
+	NORMALIZE
+*------------------------------------*/
+@import 'base/normalize';
+
+/*------------------------------------*
+	TYPOGRAPHY
+*------------------------------------*/
+@import 'base/typography.scss';
+
+/*------------------------------------*
+	COMPONENTS
+*------------------------------------*/
+@import 'base/shared.scss';
+
+/*------------------------------------*
+	ICONS
+*------------------------------------*/
+@import 'components/icons';
+
+/*------------------------------------*
+	WIDGETS
+*------------------------------------*/
+@import 'components/slider';
+
+/*------------------------------------*
+	WIDGETS
+*------------------------------------*/
+@import 'components/widgets';
+
+/*------------------------------------*
+	BUTTONS
+*------------------------------------*/
+@import 'components/buttons';
+
+/*------------------------------------*
+	INPUTS
+*------------------------------------*/
+@import 'components/inputs';
+
+/*------------------------------------*
+	WORDPRESS
+*------------------------------------*/
+@import 'components/wordpress';
+
+/*------------------------------------*
+	SOCIAL MEDIA
+*------------------------------------*/
+@import 'components/social-media';
+
+/*------------------------------------*
+	MAPS
+*------------------------------------*/
+@import 'components/maps';
+
+/*------------------------------------*
+	REQUEST FORM
+*------------------------------------*/
+@import 'components/request-form.scss';
+
+/*------------------------------------*
+	HERO IMAGE SLIDER
+*------------------------------------*/
+@import 'components/hero-image-slider.scss';
+
+/*------------------------------------*
+	CATEGORIES
+*------------------------------------*/
+@import 'components/categories.scss';
+
+/*------------------------------------*
+	BRAND
+*------------------------------------*/
+@import 'components/brand.scss';
+
+/*------------------------------------*
+	HEADER/HAMBURGER
+*------------------------------------*/
+@import 'components/header/hamburger.scss';
+
+/*------------------------------------*
+	HEADER/NAVIGATION
+*------------------------------------*/
+@import 'components/header/navigation';
+
+/*------------------------------------*
+	HEADER
+*------------------------------------*/
+@import 'components/header/header.scss';
+
+/*------------------------------------*
+	FOOTER NAVIGATION
+*------------------------------------*/
+@import 'components/footer/navigation.scss';
+
+/*------------------------------------*
+	FOOTER NAVIGATION
+*------------------------------------*/
+@import 'components/footer/contact-info.scss';
+
+/*------------------------------------*
+	FOOTER
+*------------------------------------*/
+@import 'components/footer/footer.scss';
+
+/*------------------------------------*
+	P A R T I A L S
+	  WORKSPACES
+*------------------------------------*/
+@import 'partials/workspace.scss';
+
+/*------------------------------------*
+	  POSTS
+*------------------------------------*/
+@import 'partials/posts.scss';
+
+/*------------------------------------*
+	  T E S T I M O N I A L S
+*------------------------------------*/
+@import 'partials/testimonials.scss';
+
+/*------------------------------------*
+	  A U T H
+*------------------------------------*/
+@import 'partials/auth.scss';
+
+/*------------------------------------*
+	  G U T E N B E R G
+*------------------------------------*/
+@import '../../inc//gutenberg/scss/front-end/gutenberg.scss';
+
+/*------------------------------------*
+	P A G E S
+*------------------------------------*/
+/*------------------------------------*
+	CUSTOM META FLOORPLAN
+*------------------------------------*/
+@import '../../inc/customroomsmeta/scss/custom-rooms-meta-front-end.scss';
+
+/*------------------------------------*
+	CUSTOM WORKINGSPACE MAPS
+*------------------------------------*/
+@import '../../inc/custommapsmeta/scss/custom-maps-meta-front-end.scss';
+
+/*------------------------------------*
+	PAGE
+*------------------------------------*/
+@import 'pages/page.scss';
+
+/*------------------------------------*
+	FRONT PAGE
+*------------------------------------*/
+
+@import 'pages/front-page.scss';
+
+/*------------------------------------*
+	SINGLE WORKINGSPACES
+*------------------------------------*/
+@import 'pages/single-workingspaces.scss';
+
+/*------------------------------------*
+	SEARCH PAGE
+*------------------------------------*/
+@import 'pages/search-page.scss';
+

@@ -1,0 +1,63 @@
+$color: $hamburger-layer-color;
+
+.hamburger {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    cursor: pointer;
+    align-items: flex-end;
+    
+    z-index: 100;
+
+    &.is-hover,
+    &.is-active {
+        span {
+            background-color: #fff !important;
+
+            &:nth-child(2) {
+                width: $hamburger-layer-width;
+            }
+        }
+    }
+
+    span {
+        width: $hamburger-layer-width;
+        height: $hamburger-layer-height;
+        background-color: $color;
+        margin: $hamburger-layer-spacing 0;
+
+        @include transition($transition);
+
+        &:nth-child(2){
+            width: calc(#{$hamburger-layer-width} / 1.6);
+        }
+    }
+}
+
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) {
+   .hamburger {
+       margin-right: -10px;
+   }
+ }
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { 
+    
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+
+ }
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { 
+
+}

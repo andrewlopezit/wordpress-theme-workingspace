@@ -1,0 +1,18 @@
+.workingspace{
+    &.gutenberg--inspector-controls.wordpress-heading-border {
+        .container {
+            margin-left: 2px;
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+
+            h2 {
+                margin: 0;
+            }
+        }
+    }
+
+    &.gutenberg--inspector-controls.wordpress-column-container.toggle-settings{
+        margin-top: 20px;
+    }
+}

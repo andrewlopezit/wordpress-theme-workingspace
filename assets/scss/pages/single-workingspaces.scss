@@ -1,0 +1,104 @@
+$background-color: #E6EBE9;
+
+.single-workingspaces.page {
+    .hero-section {
+    }
+    .service {
+        margin-bottom: $margin-bottom-section;
+        h1 {
+         margin-bottom: $margin-bottom-section - 50;
+        }
+
+        .card {
+            border: 0 !important;
+
+
+            .card-body{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 3em !important;
+
+                flex-direction: column !important;
+
+                .icon {
+                    width: 50px;
+                    height: 50px;
+                    cursor: default;
+                }
+
+                h4 {
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+
+    .spaces {
+        margin-bottom: $margin-bottom-section;
+        
+        h1 {
+            width: 300px;
+        }
+
+        .location-container {
+            display: flex;
+            align-items: center;
+            margin-top: 30px;
+            margin-bottom: 10px;
+    
+            i {
+                margin-right: 10px;
+                font-size: 1.5em;
+                position: relative;
+    
+                @include transform(translateY(-10px));
+    
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -6px;
+                    left: 50%;
+                    width: 5px;
+                    height: 2px;
+                    background-color: var(--primary-color, $primary-color);
+    
+                    @include transform(translateX(-48%));
+                    @include animation(marker-anim 1s linear infinite);
+                }
+            }
+        }
+    }
+
+    .workingspaces {
+        background-color: lighten($background-color, 5%);
+
+        padding: 2rem 0;
+
+        h1, p {
+            width: 370px;
+        }
+    }
+}
+
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+    .single-workingspaces.page {
+        .workingspaces h1 {
+            width: 100%;
+        }
+    }
+}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) { 
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+}
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {
+}

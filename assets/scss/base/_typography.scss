@@ -1,0 +1,267 @@
+/**
+ * Headings.
+ */
+ h1,
+ h2,
+ h3,
+ h4,
+ h5,
+ h6 {
+     font-style: $heading-font-style;
+     font-family: $heading-font-family;
+
+     margin: 0;
+     line-height: 1.4;
+
+     span, mark {
+        position: relative;
+        z-index: 1;
+        background-color: transparent !important;
+        color: inherit;
+        padding: 0;
+
+        &::after {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 5px;
+            right: -8px;
+            bottom: 6px;
+            background-color: var(--primary-color, $primary-color);
+            z-index: -1;
+        }
+    }
+
+    &.center {
+        span, mark {
+            &::after {
+                right: 10%;
+                left: 10%;
+                width: 80%;
+            }
+        }
+    }
+ }
+ 
+ h1 {
+     font-size: 2.5em;
+     line-height: 1.2em;
+
+     span {
+         &::after {
+             bottom: 6px;
+         }
+     }
+
+     &.--border-left {
+         border-left: 6px solid var(--primary-color, $primary-color);
+         padding-left: 0.8em;
+     }
+ }
+ 
+ h2 {
+     font-size: 2em;
+
+     span {
+         &::after {
+             bottom: 5px;
+         }
+     }
+
+     mark {
+        &::after {
+            bottom: 4px;
+        }
+    }
+ }
+ 
+ h3 {
+     font-size: 1.8em;
+     mark {
+        &::after {
+            bottom: 3px;
+        }
+    }
+ }
+ 
+ h4 {
+     line-height: 1.2em;
+     font-weight: 400;
+
+    span { 
+        &::after {
+            bottom: 4px;
+        }
+    }
+
+     mark {
+        &::after {
+            height: 4px;
+            bottom: 4px;
+        }
+    }
+ }
+ 
+ h5 {
+     font-size: 1.2em;
+     font-weight: 400;
+     line-height: 1.1em;
+
+     mark {
+        &::after {
+            height: 3px;
+            bottom: 3px;
+        }
+    }
+ }
+ 
+ h6 {
+     font-size: 1em;
+     font-weight: 400;
+     line-height: 1em;
+ }
+
+ .headline {
+    &.title {
+        line-height: .8em;
+        font-weight: 400;
+
+        span { 
+            &::after {
+                bottom: 10px;
+            }
+        }
+    }
+
+    &.large{
+        font-size: 4em;
+    }
+
+    &.hero {
+        font-size: 3em;
+        width: 50%;
+        line-height: 1em;
+    }
+
+    &.has-text-align-center {
+        margin: auto;
+    }
+ }
+
+
+ .tagline {
+     font-family: $primary-font-family;
+
+     &.header{
+         font-size: 3em;
+         line-height: 1em;
+         position: relative;
+         z-index: 1;
+         max-width: 400px;
+
+         &::after {
+             content: '';
+             position: absolute;
+             bottom: 4px;
+             height: 5px;
+             left: 5%;
+             width: 150px;
+
+             background-color: var(--primary-color, $primary-color);
+
+             z-index: -1;
+        }
+     }
+ }
+
+ p {
+    font-family: $secondary-font-family;
+
+    &.title {
+        &.sub-paragraph {
+            font-size: 16px;
+        }
+    }
+
+    &.heading--sub-paragraph {
+        width: 600px;
+        margin: auto;
+    }
+ }
+
+ a {
+    text-decoration: none;
+    color: var(--secondary-color, $secondary-color);
+
+    @include transition($transition);
+
+    &:hover {
+        color: darken($secondary-color, 15%);
+    }
+ }
+
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+    .headline {
+        &.large{
+            font-size: 3.5em;
+        }
+
+        &.hero {
+            width: 100%;
+        }
+    }
+    
+    .tagline {
+        &.header {
+            max-width: 100%;
+        }
+    }
+
+    p {
+        &.heading--sub-paragraph {
+            width: 100%;
+        }
+    }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+    .tagline {
+        &.header {
+            max-width: 100%;
+        }
+    }
+
+    p {
+        &.heading--sub-paragraph {
+            width: 100%;
+        }
+    }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+    p {
+        &.heading--sub-paragraph {
+            width: 600px;
+        }
+    }
+ }
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { 
+    p {
+        &.heading--sub-paragraph {
+            width: 600px;
+        }
+    }
+}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) { }

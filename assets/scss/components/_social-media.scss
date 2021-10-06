@@ -1,0 +1,23 @@
+$icon-size: 28px;
+$color: $color-5;
+$hover-color: $secondary-color;
+
+$gutter: 5px;
+
+.social-media {
+    display: flex;
+    align-items: center;
+
+    &.title {
+        display: flex;
+        flex-direction: column;
+
+        h4 {
+            line-height: 0;
+            margin: 10px 0;
+            font-family: $secondary-font-family;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+    }
+}

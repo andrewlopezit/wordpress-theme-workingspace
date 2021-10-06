@@ -1,0 +1,91 @@
+.wp-block-columns {
+    margin: auto;
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+
+    width: auto;
+    max-width: 1140px;
+    padding: 0 !important;
+
+    &.full-width {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    &.has-lightgray-background-color{
+        background-color: #f4f6f5;   
+    }
+
+    &.has-yellow-background-color{
+        background-color: $primary-color;   
+    }
+
+    &.has-cyan-background-color{
+        background-color: $secondary-color; 
+    }
+
+    &.has-gray-background-color{
+        background-color: $color-5;
+    }
+
+    &.has-white-background-color{
+        background-color: #F9F9F9;
+    }
+
+    &.has-opacity-background-color {
+        background-color: rgba(#000, 0.2);
+    }
+
+    .wp-block-column {
+        width: 100%;
+        max-width: 100%;
+        padding-right: calc(var(--bs-gutter-x) * .5);
+        padding-left: calc(var(--bs-gutter-x) * .5);
+        margin-top: var(--bs-gutter-y);
+    }
+
+    &.has-align-center-viewport {
+        position: absolute;
+        z-index: 1;
+        left: 50%;
+        width: 100%;
+
+        bottom: -20vh;
+        margin: 0 10px;
+
+        @include transform(translateX(-50%));
+    }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) { 
+    .wp-block-columns {
+        &.has-align-center-viewport {
+            margin: 0;
+            bottom: auto;
+        }
+
+        &.mmt-65vh {
+            margin-top: 65vh !important;
+        }
+    }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+	
+ }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { }
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) { }

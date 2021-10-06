@@ -1,0 +1,18 @@
+{
+    "name": "colonnello/wordpress-theme-workingspace",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Andrew Lopez",
+            "email": "andrew.lopez.it@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "vlucas/phpdotenv": "5.3.x-dev",
+        "google/apiclient": "2.x-dev"
+    },
+    "autoload": {
+        "psr-4": {"Inc\\": "./inc"}
+    }
+}

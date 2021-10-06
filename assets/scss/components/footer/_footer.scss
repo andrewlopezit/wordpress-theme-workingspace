@@ -1,0 +1,38 @@
+$footer-margin: 20px;
+
+.footer.background {
+    background-color: var(--footer-background-color, $footer-color);
+    width: 100%;
+    height: auto;
+    position: relative;
+
+    padding-bottom: $footer-margin + 20;
+
+    .image-background {
+        position: absolute;
+        right: 0;
+        width: 40vw;
+        height: 100%;
+
+        background-image: var(--footer-backgound-image, url('../background/nastuh-abootalebi-eHD8Y1Znfpk-unsplash.jpg'));
+        background-size: 250%;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        @include clip-polygon((40% 0, 100% 0, 100% 100%, 0 100%));
+    }
+}
+
+#header-content {
+    color:  #fff;
+
+    .brand {
+        margin-top: $footer-margin + 20;
+        margin-bottom: $footer-margin;
+    }
+
+    .contact-info,
+    .navigation-container.footer {
+        margin-top: $footer-margin + 10;
+    }
+}

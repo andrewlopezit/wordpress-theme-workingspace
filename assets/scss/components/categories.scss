@@ -1,0 +1,29 @@
+.categories {
+    
+    &.--workingspaces{
+        background-color: #fff;
+        margin-top: 2em;
+        padding: 2em;
+
+        @include fit-content;
+        
+        .categories-container {
+            display: flex;
+            flex-direction: column;
+   
+            .input-group {
+                input {
+                    &::after{
+                        cursor: default;
+                    }
+                }
+   
+                label {
+                    font-size: .8em;
+                    margin-top: 2px;
+                    font-weight: 600;
+                }
+            }
+       }
+    }
+}

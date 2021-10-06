@@ -1,0 +1,66 @@
+$border: 2px solid var(--secondary-color, $secondary-color);
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+
+    input[type=checkbox] {
+        width: 0;
+        height: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+
+        & + label {
+            font-size: 14px;
+            margin-left: 30px !important;
+        }
+
+        &:checked:after{
+            background-color: var(--secondary-color, $secondary-color);
+            font-family: "Font Awesome 5 Free";
+            content: "\f00c";
+            padding-left: 2px;
+            font-weight: 900;
+            color: #fff;
+        }
+
+        &::after {
+            background-color: #fff;
+            border: $border;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+        }
+    }
+    
+    input[type=text] {
+        border-radius: 0;
+        border: $border;
+    }
+
+    .input-group-append {
+        border-radius: 0;
+
+        .input-group-text {
+            background-color: var(--secondary-color, $secondary-color);
+            padding: 0.6rem .75rem;
+            border: 0;
+            border-radius: 0;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+
+            i {
+                margin-right: 5px;
+            }
+        }
+    }
+}
+

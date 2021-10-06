@@ -21,3 +21,9 @@ node_modules/
 *.log
 *.sql
 *.sqlite
+
+/vendor/
+
+.env
+
+**/.DS_Store

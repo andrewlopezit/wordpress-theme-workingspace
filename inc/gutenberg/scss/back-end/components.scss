@@ -1,0 +1,58 @@
+.workingspace{
+    &.gutenberg-components--margin-control{
+        display: flex;
+        margin: auto;
+        margin-bottom: 8px;
+
+        .margin-container {
+            display: flex;
+            align-items: center;
+
+            &:not(:last-child) {
+                margin-right: 10px;
+            }
+
+            .label {
+                width: 50px;
+                height: 50px;
+                padding: 5px;
+
+                border: 2px solid #e0e0e0;
+                border-style: dashed;
+                margin-right: 5px;
+            }
+
+            input {
+                width: 55px;
+            }
+
+            &.top {
+                .label {
+                    border-top: 2px solid #007cba;
+                    border-top-style: solid;
+                }
+            }
+
+            &.right {
+                .label {
+                    border-right: 2px solid #007cba;
+                    border-right-style: solid;
+                }
+            }
+
+            &.bottom {
+                .label {
+                    border-bottom: 2px solid #007cba;
+                    border-bottom-style: solid;
+                }
+            }
+
+            &.left {
+                .label {
+                    border-left: 2px solid #007cba;
+                    border-left-style: solid;
+                }
+            }
+        }
+    }
+}

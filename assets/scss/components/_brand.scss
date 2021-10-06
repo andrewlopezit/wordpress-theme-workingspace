@@ -1,0 +1,11 @@
+$brand-color: #000 !default;
+
+.brand {
+    width: 7em;
+    height: 3em;
+
+    background-image: var(--brand, url('../logo/working-space.svg'));
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}

@@ -1,0 +1,107 @@
+.footer-navigation {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+
+    li {
+        list-style-type: none;
+
+        &:nth-child(odd) {
+            margin-right: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            font-family:  $secondary-font-family;
+            font-weight: 600;
+            font-size: 1.5em;
+
+            color: $navigation-color;
+
+            @include transition($transition);
+        }
+
+        .sub-menu {
+            max-width: 200px;
+            padding-left: 0;
+
+           li {
+               &:hover {
+                   a {
+                       opacity: 1;
+                   }
+               }             
+
+                a {
+                    font-size: 0.9em;
+                    font-weight: 500;
+                    opacity: .6;
+                }
+           }
+        }
+    }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) {
+    .footer-navigation {
+        padding: 0;
+
+        li {        
+            .sub-menu {
+                width: 100%;
+                padding-left: 0;
+
+                li{
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { 
+    .footer-navigation {
+        padding: 0;
+
+        li {
+            margin: 0;
+            
+            .sub-menu {
+                width: 100%;
+                padding-left: 0;
+
+                li{
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+    .footer-navigation {
+        
+        li {
+            margin: 0 $navigation-margin;
+        }
+    }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { 
+    .footer-navigation {
+        li {
+            .sub-menu {
+                margin-top: $navigation-margin - 10;
+            }
+        }
+    }
+
+}

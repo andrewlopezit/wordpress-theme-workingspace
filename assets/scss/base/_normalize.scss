@@ -1,0 +1,104 @@
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS and IE text size adjust after device orientation change,
+ *    without disabling user zoom.
+ */
+
+ html {
+    font-family: sans-serif; /* 1 */
+    -ms-text-size-adjust: 100%; /* 2 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+  }
+  
+/**
+* Remove default margin.
+*/
+
+body {
+  margin: 0;
+}
+
+/**
+* UI Datepicker custom
+*/
+.ui-datepicker {
+  background: #fff ;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+
+  .ui-datepicker-header{
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-gap: 5px;
+    padding: 0.5em;
+    grid-template-areas: 
+    "prev title next";
+
+    .ui-datepicker-prev,
+    .ui-datepicker-next,
+    .ui-datepicker-title {
+      padding: 2px;
+      text-align: center;
+    }
+
+    .ui-datepicker-prev {
+      grid-area: prev;
+
+    }
+
+    .ui-datepicker-next {
+      grid-area: next;
+    }
+
+    .ui-datepicker-title {
+      grid-area: title;
+    }
+  }
+  
+  .ui-datepicker-calendar {
+    width: 200px;
+    margin: auto;
+    
+    thead {
+      tr {
+        th {
+          span {
+            position: relative;
+
+            &::after {
+              position: absolute;
+              content: "";
+              bottom: 3px;
+              left: 0;
+              width: 100%;
+              height: 2px;
+              z-index: -1;
+              background-color: var(--primary-color, $primary-color);
+            }
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          a.ui-state-highlight{
+            position: relative;
+
+            &::after {
+              content: "";
+              position: absolute;
+              width: 10px;
+              height: 10px;
+              left: 0;
+              z-index: -1;
+              background-color: var(--primary-color, $primary-color);
+              
+              @include transform(translate(5px, 8px));
+            }
+          }
+        }
+      }
+    }
+  }
+}
