@@ -1,6 +1,7 @@
 <?php
 ob_start();
-    $data = get_post_meta( $post->ID, 'custom_maps_mapbox_form_key', true );
+
+$data = get_post_meta( $post->ID, 'custom_maps_mapbox_form_key', true );
 ?>
 
 <div class="custom-meta-maps-container" id="custom-maps-meta">

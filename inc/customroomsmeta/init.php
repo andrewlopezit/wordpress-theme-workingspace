@@ -56,7 +56,6 @@ final class Init {
     }
 
     public function render_post_type_metabox($post) {
-        
         $this->backend = new BackEndCallbacks();
         $this->backend->index($post);
     }
