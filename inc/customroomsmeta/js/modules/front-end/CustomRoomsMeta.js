@@ -198,7 +198,7 @@ class CustomRoomsMeta {
                                 ${value?.featured_image ? imageTemplate(value.featured_image) : ''}
                             </a>
                             <div class="detail">
-                                <h2 class="name"><a href="#">${value?.post_title}</a></h2>
+                                <h2 class="name"><a href="${value?.permalink}">${value?.post_title}</a></h2>
                                 <div class="price">Price: <span>$${value?.room_rate}/month</span></div>
                                 <div class="capacity">Capacity: <span>${value?.capacity ?? 0}</span></div>
                                 ${value?.categories?.length > 0 ? this.categoriesTemplate(value.categories) : ''}

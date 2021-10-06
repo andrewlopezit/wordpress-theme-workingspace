@@ -4900,7 +4900,7 @@ class CustomRoomsMeta {
                                 ${value !== null && value !== void 0 && value.featured_image ? imageTemplate(value.featured_image) : ''}
                             </a>
                             <div class="detail">
-                                <h2 class="name"><a href="#">${value === null || value === void 0 ? void 0 : value.post_title}</a></h2>
+                                <h2 class="name"><a href="${value === null || value === void 0 ? void 0 : value.permalink}">${value === null || value === void 0 ? void 0 : value.post_title}</a></h2>
                                 <div class="price">Price: <span>$${value === null || value === void 0 ? void 0 : value.room_rate}/month</span></div>
                                 <div class="capacity">Capacity: <span>${(_value$capacity = value === null || value === void 0 ? void 0 : value.capacity) !== null && _value$capacity !== void 0 ? _value$capacity : 0}</span></div>
                                 ${(value === null || value === void 0 ? void 0 : (_value$categories = value.categories) === null || _value$categories === void 0 ? void 0 : _value$categories.length) > 0 ? this.categoriesTemplate(value.categories) : ''}
