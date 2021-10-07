@@ -1,9 +1,15 @@
 <?php
     get_header();
+    
 ?>
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 <div class="single-workingspaces page">
-    <section class="hero-section" style="background-image: url('<?php the_post_thumbnail_url('hero_background'); ?>')">
+    <section class="hero-section" style="
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)), url('<?php the_post_thumbnail_url('hero_background'); ?>');
+    background-image: -moz-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)), url('<?php the_post_thumbnail_url('hero_background'); ?>');
+    background-image: -o-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)), url('<?php the_post_thumbnail_url('hero_background'); ?>');
+    background-image: -ms-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)), url('<?php the_post_thumbnail_url('hero_background'); ?>');
+    background-image: -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)), url('<?php the_post_thumbnail_url('hero_background'); ?>');">
         <div class="container">
             <div class="row">
                 <div class="col">
