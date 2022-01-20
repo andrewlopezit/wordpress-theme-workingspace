@@ -53,7 +53,7 @@ class Main {
 
         addRemoveLabelClassFill(this.$formGroup.find('input, select, textarea'));
 
-        this.$formGroup.on('keyup', 'input, select, textarea', e => {
+        this.$formGroup.on('keyup change', 'input, select, textarea', e => {
             const $el = $(e.currentTarget);
 
             addRemoveLabelClassFill($el);

@@ -11,16 +11,11 @@
 namespace Inc\Custommapsmeta;
 
 use Inc\Custommapsmeta\Callbacks\BackEndCallbacks;
-use Inc\Custommapsmeta\Callbacks\FrontEndCallbacks;
 
 final class Init {
     private $custom_meta_id = 'workingspaceMapsID';
     private $_metabox = [];
     
-    public function init_shortcode() {
-        add_shortcode('workingspaces_maps', array( $this, 'workingspace_maps_shortcode' ));
-    }
-
     public function add() {
         // initialize
         if(is_admin()) {
@@ -121,11 +116,5 @@ final class Init {
             'place_name' => sanitize_text_field($_POST['place_name'])
 		);
 		update_post_meta( $post_id, 'custom_maps_mapbox_form_key', $data );
-    }
-
-    public function workingspace_maps_shortcode($args = null) {
-        $this->frontend = new FrontEndCallbacks();
-        $this->frontend->index($args);
-        return ob_get_clean();
     }
 }

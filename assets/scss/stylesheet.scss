@@ -42,6 +42,7 @@
 *
 * PARTIALS
 * - WORKSPACES
+* - WORKSPACES-MAPS
 * - POSTS
 * - TESTIMONIALS
 * - AUTH
@@ -179,6 +180,11 @@
 @import 'partials/workspace.scss';
 
 /*------------------------------------*
+	  WORKSPACES-MAPS
+*------------------------------------*/
+@import 'partials/workspace-maps.scss';
+
+/*------------------------------------*
 	  POSTS
 *------------------------------------*/
 @import 'partials/posts.scss';
@@ -201,15 +207,11 @@
 /*------------------------------------*
 	P A G E S
 *------------------------------------*/
+
 /*------------------------------------*
 	CUSTOM META FLOORPLAN
 *------------------------------------*/
 @import '../../inc/customroomsmeta/scss/custom-rooms-meta-front-end.scss';
-
-/*------------------------------------*
-	CUSTOM WORKINGSPACE MAPS
-*------------------------------------*/
-@import '../../inc/custommapsmeta/scss/custom-maps-meta-front-end.scss';
 
 /*------------------------------------*
 	PAGE

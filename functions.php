@@ -125,11 +125,6 @@ if(!class_exists('WorkingspaceTheme')) {
             $rooms = new CustomRoomsMeta();
             $rooms->init_shortcode();
 
-
-            //init workingspace maps shortcode
-            $workingspace_maps = new CustomMapsMeta();
-            $workingspace_maps->init_shortcode();
-
             // init gutenberg blocks
             $gutenberg = new Gutenberg();
             $gutenberg->init();
@@ -433,14 +428,13 @@ if(!class_exists('WorkingspaceTheme')) {
 
             $maps->post(
                 array(
-                'title' => 'Map Location',
-                'post' => 'workingspaces'
-                )
-            )
-            ->post(
-                array(
                     'title' => 'Map Location',
                     'post' => 'countries'
+                )
+            )->post(
+                array(
+                    'title' => 'Map Location',
+                    'post' => 'workingspaces'
                 )
             )->add();
         }

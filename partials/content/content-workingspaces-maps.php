@@ -30,7 +30,7 @@ $workingspaces = new WP_Query( $query );
 <div class="container">
     <div class="row">
         <div class="col">
-            <div id="workspaces-map">
+            <div id="workspaces-map" <?php if(isset($args['type']) && $args['type'] === 'normal') echo 'data-type="normal"'; ?>>
             <div class="content-container">
                 <div class="action-container shadow-sm d-flex d-sm-block d-md-none" id="mobile-maps">
                     <div class="loading --icon"></div>

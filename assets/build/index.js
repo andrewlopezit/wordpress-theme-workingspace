@@ -108,8 +108,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_frontend_SearchPage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/frontend/SearchPage */ "./assets/js/modules/frontend/SearchPage.js");
 /* harmony import */ var _modules_frontend_Auth__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/frontend/Auth */ "./assets/js/modules/frontend/Auth.js");
 /* harmony import */ var _modules_frontend_Heart__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./modules/frontend/Heart */ "./assets/js/modules/frontend/Heart.js");
-/* harmony import */ var _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta */ "./inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta.js");
-/* harmony import */ var _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../inc/custommapsmeta/js/modules/front-end/CustomMapsMeta */ "./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js");
+/* harmony import */ var _modules_frontend_WorkingspacesMaps__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./modules/frontend/WorkingspacesMaps */ "./assets/js/modules/frontend/WorkingspacesMaps.js");
+/* harmony import */ var _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta */ "./inc/customroomsmeta/js/modules/front-end/CustomRoomsMeta.js");
 
  // import modules
 
@@ -132,7 +132,6 @@ let hamburgerMenu;
 let testimonialsSlider;
 let main;
 let customRoomsMeta;
-let customMapsMeta;
 let posts;
 let requestForm;
 let page;
@@ -140,6 +139,7 @@ let modal;
 let searchPage;
 let auth;
 let heart;
+let workingspacesMaps;
 const hompage = document.querySelector(".home");
 
 if (hompage) {
@@ -155,10 +155,10 @@ page = new _modules_frontend_Page__WEBPACK_IMPORTED_MODULE_8__["default"]();
 modal = new _modules_frontend_Modal__WEBPACK_IMPORTED_MODULE_9__["default"]();
 searchPage = new _modules_frontend_SearchPage__WEBPACK_IMPORTED_MODULE_10__["default"]();
 auth = new _modules_frontend_Auth__WEBPACK_IMPORTED_MODULE_11__["default"]();
-heart = new _modules_frontend_Heart__WEBPACK_IMPORTED_MODULE_12__["default"](); // include front-end init
+heart = new _modules_frontend_Heart__WEBPACK_IMPORTED_MODULE_12__["default"]();
+workingspacesMaps = new _modules_frontend_WorkingspacesMaps__WEBPACK_IMPORTED_MODULE_13__["default"](); // include front-end init
 
-customRoomsMeta = new _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_13__["default"]();
-customMapsMeta = new _inc_custommapsmeta_js_modules_front_end_CustomMapsMeta__WEBPACK_IMPORTED_MODULE_14__["default"]();
+customRoomsMeta = new _inc_customroomsmeta_js_modules_front_end_CustomRoomsMeta__WEBPACK_IMPORTED_MODULE_14__["default"]();
 
 /***/ }),
 
@@ -1051,7 +1051,7 @@ class Main {
     };
 
     addRemoveLabelClassFill(this.$formGroup.find('input, select, textarea'));
-    this.$formGroup.on('keyup', 'input, select, textarea', e => {
+    this.$formGroup.on('keyup change', 'input, select, textarea', e => {
       const $el = $(e.currentTarget);
       addRemoveLabelClassFill($el);
     });
@@ -1573,8 +1573,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(intl_tel_input__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _intl_tel_input_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./intl-tel-input/utils.js */ "./assets/js/modules/frontend/intl-tel-input/utils.js");
 /* harmony import */ var _intl_tel_input_utils_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_intl_tel_input_utils_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index.js */ "./assets/js/modules/frontend/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
@@ -1592,16 +1594,16 @@ class RequestForm {
 
     this.assetsDir = translation_array.assets_dir;
     this.siteUrl = translation_array.site_url;
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common["X-WP-Nonce"] = translation_array.workingspaces_nonce;
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.defaults.headers.common["X-WP-Nonce"] = translation_array.workingspaces_nonce;
     this.primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
     this.requestForm; //init input datepicker
 
     this.initDatePicker(); // init gsap animation
 
-    this.initAnimation(); // initialize events function
+    this.initAnimation();
+    this.initRequestForm(); // initialize events function
 
-    this.events();
-    this.initRequestForm(); // init international country code input
+    this.events(); // init international country code input
 
     this.initIntlTelCountryCodeInput();
   }
@@ -1641,23 +1643,13 @@ class RequestForm {
   }
 
   events() {
-    this.$formGroup.on('keyup change', 'input, select, textarea', e => {
-      const $el = $(e.currentTarget); // validate form
-
-      const isValid = this.isInputValid($el);
-      this.checkRequestForm();
-
-      if (!isValid) {
-        $el.css('--border-color', '#dc3545');
-        return;
-      }
-
-      $el.css('--border-color', this.primaryColor);
+    this.requestForm.inputs.on('keyup change', e => {
+      this.validateForm();
     });
     this.$formButton.on('click', e => {
       e.preventDefault();
       if (!this.requestForm.isValid) return;
-      const requestFormData = this.getRequestFormData();
+      const requestFormData = Object(_index_js__WEBPACK_IMPORTED_MODULE_2__["formValidation"])(this.requestForm.inputs).getFormData();
       this.$formButton.html('submitting');
       this.loadingBarAnimation.play();
       this.$formButton.attr('disabled', true);
@@ -1675,26 +1667,6 @@ class RequestForm {
         this.alertBoxAnimation.play();
       });
     });
-  }
-
-  isInputValid($input) {
-    const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if ($input.attr('required') && !$input.val().length || $input.attr('minlength') && $input.val().length < +$input.attr('minlength') || $input.attr('maxlength') && $input.val().length > +$input.attr('maxlength') || $input.attr('type') === 'email' && !emailPattern.test($input.val()) || $input.attr('type') === 'tel' && !$input.hasClass('is-valid')) {
-      return false;
-    }
-
-    return true;
-  }
-
-  checkRequestForm() {
-    this.requestForm.inputValidations = [];
-    this.requestForm.inputs.each((i, el) => {
-      this.requestForm.inputValidations.push(this.isInputValid($(el)));
-    });
-    const isFormValid = this.requestForm.inputValidations.every(input => input === true);
-    this.requestForm.isValid = isFormValid;
-    this.$formButton.attr('disabled', !isFormValid);
   }
 
   initDatePicker() {
@@ -1730,7 +1702,7 @@ class RequestForm {
       const countryData = iti.getSelectedCountryData();
       iti.setCountry(countryData.iso2);
       validatedTelNumber(e.currentTarget);
-      this.checkRequestForm();
+      this.validateForm();
     });
     $(input).on('keyup', e => {
       if (isNaN(e.currentTarget.value)) {
@@ -1741,6 +1713,7 @@ class RequestForm {
       if ($(e.currentTarget).val().length && !$label.hasClass('is-active')) $label.addClass('is-active');
       if (!$(e.currentTarget).val().length) $label.removeClass('is-active');
       validatedTelNumber(e.currentTarget);
+      this.validateForm();
     });
 
     const validatedTelNumber = el => {
@@ -1763,18 +1736,22 @@ class RequestForm {
     this.$formButton.attr('disabled', true);
   }
 
-  getRequestFormData() {
-    let obj = {};
-    this.requestForm.inputs.each((i, el) => {
-      obj[$(el).attr('name')] = $(el).val();
-    });
-    return obj;
+  validateForm() {
+    const isFormValid = Object(_index_js__WEBPACK_IMPORTED_MODULE_2__["formValidation"])(this.requestForm.inputs).validate();
+    this.requestForm.isValid = isFormValid;
+
+    if (!isFormValid) {
+      this.$formButton.attr('disabled', true);
+      return;
+    }
+
+    this.$formButton.attr('disabled', false);
   }
 
   submitForm(data) {
     if (!data) return;
     const url = `${this.siteUrl}/wp-json/wp/v2/inquiries`;
-    return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(url, data);
+    return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(url, data);
   }
 
 }
@@ -2302,6 +2279,519 @@ const UserHeader = (user = null) => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (UserHeader);
+
+/***/ }),
+
+/***/ "./assets/js/modules/frontend/WorkingspacesMaps.js":
+/*!*********************************************************!*\
+  !*** ./assets/js/modules/frontend/WorkingspacesMaps.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index */ "./assets/js/modules/frontend/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+class WorkingspacesMaps {
+  constructor() {
+    this.$workspaceContainer = $('#workspaces-map');
+    if (!this.$workspaceContainer.length) return;
+    this.$contentContainer = this.$workspaceContainer.find('.content-container');
+    this.$labelFilterContainer = this.$contentContainer.find('.action-container > .label');
+    this.$filterContainer = this.$contentContainer.find('.filter-container');
+    this.$mapContainer = this.$contentContainer.find('.map-container');
+    this.$mapSpacer = this.$mapContainer.find('.map-spacer');
+    this.$map = this.$mapContainer.find('.map#map');
+    this.$itemContainer = this.$contentContainer.find('.item-container');
+    this.$filterCategoriesContainer = this.$filterContainer.find('.filter.categories');
+    this.$filterCapacityContainer = this.$filterContainer.find('.filter.capacity');
+    this.$filterLocationContainer = this.$filterContainer.find('.filter.location');
+    this.$filterPriceRangeContainer = this.$filterContainer.find('.filter.price-range');
+    this.$priceRange = this.$filterContainer.find('.filter > .action-container > .slider#price-range');
+    this.$btnFilter = this.$workspaceContainer.find('.action-container > .action.filter');
+    this.$btnSetFilter = this.$filterContainer.find('.btn.filter');
+    this.$btnFitLocations = this.$mapContainer.find('.btn.fit-workingspaces');
+    this.$btnMapView = this.$contentContainer.find('.action-container#mobile-maps');
+    this.$btnLoadMore = this.$itemContainer.find('.btn.load-more');
+    this.$btnFindAllposts = this.$itemContainer.find('.find-all.posts'); //local variable
+
+    this.siteUrl = translation_array.site_url;
+    this.isUserLoggedIn = translation_array.is_user_logged_in;
+    this.mapZoom = 15;
+    this.isMapLoaded = false;
+    this.btnFilterPositionTop = this.$btnFilter.offset().top + 500;
+    this.filterItem = 1; //init slider
+
+    Object(_index__WEBPACK_IMPORTED_MODULE_0__["rangeSlider"])({
+      container: this.$priceRange.get()[0]
+    });
+    this.initAnimation(); // init events
+
+    this.events(); // init map
+
+    this.initMap();
+  }
+
+  initMap() {
+    var _this$$map$data$split, _this$$map, _this$$map$data;
+
+    this.map = Object(_index__WEBPACK_IMPORTED_MODULE_0__["maps"])({
+      container: this.$map.get()[0],
+      center: (_this$$map$data$split = (_this$$map = this.$map) === null || _this$$map === void 0 ? void 0 : (_this$$map$data = _this$$map.data('geolocation')) === null || _this$$map$data === void 0 ? void 0 : _this$$map$data.split(',')) !== null && _this$$map$data$split !== void 0 ? _this$$map$data$split : null,
+      zoom: this.mapZoom
+    }).control();
+    this.workingspaces = this.getWorkingspacesInHtml();
+    const locations = this.workingspaces.map(workingspace => {
+      if (workingspace !== null && workingspace !== void 0 && workingspace.geolocation) return workingspace.geolocation;
+    });
+    this.setMapMarkers(locations); //
+
+    this.mapEvents();
+  }
+
+  setMapMarkers(locations) {
+    if (this.markers) this.markers.forEach(marker => marker.remove());
+    if (locations.length < 1) return;
+
+    if (locations.length > 1) {
+      this.markers = this.map.fitLocations(locations).addMarkers(this.workingspaces).getMarkers();
+    } else {
+      this.markers = this.map.addMarkers(this.workingspaces).getMarkers();
+      this.map.get().flyTo({
+        center: locations[0],
+        essential: true,
+        zoom: this.mapZoom
+      });
+    }
+  }
+
+  mapEvents() {
+    this.$map.hide();
+    const load = Object(_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$mapContainer, 60).start();
+    this.map.get().on('load', () => {
+      this.$btnMapView.html(`<button class="btn maps"><i class="far fa-map"></i></button>`);
+      this.$map.show();
+      this.isMapLoaded = true;
+      load.end();
+      this.map.get().resize();
+    });
+  }
+
+  initAnimation() {
+    if (!this.$filterContainer) return;
+    this.filterAnimation = gsap.timeline({
+      paused: true
+    });
+    this.$filterContainer.css({
+      'display': 'none',
+      'opacity': 0
+    });
+    this.filterAnimation.to(this.$filterContainer, {
+      opacity: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      translateY: 0,
+      duration: .3
+    });
+    this.mapMobileAnimation = gsap.timeline({
+      paused: true,
+      onComplete: () => {
+        if (this.isMapLoaded) {
+          this.$mapContainer.css('width', $(document).width() - 44);
+          this.map.get().resize();
+        }
+      },
+      onReverseComplete: () => this.$mapContainer.css('width', 0)
+    });
+    this.mapMobileAnimation.to(this.$mapContainer, {
+      opacity: 1,
+      width: $(document).width() - 44
+    });
+  }
+
+  initBtnMobileMapAnimation() {
+    this.$btnMapView.addClass('is-active');
+    this.btnMapviewAnimation = gsap.timeline({
+      onComplete: () => this.$btnMapView.find('.btn.maps > i').attr('class', 'fas fa-times'),
+      onReverseComplete: () => {
+        this.$btnMapView.find('.btn.maps > i').attr('class', 'far fa-map');
+        this.$btnMapView.css({
+          left: 'auto',
+          right: 0
+        });
+      }
+    });
+    this.btnMapviewAnimation.to(this.$btnMapView, {
+      top: 90,
+      left: -10,
+      padding: 5,
+      right: 'auto'
+    }).to(this.$btnMapView.find('.btn.maps'), {
+      width: 35,
+      height: 35,
+      marginRight: 0
+    }, '<').to(this.$btnMapView.find('.btn.maps > i'), {
+      fontSize: 18
+    }, '<');
+  }
+
+  events() {
+    this.$btnFilter.on('click', () => {
+      this.$btnFilter.toggleClass('is-active');
+
+      if (this.$btnFilter.hasClass('is-active')) {
+        this.filterAnimation.play();
+        return;
+      } else {
+        this.filterAnimation.reverse();
+        return;
+      }
+    });
+    this.$filterLocationContainer.on('click', '.action-container > button', e => {
+      const $el = $(e.currentTarget);
+      $el.siblings().removeClass('is-active');
+      $el.addClass('is-active');
+    });
+    this.$filterCategoriesContainer.on('click', '.action-container > button', e => {
+      const $el = $(e.currentTarget);
+      $el.toggleClass('is-active');
+    });
+    this.$filterCapacityContainer.on('click', '.action-container > button', e => {
+      const $el = $(e.currentTarget);
+      $el.toggleClass('is-active');
+    });
+    this.$btnSetFilter.on('click', () => {
+      this.filterAnimation.reverse();
+      this.$btnFilter.removeClass('is-active');
+      this.filterItem = 1;
+      this.dislplayFilteredWorkingspaces();
+    });
+    this.$itemContainer.on('click', '.loading#loading > .btn.retry', () => {
+      this.dislplayFilteredWorkingspaces();
+    });
+    this.$btnFitLocations.on('click', () => {
+      const locations = this.workingspaces.map(workingspace => {
+        if (workingspace !== null && workingspace !== void 0 && workingspace.geolocation) return workingspace.geolocation;
+      });
+      this.map.fitLocations(locations);
+    });
+    this.$mapContainer.on('click', '.loading#loading > .btn.retry', () => {
+      this.initMap();
+    });
+    this.$itemContainer.on('click', '.item', e => {
+      const $el = $(e.currentTarget);
+
+      if ($el) {
+        const geolocation = $el.data('geolocation').split(',');
+        this.map.get().flyTo({
+          center: geolocation,
+          essential: true,
+          zoom: this.mapZoom
+        });
+      }
+    });
+    $(document).on('scroll', e => {
+      this.changePostionMobileBtnMap();
+
+      if (this.$workspaceContainer.data('type') !== 'normal') {
+        this.changeFiltersPosition();
+        this.changeMapPosition();
+      }
+
+      if (this.$btnMapView.hasClass('is-active')) {
+        this.btnMapviewAnimation.reverse();
+        this.mapMobileAnimation.reverse();
+        this.$btnMapView.removeClass('is-active');
+      }
+    });
+    $(window).on('resize orientationchange', e => {
+      if (this.isMapLoaded) this.map.get().resize();
+
+      if (this.$btnMapView.hasClass('is-active')) {
+        this.btnMapviewAnimation.reverse();
+        this.mapMobileAnimation.reverse();
+        this.$btnMapView.removeClass('is-active');
+      }
+    });
+    this.$btnMapView.on('click', () => {
+      if (!this.isMapLoaded) return;
+
+      if (!this.$btnMapView.hasClass('is-active')) {
+        this.initBtnMobileMapAnimation();
+        this.mapMobileAnimation.play();
+      } else {
+        this.btnMapviewAnimation.reverse();
+        this.mapMobileAnimation.reverse();
+        this.$btnMapView.removeClass('is-active');
+      }
+    });
+    this.$btnLoadMore.on('click', () => {
+      this.filterItem++;
+      const load = Object(_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$itemContainer).start();
+      const filter = this.getWorkingspaceFilter;
+      filter.offset = this.workingspaces.length;
+      this.$btnLoadMore.hide();
+      let request = [Object(_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter)];
+      if (this.isUserLoggedIn) request.push(Object(_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getUserWorkingspaces());
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.all(request).then(axios__WEBPACK_IMPORTED_MODULE_1___default.a.spread((...responses) => {
+        this.$btnLoadMore.show();
+        load.end();
+        const {
+          data: {
+            posts,
+            pagination
+          }
+        } = responses[0];
+        const {
+          data: userWorkingspaces
+        } = this.isUserLoggedIn ? responses[1] : {
+          data: []
+        };
+
+        if (!posts) {
+          this.$btnLoadMore.attr('disabled', true);
+          return;
+        }
+
+        const template = this.workingspacesTemplate(posts, userWorkingspaces);
+        $(template).insertBefore(this.$btnLoadMore.parent());
+        this.setWorkingspaces(posts, true);
+        const locations = this.workingspaces.map(workingspace => {
+          return workingspace === null || workingspace === void 0 ? void 0 : workingspace.geolocation;
+        });
+        this.setMapMarkers(locations);
+      })).catch(e => {
+        load.displayError();
+      });
+    });
+  }
+
+  changePostionMobileBtnMap() {
+    const btnPostionTop = parseInt(getComputedStyle(this.$btnMapView.get()[0]).getPropertyValue('--position-top'));
+
+    if (window.scrollY <= btnPostionTop) {
+      this.$btnMapView.css('top', btnPostionTop + 90 - window.scrollY);
+    } else {
+      this.$btnMapView.css('top', 90);
+    }
+  }
+
+  changeFiltersPosition() {
+    if (window.scrollY >= this.btnFilterPositionTop) {
+      if (this.$btnFilter.hasClass('is-fixed')) return;
+      this.$btnFilter.addClass('is-fixed shadow');
+      this.$filterContainer.addClass('is-fixed shadow');
+    } else {
+      if (!this.$btnFilter.hasClass('is-fixed')) return;
+      this.$btnFilter.removeClass('is-fixed shadow');
+      this.filterAnimation.reverse();
+      this.$filterContainer.removeClass('is-fixed shadow');
+    }
+  }
+
+  changeMapPosition() {
+    if ($(document).width() <= 575.98) return;
+
+    if (window.scrollY >= this.btnFilterPositionTop) {
+      if (this.$mapContainer.hasClass('is-fixed')) return;
+      this.$mapContainer.addClass('is-fixed shadow');
+      this.$mapSpacer.hide();
+      this.map.get().resize();
+    } else {
+      if (!this.$mapContainer.hasClass('is-fixed')) return;
+      this.$mapContainer.removeClass('is-fixed shadow');
+      this.$mapSpacer.show();
+      this.map.get().resize();
+    }
+  }
+
+  workingspacesTemplate(data, userWorkingspaces) {
+    let template = '';
+    const userWorkingspaceIds = userWorkingspaces.length > 0 ? userWorkingspaces.map(workingspace => workingspace.ID) : [];
+
+    if (!data || data.length < 1) {
+      return `<p>No items match your criteria.</p>`;
+    }
+
+    const locationTemplate = location => {
+      return `
+                <div class="detail-icontainer location">
+                    <i class="fas fa-map-marker-alt text-muted"></i>
+                    <a href="#">${location}</a>
+                </div>`;
+    };
+
+    const priceRangeTemplate = priceRange => {
+      return `<div class="detail-icontainer price-range">
+                        <span>Price range: </span>
+                        <span class="price">$${priceRange.length > 1 ? priceRange.join(' - $') : priceRange[0]}/month</span>
+                    </div>`;
+    };
+
+    const capacityTemplate = capacityRange => {
+      return `<div class="detail-icontainer capacity">
+                        <i class="fas fa-user text-muted"></i>
+                        <p class="text-muted">Capacity: <span>${capacityRange[0]} - ${capacityRange[1]}</span></p>
+                    </div>`;
+    };
+
+    data.forEach(val => {
+      var _val$location, _val$location2, _val$total_rooms;
+
+      const minimumCapacity = val.capacity_list ? Math.min.apply(Math, val.capacity_list) : null;
+      const maximumCapacity = val.capacity_list ? Math.max.apply(Math, val.capacity_list) : null;
+      template += `<div class="item workspace card border-top-left border--post border--hover" data-id="${val === null || val === void 0 ? void 0 : val.ID}" data-geolocation="${val === null || val === void 0 ? void 0 : (_val$location = val.location) === null || _val$location === void 0 ? void 0 : _val$location.location}">
+                            <img class="card-img-top" src="${val.featured_image}" alt="">
+                            <div class="card-body">
+                                <div class="action-container">
+                                    <div class="action-like shadow-sm">
+                                        <i class="${userWorkingspaceIds.includes(val === null || val === void 0 ? void 0 : val.ID) ? 'fas fa-heart is-added' : 'far fa-heart'}"></i>
+                                    </div>
+                                </div>
+
+                                <h5><a href="${val === null || val === void 0 ? void 0 : val.permalink}">${val === null || val === void 0 ? void 0 : val.post_title}</a></h5>
+                                
+                                ${val !== null && val !== void 0 && (_val$location2 = val.location) !== null && _val$location2 !== void 0 && _val$location2.place_name ? locationTemplate(val.location.place_name) : ''}
+                                ${minimumCapacity || maximumCapacity ? capacityTemplate([minimumCapacity, maximumCapacity]) : ''} 
+                                <div class="detail-icontainer total-rooms">
+                                    <i class="fas fa-chair text-muted"></i>
+                                    <p class="text-muted">No. of rooms: <span>${(_val$total_rooms = val === null || val === void 0 ? void 0 : val.total_rooms) !== null && _val$total_rooms !== void 0 ? _val$total_rooms : 0}</span></p>
+                                </div>
+                                ${val !== null && val !== void 0 && val.price_range ? priceRangeTemplate(val.price_range) : ''}
+                            </div>
+                        </div>`;
+    });
+    return template;
+  }
+
+  dislplayFilteredWorkingspaces() {
+    const filter = this.getWorkingspaceFilter;
+    const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
+
+    if (filter.priceRange) {
+      const priceRange = filter.price_range.split(',');
+      this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${priceRange.join(' - $')}`);
+    }
+
+    this.$itemContainer.find('.item,p').remove();
+    const load = Object(_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$itemContainer).start();
+    this.$btnLoadMore.hide();
+    let request = [Object(_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter)];
+    if (this.isUserLoggedIn) request.push(Object(_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getUserWorkingspaces());
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.all(request).then(axios__WEBPACK_IMPORTED_MODULE_1___default.a.spread((...responses) => {
+      this.$btnLoadMore.show();
+      const {
+        data: {
+          posts: filteredWorkingspaces
+        }
+      } = responses[0];
+      const {
+        data: userWorkingspaces
+      } = this.isUserLoggedIn ? responses[1] : {
+        data: []
+      };
+
+      if (this.$btnFindAllposts.length > 0) {
+        const template = this.workingspacesTemplate(filteredWorkingspaces, userWorkingspaces);
+        $(template).insertBefore(this.$btnFindAllposts);
+      } else if (this.$btnLoadMore.length > 0) {
+        const template = this.workingspacesTemplate(filteredWorkingspaces, userWorkingspaces);
+        $(template).insertBefore(this.$btnLoadMore.parent());
+      } else {
+        this.$itemContainer.append(this.workingspacesTemplate(filteredWorkingspaces, userWorkingspaces));
+      }
+
+      this.setWorkingspaces(filteredWorkingspaces);
+      const locations = this.workingspaces.map(workingspace => {
+        return workingspace === null || workingspace === void 0 ? void 0 : workingspace.geolocation;
+      });
+      this.setMapMarkers(locations);
+      load.end();
+    })).catch(e => {
+      console.log(e);
+      load.displayError();
+    });
+  }
+
+  getWorkingspacesInHtml() {
+    let workingspaces = [];
+    this.$itemContainer.find('.item').each((i, el) => {
+      var _$$data$split;
+
+      const property = {
+        title: $(el).find('.card-body > h5 > a').html(),
+        location: $(el).find('.card-body > .location > a').html(),
+        capacity: $(el).find('.card-body > .capacity > p > .capacity').html(),
+        totalRooms: $(el).find('.card-body > .total-rooms > p > .total-rooms').html(),
+        priceRange: $(el).find('.card-body > .price-range > .price').html(),
+        imgSrc: $(el).find('img').attr('src'),
+        geolocation: (_$$data$split = $(el).data('geolocation').split(',')) !== null && _$$data$split !== void 0 ? _$$data$split : null
+      };
+      workingspaces.push(property);
+    });
+    return workingspaces;
+  }
+
+  get getWorkingspaceFilter() {
+    const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
+    const $activeCategories = this.$filterCategoriesContainer.find('.action-container > .btn.is-active');
+    const $activeCapacity = this.$filterCapacityContainer.find('.action-container > .btn.is-active');
+    const $priceRangeMin = this.$filterPriceRangeContainer.find('.minmax-values > div > #minimum');
+    const $priceRangeMax = this.$filterPriceRangeContainer.find('.minmax-values > div > #maximum');
+    const locationID = $activeLocation.map((i, el) => $(el).data('id'))[0];
+    const categoryIds = $activeCategories.map((i, el) => $(el).data('id')).get();
+    const capacities = $activeCapacity.map((i, el) => $(el).data('capacity')).get();
+    const minimumPriceRange = +$priceRangeMin.html();
+    const maximumPriceRange = +$priceRangeMax.html();
+    const filter = {
+      country: locationID,
+      room_categories: categoryIds,
+      capacities: capacities.length > 0 ? capacities : '1up',
+      price_range: minimumPriceRange && maximumPriceRange ? `${minimumPriceRange},${maximumPriceRange}` : null,
+      paged: this.filterItem
+    };
+    return filter;
+  }
+
+  setWorkingspaces(workingspaces, isConcat = false) {
+    let newWorkingspaces = [];
+
+    if (!workingspaces) {
+      this.workingspaces = [];
+      return;
+    }
+
+    workingspaces.forEach(workingspace => {
+      var _workingspace$locatio, _workingspace$locatio2, _workingspace$price_r;
+
+      const minimumCapacity = Math.min.apply(Math, workingspace.capacity_list);
+      const maximumCapacity = Math.max.apply(Math, workingspace.capacity_list);
+      const property = {
+        title: workingspace === null || workingspace === void 0 ? void 0 : workingspace.post_title,
+        location: workingspace === null || workingspace === void 0 ? void 0 : (_workingspace$locatio = workingspace.location) === null || _workingspace$locatio === void 0 ? void 0 : _workingspace$locatio.place_name,
+        capacity: `${minimumCapacity} - ${maximumCapacity}`,
+        totalRooms: workingspace === null || workingspace === void 0 ? void 0 : workingspace.total_rooms,
+        imgSrc: workingspace === null || workingspace === void 0 ? void 0 : workingspace.featured_image,
+        geolocation: workingspace === null || workingspace === void 0 ? void 0 : (_workingspace$locatio2 = workingspace.location) === null || _workingspace$locatio2 === void 0 ? void 0 : _workingspace$locatio2.location.split(',')
+      };
+      if (workingspace !== null && workingspace !== void 0 && workingspace.priceRange) property.priceRange = `${(workingspace === null || workingspace === void 0 ? void 0 : (_workingspace$price_r = workingspace.price_range) === null || _workingspace$price_r === void 0 ? void 0 : _workingspace$price_r.length) > 1 ? workingspace.price_range.join(' - $') : workingspace === null || workingspace === void 0 ? void 0 : workingspace.price_range[0]}/month`;
+      newWorkingspaces.push(property);
+    });
+    this.workingspaces = isConcat ? this.workingspaces.concat(newWorkingspaces) : newWorkingspaces;
+  }
+
+  isTouchEvent() {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (WorkingspacesMaps);
 
 /***/ }),
 
@@ -4135,519 +4625,6 @@ const userHeader = _UserHeader__WEBPACK_IMPORTED_MODULE_5__["default"];
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
-
-/***/ }),
-
-/***/ "./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js":
-/*!*******************************************************************!*\
-  !*** ./inc/custommapsmeta/js/modules/front-end/CustomMapsMeta.js ***!
-  \*******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../assets/js/modules/frontend/index */ "./assets/js/modules/frontend/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-
-
-
-class WorkingspacesMaps {
-  constructor() {
-    this.$workspaceContainer = $('#workspaces-map');
-    if (!this.$workspaceContainer.length) return;
-    this.$contentContainer = this.$workspaceContainer.find('.content-container');
-    this.$labelFilterContainer = this.$contentContainer.find('.action-container > .label');
-    this.$filterContainer = this.$contentContainer.find('.filter-container');
-    this.$mapContainer = this.$contentContainer.find('.map-container');
-    this.$mapSpacer = this.$mapContainer.find('.map-spacer');
-    this.$map = this.$mapContainer.find('.map#map');
-    this.$itemContainer = this.$contentContainer.find('.item-container');
-    this.$filterCategoriesContainer = this.$filterContainer.find('.filter.categories');
-    this.$filterCapacityContainer = this.$filterContainer.find('.filter.capacity');
-    this.$filterLocationContainer = this.$filterContainer.find('.filter.location');
-    this.$filterPriceRangeContainer = this.$filterContainer.find('.filter.price-range');
-    this.$priceRange = this.$filterContainer.find('.filter > .action-container > .slider#price-range');
-    this.$btnFilter = this.$workspaceContainer.find('.action-container > .action.filter');
-    this.$btnSetFilter = this.$filterContainer.find('.btn.filter');
-    this.$btnFitLocations = this.$mapContainer.find('.btn.fit-workingspaces');
-    this.$btnMapView = this.$contentContainer.find('.action-container#mobile-maps');
-    this.$btnLoadMore = this.$itemContainer.find('.btn.load-more');
-    this.$btnFindAllposts = this.$itemContainer.find('.find-all.posts'); //local variable
-
-    this.siteUrl = translation_array.site_url;
-    this.isUserLoggedIn = translation_array.is_user_logged_in;
-    this.mapZoom = 15;
-    this.isMapLoaded = false;
-    this.btnFilterPositionTop = this.$btnFilter.offset().top + 500;
-    this.filterItem = 1; //init slider
-
-    Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["rangeSlider"])({
-      container: this.$priceRange.get()[0]
-    });
-    this.initAnimation(); // init events
-
-    this.events(); // init map
-
-    this.initMap();
-  }
-
-  initMap() {
-    var _this$$map$data$split, _this$$map, _this$$map$data;
-
-    this.map = Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["maps"])({
-      container: this.$map.get()[0],
-      center: (_this$$map$data$split = (_this$$map = this.$map) === null || _this$$map === void 0 ? void 0 : (_this$$map$data = _this$$map.data('geolocation')) === null || _this$$map$data === void 0 ? void 0 : _this$$map$data.split(',')) !== null && _this$$map$data$split !== void 0 ? _this$$map$data$split : null,
-      zoom: this.mapZoom
-    }).control();
-    this.workingspaces = this.getWorkingspacesInHtml();
-    const locations = this.workingspaces.map(workingspace => {
-      if (workingspace !== null && workingspace !== void 0 && workingspace.geolocation) return workingspace.geolocation;
-    });
-    this.setMapMarkers(locations); //
-
-    this.mapEvents();
-  }
-
-  setMapMarkers(locations) {
-    if (this.markers) this.markers.forEach(marker => marker.remove());
-    if (locations.length < 1) return;
-
-    if (locations.length > 1) {
-      this.markers = this.map.fitLocations(locations).addMarkers(this.workingspaces).getMarkers();
-    } else {
-      this.markers = this.map.addMarkers(this.workingspaces).getMarkers();
-      this.map.get().flyTo({
-        center: locations[0],
-        essential: true,
-        zoom: this.mapZoom
-      });
-    }
-  }
-
-  mapEvents() {
-    this.$map.hide();
-    const load = Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$mapContainer, 60).start();
-    this.map.get().on('load', () => {
-      this.$btnMapView.html(`<button class="btn maps"><i class="far fa-map"></i></button>`);
-      this.$map.show();
-      this.isMapLoaded = true;
-      load.end();
-      this.map.get().resize();
-    });
-  }
-
-  initAnimation() {
-    if (!this.$filterContainer) return;
-    this.filterAnimation = gsap.timeline({
-      paused: true
-    });
-    this.$filterContainer.css({
-      'display': 'none',
-      'opacity': 0
-    });
-    this.filterAnimation.to(this.$filterContainer, {
-      opacity: 1,
-      display: 'flex',
-      flexDirection: 'column',
-      translateY: 0,
-      duration: .3
-    });
-    this.mapMobileAnimation = gsap.timeline({
-      paused: true,
-      onComplete: () => {
-        if (this.isMapLoaded) {
-          this.$mapContainer.css('width', $(document).width() - 44);
-          this.map.get().resize();
-        }
-      },
-      onReverseComplete: () => this.$mapContainer.css('width', 0)
-    });
-    this.mapMobileAnimation.to(this.$mapContainer, {
-      opacity: 1,
-      width: $(document).width() - 44
-    });
-  }
-
-  initBtnMobileMapAnimation() {
-    this.$btnMapView.addClass('is-active');
-    this.btnMapviewAnimation = gsap.timeline({
-      onComplete: () => this.$btnMapView.find('.btn.maps > i').attr('class', 'fas fa-times'),
-      onReverseComplete: () => {
-        this.$btnMapView.find('.btn.maps > i').attr('class', 'far fa-map');
-        this.$btnMapView.css({
-          left: 'auto',
-          right: 0
-        });
-      }
-    });
-    this.btnMapviewAnimation.to(this.$btnMapView, {
-      top: 90,
-      left: -10,
-      padding: 5,
-      right: 'auto'
-    }).to(this.$btnMapView.find('.btn.maps'), {
-      width: 35,
-      height: 35,
-      marginRight: 0
-    }, '<').to(this.$btnMapView.find('.btn.maps > i'), {
-      fontSize: 18
-    }, '<');
-  }
-
-  events() {
-    this.$btnFilter.on('click', () => {
-      this.$btnFilter.toggleClass('is-active');
-
-      if (this.$btnFilter.hasClass('is-active')) {
-        this.filterAnimation.play();
-        return;
-      } else {
-        this.filterAnimation.reverse();
-        return;
-      }
-    });
-    this.$filterLocationContainer.on('click', '.action-container > button', e => {
-      const $el = $(e.currentTarget);
-      $el.siblings().removeClass('is-active');
-      $el.addClass('is-active');
-    });
-    this.$filterCategoriesContainer.on('click', '.action-container > button', e => {
-      const $el = $(e.currentTarget);
-      $el.toggleClass('is-active');
-    });
-    this.$filterCapacityContainer.on('click', '.action-container > button', e => {
-      const $el = $(e.currentTarget);
-      $el.toggleClass('is-active');
-    });
-    this.$btnSetFilter.on('click', () => {
-      this.filterAnimation.reverse();
-      this.$btnFilter.removeClass('is-active');
-      this.filterItem = 1;
-      this.dislplayFilteredWorkingspaces();
-    });
-    this.$itemContainer.on('click', '.loading#loading > .btn.retry', () => {
-      this.dislplayFilteredWorkingspaces();
-    });
-    this.$btnFitLocations.on('click', () => {
-      const locations = this.workingspaces.map(workingspace => {
-        if (workingspace !== null && workingspace !== void 0 && workingspace.geolocation) return workingspace.geolocation;
-      });
-      this.map.fitLocations(locations);
-    });
-    this.$mapContainer.on('click', '.loading#loading > .btn.retry', () => {
-      this.initMap();
-    });
-    this.$itemContainer.on('click', '.item', e => {
-      const $el = $(e.currentTarget);
-
-      if ($el) {
-        const geolocation = $el.data('geolocation').split(',');
-        this.map.get().flyTo({
-          center: geolocation,
-          essential: true,
-          zoom: this.mapZoom
-        });
-      }
-    });
-    $(document).on('scroll', e => {
-      this.changePostionMobileBtnMap();
-
-      if (this.$workspaceContainer.data('type') !== 'normal') {
-        this.changeFiltersPosition();
-        this.changeMapPosition();
-      }
-
-      if (this.$btnMapView.hasClass('is-active')) {
-        this.btnMapviewAnimation.reverse();
-        this.mapMobileAnimation.reverse();
-        this.$btnMapView.removeClass('is-active');
-      }
-    });
-    $(window).on('resize orientationchange', e => {
-      if (this.isMapLoaded) this.map.get().resize();
-
-      if (this.$btnMapView.hasClass('is-active')) {
-        this.btnMapviewAnimation.reverse();
-        this.mapMobileAnimation.reverse();
-        this.$btnMapView.removeClass('is-active');
-      }
-    });
-    this.$btnMapView.on('click', () => {
-      if (!this.isMapLoaded) return;
-
-      if (!this.$btnMapView.hasClass('is-active')) {
-        this.initBtnMobileMapAnimation();
-        this.mapMobileAnimation.play();
-      } else {
-        this.btnMapviewAnimation.reverse();
-        this.mapMobileAnimation.reverse();
-        this.$btnMapView.removeClass('is-active');
-      }
-    });
-    this.$btnLoadMore.on('click', () => {
-      this.filterItem++;
-      const load = Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$itemContainer).start();
-      const filter = this.getWorkingspaceFilter;
-      filter.offset = this.workingspaces.length;
-      this.$btnLoadMore.hide();
-      let request = [Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter)];
-      if (this.isUserLoggedIn) request.push(Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getUserWorkingspaces());
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.all(request).then(axios__WEBPACK_IMPORTED_MODULE_1___default.a.spread((...responses) => {
-        this.$btnLoadMore.show();
-        load.end();
-        const {
-          data: {
-            posts,
-            pagination
-          }
-        } = responses[0];
-        const {
-          data: userWorkingspaces
-        } = this.isUserLoggedIn ? responses[1] : {
-          data: []
-        };
-
-        if (!posts) {
-          this.$btnLoadMore.attr('disabled', true);
-          return;
-        }
-
-        const template = this.workingspacesTemplate(posts, userWorkingspaces);
-        $(template).insertBefore(this.$btnLoadMore.parent());
-        this.setWorkingspaces(posts, true);
-        const locations = this.workingspaces.map(workingspace => {
-          return workingspace === null || workingspace === void 0 ? void 0 : workingspace.geolocation;
-        });
-        this.setMapMarkers(locations);
-      })).catch(e => {
-        load.displayError();
-      });
-    });
-  }
-
-  changePostionMobileBtnMap() {
-    const btnPostionTop = parseInt(getComputedStyle(this.$btnMapView.get()[0]).getPropertyValue('--position-top'));
-
-    if (window.scrollY <= btnPostionTop) {
-      this.$btnMapView.css('top', btnPostionTop + 90 - window.scrollY);
-    } else {
-      this.$btnMapView.css('top', 90);
-    }
-  }
-
-  changeFiltersPosition() {
-    if (window.scrollY >= this.btnFilterPositionTop) {
-      if (this.$btnFilter.hasClass('is-fixed')) return;
-      this.$btnFilter.addClass('is-fixed shadow');
-      this.$filterContainer.addClass('is-fixed shadow');
-    } else {
-      if (!this.$btnFilter.hasClass('is-fixed')) return;
-      this.$btnFilter.removeClass('is-fixed shadow');
-      this.filterAnimation.reverse();
-      this.$filterContainer.removeClass('is-fixed shadow');
-    }
-  }
-
-  changeMapPosition() {
-    if ($(document).width() <= 575.98) return;
-
-    if (window.scrollY >= this.btnFilterPositionTop) {
-      if (this.$mapContainer.hasClass('is-fixed')) return;
-      this.$mapContainer.addClass('is-fixed shadow');
-      this.$mapSpacer.hide();
-      this.map.get().resize();
-    } else {
-      if (!this.$mapContainer.hasClass('is-fixed')) return;
-      this.$mapContainer.removeClass('is-fixed shadow');
-      this.$mapSpacer.show();
-      this.map.get().resize();
-    }
-  }
-
-  workingspacesTemplate(data, userWorkingspaces) {
-    let template = '';
-    const userWorkingspaceIds = userWorkingspaces.length > 0 ? userWorkingspaces.map(workingspace => workingspace.ID) : [];
-
-    if (!data || data.length < 1) {
-      return `<p>No items match your criteria.</p>`;
-    }
-
-    const locationTemplate = location => {
-      return `
-                <div class="detail-icontainer location">
-                    <i class="fas fa-map-marker-alt text-muted"></i>
-                    <a href="#">${location}</a>
-                </div>`;
-    };
-
-    const priceRangeTemplate = priceRange => {
-      return `<div class="detail-icontainer price-range">
-                        <span>Price range: </span>
-                        <span class="price">$${priceRange.length > 1 ? priceRange.join(' - $') : priceRange[0]}/month</span>
-                    </div>`;
-    };
-
-    const capacityTemplate = capacityRange => {
-      return `<div class="detail-icontainer capacity">
-                        <i class="fas fa-user text-muted"></i>
-                        <p class="text-muted">Capacity: <span>${capacityRange[0]} - ${capacityRange[1]}</span></p>
-                    </div>`;
-    };
-
-    data.forEach(val => {
-      var _val$location, _val$location2, _val$total_rooms;
-
-      const minimumCapacity = val.capacity_list ? Math.min.apply(Math, val.capacity_list) : null;
-      const maximumCapacity = val.capacity_list ? Math.max.apply(Math, val.capacity_list) : null;
-      template += `<div class="item workspace card border-top-left border--post border--hover" data-id="${val === null || val === void 0 ? void 0 : val.ID}" data-geolocation="${val === null || val === void 0 ? void 0 : (_val$location = val.location) === null || _val$location === void 0 ? void 0 : _val$location.location}">
-                            <img class="card-img-top" src="${val.featured_image}" alt="">
-                            <div class="card-body">
-                                <div class="action-container">
-                                    <div class="action-like shadow-sm">
-                                        <i class="${userWorkingspaceIds.includes(val === null || val === void 0 ? void 0 : val.ID) ? 'fas fa-heart is-added' : 'far fa-heart'}"></i>
-                                    </div>
-                                </div>
-
-                                <h5><a href="${val === null || val === void 0 ? void 0 : val.permalink}">${val === null || val === void 0 ? void 0 : val.post_title}</a></h5>
-                                
-                                ${val !== null && val !== void 0 && (_val$location2 = val.location) !== null && _val$location2 !== void 0 && _val$location2.place_name ? locationTemplate(val.location.place_name) : ''}
-                                ${minimumCapacity || maximumCapacity ? capacityTemplate([minimumCapacity, maximumCapacity]) : ''} 
-                                <div class="detail-icontainer total-rooms">
-                                    <i class="fas fa-chair text-muted"></i>
-                                    <p class="text-muted">No. of rooms: <span>${(_val$total_rooms = val === null || val === void 0 ? void 0 : val.total_rooms) !== null && _val$total_rooms !== void 0 ? _val$total_rooms : 0}</span></p>
-                                </div>
-                                ${val !== null && val !== void 0 && val.price_range ? priceRangeTemplate(val.price_range) : ''}
-                            </div>
-                        </div>`;
-    });
-    return template;
-  }
-
-  dislplayFilteredWorkingspaces() {
-    const filter = this.getWorkingspaceFilter;
-    const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
-
-    if (filter.priceRange) {
-      const priceRange = filter.price_range.split(',');
-      this.$labelFilterContainer.html(`Location: ${$activeLocation.html()}, Price range: $${priceRange.join(' - $')}`);
-    }
-
-    this.$itemContainer.find('.item,p').remove();
-    const load = Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["loading"])(this.$itemContainer).start();
-    this.$btnLoadMore.hide();
-    let request = [Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getWorkingspacesByFilter(filter)];
-    if (this.isUserLoggedIn) request.push(Object(_assets_js_modules_frontend_index__WEBPACK_IMPORTED_MODULE_0__["api"])(this.siteUrl).getUserWorkingspaces());
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.all(request).then(axios__WEBPACK_IMPORTED_MODULE_1___default.a.spread((...responses) => {
-      this.$btnLoadMore.show();
-      const {
-        data: {
-          posts: filteredWorkingspaces
-        }
-      } = responses[0];
-      const {
-        data: userWorkingspaces
-      } = this.isUserLoggedIn ? responses[1] : {
-        data: []
-      };
-
-      if (this.$btnFindAllposts.length > 0) {
-        const template = this.workingspacesTemplate(filteredWorkingspaces, userWorkingspaces);
-        $(template).insertBefore(this.$btnFindAllposts);
-      } else if (this.$btnLoadMore.length > 0) {
-        const template = this.workingspacesTemplate(filteredWorkingspaces, userWorkingspaces);
-        $(template).insertBefore(this.$btnLoadMore.parent());
-      } else {
-        this.$itemContainer.append(this.workingspacesTemplate(filteredWorkingspaces, userWorkingspaces));
-      }
-
-      this.setWorkingspaces(filteredWorkingspaces);
-      const locations = this.workingspaces.map(workingspace => {
-        return workingspace === null || workingspace === void 0 ? void 0 : workingspace.geolocation;
-      });
-      this.setMapMarkers(locations);
-      load.end();
-    })).catch(e => {
-      console.log(e);
-      load.displayError();
-    });
-  }
-
-  getWorkingspacesInHtml() {
-    let workingspaces = [];
-    this.$itemContainer.find('.item').each((i, el) => {
-      var _$$data$split;
-
-      const property = {
-        title: $(el).find('.card-body > h5 > a').html(),
-        location: $(el).find('.card-body > .location > a').html(),
-        capacity: $(el).find('.card-body > .capacity > p > .capacity').html(),
-        totalRooms: $(el).find('.card-body > .total-rooms > p > .total-rooms').html(),
-        priceRange: $(el).find('.card-body > .price-range > .price').html(),
-        imgSrc: $(el).find('img').attr('src'),
-        geolocation: (_$$data$split = $(el).data('geolocation').split(',')) !== null && _$$data$split !== void 0 ? _$$data$split : null
-      };
-      workingspaces.push(property);
-    });
-    return workingspaces;
-  }
-
-  get getWorkingspaceFilter() {
-    const $activeLocation = this.$filterLocationContainer.find('.action-container > .btn.is-active');
-    const $activeCategories = this.$filterCategoriesContainer.find('.action-container > .btn.is-active');
-    const $activeCapacity = this.$filterCapacityContainer.find('.action-container > .btn.is-active');
-    const $priceRangeMin = this.$filterPriceRangeContainer.find('.minmax-values > div > #minimum');
-    const $priceRangeMax = this.$filterPriceRangeContainer.find('.minmax-values > div > #maximum');
-    const locationID = $activeLocation.map((i, el) => $(el).data('id'))[0];
-    const categoryIds = $activeCategories.map((i, el) => $(el).data('id')).get();
-    const capacities = $activeCapacity.map((i, el) => $(el).data('capacity')).get();
-    const minimumPriceRange = +$priceRangeMin.html();
-    const maximumPriceRange = +$priceRangeMax.html();
-    const filter = {
-      country: locationID,
-      room_categories: categoryIds,
-      capacities: capacities.length > 0 ? capacities : '1up',
-      price_range: minimumPriceRange && maximumPriceRange ? `${minimumPriceRange},${maximumPriceRange}` : null,
-      paged: this.filterItem
-    };
-    return filter;
-  }
-
-  setWorkingspaces(workingspaces, isConcat = false) {
-    let newWorkingspaces = [];
-
-    if (!workingspaces) {
-      this.workingspaces = [];
-      return;
-    }
-
-    workingspaces.forEach(workingspace => {
-      var _workingspace$locatio, _workingspace$locatio2, _workingspace$price_r;
-
-      const minimumCapacity = Math.min.apply(Math, workingspace.capacity_list);
-      const maximumCapacity = Math.max.apply(Math, workingspace.capacity_list);
-      const property = {
-        title: workingspace === null || workingspace === void 0 ? void 0 : workingspace.post_title,
-        location: workingspace === null || workingspace === void 0 ? void 0 : (_workingspace$locatio = workingspace.location) === null || _workingspace$locatio === void 0 ? void 0 : _workingspace$locatio.place_name,
-        capacity: `${minimumCapacity} - ${maximumCapacity}`,
-        totalRooms: workingspace === null || workingspace === void 0 ? void 0 : workingspace.total_rooms,
-        imgSrc: workingspace === null || workingspace === void 0 ? void 0 : workingspace.featured_image,
-        geolocation: workingspace === null || workingspace === void 0 ? void 0 : (_workingspace$locatio2 = workingspace.location) === null || _workingspace$locatio2 === void 0 ? void 0 : _workingspace$locatio2.location.split(',')
-      };
-      if (workingspace !== null && workingspace !== void 0 && workingspace.priceRange) property.priceRange = `${(workingspace === null || workingspace === void 0 ? void 0 : (_workingspace$price_r = workingspace.price_range) === null || _workingspace$price_r === void 0 ? void 0 : _workingspace$price_r.length) > 1 ? workingspace.price_range.join(' - $') : workingspace === null || workingspace === void 0 ? void 0 : workingspace.price_range[0]}/month`;
-      newWorkingspaces.push(property);
-    });
-    this.workingspaces = isConcat ? this.workingspaces.concat(newWorkingspaces) : newWorkingspaces;
-  }
-
-  isTouchEvent() {
-    return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
-  }
-
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (WorkingspacesMaps);
 
 /***/ }),
 

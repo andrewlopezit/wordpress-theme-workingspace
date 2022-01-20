@@ -125,6 +125,7 @@ class Auth extends BaseClass {
         $result = get_user_by( 'id', $user_id );
         $user = $this->unset_user_prop($result->data);
         $user->x_wp_nonce = wp_create_nonce( 'auth_wp_rest' );
+        $this->logged_in($user);
 
         return $user;
     }
