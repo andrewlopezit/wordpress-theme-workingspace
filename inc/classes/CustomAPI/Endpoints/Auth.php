@@ -8,11 +8,11 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Classes\CustomAPI\Endpoints;
+namespace inc\classes\customapi\endpoints;
 
-use Inc\Classes\CustomAPI\Endpoints\BaseClass;
+use inc\classes\customapi\endpoints\BaseClass;
 
-use Inc\Helpers\Sanitize;
+use inc\helpers\Sanitize;
 use Google_Client;
 
 class Auth extends BaseClass {

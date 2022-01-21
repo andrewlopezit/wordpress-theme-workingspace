@@ -8,7 +8,7 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Gutenberg;
+namespace inc\gutenberg;
 
 class Pattern {
 

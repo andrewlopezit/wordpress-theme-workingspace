@@ -8,12 +8,12 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Classes\CustomAPI\Endpoints;
+namespace inc\classes\customapi\endpoints;
 
-use Inc\Classes\CustomAPI\Endpoints\BaseClass;
-use Inc\Classes\CustomAPI\Endpoints\Filters;
+use inc\classes\customapi\endpoints\BaseClass;
+use inc\classes\customapi\endpoints\Filters;
 
-use Inc\Helpers\Workingspaces as WorkspacesHelpers;
+use inc\helpers\Workingspaces as WorkspacesHelpers;
 
 use WP_Query;
 

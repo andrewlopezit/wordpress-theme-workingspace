@@ -8,10 +8,10 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\customroomsmeta;
+namespace inc\customroomsmeta;
 
-use Inc\customroomsmeta\Callbacks\BackEndCallbacks;
-use Inc\customroomsmeta\Callbacks\FrontEndCallbacks;
+use inc\customroomsmeta\callbacks\BackEndCallbacks;
+use inc\customroomsmeta\callbacks\FrontEndCallbacks;
 
 final class Init {
 

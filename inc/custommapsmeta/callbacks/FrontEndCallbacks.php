@@ -8,7 +8,7 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Custommapsmeta\Callbacks;
+namespace inc\custommapsmeta\callbacks;
 
 final class FrontEndCallbacks {
     public function index($args) {

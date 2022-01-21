@@ -8,9 +8,9 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Custommapsmeta;
+namespace inc\custommapsmeta;
 
-use Inc\Custommapsmeta\Callbacks\BackEndCallbacks;
+use inc\custommapsmeta\callbacks\BackEndCallbacks;
 
 final class Init {
     private $custom_meta_id = 'workingspaceMapsID';

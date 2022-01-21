@@ -8,7 +8,7 @@
  * @since Workingspace 1.0
  */
 
- namespace Inc\Classes;
+ namespace inc\classes;
 
  final class RegisterSidebar {
 

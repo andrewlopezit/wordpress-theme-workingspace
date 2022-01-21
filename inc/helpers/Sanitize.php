@@ -8,7 +8,7 @@
  * @since Workingspace 1.0
  */
 
- namespace Inc\Helpers;
+ namespace inc\helpers;
 
  final class Sanitize  {
 

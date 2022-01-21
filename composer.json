@@ -13,6 +13,6 @@
         "google/apiclient": "2.x-dev"
     },
     "autoload": {
-        "psr-4": {"Inc\\": "./inc"}
+        "psr-4": {"inc\\": "./inc"}
     }
 }
