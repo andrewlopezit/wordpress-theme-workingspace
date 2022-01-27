@@ -10,7 +10,7 @@ Clone the repository
  
 1. Install all the dependencies
 
-    **composer install**
+    **composer install**,
     **npm install**
     
 2. Run **npm run start**
