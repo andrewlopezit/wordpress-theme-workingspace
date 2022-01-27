@@ -10,8 +10,8 @@ Clone the repository
  
 1. Install all the dependencies using composer
 
-    ##composer install,
-    ##npm install
+    ** composer install**,
+    ** npm install **
     
 2. Run **npm run start**
 
