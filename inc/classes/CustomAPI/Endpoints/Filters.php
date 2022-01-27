@@ -8,10 +8,10 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Classes\CustomAPI\Endpoints;
+namespace inc\classes\customapi\Endpoints;
 
-use Inc\Helpers\Posts;
-use Inc\Helpers\Rooms;
+use inc\helpers\Posts;
+use inc\helpers\Rooms;
 
 final class Filters {
     

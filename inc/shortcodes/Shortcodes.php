@@ -8,7 +8,7 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Shortcodes;
+namespace inc\shortcodes;
 
 class Shortcodes {
 

@@ -8,7 +8,7 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Gutenberg\Callbacks;
+namespace inc\gutenberg\callbacks;
 
 final class FrontEndCallbacks {
     public function featured_posts($args) {

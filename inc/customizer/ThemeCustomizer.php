@@ -10,12 +10,12 @@
 
 namespace Inc\Customizer;
 
-use Inc\Customizer\Sections\Navigation;
-use Inc\Customizer\Sections\Header;
-use Inc\Customizer\Sections\Color;
-use Inc\Customizer\Sections\Footer;
+use inc\customizer\sections\Navigation;
+use inc\customizer\sections\Header;
+use inc\customizer\sections\Color;
+use inc\customizer\sections\Footer;
 
-use Inc\Classes\ThemeSetup;
+use inc\classes\ThemeSetup;
 
 final class ThemeCustomizer  {
 

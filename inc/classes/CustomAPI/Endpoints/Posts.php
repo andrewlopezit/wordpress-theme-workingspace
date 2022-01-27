@@ -8,9 +8,9 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Classes\CustomAPI\Endpoints;
+namespace inc\classes\customapi\endpoints;
 
-use Inc\Classes\CustomAPI\Endpoints\BaseClass;
+use inc\classes\customapi\endpoints\BaseClass;
 use WP_Query;
 
 class Posts extends BaseClass {

@@ -8,15 +8,15 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Classes\CustomAPI;
+namespace inc\classes\customapi;
 
-use Inc\Classes\CustomAPI\Endpoints\Workingspaces;
-use Inc\Classes\CustomAPI\Endpoints\Rooms;
-use Inc\Classes\CustomAPI\Endpoints\Posts;
-use Inc\Classes\CustomAPI\Endpoints\Inquiries;
-use Inc\Classes\CustomAPI\Endpoints\Search;
-use Inc\Classes\CustomAPI\Endpoints\Auth;
-use Inc\Classes\CustomAPI\Endpoints\Users;
+use inc\classes\customapi\endpoints\Workingspaces;
+use inc\classes\customapi\endpoints\Rooms;
+use inc\classes\customapi\endpoints\Posts;
+use inc\classes\customapi\endpoints\Inquiries;
+use inc\classes\customapi\endpoints\Search;
+use inc\classes\customapi\endpoints\Auth;
+use inc\classes\customapi\endpoints\Users;
 
 use WP_REST_SERVER;
 

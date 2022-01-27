@@ -8,9 +8,9 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Classes\CustomAPI\Endpoints;
+namespace inc\classes\customapi\Endpoints;
 
-use Inc\Helpers\Posts;
+use inc\helpers\Posts;
 
 class BaseClass {
 

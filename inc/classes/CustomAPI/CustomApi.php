@@ -8,9 +8,9 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Classes\CustomAPI;
+namespace inc\classes\customapi;
 
-use Inc\Classes\CustomAPI\Routes;
+use inc\classes\customapi\Routes;
 
 class CustomApi   {
   

@@ -8,18 +8,18 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Classes;
+namespace inc\classes;
 
-use Inc\Classes\EnqueueStyle;
-use Inc\Classes\EnqueueScript;
+use inc\classes\EnqueueStyle;
+use inc\classes\EnqueueScript;
 
-use Inc\Classes\RegisterMenu;
-use Inc\Classes\RegisterSidebar;
+use inc\classes\RegisterMenu;
+use inc\classes\RegisterSidebar;
 
-use Inc\Classes\ThemeSupport;
-use Inc\Classes\ImageSize;
+use inc\classes\ThemeSupport;
+use inc\classes\ImageSize;
 
-use Inc\Customizer\ThemeCustomizer;
+use inc\customizer\ThemeCustomizer;
 
 final class ThemeSetup {
 

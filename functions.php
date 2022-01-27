@@ -21,12 +21,12 @@ if(file_exists(dirname(__FILE__).'/inc/helpers/global-helpers.php')) {
     require_once dirname(__FILE__).'/inc/helpers/global-helpers.php';
 }
 
-use Inc\Classes\ThemeSetup;
-use Inc\CustomRoomsMeta\Init as CustomRoomsMeta;
-use Inc\Custommapsmeta\Init as CustomMapsMeta;
-use Inc\Classes\CustomAPI\CustomApi;
-use Inc\Gutenberg\Gutenberg;
-use Inc\Shortcodes\Shortcodes;
+use inc\classes\ThemeSetup;
+use inc\customroomsmeta\Init as CustomRoomsMeta;
+use inc\custommapsmeta\Init as CustomMapsMeta;
+use inc\classes\customapi\CustomApi;
+use inc\gutenberg\Gutenberg;
+use inc\shortcodes\Shortcodes;
 
 // Core Constants.
 define( 'WORKINGSPACEWP_THEME_DIR', get_template_directory() );

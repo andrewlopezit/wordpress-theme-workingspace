@@ -8,10 +8,10 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Gutenberg;
+namespace inc\gutenberg;
 
-use Inc\Gutenberg\Callbacks\FrontEndCallbacks;
-use Inc\Gutenberg\Pattern;
+use inc\gutenberg\callbacks\FrontEndCallbacks;
+use inc\gutenberg\Pattern;
 
 class Gutenberg {
 

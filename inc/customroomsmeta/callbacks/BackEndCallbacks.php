@@ -8,7 +8,7 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\customroomsmeta\Callbacks;
+namespace inc\customroomsmeta\Callbacks;
 
 final class BackEndCallbacks {
 

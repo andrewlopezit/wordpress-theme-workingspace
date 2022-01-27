@@ -8,10 +8,10 @@
  * @since Workingspace 1.0
  */
 
-namespace Inc\Classes\CustomAPI\Endpoints;
+namespace inc\classes\customapi\endpoints;
 
-use Inc\Classes\CustomAPI\Endpoints\BaseClass;
-use Inc\Helpers\Sanitize;
+use inc\classes\customapi\endpoints\BaseClass;
+use inc\helpers\Sanitize;
 
 class Inquiries extends BaseClass {
     function create_inquiries($args) {
