@@ -8,10 +8,9 @@ Clone the repository
 
     git clone https://github.com/andrewlopezit/wordpress-theme-workingspace.git
  
-1. Install all the dependencies using composer
+1. Install all the dependencies
 
     **composer install**
-    
     **npm install**
     
 2. Run **npm run start**
